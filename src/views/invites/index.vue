@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 15:00:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 15:34:11
+ * @LastEditTime: 2025-02-25 15:36:46
  * @Description: 我的邀请人列表页
  -->
 <template>
@@ -161,6 +161,8 @@ const onInvite = () => {
   left: 0;
   right: 0;
   z-index: 99;
+  max-width: 750px;
+  margin: 0 auto;
 
   :global {
     .van-nav-bar {
@@ -169,10 +171,12 @@ const onInvite = () => {
 
     .van-nav-bar__title {
       color: #323233;
+      font-size: 16px;
     }
 
-    .van-icon {
+    .van-nav-bar__arrow {
       color: #323233;
+      font-size: 18px;
     }
   }
 }
