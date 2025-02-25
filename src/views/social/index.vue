@@ -27,10 +27,10 @@
             <div :class="$style.userMeta">
               <div :class="$style.userName">{{ item.name }}</div>
               <div :class="$style.platform">
-                <van-image
-                  width="16"
-                  height="16"
-                  :src="item.platformIcon"
+                <img 
+                  src="@/assets/icon/Facebook.png" 
+                  :class="$style.platformIcon"
+                  alt="platform"
                 />
                 <span>{{ item.platform }}</span>
               </div>
@@ -195,6 +195,13 @@ const onItemClick = (item) => {
   gap: 4px;
   font-size: 12px;
   color: #969799;
+}
+
+.platformIcon {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  flex-shrink: 0;
 }
 
 .status {
