@@ -70,14 +70,17 @@
             v-for="account in userInfo.socialAccounts" 
             :key="account.platform"
             :class="$style.socialItem"
+            @click="onAccountClick(account)"
           >
             <van-image
+              :class="$style.avatar"
               width="32"
               height="32"
               :src="account.icon"
             />
             <span>{{ account.platform }}</span>
-            <span :class="$style.status">已认证</span>
+            <div :class="[$style.status, $style.verified]">已认证</div>
+            <van-icon name="arrow" :class="$style.arrow" />
           </div>
         </div>
       </div>
@@ -138,21 +141,25 @@ const userInfo = ref({
   inviteEarnings: 50,
   socialAccounts: [
     {
+      id: 1,
       platform: 'Instagram',
       icon: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
       verified: true
     },
     {
+      id: 2,
       platform: '小红书',
       icon: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
       verified: true
     },
     {
+      id: 3,
       platform: 'Tiktok',
       icon: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
       verified: true
     },
     {
+      id: 4,
       platform: 'Facebook',
       icon: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
       verified: true
@@ -177,6 +184,10 @@ const onSocialClick = () => {
 const onSettingsClick = () => {
   showToast('设置功能开发中')
 }
+
+const onAccountClick = (account) => {
+  router.push(`/social/detail/${account.id}`)
+}
 </script>
 
 <style lang="less" module>
@@ -184,6 +195,7 @@ const onSettingsClick = () => {
   min-height: 100vh;
   background: #f7f8fa;
   padding: 12px;
+  padding-bottom: 62px;
 }
 
 .userInfo {
@@ -306,11 +318,23 @@ const onSettingsClick = () => {
   display: flex;
   align-items: center;
   gap: 8px;
+  cursor: pointer;
 
   span {
     flex: 1;
     font-size: 13px;
     color: #323233;
+  }
+}
+
+.status {
+  font-size: 12px;
+  color: #ff4d4f;
+  min-width: 48px;
+  text-align: right;
+
+  &.verified {
+    color: #07c160;
   }
 }
 
@@ -339,5 +363,15 @@ const onSettingsClick = () => {
 
 .inviteBtn {
   margin-top: 16px;
+}
+
+.avatar {
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.arrow {
+  font-size: 16px;
+  color: #969799;
 }
 </style> 
