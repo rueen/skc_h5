@@ -2,9 +2,9 @@
   <div :class="$style.groupsPage">
     <!-- 表头 -->
     <div :class="$style.tableHeader">
-      <span>用户列表</span>
-      <span>任务次数</span>
-      <span>奖励</span>
+      <span :class="$style.tableHeaderItem1">用户列表</span>
+      <span :class="$style.tableHeaderItem2">任务次数</span>
+      <span :class="$style.tableHeaderItem3">奖励</span>
     </div>
 
     <!-- 列表内容 -->
@@ -170,8 +170,18 @@ const onRefresh = () => {
   border-bottom: 1px solid #f5f6f7;
   max-width: 750px;
   margin: 0 auto;
+  .tableHeaderItem1 {
+    flex: 1;
+  }
+  .tableHeaderItem2 {
+    width: 70px;
+    text-align: center;
+  }
+  .tableHeaderItem3 {
+    width: 70px;
+    text-align: center;
+  }
 }
-
 .content {
   padding: 52px 12px 0;
 }
@@ -210,7 +220,8 @@ const onRefresh = () => {
 .taskCount {
   font-size: 14px;
   color: #323233;
-  margin: 0 24px;
+  width: 70px;
+  text-align: center;
 }
 
 .reward {
@@ -219,6 +230,8 @@ const onRefresh = () => {
   font-weight: 500;
   min-width: 60px;
   text-align: right;
+  width: 70px;
+  text-align: center;
 }
 
 .footer {
