@@ -142,6 +142,16 @@ const router = createRouter({
         requiresAuth: true,
         hideTabbar: true
       }
+    },
+    {
+      path: '/wallet/withdraw',
+      name: 'WalletWithdraw',
+      component: () => import('../views/wallet/withdraw.vue'),
+      meta: {
+        title: '提现',
+        requiresAuth: true,
+        hideTabbar: true
+      }
     }
   ]
 })

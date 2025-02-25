@@ -77,7 +77,7 @@ const onClickLeft = () => {
 }
 
 const onWithdrawClick = () => {
-  showToast('提现功能开发中')
+  router.push('/wallet/withdraw')
 }
 </script>
 
