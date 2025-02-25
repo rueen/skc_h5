@@ -152,6 +152,16 @@ const router = createRouter({
         requiresAuth: true,
         hideTabbar: true
       }
+    },
+    {
+      path: '/tasks/apply/:id',
+      name: 'TaskApply',
+      component: () => import('../views/tasks/apply.vue'),
+      meta: {
+        title: '任务报名',
+        requiresAuth: true,
+        hideTabbar: true
+      }
     }
   ]
 })

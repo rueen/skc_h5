@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 14:58:01
+ * @LastEditTime: 2025-02-25 20:21:54
  * @Description: 任务详情页
  -->
 <template>
@@ -150,10 +150,11 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { showToast } from 'vant'
 
 const router = useRouter()
+const route = useRoute()
 
 // 任务数据
 const task = ref({
@@ -196,7 +197,7 @@ const onShare = () => {
 
 // 提交报名
 const onSubmit = () => {
-  showSuccessDialog.value = true
+  router.push(`/tasks/apply/${route.params.id}`)
 }
 
 // 查看任务
