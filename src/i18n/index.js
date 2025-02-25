@@ -37,6 +37,15 @@ const zh = {
     pullText: '下拉刷新',
     loosingText: '释放刷新',
     loadingText: '加载中...'
+  },
+  tasks: {
+    enrolled: '已报名',
+    published: '已发布',
+    completed: '已完成',
+    finishedText: '没有更多了',
+    loadingText: '加载中...',
+    pullText: '下拉刷新',
+    loosingText: '释放刷新'
   }
 }
 
@@ -77,6 +86,15 @@ const en = {
     pullText: 'Pull to refresh',
     loosingText: 'Release to refresh',
     loadingText: 'Loading...'
+  },
+  tasks: {
+    enrolled: 'Enrolled',
+    published: 'Published',
+    completed: 'Completed',
+    finishedText: 'No more data',
+    loadingText: 'Loading...',
+    pullText: 'Pull to refresh',
+    loosingText: 'Release to refresh'
   }
 }
 
