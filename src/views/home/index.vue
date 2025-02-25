@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 11:25:01
+ * @LastEditTime: 2025-02-25 11:45:38
  * @Description: 首页
  -->
 <script setup>
@@ -36,7 +36,7 @@ const refreshing = ref(false)
 const mockData = [
   {
     id: 1,
-    title: '测评新款化妆品',
+    title: '测评新款化妆品测评新款化妆品',
     price: 1500,
     remainingSlots: 3,
     category: '美妆/护肤',
@@ -159,37 +159,48 @@ const formatDate = (date) => {
                 <h3>{{ item.title }}</h3>
               </div>
               
-              <div :class="$style.price">
-                {{ formatPrice(item.price) }}
-                <span :class="$style.slots">剩余名额：{{ item.remainingSlots }}</span>
-              </div>
+              <div :class="$style.contentRow">
+                <div :class="$style.leftContent">
+                  <div :class="$style.price">
+                    {{ formatPrice(item.price) }}
+                  </div>
+                  <div :class="$style.tags">
+                    <van-tag
+                      type="primary" 
+                      :class="$style.taskType"
+                    >
+                      {{ item.taskType }}
+                    </van-tag>
+                    <van-tag
+                      type="warning"
+                      :class="$style.followers"
+                    >
+                      {{ item.followers }}
+                    </van-tag>
+                  </div>
+                </div>
 
-              <div :class="$style.category">{{ item.category }}</div>
-
-              <div :class="$style.tags">
-                <van-tag
-                  type="primary" 
-                  :class="$style.taskType"
-                >
-                  {{ item.taskType }}
-                </van-tag>
-                <van-tag
-                  type="warning"
-                  :class="$style.followers"
-                >
-                  {{ item.followers }}
-                </van-tag>
-              </div>
-
-              <div :class="$style.deadline">
-                截止：{{ item.deadline }}
+                <div :class="$style.info">
+                  <div :class="$style.infoItem">
+                    <span :class="$style.label">剩余名额：</span>
+                    <span :class="$style.value">{{ item.remainingSlots }}</span>
+                  </div>
+                  <div :class="$style.infoItem">
+                    <span :class="$style.label">达人领域：</span>
+                    <span :class="$style.value">{{ item.category }}</span>
+                  </div>
+                  <div :class="$style.infoItem">
+                    <span :class="$style.label">截止日期：</span>
+                    <span :class="$style.value">{{ item.deadline }}</span>
+                  </div>
+                </div>
               </div>
             </div>
 
             <div :class="$style.image">
               <van-image
-                width="100"
-                height="100"
+                width="90"
+                height="90"
                 fit="cover"
                 :src="item.image"
                 radius="4"
@@ -246,8 +257,8 @@ const formatDate = (date) => {
 }
 
 .listItem {
-  margin: 12px;
-  padding: 16px;
+  margin: 8px 12px;
+  padding: 12px;
   background: #fff;
   border-radius: 8px;
   display: flex;
@@ -258,63 +269,71 @@ const formatDate = (date) => {
 
 .mainContent {
   flex: 1;
-  min-width: 0; // 防止文本溢出
+  min-width: 0;
+  width: 0;
+  display: flex;
+  flex-direction: column;
+  height: 90px;
 }
 
 .header {
   display: flex;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+  width: 100%;
 
   .icon {
     color: #1989fa;
-    font-size: 20px;
-    margin-right: 8px;
+    font-size: 16px;
+    margin-right: 6px;
+    flex-shrink: 0;
   }
 
   h3 {
     margin: 0;
-    font-size: 16px;
+    font-size: 15px;
     color: #323233;
     font-weight: normal;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    flex: 1;
   }
+}
+
+.contentRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex: 1;
+  padding-top: 2px;
+}
+
+.leftContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .price {
-  font-size: 20px;
+  font-size: 18px;
   color: #ff4d4f;
   font-weight: bold;
-  margin-bottom: 8px;
-
-  .slots {
-    margin-left: 12px;
-    font-size: 14px;
-    color: #969799;
-    font-weight: normal;
-  }
-}
-
-.category {
-  font-size: 14px;
-  color: #323233;
-  margin-bottom: 8px;
+  line-height: 1.2;
 }
 
 .tags {
   display: flex;
-  gap: 8px;
-  margin-bottom: 8px;
+  gap: 4px;
 
   :global {
     .van-tag {
-      padding: 0 8px;
-      font-size: 12px;
-      height: 24px;
-      line-height: 22px;
-      border-radius: 4px;
+      padding: 0 4px;
+      font-size: 11px;
+      height: 18px;
+      line-height: 16px;
+      border-radius: 2px;
     }
   }
 
@@ -323,6 +342,7 @@ const formatDate = (date) => {
       .van-tag {
         color: #1989fa;
         border-color: #1989fa;
+        background: rgba(25, 137, 250, 0.1);
       }
     }
   }
@@ -332,19 +352,44 @@ const formatDate = (date) => {
       .van-tag {
         color: #ff976a;
         border-color: #ff976a;
+        background: rgba(255, 151, 106, 0.1);
       }
     }
   }
 }
 
-.deadline {
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  flex: 1;
+  margin-left: 12px;
+  padding: 0;
+}
+
+.infoItem {
   font-size: 12px;
-  color: #969799;
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  white-space: nowrap;
+
+  .label {
+    color: #969799;
+    margin-right: 3px;
+    min-width: 60px;
+  }
+
+  .value {
+    color: #323233;
+  }
 }
 
 .image {
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   flex-shrink: 0;
   border-radius: 4px;
   overflow: hidden;
