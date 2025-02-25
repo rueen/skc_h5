@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 20:55:45
+ * @LastEditTime: 2025-02-25 21:08:23
  * @Description: 登录页
  -->
 <script setup>
@@ -146,7 +146,7 @@ const toggleLang = () => {
 <style lang="less" module>
 .loginPage {
   min-height: 100vh;
-  padding: 40px 20px;
+  padding: 40px 10px;
   box-sizing: border-box;
   background: #fff;
 }
@@ -184,7 +184,7 @@ const toggleLang = () => {
 }
 
 .submit {
-  margin-top: 24px;
+  margin: var(--van-cell-group-inset-padding);
 }
 
 .agreement {
