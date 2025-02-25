@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 20:42:09
+ * @LastEditTime: 2025-02-25 21:26:27
  * @Description: 任务详情页
  -->
 <template>
@@ -32,7 +32,11 @@
           </div>
         </div>
         <div :class="$style.platform">
-          <van-icon name="shop-o" :class="$style.icon" />
+          <img 
+            src="@/assets/icon/Facebook.png" 
+            :class="$style.platformIcon"
+            alt="platform"
+          />
           {{ task.platform }}
         </div>
         <div :class="$style.extraInfo">
@@ -241,8 +245,9 @@ const onSubmit = () => {
     color: #323233;
     margin-bottom: 16px;
 
-    .icon {
-      font-size: 18px;
+    .platformIcon {
+      width: 16px;
+      height: 16px;
       margin-right: 6px;
     }
   }

@@ -39,7 +39,11 @@
             <div :class="$style.mainContent">
               <div :class="$style.header">
                 <div :class="$style.titleWrapper">
-                  <van-icon name="fire-o" :class="$style.icon" />
+                  <img 
+                    src="@/assets/icon/Facebook.png" 
+                    :class="$style.platformIcon"
+                    alt="platform"
+                  />
                   <h3>{{ item.title }}</h3>
                 </div>
                 <span :class="$style.status">{{ item.status }}</span>
@@ -249,9 +253,9 @@ const formatPrice = (price) => {
   flex: 1;
   min-width: 0;
 
-  .icon {
-    color: #1989fa;
-    font-size: 16px;
+  .platformIcon {
+    width: 16px;
+    height: 16px;
     margin-right: 6px;
     flex-shrink: 0;
   }

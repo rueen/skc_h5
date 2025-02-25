@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 11:45:38
+ * @LastEditTime: 2025-02-25 21:25:13
  * @Description: 首页
  -->
 <script setup>
@@ -158,7 +158,11 @@ const formatDate = (date) => {
           >
             <div :class="$style.mainContent">
               <div :class="$style.header">
-                <van-icon name="fire-o" :class="$style.icon" />
+                <img 
+                  src="@/assets/icon/Facebook.png" 
+                  :class="$style.platformIcon"
+                  alt="platform"
+                />
                 <h3>{{ item.title }}</h3>
               </div>
               
@@ -285,9 +289,9 @@ const formatDate = (date) => {
   margin-bottom: 8px;
   width: 100%;
 
-  .icon {
-    color: #1989fa;
-    font-size: 16px;
+  .platformIcon {
+    width: 16px;
+    height: 16px;
     margin-right: 6px;
     flex-shrink: 0;
   }
