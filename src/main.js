@@ -32,7 +32,9 @@ import {
   Image,
   Icon,
   Dialog,
-  NavBar
+  NavBar,
+  Picker,
+  Popup
 } from 'vant'
 
 const app = createApp(App)
@@ -59,5 +61,7 @@ app.use(Image)
 app.use(Icon)
 app.use(Dialog)
 app.use(NavBar)
+app.use(Picker)
+app.use(Popup)
 
 app.mount('#app')
