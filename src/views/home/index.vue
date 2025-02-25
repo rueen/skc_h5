@@ -9,8 +9,10 @@
 import { ref, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { showToast } from 'vant'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
+const router = useRouter()
 
 // 当前选中的平台
 const activePlatform = ref(0)
@@ -152,6 +154,7 @@ const formatDate = (date) => {
             v-for="item in list"
             :key="item.id"
             :class="$style.listItem"
+            @click="router.push(`/tasks/detail/${item.id}`)"
           >
             <div :class="$style.mainContent">
               <div :class="$style.header">

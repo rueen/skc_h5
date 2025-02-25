@@ -2,31 +2,27 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 14:38:20
+ * @LastEditTime: 2025-02-25 14:41:27
  * @Description: 任务详情页
  -->
 <template>
   <div :class="$style.detailPage">
-    <!-- 顶部导航 -->
-    <van-nav-bar
-      title="任务详情"
-      left-arrow
-      :class="$style.navbar"
-      @click-left="onClickLeft"
-    />
+    <!-- Banner图片 -->
+    <div :class="$style.banner">
+      <van-image
+        :src="task.banner"
+        width="100%"
+        height="200"
+        fit="cover"
+      />
+      <!-- 返回按钮覆盖在banner上 -->
+      <div :class="$style.backBtn" @click="onClickLeft">
+        <van-icon name="arrow-left" />
+      </div>
+    </div>
 
     <!-- 主要内容区域 -->
     <div :class="$style.content">
-      <!-- Banner图片 -->
-      <div :class="$style.banner">
-        <van-image
-          :src="task.banner"
-          width="100%"
-          height="200"
-          fit="cover"
-        />
-      </div>
-
       <!-- 基本信息 -->
       <div :class="$style.basicInfo">
         <div :class="$style.price">$ {{ task.price }}</div>
@@ -169,24 +165,32 @@ const onSubmit = () => {
   flex-direction: column;
 }
 
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 99;
+.banner {
   background: #fff;
+  position: relative;
+}
+
+.backBtn {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  width: 32px;
+  height: 32px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 1;
 }
 
 .content {
   flex: 1;
-  margin-top: 46px;
   margin-bottom: 60px;
   padding: 0 0 12px;
-}
-
-.banner {
-  background: #fff;
 }
 
 .basicInfo {
