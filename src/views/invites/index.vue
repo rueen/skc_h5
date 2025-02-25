@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 15:00:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 15:36:46
+ * @LastEditTime: 2025-02-25 15:40:23
  * @Description: 我的邀请人列表页
  -->
 <template>
@@ -190,9 +190,9 @@ const onInvite = () => {
   background: #fff;
   display: flex;
   justify-content: space-between;
-  padding: 12px 16px;
+  padding: 12px 24px;
   font-size: 14px;
-  color: #969799;
+  color: #323232;
   border-bottom: 1px solid #f5f6f7;
   max-width: 750px;
   margin: 0 auto;
@@ -200,7 +200,7 @@ const onInvite = () => {
 
 .content {
   padding: 0 12px;
-  margin-top: 96px;
+  margin-top: 55px;
 }
 
 .listItem {
