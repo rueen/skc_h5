@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 14:26:53
+ * @LastEditTime: 2025-02-25 20:51:14
  * @Description: 任务页
  -->
 <template>
@@ -34,7 +34,7 @@
             v-for="item in list"
             :key="item.id"
             :class="$style.listItem"
-            @click="router.push(`/tasks/detail/${item.id}`)"
+            @click="router.push(`/tasks/apply/detail/${item.id}`)"
           >
             <div :class="$style.mainContent">
               <div :class="$style.header">

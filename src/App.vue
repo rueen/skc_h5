@@ -17,8 +17,8 @@ const active = ref(0)
 
 // 计算是否显示底部导航栏
 const showTabbar = computed(() => {
-  // 在登录页、任务详情页、邀请人列表页、名片列表页、设置页、个人信息编辑页、名片详情页、钱包页、结算账单页、提现记录页、提现账户页、添加账户页、提现页和任务报名页不显示底部导航
-  return !['Login', 'TaskDetail', 'Invites', 'Social', 'Settings', 'ProfileEdit', 'SocialDetail', 'Wallet', 'WalletBills', 'WalletRecords', 'WalletAccounts', 'WalletAccountsAdd', 'WalletWithdraw', 'TaskApply'].includes(route.name)
+  // 在登录页、任务详情页、邀请人列表页、名片列表页、设置页、个人信息编辑页、名片详情页、钱包页、结算账单页、提现记录页、提现账户页、添加账户页、提现页、任务报名页和报名详情页不显示底部导航
+  return !['Login', 'TaskDetail', 'Invites', 'Social', 'Settings', 'ProfileEdit', 'SocialDetail', 'Wallet', 'WalletBills', 'WalletRecords', 'WalletAccounts', 'WalletAccountsAdd', 'WalletWithdraw', 'TaskApply', 'TaskApplyDetail'].includes(route.name)
 })
 </script>
 
