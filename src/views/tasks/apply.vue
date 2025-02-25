@@ -19,13 +19,19 @@
           :class="$style.taskImage"
         />
         <div :class="$style.taskDetail">
-          <div :class="$style.taskName">{{ task.platform }}</div>
-          <div :class="$style.taskTags">
-            <span :class="$style.tag">图文</span>
-            <span :class="$style.tag">美妆</span>
-          </div>
+          <div :class="$style.taskName">{{ task.title }}</div>
           <div :class="$style.taskPrice">${{ task.price }}</div>
-          <div :class="$style.taskDeadline">截止日期：{{ task.deadline }}</div>
+          <div :class="$style.taskBottom">
+            <div :class="$style.tags">
+              <van-tag type="primary" :class="$style.taskType">
+                {{ task.taskType }}
+              </van-tag>
+              <van-tag type="warning" :class="$style.followers">
+                {{ task.followers }}
+              </van-tag>
+            </div>
+            <div :class="$style.taskDeadline">截止日期：{{ task.deadline }}</div>
+          </div>
         </div>
       </div>
 
@@ -93,7 +99,9 @@ const route = useRoute()
 // 任务数据
 const task = ref({
   price: 50,
-  platform: '美国-雅诗兰黛口红种草',
+  title: '美国-雅诗兰黛口红种草',
+  taskType: '图文',
+  followers: '10w+',
   deadline: '2025-02-20',
   banner: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
 })
@@ -177,18 +185,16 @@ const onSubmit = () => {
 
 .taskDetail {
   flex: 1;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .taskName {
   font-size: 14px;
   color: #323233;
   margin-bottom: 8px;
-}
-
-.taskTags {
-  margin-bottom: 8px;
-  display: flex;
-  gap: 8px;
 }
 
 .tag {
@@ -204,6 +210,18 @@ const onSubmit = () => {
   font-weight: 500;
   color: #ee0a24;
   margin-bottom: 4px;
+}
+
+.taskBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tags {
+  display: flex;
+  gap: 4px;
+  align-items: center;
 }
 
 .taskDeadline {
