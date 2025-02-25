@@ -297,7 +297,7 @@ const onClickRight = () => {
   background: #f7f8fa;
   border-radius: 4px;
   padding: 4px 12px;
-  width: 100%;
+  width: 200px;
   height: 100%;
   display: flex;
   align-items: center;

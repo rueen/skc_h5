@@ -40,7 +40,7 @@
       <div :class="$style.menuItem">
         <div :class="$style.menuHeader" @click="router.push('/invites')">
           <div :class="$style.menuTitle">
-            <van-icon name="friends-o" />
+            <van-icon name="friends-o" size="20" />
             <span>我的邀请人</span>
           </div>
           <van-icon name="arrow" />
@@ -61,7 +61,7 @@
       <div :class="$style.menuItem">
         <div :class="$style.menuHeader" @click="onSocialClick">
           <div :class="$style.menuTitle">
-            <van-icon name="card" />
+            <van-icon name="card" size="20" />
             <span>我的名片</span>
           </div>
           <van-icon name="arrow" />
@@ -91,7 +91,7 @@
       <div :class="$style.menuItem">
         <div :class="$style.menuHeader">
           <div :class="$style.menuTitle">
-            <van-icon name="chart-trending-o" />
+            <van-icon name="chart-trending-o" size="20" />
             <span>任务数据</span>
           </div>
         </div>
@@ -115,7 +115,7 @@
       <div :class="$style.menuItem" @click="onSettingsClick">
         <div :class="$style.menuHeader">
           <div :class="$style.menuTitle">
-            <van-icon name="setting-o" />
+            <van-icon name="setting-o" size="20" />
             <span>设置</span>
           </div>
           <van-icon name="arrow" />

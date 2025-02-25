@@ -32,7 +32,7 @@
           @click="router.push('/wallet/bills')"
         >
           <div :class="$style.menuTitle">
-            <van-icon name="balance-list-o" />
+            <van-icon name="balance-list-o" size="20" />
             <span>结算账单</span>
           </div>
           <van-icon name="arrow" />
@@ -43,7 +43,7 @@
           @click="router.push('/wallet/records')"
         >
           <div :class="$style.menuTitle">
-            <van-icon name="records" />
+            <van-icon name="records-o" size="20" />
             <span>提现记录</span>
           </div>
           <van-icon name="arrow" />
@@ -54,7 +54,7 @@
           @click="router.push('/wallet/accounts')"
         >
           <div :class="$style.menuTitle">
-            <van-icon name="card" />
+            <van-icon name="balance-pay" size="20" />
             <span>提现账户</span>
           </div>
           <van-icon name="arrow" />
