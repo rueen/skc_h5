@@ -29,7 +29,8 @@ import {
   PullRefresh,
   List,
   Tag,
-  Image
+  Image,
+  Icon
 } from 'vant'
 
 const app = createApp(App)
@@ -53,5 +54,6 @@ app.use(PullRefresh)
 app.use(List)
 app.use(Tag)
 app.use(Image)
+app.use(Icon)
 
 app.mount('#app')

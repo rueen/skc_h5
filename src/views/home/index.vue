@@ -1,8 +1,8 @@
 <!--
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
- * @LastEditors: diaochan
- * @LastEditTime: 2025-02-25 11:00:33
+ * @LastEditors: rueen
+ * @LastEditTime: 2025-02-25 11:25:01
  * @Description: 首页
  -->
 <script setup>
@@ -124,80 +124,81 @@ const formatDate = (date) => {
 <template>
   <div :class="$style.homePage">
     <!-- 平台选择标签 -->
-    <van-tabs
-      v-model:active="activePlatform"
-      :class="$style.platformTabs"
-      scrollspy
-      sticky
-      swipeable
-      @change="onPlatformChange"
-    >
-      <van-tab 
-        v-for="platform in platforms" 
-        :key="platform.id"
-        :title="platform.name"
+    <div :class="$style.tabsWrapper">
+      <van-tabs
+        v-model:active="activePlatform"
+        :class="$style.platformTabs"
+        swipeable
+        @change="onPlatformChange"
       >
-        <!-- 下拉刷新 -->
-        <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-          <!-- 列表 -->
-          <van-list
-            v-model:loading="loading"
-            v-model:finished="finished"
-            :finished-text="t('home.finishedText')"
-            @load="onLoad"
+        <van-tab 
+          v-for="platform in platforms" 
+          :key="platform.id"
+          :title="platform.name"
+        />
+      </van-tabs>
+    </div>
+
+    <!-- 列表内容区域 -->
+    <div :class="$style.content">
+      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+        <van-list
+          v-model:loading="loading"
+          v-model:finished="finished"
+          :finished-text="t('home.finishedText')"
+          @load="onLoad"
+        >
+          <div 
+            v-for="item in list"
+            :key="item.id"
+            :class="$style.listItem"
           >
-            <div 
-              v-for="item in list"
-              :key="item.id"
-              :class="$style.listItem"
-            >
-              <div :class="$style.content">
-                <div :class="$style.header">
-                  <van-icon name="fire-o" :class="$style.icon" />
-                  <h3>{{ item.title }}</h3>
-                </div>
-                
-                <div :class="$style.info">
-                  <div :class="$style.price">{{ formatPrice(item.price) }}</div>
-                  <div :class="$style.slots">
-                    剩余名额：<span>{{ item.remainingSlots }}</span>
-                  </div>
-                </div>
-
-                <div :class="$style.category">
-                  <span>{{ item.category }}</span>
-                  <span :class="$style.deadline">{{ formatDate(item.deadline) }}</span>
-                </div>
-
-                <div :class="$style.tags">
-                  <van-tag 
-                    type="primary" 
-                    :class="$style.taskType"
-                  >
-                    {{ item.taskType }}
-                  </van-tag>
-                  <van-tag 
-                    type="warning"
-                    :class="$style.followers"
-                  >
-                    {{ item.followers }}
-                  </van-tag>
-                </div>
+            <div :class="$style.mainContent">
+              <div :class="$style.header">
+                <van-icon name="fire-o" :class="$style.icon" />
+                <h3>{{ item.title }}</h3>
+              </div>
+              
+              <div :class="$style.price">
+                {{ formatPrice(item.price) }}
+                <span :class="$style.slots">剩余名额：{{ item.remainingSlots }}</span>
               </div>
 
-              <div :class="$style.image">
-                <van-image
-                  width="100"
-                  height="100"
-                  fit="cover"
-                  :src="item.image"
-                />
+              <div :class="$style.category">{{ item.category }}</div>
+
+              <div :class="$style.tags">
+                <van-tag
+                  type="primary" 
+                  :class="$style.taskType"
+                >
+                  {{ item.taskType }}
+                </van-tag>
+                <van-tag
+                  type="warning"
+                  :class="$style.followers"
+                >
+                  {{ item.followers }}
+                </van-tag>
+              </div>
+
+              <div :class="$style.deadline">
+                截止：{{ item.deadline }}
               </div>
             </div>
-          </van-list>
-        </van-pull-refresh>
-      </van-tab>
-    </van-tabs>
+
+            <div :class="$style.image">
+              <van-image
+                width="100"
+                height="100"
+                fit="cover"
+                :src="item.image"
+                radius="4"
+              />
+            </div>
+          </div>
+        </van-list>
+      </van-pull-refresh>
+    </div>
   </div>
 </template>
 
@@ -205,6 +206,19 @@ const formatDate = (date) => {
 .homePage {
   min-height: 100vh;
   background: #f7f8fa;
+  display: flex;
+  flex-direction: column;
+}
+
+.tabsWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  background: #fff;
+  max-width: 750px;
+  margin: 0 auto;
 }
 
 .platformTabs {
@@ -225,102 +239,113 @@ const formatDate = (date) => {
   }
 }
 
+.content {
+  flex: 1;
+  margin-top: 44px; // 与 van-tabs 的默认高度保持一致
+  overflow-y: auto;
+}
+
 .listItem {
   margin: 12px;
   padding: 16px;
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
 }
 
-.content {
+.mainContent {
   flex: 1;
-  margin-right: 12px;
+  min-width: 0; // 防止文本溢出
 }
 
 .header {
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 
   .icon {
-    color: var(--van-primary-color);
-    font-size: 18px;
-    margin-right: 6px;
+    color: #1989fa;
+    font-size: 20px;
+    margin-right: 8px;
   }
 
   h3 {
     margin: 0;
     font-size: 16px;
-    color: #333;
-    font-weight: bold;
+    color: #323233;
+    font-weight: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
-.info {
-  display: flex;
-  align-items: center;
+.price {
+  font-size: 20px;
+  color: #ff4d4f;
+  font-weight: bold;
   margin-bottom: 8px;
 
-  .price {
-    color: #ff4d4f;
-    font-size: 18px;
-    font-weight: bold;
-    margin-right: 12px;
-  }
-
   .slots {
-    color: #666;
+    margin-left: 12px;
     font-size: 14px;
-
-    span {
-      color: #ff4d4f;
-      font-weight: bold;
-    }
+    color: #969799;
+    font-weight: normal;
   }
 }
 
 .category {
-  color: #666;
   font-size: 14px;
+  color: #323233;
   margin-bottom: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  .deadline {
-    color: #999;
-  }
 }
 
 .tags {
   display: flex;
   gap: 8px;
+  margin-bottom: 8px;
+
+  :global {
+    .van-tag {
+      padding: 0 8px;
+      font-size: 12px;
+      height: 24px;
+      line-height: 22px;
+      border-radius: 4px;
+    }
+  }
 
   .taskType {
-    // 使用 :global 来覆盖 Vant 组件的默认样式
     :global {
       .van-tag {
-        padding: 0 8px;
+        color: #1989fa;
+        border-color: #1989fa;
       }
     }
   }
 
   .followers {
-    // 使用 :global 来覆盖 Vant 组件的默认样式
     :global {
       .van-tag {
-        padding: 0 8px;
+        color: #ff976a;
+        border-color: #ff976a;
       }
     }
   }
 }
 
+.deadline {
+  font-size: 12px;
+  color: #969799;
+}
+
 .image {
   width: 100px;
   height: 100px;
+  flex-shrink: 0;
   border-radius: 4px;
   overflow: hidden;
 }
