@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 19:13:55
+ * @LastEditTime: 2025-02-25 19:19:35
  * @Description: 
 -->
 <template>
@@ -10,9 +10,7 @@
     <van-nav-bar
       title="编辑个人信息"
       left-arrow
-      right-text="保存"
       @click-left="onClickLeft"
-      @click-right="onSave"
       :class="$style.navbar"
       fixed
     />
@@ -20,15 +18,14 @@
     <div :class="$style.content">
       <!-- 头像 -->
       <div :class="$style.avatarItem" @click="onAvatarClick">
-        <span :class="$style.label">头像</span>
-        <div :class="$style.value">
+        <div :class="$style.avatarContent">
           <van-image
             round
-            width="50"
-            height="50"
+            width="70"
+            height="70"
             :src="form.avatar"
           />
-          <van-icon name="arrow" />
+          <span :class="$style.avatarText">点击更换头像</span>
         </div>
       </div>
 
@@ -98,6 +95,16 @@
           />
         </div>
       </div>
+
+      <!-- 保存按钮 -->
+      <van-button 
+        type="primary" 
+        block
+        :class="$style.saveBtn"
+        @click="onSave"
+      >
+        保存
+      </van-button>
     </div>
 
     <!-- 性别选择器 -->
@@ -222,25 +229,21 @@ const onCityConfirm = (values) => {
 }
 
 .avatarItem {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 16px;
-  background: #fff;
-  border-radius: 8px;
+  padding: 24px 16px;
   margin-bottom: 12px;
   cursor: pointer;
+}
 
-  .value {
-    display: flex;
-    align-items: center;
-    gap: 4px;
+.avatarContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
 
-    .van-icon {
-      color: #969799;
-      font-size: 16px;
-    }
-  }
+.avatarText {
+  font-size: 12px;
+  color: #c8c9cc;
 }
 
 .formGroup {
@@ -306,5 +309,9 @@ const onCityConfirm = (values) => {
       line-height: normal;
     }
   }
+}
+
+.saveBtn {
+  margin-top: 24px;
 }
 </style> 
