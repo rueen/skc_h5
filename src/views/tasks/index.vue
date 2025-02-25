@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 14:18:19
+ * @LastEditTime: 2025-02-25 14:26:53
  * @Description: 任务页
  -->
 <template>
@@ -34,6 +34,7 @@
             v-for="item in list"
             :key="item.id"
             :class="$style.listItem"
+            @click="router.push(`/tasks/detail/${item.id}`)"
           >
             <div :class="$style.mainContent">
               <div :class="$style.header">
@@ -87,8 +88,10 @@
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { showToast } from 'vant'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
+const router = useRouter()
 
 // 当前选中的任务状态
 const activeTab = ref(0)

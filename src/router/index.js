@@ -39,6 +39,12 @@ const router = createRouter({
       name: 'Profile',
       component: () => import('../views/profile/index.vue'),
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/tasks/detail/:id',
+      name: 'TaskDetail',
+      component: () => import('../views/tasks/detail.vue'),
+      meta: { requiresAuth: true }
     }
   ]
 })
