@@ -24,7 +24,7 @@
         <div :class="$style.amount">${{ userInfo.monthlyEarnings }}</div>
         <div :class="$style.label">本月收益</div>
       </div>
-      <div :class="$style.earningItem">
+      <div :class="$style.earningItem" @click="onBalanceClick">
         <div :class="$style.amount">${{ userInfo.accountBalance }}</div>
         <div :class="$style.label">账户余额</div>
       </div>
@@ -189,6 +189,10 @@ const onSettingsClick = () => {
 
 const onAccountClick = (account) => {
   router.push(`/social/detail/${account.id}`)
+}
+
+const onBalanceClick = () => {
+  router.push('/wallet')
 }
 </script>
 

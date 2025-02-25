@@ -92,6 +92,16 @@ const router = createRouter({
         requiresAuth: true,
         hideTabbar: true
       }
+    },
+    {
+      path: '/wallet',
+      name: 'Wallet',
+      component: () => import('../views/wallet/index.vue'),
+      meta: {
+        title: '我的钱包',
+        requiresAuth: true,
+        hideTabbar: true
+      }
     }
   ]
 })
