@@ -30,7 +30,8 @@ import {
   List,
   Tag,
   Image,
-  Icon
+  Icon,
+  Dialog
 } from 'vant'
 
 const app = createApp(App)
@@ -55,5 +56,6 @@ app.use(List)
 app.use(Tag)
 app.use(Image)
 app.use(Icon)
+app.use(Dialog)
 
 app.mount('#app')

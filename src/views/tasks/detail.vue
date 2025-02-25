@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 14:51:32
+ * @LastEditTime: 2025-02-25 14:58:01
  * @Description: 任务详情页
  -->
 <template>
@@ -121,6 +121,30 @@
         立即报名
       </van-button>
     </div>
+
+    <!-- 报名成功弹窗 -->
+    <van-dialog
+      v-model:show="showSuccessDialog"
+      :show-confirm-button="false"
+      :close-on-click-overlay="false"
+      class="success-dialog"
+    >
+      <div :class="$style.successContent">
+        <van-icon name="cross" :class="$style.closeBtn" @click="showSuccessDialog = false" />
+        <van-icon name="checked" :class="$style.successIcon" />
+        <h3 :class="$style.successTitle">报名成功</h3>
+        <p :class="$style.successTip">请在心等待，留意审核结果</p>
+        <p :class="$style.successDesc">管理员将在5小时以内完成审核</p>
+        <van-button 
+          type="primary" 
+          block 
+          :class="$style.checkTaskBtn"
+          @click="onCheckTask"
+        >
+          查看任务
+        </van-button>
+      </div>
+    </van-dialog>
   </div>
 </template>
 
@@ -152,6 +176,9 @@ const task = ref({
 // 任务流程步骤
 const processSteps = ['报名', '审核', '发帖', '完成']
 
+// 控制成功弹窗显示
+const showSuccessDialog = ref(false)
+
 // 返回上一页
 const onClickLeft = () => {
   router.back()
@@ -169,7 +196,13 @@ const onShare = () => {
 
 // 提交报名
 const onSubmit = () => {
-  showToast('报名成功')
+  showSuccessDialog.value = true
+}
+
+// 查看任务
+const onCheckTask = () => {
+  showSuccessDialog.value = false
+  router.push('/tasks')
 }
 </script>
 
@@ -412,5 +445,61 @@ const onSubmit = () => {
 
 .submitBtn {
   flex: 1;
+}
+
+.successContent {
+  padding: 24px 16px;
+  text-align: center;
+  position: relative;
+}
+
+.closeBtn {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  font-size: 18px;
+  color: #969799;
+  cursor: pointer;
+}
+
+.successIcon {
+  font-size: 48px;
+  color: #07c160;
+  margin-bottom: 16px;
+}
+
+.successTitle {
+  font-size: 18px;
+  color: #323233;
+  margin: 0 0 8px;
+  font-weight: 500;
+}
+
+.successTip {
+  font-size: 14px;
+  color: #323233;
+  margin: 0 0 4px;
+}
+
+.successDesc {
+  font-size: 12px;
+  color: #969799;
+  margin: 0 0 24px;
+}
+
+.checkTaskBtn {
+  width: 240px;
+  margin: 0 auto;
+}
+</style>
+
+<style lang="less">
+// 修改弹窗默认样式
+.success-dialog {
+  .van-dialog {
+    width: 320px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
 }
 </style> 
