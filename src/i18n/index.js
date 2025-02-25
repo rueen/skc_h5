@@ -29,6 +29,14 @@ const zh = {
     tasks: '任务',
     groups: '小组',
     profile: '我的'
+  },
+  home: {
+    all: '全部',
+    loadingText: '加载中...',
+    finishedText: '没有更多了',
+    pullText: '下拉刷新',
+    loosingText: '释放刷新',
+    loadingText: '加载中...'
   }
 }
 
@@ -61,6 +69,14 @@ const en = {
     tasks: 'Tasks',
     groups: 'Groups',
     profile: 'Profile'
+  },
+  home: {
+    all: 'All',
+    loadingText: 'Loading...',
+    finishedText: 'No more data',
+    pullText: 'Pull to refresh',
+    loosingText: 'Release to refresh',
+    loadingText: 'Loading...'
   }
 }
 
