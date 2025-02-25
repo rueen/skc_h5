@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 21:08:23
+ * @LastEditTime: 2025-02-25 21:11:56
  * @Description: 登录页
  -->
 <script setup>
@@ -125,16 +125,17 @@ const toggleLang = () => {
     </van-tabs>
 
     <div :class="$style.submit">
+      <div :class="$style.tip">未注册的手机号/邮箱将自动创建账号</div>
+      <van-button type="primary" block @click="onSubmit">
+        {{ t('login.login') }}
+      </van-button>
+
       <van-checkbox v-model="formData.agreed" :class="$style.agreement">
         {{ t('login.agreement') }}
         <a href="#">{{ t('login.userAgreement') }}</a>
         {{ t('login.and') }}
         <a href="#">{{ t('login.privacyPolicy') }}</a>
       </van-checkbox>
-
-      <van-button type="primary" block @click="onSubmit">
-        {{ t('login.login') }}
-      </van-button>
     </div>
 
     <div :class="$style.langSwitch" @click="toggleLang">
@@ -184,13 +185,25 @@ const toggleLang = () => {
 }
 
 .submit {
-  margin: var(--van-cell-group-inset-padding);
+  margin-left: var(--van-cell-group-inset-padding);
+  margin-right: var(--van-cell-group-inset-padding);
+  margin-top: 50px;
+  padding: 0 20px;
+}
+
+.tip {
+  font-size: 12px;
+  color: #969799;
+  text-align: center;
+  margin-bottom: 16px;
 }
 
 .agreement {
-  margin-bottom: 16px;
+  margin-top: 16px;
   font-size: 12px;
   color: #666;
+  text-align: center;
+  justify-content: center;
 
   a {
     color: var(--van-primary-color);
