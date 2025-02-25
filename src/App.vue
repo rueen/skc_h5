@@ -17,8 +17,8 @@ const active = ref(0)
 
 // 计算是否显示底部导航栏
 const showTabbar = computed(() => {
-  // 在登录页和任务详情页不显示底部导航
-  return !['login', 'TaskDetail'].includes(route.name)
+  // 在登录页、任务详情页和邀请人列表页不显示底部导航
+  return !['login', 'TaskDetail', 'Invites'].includes(route.name)
 })
 </script>
 

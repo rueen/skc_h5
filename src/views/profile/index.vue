@@ -37,7 +37,7 @@
     <div :class="$style.menuList">
       <!-- 我的邀请人 -->
       <div :class="$style.menuItem">
-        <div :class="$style.menuHeader">
+        <div :class="$style.menuHeader" @click="router.push('/invites')">
           <div :class="$style.menuTitle">
             <van-icon name="friends-o" />
             <span>我的邀请人</span>
@@ -54,13 +54,6 @@
             <span :class="$style.inviteLabel">奖励收益</span>
           </div>
         </div>
-        <van-button 
-          block 
-          :class="$style.inviteBtn"
-          @click="router.push('/invites')"
-        >
-          邀请好友
-        </van-button>
       </div>
 
       <!-- 我的名片 -->
