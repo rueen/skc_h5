@@ -45,6 +45,12 @@ const router = createRouter({
       name: 'TaskDetail',
       component: () => import('../views/tasks/detail.vue'),
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/invites',
+      name: 'Invites',
+      component: () => import('../views/invites/index.vue'),
+      meta: { requiresAuth: true }
     }
   ]
 })

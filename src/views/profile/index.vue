@@ -36,7 +36,7 @@
     <!-- 功能列表 -->
     <div :class="$style.menuList">
       <!-- 我的邀请人 -->
-      <div :class="$style.menuItem" @click="onInvitesClick">
+      <div :class="$style.menuItem">
         <div :class="$style.menuHeader">
           <div :class="$style.menuTitle">
             <van-icon name="friends-o" />
@@ -54,6 +54,13 @@
             <span :class="$style.inviteLabel">奖励收益</span>
           </div>
         </div>
+        <van-button 
+          block 
+          :class="$style.inviteBtn"
+          @click="router.push('/invites')"
+        >
+          邀请好友
+        </van-button>
       </div>
 
       <!-- 我的名片 -->
@@ -335,5 +342,9 @@ const onSettingsClick = () => {
     color: #969799;
     margin-top: 4px;
   }
+}
+
+.inviteBtn {
+  margin-top: 16px;
 }
 </style> 
