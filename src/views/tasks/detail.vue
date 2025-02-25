@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 21:26:27
+ * @LastEditTime: 2025-02-25 21:59:00
  * @Description: 任务详情页
  -->
 <template>
@@ -108,11 +108,11 @@
     <div :class="$style.footer">
       <div :class="$style.actions">
         <div :class="$style.actionItem" @click="onContact">
-          <van-icon name="service-o" />
+          <van-icon name="service" size="20" />
           <span>联系管理员</span>
         </div>
         <div :class="$style.actionItem" @click="onShare">
-          <van-icon name="share-o" />
+          <van-icon name="share" size="20" />
           <span>邀请好友</span>
         </div>
       </div>
