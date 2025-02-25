@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 18:42:22
+ * @LastEditTime: 2025-02-25 19:22:54
  * @Description: 
 -->
 <script setup>
@@ -18,7 +18,7 @@ const active = ref(0)
 // 计算是否显示底部导航栏
 const showTabbar = computed(() => {
   // 在登录页、任务详情页、邀请人列表页、名片列表页、设置页和个人信息编辑页不显示底部导航
-  return !['login', 'TaskDetail', 'Invites', 'Social', 'Settings', 'ProfileEdit'].includes(route.name)
+  return !['Login', 'TaskDetail', 'Invites', 'Social', 'Settings', 'ProfileEdit'].includes(route.name)
 })
 </script>
 
