@@ -35,7 +35,14 @@
           :class="$style.taskImage"
         />
         <div :class="$style.taskDetail">
-          <div :class="$style.taskName">{{ applyInfo.task.title }}</div>
+          <div :class="$style.taskTitle">
+            <img 
+              src="@/assets/icon/Facebook.png" 
+              :class="$style.platformIcon"
+              alt="platform"
+            />
+            <div :class="$style.taskName">{{ applyInfo.task.title }}</div>
+          </div>
           <div :class="$style.taskPrice">${{ applyInfo.task.price }}</div>
           <div :class="$style.taskBottom">
             <div :class="$style.tags">
@@ -286,10 +293,21 @@ const getStatusIcon = (status) => {
   justify-content: space-between;
 }
 
+.taskTitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.platformIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
 .taskName {
   font-size: 14px;
   color: #323233;
-  margin-bottom: 8px;
 }
 
 .taskPrice {

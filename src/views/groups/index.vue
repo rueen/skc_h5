@@ -4,7 +4,7 @@
     <div :class="$style.tableHeader">
       <span>用户列表</span>
       <span>任务次数</span>
-      <span>管理奖励</span>
+      <span>奖励</span>
     </div>
 
     <!-- 列表内容 -->
@@ -173,8 +173,7 @@ const onRefresh = () => {
 }
 
 .content {
-  padding: 0 12px;
-  margin-top: 44px;
+  padding: 52px 12px 0;
 }
 
 .listItem {
