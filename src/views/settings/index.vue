@@ -60,8 +60,8 @@ const userStore = useUserStore()
 const showLanguagePicker = ref(false)
 
 const languages = [
-  { text: '简体中文', value: 'zh-CN' },
-  { text: 'English', value: 'en-US' }
+  { text: '简体中文', value: 'zh' },
+  { text: 'English', value: 'en' }
 ]
 
 const currentLanguage = computed(() => {
@@ -77,8 +77,9 @@ const onClickLeft = () => {
 }
 
 const onConfirm = (value) => {
-  locale.value = value.value
-  showLanguagePicker.value = false
+  locale.value = value.selectedValues[0];
+  showLanguagePicker.value = false;
+  localStorage.setItem('language', locale.value)
 }
 
 const onLogoutClick = () => {

@@ -2,6 +2,9 @@ import { createI18n } from 'vue-i18n'
 
 // 中文语言包
 const zh = {
+  common: {
+    cancel: '取消'
+  },
   login: {
     title: 'SKC 种草',
     subtitle: '分享你的种草清单',
@@ -46,11 +49,21 @@ const zh = {
     loadingText: '加载中...',
     pullText: '下拉刷新',
     loosingText: '释放刷新'
+  },
+  settings: {
+    language: '语言设置',
+    selectLanguage: '选择语言',
+    logout: '退出登录',
+    logoutConfirm: '确认退出',
+    logoutMessage: '确定要退出登录吗？'
   }
 }
 
 // 英文语言包
 const en = {
+  common: {
+    cancel: 'Cancel'
+  },
   login: {
     title: 'SKC List',
     subtitle: 'Share Your Shopping List',
@@ -95,6 +108,13 @@ const en = {
     loadingText: 'Loading...',
     pullText: 'Pull to refresh',
     loosingText: 'Release to refresh'
+  },
+  settings: {
+    language: 'Language Settings',
+    selectLanguage: 'Select Language',
+    logout: 'Logout',
+    logoutConfirm: 'Confirm Logout',
+    logoutMessage: 'Are you sure you want to logout?'
   }
 }
 
