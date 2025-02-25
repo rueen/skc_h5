@@ -14,13 +14,6 @@
     <!-- 详情内容 -->
     <div :class="$style.content">
       <div :class="$style.userInfo">
-        <van-image
-          round
-          width="60"
-          height="60"
-          :src="detail.avatar"
-        />
-        <div :class="$style.userName">{{ detail.name }}</div>
         <div :class="$style.platform">
           <van-image
             width="16"
@@ -36,32 +29,94 @@
 
       <div :class="$style.stats">
         <div :class="$style.statItem">
+          <span :class="$style.label">账号名称</span>
+          <div :class="$style.valueWrapper">
+            <template v-if="isEditing">
+              <div :class="$style.inputWrapper">
+                <van-field
+                  v-model="editForm.accountName"
+                  type="text"
+                  placeholder="请输入账号名称"
+                  :class="$style.input"
+                />
+              </div>
+            </template>
+            <template v-else>
+              <span :class="$style.value">{{ detail.accountName }}</span>
+            </template>
+          </div>
+        </div>
+        <div :class="$style.statItem">
           <span :class="$style.label">粉丝</span>
-          <template v-if="isEditing">
-            <van-field
-              v-model="editForm.followers"
-              type="digit"
-              placeholder="请输入粉丝数量"
-              :class="$style.input"
-            />
-          </template>
-          <template v-else>
-            <span :class="$style.value">{{ detail.followers }}</span>
-          </template>
+          <div :class="$style.valueWrapper">
+            <template v-if="isEditing">
+              <div :class="$style.inputWrapper">
+                <van-field
+                  v-model="editForm.followers"
+                  type="digit"
+                  placeholder="请输入粉丝数量"
+                  :class="$style.input"
+                />
+              </div>
+            </template>
+            <template v-else>
+              <span :class="$style.value">{{ detail.followers }}</span>
+            </template>
+          </div>
         </div>
         <div :class="$style.statItem">
           <span :class="$style.label">{{ detail.platform === 'Instagram' ? '帖子' : '好友' }}</span>
-          <template v-if="isEditing">
-            <van-field
-              v-model="editForm.friends"
-              type="digit"
-              :placeholder="`请输入${detail.platform === 'Instagram' ? '帖子' : '好友'}数量`"
-              :class="$style.input"
-            />
-          </template>
-          <template v-else>
-            <span :class="$style.value">{{ detail.platform === 'Instagram' ? detail.posts : detail.friends }}</span>
-          </template>
+          <div :class="$style.valueWrapper">
+            <template v-if="isEditing">
+              <div :class="$style.inputWrapper">
+                <van-field
+                  v-model="editForm.friends"
+                  type="digit"
+                  :placeholder="`请输入${detail.platform === 'Instagram' ? '帖子' : '好友'}数量`"
+                  :class="$style.input"
+                />
+              </div>
+            </template>
+            <template v-else>
+              <span :class="$style.value">{{ detail.platform === 'Instagram' ? detail.posts : detail.friends }}</span>
+            </template>
+          </div>
+        </div>
+        <div :class="$style.statItem">
+          <span :class="$style.label">发帖数</span>
+          <div :class="$style.valueWrapper">
+            <template v-if="isEditing">
+              <div :class="$style.inputWrapper">
+                <van-field
+                  v-model="editForm.posts"
+                  type="digit"
+                  placeholder="请输入发帖数量"
+                  :class="$style.input"
+                />
+              </div>
+            </template>
+            <template v-else>
+              <span :class="$style.value">{{ detail.posts }}</span>
+            </template>
+          </div>
+        </div>
+        <div :class="$style.statItem">
+          <span :class="$style.label">主页链接</span>
+          <div :class="$style.valueWrapper">
+            <template v-if="isEditing">
+              <div :class="$style.inputWrapper">
+                <van-field
+                  v-model="editForm.homepage"
+                  type="text"
+                  placeholder="请输入主页链接"
+                  :class="$style.input"
+                />
+              </div>
+            </template>
+            <template v-else>
+              <span :class="$style.value">{{ detail.homepage || '-' }}</span>
+            </template>
+          </div>
         </div>
       </div>
     </div>
@@ -81,14 +136,20 @@ const detail = ref({
   avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
   platform: 'Facebook',
   platformIcon: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
+  accountName: '@chantal_lyric',
   followers: 800,
   friends: 500,
+  posts: 120,
+  homepage: 'https://facebook.com/chantal',
   verified: true
 })
 
 const editForm = ref({
+  accountName: '',
   followers: '',
-  friends: ''
+  friends: '',
+  posts: '',
+  homepage: ''
 })
 
 const onClickLeft = () => {
@@ -108,8 +169,11 @@ const onClickRight = () => {
     isEditing.value = true
     // 初始化编辑表单
     editForm.value = {
+      accountName: detail.value.accountName,
       followers: detail.value.followers,
-      friends: detail.value.friends
+      friends: detail.value.friends,
+      posts: detail.value.posts,
+      homepage: detail.value.homepage || ''
     }
   }
 }
@@ -159,20 +223,11 @@ const onClickRight = () => {
 
 .userInfo {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 24px;
+  justify-content: space-between;
+  padding: 16px;
   background: #fff;
   border-radius: 8px;
-  text-align: center;
-}
-
-.userName {
-  font-size: 16px;
-  color: #323233;
-  font-weight: 500;
-  margin-top: 12px;
-  margin-bottom: 8px;
 }
 
 .platform {
@@ -181,7 +236,6 @@ const onClickRight = () => {
   gap: 4px;
   font-size: 13px;
   color: #969799;
-  margin-bottom: 8px;
 }
 
 .status {
@@ -207,25 +261,72 @@ const onClickRight = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 4px 0;
 
   .label {
     font-size: 14px;
     color: #323233;
   }
+}
 
-  .value {
-    font-size: 14px;
-    color: #323233;
-  }
+.valueWrapper {
+  flex: 1;
+  max-width: 300px;
+  margin-left: 16px;
+  display: flex;
+  justify-content: flex-end;
+  height: 28px;
+  align-items: center;
+}
+
+.value {
+  font-size: 14px;
+  color: #323233;
+  padding: 4px 12px;
+  border-radius: 4px;
+  line-height: 20px;
+}
+
+.inputWrapper {
+  background: #f7f8fa;
+  border-radius: 4px;
+  padding: 4px 12px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .input {
+  flex: 1;
+  background: #f7f8fa;
+  height: 100%;
+  padding: 0;
+  height: 100%;
+  
   :global {
     .van-field__body {
       text-align: right;
+      height: 100%;
     }
+
     .van-field__control {
       text-align: right;
+      height: 20px;
+      min-height: 20px;
+      padding: 0;
+      font-size: 14px;
+      color: #323233;
+      line-height: 20px;
+    }
+
+    .van-cell {
+      padding: 0;
+      background: transparent;
+      line-height: normal;
+      height: 100%;
+      display: flex;
+      align-items: center;
     }
   }
 }
