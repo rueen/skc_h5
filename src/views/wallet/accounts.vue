@@ -23,13 +23,11 @@
             </div>
           </div>
           <div :class="$style.actions">
-            <van-button 
-              size="small" 
-              :class="$style.deleteBtn"
+            <van-icon 
+              name="delete-o" 
+              :class="$style.deleteIcon"
               @click="onDeleteClick(account)"
-            >
-              删除
-            </van-button>
+            />
           </div>
         </div>
       </div>
@@ -186,10 +184,18 @@ const onDeleteClick = (account) => {
   }
 }
 
-.deleteBtn {
-  --van-button-default-background: #fff;
-  --van-button-default-border-color: #ff4d4f;
-  --van-button-default-color: #ff4d4f;
+.actions {
+  padding-left: 16px;
+}
+
+.deleteIcon {
+  font-size: 18px;
+  color: #969799;
+  cursor: pointer;
+
+  &:hover {
+    color: #ff4d4f;
+  }
 }
 
 .addBtn {
