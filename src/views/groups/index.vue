@@ -59,7 +59,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const activeTab = ref(1)
 const loading = ref(false)
@@ -75,57 +75,75 @@ const tabs = ref([
   { id: 5, name: '群5' }
 ])
 
-// 列表数据
-const list = ref([
-  {
-    id: 1,
-    name: '爱可可的故事',
-    avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-    date: '2022-03-25',
-    taskCount: 3,
-    reward: '15.00'
-  },
-  {
-    id: 2,
-    name: '迷谷讲历史',
-    avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-    date: '2025-04-25',
-    taskCount: 0,
-    reward: '15.00'
-  },
-  {
-    id: 3,
-    name: '新鲜事',
-    avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-    date: '2025-02-25',
-    taskCount: 0,
-    reward: '15.00'
-  },
-  {
-    id: 4,
-    name: '新鲜事体育',
-    avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-    date: '2025-04-25',
-    taskCount: 0,
-    reward: '00.00'
-  }
-])
+// 监听标签切换
+watch(activeTab, (newVal) => {
+  // 重置列表状态
+  list.value = []
+  finished.value = false
+  loading.value = false
+  // 加载新数据
+  loadData()
+})
 
-const onLoad = () => {
+// 列表数据
+const list = ref([])
+
+// 加载数据的方法
+const loadData = () => {
+  loading.value = true
   setTimeout(() => {
-    if (refreshing.value) {
-      list.value = []
-      refreshing.value = false
-    }
+    const newData = [
+      {
+        id: 1,
+        name: `群${activeTab.value}-成员1`,
+        avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
+        date: '2022-03-25',
+        taskCount: Math.floor(Math.random() * 5),
+        reward: (Math.random() * 20).toFixed(2)
+      },
+      {
+        id: 2,
+        name: `群${activeTab.value}-成员2`,
+        avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
+        date: '2025-04-25',
+        taskCount: Math.floor(Math.random() * 5),
+        reward: (Math.random() * 20).toFixed(2)
+      },
+      {
+        id: 3,
+        name: `群${activeTab.value}-成员3`,
+        avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
+        date: '2025-02-25',
+        taskCount: Math.floor(Math.random() * 5),
+        reward: (Math.random() * 20).toFixed(2)
+      },
+      {
+        id: 4,
+        name: `群${activeTab.value}-成员4`,
+        avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
+        date: '2025-04-25',
+        taskCount: Math.floor(Math.random() * 5),
+        reward: (Math.random() * 20).toFixed(2)
+      }
+    ]
+    list.value = [...list.value, ...newData]
     loading.value = false
     finished.value = true
-  }, 1000)
+  }, 500)
+}
+
+// 初始加载
+loadData()
+
+const onLoad = () => {
+  loadData()
 }
 
 const onRefresh = () => {
   finished.value = false
-  loading.value = true
-  onLoad()
+  loading.value = false
+  refreshing.value = false
+  loadData()
 }
 </script>
 
