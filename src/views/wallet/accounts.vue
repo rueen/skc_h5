@@ -40,7 +40,7 @@
         :class="$style.addBtn"
         @click="onAddClick"
       >
-        添加提现账户
+        添加账户
       </van-button>
     </div>
   </div>
@@ -91,7 +91,7 @@ const onClickLeft = () => {
 }
 
 const onAddClick = () => {
-  showToast('添加账户功能开发中')
+  router.push('/wallet/accounts/add')
 }
 
 const onDeleteClick = (account) => {

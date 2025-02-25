@@ -132,6 +132,16 @@ const router = createRouter({
         requiresAuth: true,
         hideTabbar: true
       }
+    },
+    {
+      path: '/wallet/accounts/add',
+      name: 'WalletAccountsAdd',
+      component: () => import('../views/wallet/accounts-add.vue'),
+      meta: {
+        title: '添加账户',
+        requiresAuth: true,
+        hideTabbar: true
+      }
     }
   ]
 })
