@@ -72,6 +72,16 @@ const router = createRouter({
         requiresAuth: true,
         hideTabbar: true
       }
+    },
+    {
+      path: '/profile/edit',
+      name: 'ProfileEdit',
+      component: () => import('../views/profile/edit.vue'),
+      meta: {
+        title: '个人信息编辑',
+        requiresAuth: true,
+        hideTabbar: true
+      }
     }
   ]
 })

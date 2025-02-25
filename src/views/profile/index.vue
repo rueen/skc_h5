@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.profilePage">
     <!-- 用户信息 -->
-    <div :class="$style.userInfo">
+    <div :class="$style.userInfo" @click="router.push('/profile/edit')">
       <div :class="$style.userHeader">
         <van-image
           round
@@ -15,21 +15,22 @@
           </div>
         </div>
       </div>
+      <van-icon name="arrow" :class="$style.arrow" />
+    </div>
 
-      <!-- 收益信息 -->
-      <div :class="$style.earnings">
-        <div :class="$style.earningItem">
-          <span :class="$style.amount">${{ userInfo.monthlyEarnings }}</span>
-          <span :class="$style.label">本月收益</span>
-        </div>
-        <div :class="$style.earningItem">
-          <span :class="$style.amount">${{ userInfo.accountBalance }}</span>
-          <span :class="$style.label">账户余额</span>
-        </div>
-        <div :class="$style.earningItem">
-          <span :class="$style.amount">${{ userInfo.totalEarnings }}</span>
-          <span :class="$style.label">累计收益</span>
-        </div>
+    <!-- 收益信息 -->
+    <div :class="$style.earnings">
+      <div :class="$style.earningItem">
+        <div :class="$style.amount">${{ userInfo.monthlyEarnings }}</div>
+        <div :class="$style.label">本月收益</div>
+      </div>
+      <div :class="$style.earningItem">
+        <div :class="$style.amount">${{ userInfo.accountBalance }}</div>
+        <div :class="$style.label">账户余额</div>
+      </div>
+      <div :class="$style.earningItem">
+        <div :class="$style.amount">${{ userInfo.totalEarnings }}</div>
+        <div :class="$style.label">累计收益</div>
       </div>
     </div>
 
@@ -115,7 +116,7 @@
         <div :class="$style.menuHeader">
           <div :class="$style.menuTitle">
             <van-icon name="setting-o" />
-            <span>个人信息设置</span>
+            <span>设置</span>
           </div>
           <van-icon name="arrow" />
         </div>
@@ -204,12 +205,15 @@ const onAccountClick = (account) => {
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .userHeader {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
 }
 
 .userMeta {
@@ -226,23 +230,39 @@ const onAccountClick = (account) => {
 .earnings {
   display: flex;
   justify-content: space-between;
-  text-align: center;
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
 }
 
 .earningItem {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+  flex: 1;
+  text-align: center;
+  position: relative;
+
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 24px;
+    background: #f5f6f7;
+  }
 
   .amount {
     font-size: 18px;
     color: #ff4d4f;
     font-weight: 500;
+    line-height: 1.4;
   }
 
   .label {
     font-size: 12px;
     color: #969799;
+    margin-top: 4px;
   }
 }
 
