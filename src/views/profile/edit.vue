@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 19:19:35
+ * @LastEditTime: 2025-02-25 19:30:47
  * @Description: 
 -->
 <template>
@@ -43,7 +43,7 @@
         <div :class="$style.formItem">
           <span :class="$style.label">性别</span>
           <div :class="$style.value" @click="showGenderPicker = true">
-            <span :class="$style.text">{{ form.gender || '请选择' }}</span>
+            <span :class="[$style.text, $style.pickerValue]">{{ form.gender || '请选择' }}</span>
             <van-icon name="arrow" />
           </div>
         </div>
@@ -60,7 +60,7 @@
         <div :class="$style.formItem">
           <span :class="$style.label">城市</span>
           <div :class="$style.value" @click="showCityPicker = true">
-            <span :class="$style.text">{{ form.city || '请选择' }}</span>
+            <span :class="[$style.text, $style.pickerValue]">{{ form.city || '请选择' }}</span>
             <van-icon name="arrow" />
           </div>
         </div>
@@ -160,7 +160,11 @@ const form = ref({
 const showGenderPicker = ref(false)
 const showCityPicker = ref(false)
 
-const genderOptions = ['男', '女', '保密']
+const genderOptions = [
+  { text: '男', value: 0 },
+  { text: '女', value: 1 },
+  { text: '保密', value: 2 }
+]
 
 // 事件处理
 const onClickLeft = () => {
@@ -176,13 +180,13 @@ const onAvatarClick = () => {
   showToast('头像上传功能开发中')
 }
 
-const onGenderConfirm = (value) => {
-  form.value.gender = value
+const onGenderConfirm = (values) => {
+  form.value.gender = values.selectedOptions[0].text
   showGenderPicker.value = false
 }
 
 const onCityConfirm = (values) => {
-  form.value.city = values.map(item => item.name).join('/')
+  form.value.city = values.selectedOptions.map(item => item.text).join('/')
   showCityPicker.value = false
 }
 </script>
@@ -230,7 +234,6 @@ const onCityConfirm = (values) => {
 
 .avatarItem {
   padding: 24px 16px;
-  margin-bottom: 12px;
   cursor: pointer;
 }
 
@@ -273,12 +276,18 @@ const onCityConfirm = (values) => {
     flex: 1;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     cursor: pointer;
+    gap: 4px;
 
     .text {
       font-size: 14px;
       color: #323233;
+
+      &.pickerValue {
+        text-align: right;
+        flex: 1;
+      }
     }
 
     .van-icon {
