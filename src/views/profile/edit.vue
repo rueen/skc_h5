@@ -1,7 +1,14 @@
+<!--
+ * @Author: diaochan
+ * @Date: 2025-02-25 18:25:46
+ * @LastEditors: rueen
+ * @LastEditTime: 2025-02-25 19:09:39
+ * @Description: 
+-->
 <template>
   <div :class="$style.editPage">
     <van-nav-bar
-      title="个人信息编辑"
+      title="编辑个人信息"
       left-arrow
       @click-left="onClickLeft"
       :class="$style.navbar"
