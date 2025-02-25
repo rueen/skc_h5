@@ -4,7 +4,7 @@
     <van-nav-bar
       title="名片详情"
       left-arrow
-      right-text="编辑"
+      :right-text="isEditing ? '保存' : '编辑'"
       @click-left="onClickLeft"
       @click-right="onClickRight"
       :class="$style.navbar"
@@ -20,16 +20,14 @@
           height="60"
           :src="detail.avatar"
         />
-        <div :class="$style.userMeta">
-          <div :class="$style.userName">{{ detail.name }}</div>
-          <div :class="$style.platform">
-            <van-image
-              width="16"
-              height="16"
-              :src="detail.platformIcon"
-            />
-            <span>{{ detail.platform }}</span>
-          </div>
+        <div :class="$style.userName">{{ detail.name }}</div>
+        <div :class="$style.platform">
+          <van-image
+            width="16"
+            height="16"
+            :src="detail.platformIcon"
+          />
+          <span>{{ detail.platform }}</span>
         </div>
         <div :class="[$style.status, detail.verified && $style.verified]">
           {{ detail.verified ? '已认证' : '认证中' }}
@@ -39,11 +37,31 @@
       <div :class="$style.stats">
         <div :class="$style.statItem">
           <span :class="$style.label">粉丝</span>
-          <span :class="$style.value">{{ detail.followers }}</span>
+          <template v-if="isEditing">
+            <van-field
+              v-model="editForm.followers"
+              type="digit"
+              placeholder="请输入粉丝数量"
+              :class="$style.input"
+            />
+          </template>
+          <template v-else>
+            <span :class="$style.value">{{ detail.followers }}</span>
+          </template>
         </div>
         <div :class="$style.statItem">
           <span :class="$style.label">{{ detail.platform === 'Instagram' ? '帖子' : '好友' }}</span>
-          <span :class="$style.value">{{ detail.platform === 'Instagram' ? detail.posts : detail.friends }}</span>
+          <template v-if="isEditing">
+            <van-field
+              v-model="editForm.friends"
+              type="digit"
+              :placeholder="`请输入${detail.platform === 'Instagram' ? '帖子' : '好友'}数量`"
+              :class="$style.input"
+            />
+          </template>
+          <template v-else>
+            <span :class="$style.value">{{ detail.platform === 'Instagram' ? detail.posts : detail.friends }}</span>
+          </template>
         </div>
       </div>
     </div>
@@ -56,6 +74,7 @@ import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
 
 const router = useRouter()
+const isEditing = ref(false)
 
 const detail = ref({
   name: 'Chantal Lyric',
@@ -67,12 +86,32 @@ const detail = ref({
   verified: true
 })
 
+const editForm = ref({
+  followers: '',
+  friends: ''
+})
+
 const onClickLeft = () => {
+  if (isEditing.value) {
+    isEditing.value = false
+    return
+  }
   router.back()
 }
 
 const onClickRight = () => {
-  showToast('编辑功能开发中')
+  if (isEditing.value) {
+    // 保存逻辑
+    showToast('保存成功')
+    isEditing.value = false
+  } else {
+    isEditing.value = true
+    // 初始化编辑表单
+    editForm.value = {
+      followers: detail.value.followers,
+      friends: detail.value.friends
+    }
+  }
 }
 </script>
 
@@ -120,21 +159,19 @@ const onClickRight = () => {
 
 .userInfo {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 24px;
   background: #fff;
   border-radius: 8px;
-}
-
-.userMeta {
-  margin-left: 16px;
-  flex: 1;
+  text-align: center;
 }
 
 .userName {
   font-size: 16px;
   color: #323233;
   font-weight: 500;
+  margin-top: 12px;
   margin-bottom: 8px;
 }
 
@@ -144,6 +181,7 @@ const onClickRight = () => {
   gap: 4px;
   font-size: 13px;
   color: #969799;
+  margin-bottom: 8px;
 }
 
 .status {
@@ -158,26 +196,37 @@ const onClickRight = () => {
 .stats {
   margin-top: 12px;
   display: flex;
+  flex-direction: column;
   background: #fff;
   border-radius: 8px;
   padding: 16px;
+  gap: 16px;
 }
 
 .statItem {
-  flex: 1;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   .label {
-    font-size: 13px;
-    color: #969799;
-    margin-bottom: 4px;
-    display: block;
+    font-size: 14px;
+    color: #323233;
   }
 
   .value {
-    font-size: 16px;
+    font-size: 14px;
     color: #323233;
-    font-weight: 500;
+  }
+}
+
+.input {
+  :global {
+    .van-field__body {
+      text-align: right;
+    }
+    .van-field__control {
+      text-align: right;
+    }
   }
 }
 </style> 
