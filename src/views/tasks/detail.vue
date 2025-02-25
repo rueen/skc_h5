@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 14:29:19
+ * @LastEditTime: 2025-02-25 14:38:20
  * @Description: 任务详情页
  -->
 <template>
@@ -17,6 +17,16 @@
 
     <!-- 主要内容区域 -->
     <div :class="$style.content">
+      <!-- Banner图片 -->
+      <div :class="$style.banner">
+        <van-image
+          :src="task.banner"
+          width="100%"
+          height="200"
+          fit="cover"
+        />
+      </div>
+
       <!-- 基本信息 -->
       <div :class="$style.basicInfo">
         <div :class="$style.price">$ {{ task.price }}</div>
@@ -24,11 +34,13 @@
           <van-icon name="shop-o" :class="$style.icon" />
           {{ task.platform }}
         </div>
-        <div :class="$style.deadline">
-          截止时间：{{ task.deadline }}
-        </div>
-        <div :class="$style.slots">
-          剩余名额：{{ task.slots }}
+        <div :class="$style.extraInfo">
+          <div :class="$style.slots">
+            剩余名额：<span :class="$style.highlight">{{ task.slots }}</span>
+          </div>
+          <div :class="$style.deadline">
+            截止时间：{{ task.deadline }}
+          </div>
         </div>
       </div>
 
@@ -126,7 +138,8 @@ const task = ref({
     '发布置顶评论@所有粉丝',
     '分享至200人以上公开社群1~2个'
   ],
-  description: '雅诗兰黛历时20年发布新品口红，打动千万少女芳心，为了获得更多人的关注......'
+  description: '雅诗兰黛历时20年发布新品口红，打动千万少女芳心，为了获得更多人的关注......',
+  banner: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
 })
 
 // 任务流程步骤
@@ -169,7 +182,11 @@ const onSubmit = () => {
   flex: 1;
   margin-top: 46px;
   margin-bottom: 60px;
-  padding: 12px;
+  padding: 0 0 12px;
+}
+
+.banner {
+  background: #fff;
 }
 
 .basicInfo {
@@ -197,10 +214,25 @@ const onSubmit = () => {
     }
   }
 
-  .deadline, .slots {
+  .extraInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .slots {
     font-size: 14px;
     color: #969799;
-    margin-top: 12px;
+
+    .highlight {
+      color: #ff4d4f;
+      font-weight: 500;
+    }
+  }
+
+  .deadline {
+    font-size: 14px;
+    color: #969799;
   }
 }
 
@@ -211,12 +243,20 @@ const onSubmit = () => {
 }
 
 .sectionTitle {
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 15px;
+  font-weight: 500;
   color: #323233;
-  margin: 0 0 24px;
-  padding-left: 8px;
-  border-left: 3px solid var(--van-primary-color);
+  margin: 0 0 16px;
+  display: flex;
+  align-items: center;
+
+  &::before {
+    content: '';
+    width: 2px;
+    height: 14px;
+    background: var(--van-primary-color);
+    margin-right: 6px;
+  }
 }
 
 .processSteps {
