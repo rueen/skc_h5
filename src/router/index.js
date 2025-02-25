@@ -102,6 +102,16 @@ const router = createRouter({
         requiresAuth: true,
         hideTabbar: true
       }
+    },
+    {
+      path: '/wallet/bills',
+      name: 'WalletBills',
+      component: () => import('../views/wallet/bills.vue'),
+      meta: {
+        title: '结算账单',
+        requiresAuth: true,
+        hideTabbar: true
+      }
     }
   ]
 })
