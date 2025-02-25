@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 14:41:27
+ * @LastEditTime: 2025-02-25 14:51:32
  * @Description: 任务详情页
  -->
 <template>
@@ -25,17 +25,22 @@
     <div :class="$style.content">
       <!-- 基本信息 -->
       <div :class="$style.basicInfo">
-        <div :class="$style.price">$ {{ task.price }}</div>
+        <div :class="$style.priceRow">
+          <div :class="$style.price">$ {{ task.price }}</div>
+          <div :class="$style.deadline">
+            截止时间：{{ task.deadline }}
+          </div>
+        </div>
         <div :class="$style.platform">
           <van-icon name="shop-o" :class="$style.icon" />
           {{ task.platform }}
         </div>
         <div :class="$style.extraInfo">
+          <div :class="$style.description">
+            {{ task.description }}
+          </div>
           <div :class="$style.slots">
             剩余名额：<span :class="$style.highlight">{{ task.slots }}</span>
-          </div>
-          <div :class="$style.deadline">
-            截止时间：{{ task.deadline }}
           </div>
         </div>
       </div>
@@ -97,9 +102,15 @@
 
     <!-- 底部操作栏 -->
     <div :class="$style.footer">
-      <div :class="$style.share" @click="onShare">
-        <van-icon name="share" />
-        <span>邀请好友</span>
+      <div :class="$style.actions">
+        <div :class="$style.actionItem" @click="onContact">
+          <van-icon name="service-o" />
+          <span>联系管理员</span>
+        </div>
+        <div :class="$style.actionItem" @click="onShare">
+          <van-icon name="share-o" />
+          <span>邀请好友</span>
+        </div>
       </div>
       <van-button 
         type="primary" 
@@ -134,7 +145,7 @@ const task = ref({
     '发布置顶评论@所有粉丝',
     '分享至200人以上公开社群1~2个'
   ],
-  description: '雅诗兰黛历时20年发布新品口红，打动千万少女芳心，为了获得更多人的关注......',
+  description: '护肤 爱生活 喜欢护肤品的素人',
   banner: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
 })
 
@@ -144,6 +155,11 @@ const processSteps = ['报名', '审核', '发帖', '完成']
 // 返回上一页
 const onClickLeft = () => {
   router.back()
+}
+
+// 联系管理员
+const onContact = () => {
+  showToast('联系管理员功能开发中')
 }
 
 // 分享
@@ -198,11 +214,22 @@ const onSubmit = () => {
   padding: 16px;
   margin-bottom: 12px;
 
+  .priceRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
   .price {
     font-size: 28px;
     color: #ff4d4f;
     font-weight: bold;
-    margin-bottom: 16px;
+  }
+
+  .deadline {
+    font-size: 14px;
+    color: #969799;
   }
 
   .platform {
@@ -221,7 +248,13 @@ const onSubmit = () => {
   .extraInfo {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
+  }
+
+  .description {
+    font-size: 14px;
+    color: #969799;
+    line-height: 1.3;
   }
 
   .slots {
@@ -232,11 +265,6 @@ const onSubmit = () => {
       color: #ff4d4f;
       font-weight: 500;
     }
-  }
-
-  .deadline {
-    font-size: 14px;
-    color: #969799;
   }
 }
 
@@ -359,20 +387,30 @@ const onSubmit = () => {
   align-items: center;
   gap: 12px;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
+}
 
-  .share {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    padding: 0 12px;
-    color: #969799;
-    font-size: 12px;
-  }
+.actions {
+  display: flex;
+  gap: 16px;
+}
 
-  .submitBtn {
-    flex: 1;
+.actionItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 0 8px;
+  color: #969799;
+  font-size: 12px;
+
+  .van-icon {
+    font-size: 24px;
+    margin-bottom: 2px;
   }
+}
+
+.submitBtn {
+  flex: 1;
 }
 </style> 
