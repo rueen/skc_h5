@@ -57,8 +57,8 @@
       </div>
 
       <!-- 我的名片 -->
-      <div :class="$style.menuItem" @click="onSocialClick">
-        <div :class="$style.menuHeader">
+      <div :class="$style.menuItem">
+        <div :class="$style.menuHeader" @click="onSocialClick">
           <div :class="$style.menuTitle">
             <van-icon name="card" />
             <span>我的名片</span>
@@ -72,12 +72,12 @@
             :class="$style.socialItem"
           >
             <van-image
-              width="20"
-              height="20"
+              width="32"
+              height="32"
               :src="account.icon"
             />
             <span>{{ account.platform }}</span>
-            <van-tag type="success" size="small">已认证</van-tag>
+            <span :class="$style.status">已认证</span>
           </div>
         </div>
       </div>
@@ -171,7 +171,7 @@ const onInvitesClick = () => {
 }
 
 const onSocialClick = () => {
-  showToast('社交账号功能开发中')
+  router.push('/social')
 }
 
 const onSettingsClick = () => {

@@ -17,8 +17,8 @@ const active = ref(0)
 
 // 计算是否显示底部导航栏
 const showTabbar = computed(() => {
-  // 在登录页、任务详情页和邀请人列表页不显示底部导航
-  return !['login', 'TaskDetail', 'Invites'].includes(route.name)
+  // 在登录页、任务详情页、邀请人列表页和名片列表页不显示底部导航
+  return !['login', 'TaskDetail', 'Invites', 'Social'].includes(route.name)
 })
 </script>
 
@@ -40,5 +40,20 @@ const showTabbar = computed(() => {
   margin: 0 auto;
   min-height: 100vh;
   background: #f7f8fa;
+}
+</style>
+
+<style>
+:root {
+  --van-image-placeholder-text-color: transparent;
+}
+
+/* 统一图片样式 */
+.van-image {
+  overflow: hidden;
+}
+
+.van-image__img {
+  object-fit: cover;
 }
 </style>

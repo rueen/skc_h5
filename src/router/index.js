@@ -7,6 +7,7 @@
  */
 import { createRouter, createWebHistory } from 'vue-router'
 import { useUserStore } from '../stores/user'
+import Social from '../views/social/index.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -51,6 +52,16 @@ const router = createRouter({
       name: 'Invites',
       component: () => import('../views/invites/index.vue'),
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/social',
+      name: 'Social',
+      component: Social,
+      meta: {
+        title: '我的名片',
+        requiresAuth: true,
+        hideTabbar: true
+      }
     }
   ]
 })
