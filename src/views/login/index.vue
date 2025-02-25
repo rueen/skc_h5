@@ -1,21 +1,21 @@
 <!--
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
- * @LastEditors: diaochan
- * @LastEditTime: 2025-02-25 10:25:33
+ * @LastEditors: rueen
+ * @LastEditTime: 2025-02-25 10:46:14
  * @Description: 登录页
  -->
 <script setup>
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/stores/user'
 import { showToast } from 'vant'
 
 const router = useRouter()
 const userStore = useUserStore()
+const { t, locale } = useI18n()
 
-// 当前语言
-const currentLang = ref('zh')
 // 当前登录方式
 const activeTab = ref(0)
 
@@ -31,69 +31,67 @@ const formData = reactive({
 // 获取验证码
 const getVerifyCode = () => {
   if (activeTab.value === 0 && !formData.phone) {
-    showToast('请输入手机号')
+    showToast(t('login.phoneRequired'))
     return
   }
   if (activeTab.value === 1 && !formData.email) {
-    showToast('请输入邮箱')
+    showToast(t('login.emailRequired'))
     return
   }
-  // TODO: 调用获取验证码接口
-  showToast('验证码已发送')
+  showToast(t('login.codeSent'))
 }
 
 // 提交登录
 const onSubmit = () => {
   if (!formData.agreed) {
-    showToast('请同意用户协议和隐私政策')
+    showToast(t('login.agreementRequired'))
     return
   }
   if (!formData.code) {
-    showToast('请输入验证码')
+    showToast(t('login.codeRequired'))
     return
   }
-  // TODO: 调用登录接口
   userStore.setToken('mock_token')
   router.push('/')
 }
 
 // 切换语言
 const toggleLang = () => {
-  currentLang.value = currentLang.value === 'zh' ? 'en' : 'zh'
-  // TODO: 触发全局语言切换
+  locale.value = locale.value === 'zh' ? 'en' : 'zh'
+  localStorage.setItem('language', locale.value)
 }
 </script>
 
 <template>
   <div :class="$style.loginPage">
     <div :class="$style.logo">
-      <h1>SKC 种草</h1>
-      <p>{{ currentLang === 'zh' ? '分享你的种草清单' : 'Share Your Shopping List' }}</p>
+      <h1>{{ t('login.title') }}</h1>
+      <p>{{ t('login.subtitle') }}</p>
     </div>
 
     <van-tabs v-model:active="activeTab" :class="$style.tabs">
-      <van-tab :title="currentLang === 'zh' ? '手机号登录' : 'Phone Login'">
+      <van-tab :title="t('login.phoneLogin')">
         <van-form @submit="onSubmit">
           <van-cell-group inset>
             <van-field
               v-model="formData.phone"
-              :label="currentLang === 'zh' ? '手机号' : 'Phone'"
-              :placeholder="currentLang === 'zh' ? '请输入手机号' : 'Enter phone number'"
-              :rules="[{ required: true, message: currentLang === 'zh' ? '请输入手机号' : 'Phone number is required' }]"
+              :label="t('login.phone')"
+              :placeholder="t('login.phonePlaceholder')"
+              :rules="[{ required: true, message: t('login.phoneRequired') }]"
             >
               <template #label>
-                <span :class="$style.areaCode" @click="showArea = true">+{{ formData.areaCode }}</span>
+                <span :class="$style.areaCode">+{{ formData.areaCode }}</span>
               </template>
             </van-field>
             <van-field
               v-model="formData.code"
               center
-              :label="currentLang === 'zh' ? '验证码' : 'Code'"
-              :placeholder="currentLang === 'zh' ? '请输入验证码' : 'Enter verification code'"
+              :label="t('login.code')"
+              :placeholder="t('login.codePlaceholder')"
             >
               <template #button>
                 <van-button size="small" type="primary" @click="getVerifyCode">
-                  {{ currentLang === 'zh' ? '获取验证码' : 'Get Code' }}
+                  {{ t('login.getCode') }}
                 </van-button>
               </template>
             </van-field>
@@ -101,24 +99,24 @@ const toggleLang = () => {
         </van-form>
       </van-tab>
 
-      <van-tab :title="currentLang === 'zh' ? '邮箱登录' : 'Email Login'">
+      <van-tab :title="t('login.emailLogin')">
         <van-form @submit="onSubmit">
           <van-cell-group inset>
             <van-field
               v-model="formData.email"
-              :label="currentLang === 'zh' ? '邮箱' : 'Email'"
-              :placeholder="currentLang === 'zh' ? '请输入邮箱' : 'Enter email address'"
-              :rules="[{ required: true, message: currentLang === 'zh' ? '请输入邮箱' : 'Email is required' }]"
+              :label="t('login.email')"
+              :placeholder="t('login.emailPlaceholder')"
+              :rules="[{ required: true, message: t('login.emailRequired') }]"
             />
             <van-field
               v-model="formData.code"
               center
-              :label="currentLang === 'zh' ? '验证码' : 'Code'"
-              :placeholder="currentLang === 'zh' ? '请输入验证码' : 'Enter verification code'"
+              :label="t('login.code')"
+              :placeholder="t('login.codePlaceholder')"
             >
               <template #button>
                 <van-button size="small" type="primary" @click="getVerifyCode">
-                  {{ currentLang === 'zh' ? '获取验证码' : 'Get Code' }}
+                  {{ t('login.getCode') }}
                 </van-button>
               </template>
             </van-field>
@@ -129,19 +127,19 @@ const toggleLang = () => {
 
     <div :class="$style.submit">
       <van-checkbox v-model="formData.agreed" :class="$style.agreement">
-        {{ currentLang === 'zh' ? '我已阅读并同意' : 'I have read and agree to' }}
-        <a href="#">{{ currentLang === 'zh' ? '《用户协议》' : 'User Agreement' }}</a>
-        {{ currentLang === 'zh' ? '和' : 'and' }}
-        <a href="#">{{ currentLang === 'zh' ? '《隐私政策》' : 'Privacy Policy' }}</a>
+        {{ t('login.agreement') }}
+        <a href="#">{{ t('login.userAgreement') }}</a>
+        {{ t('login.and') }}
+        <a href="#">{{ t('login.privacyPolicy') }}</a>
       </van-checkbox>
 
       <van-button type="primary" block @click="onSubmit">
-        {{ currentLang === 'zh' ? '登录' : 'Login' }}
+        {{ t('login.login') }}
       </van-button>
     </div>
 
     <div :class="$style.langSwitch" @click="toggleLang">
-      {{ currentLang === 'zh' ? 'English' : '中文' }}
+      {{ locale === 'zh' ? 'English' : '中文' }}
     </div>
   </div>
 </template>

@@ -8,6 +8,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import router from './router'
+import i18n from './i18n'
 import App from './App.vue'
 
 // 导入Vant样式
@@ -31,6 +32,7 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
+app.use(i18n)
 // 注册Vant组件
 app.use(Tabbar)
 app.use(TabbarItem)
