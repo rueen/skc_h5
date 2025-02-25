@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 10:46:14
+ * @LastEditTime: 2025-02-25 20:55:45
  * @Description: 登录页
  -->
 <script setup>
@@ -66,7 +66,6 @@ const toggleLang = () => {
   <div :class="$style.loginPage">
     <div :class="$style.logo">
       <h1>{{ t('login.title') }}</h1>
-      <p>{{ t('login.subtitle') }}</p>
     </div>
 
     <van-tabs v-model:active="activeTab" :class="$style.tabs">
@@ -157,8 +156,8 @@ const toggleLang = () => {
   margin-bottom: 40px;
 
   h1 {
-    font-size: 28px;
-    font-weight: bold;
+    font-size: 32px;
+    font-weight: 500;
     color: #333;
     margin-bottom: 8px;
   }

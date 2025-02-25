@@ -10,14 +10,19 @@
 
     <div :class="$style.content">
       <!-- 审核状态 -->
-      <div :class="$style.statusBar">
-        <van-tag 
-          :type="getStatusType(applyInfo.status)"
-          :class="$style.statusTag"
-        >
-          {{ getStatusText(applyInfo.status) }}
-        </van-tag>
-        <div :class="$style.statusDesc">{{ getStatusDesc(applyInfo.status) }}</div>
+      <div 
+        :class="[$style.statusBar, $style[`status${applyInfo.status}`]]"
+      >
+        <div :class="$style.statusIcon">
+          <van-icon 
+            :name="getStatusIcon(applyInfo.status)"
+            :class="$style.icon"
+          />
+        </div>
+        <div :class="$style.statusContent">
+          <div :class="$style.statusText">{{ getStatusText(applyInfo.status) }}</div>
+          <div :class="$style.statusDesc">{{ getStatusDesc(applyInfo.status) }}</div>
+        </div>
       </div>
 
       <!-- 任务信息 -->
@@ -153,6 +158,16 @@ const getStatusDesc = (status) => {
   }
   return descs[status]
 }
+
+// 获取状态图标
+const getStatusIcon = (status) => {
+  const icons = {
+    pending: 'clock-o',
+    approved: 'passed',
+    rejected: 'close'
+  }
+  return icons[status]
+}
 </script>
 
 <style lang="less" module>
@@ -197,13 +212,55 @@ const getStatusDesc = (status) => {
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 12px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &.statuspending {
+    background: #fffbe8;
+    .statusIcon {
+      background: #ffd21e;
+    }
+  }
+
+  &.statusapproved {
+    background: #f0fff0;
+    .statusIcon {
+      background: #07c160;
+    }
+  }
+
+  &.statusrejected {
+    background: #fff2f0;
+    .statusIcon {
+      background: #ff4d4f;
+    }
+  }
 }
 
-.statusTag {
-  font-size: 14px;
-  padding: 6px 12px;
-  margin-bottom: 8px;
+.statusIcon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .icon {
+    font-size: 24px;
+    color: #fff;
+  }
+}
+
+.statusContent {
+  flex: 1;
+}
+
+.statusText {
+  font-size: 16px;
+  font-weight: 500;
+  color: #323233;
+  margin-bottom: 4px;
 }
 
 .statusDesc {

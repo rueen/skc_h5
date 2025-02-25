@@ -7,7 +7,6 @@ const zh = {
   },
   login: {
     title: 'SKC 种草',
-    subtitle: '分享你的种草清单',
     phoneLogin: '手机号登录',
     emailLogin: '邮箱登录',
     phone: '手机号',
@@ -66,7 +65,6 @@ const en = {
   },
   login: {
     title: 'SKC List',
-    subtitle: 'Share Your Shopping List',
     phoneLogin: 'Phone Login',
     emailLogin: 'Email Login',
     phone: 'Phone',
