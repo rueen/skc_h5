@@ -62,6 +62,16 @@ const router = createRouter({
         requiresAuth: true,
         hideTabbar: true
       }
+    },
+    {
+      path: '/social/detail/:id',
+      name: 'SocialDetail',
+      component: () => import('../views/social/detail.vue'),
+      meta: {
+        title: '名片详情',
+        requiresAuth: true,
+        hideTabbar: true
+      }
     }
   ]
 })

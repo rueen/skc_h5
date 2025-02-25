@@ -21,6 +21,7 @@
           v-for="item in list" 
           :key="item.id"
           :class="$style.listItem"
+          @click="onItemClick(item)"
         >
           <div :class="$style.userInfo">
             <van-image
@@ -44,6 +45,7 @@
           <div :class="[$style.status, item.verified && $style.verified]">
             {{ item.verified ? '已认证' : '认证中' }}
           </div>
+          <van-icon name="arrow" :class="$style.arrow" />
         </div>
       </van-list>
     </div>
@@ -105,6 +107,10 @@ const onLoad = () => {
 
 const onAddClick = () => {
   showToast('添加名片功能开发中')
+}
+
+const onItemClick = (item) => {
+  router.push(`/social/detail/${item.id}`)
 }
 </script>
 
@@ -219,5 +225,11 @@ const onAddClick = () => {
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.06);
   max-width: 750px;
   margin: 0 auto;
+}
+
+.arrow {
+  margin-left: 8px;
+  font-size: 16px;
+  color: #969799;
 }
 </style> 
