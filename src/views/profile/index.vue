@@ -72,13 +72,14 @@
             :class="$style.socialItem"
             @click="onAccountClick(account)"
           >
-            <van-image
-              :class="$style.avatar"
-              width="32"
-              height="32"
-              :src="account.icon"
-            />
-            <span>{{ account.platform }}</span>
+            <div :class="$style.platform">
+              <van-image
+                width="16"
+                height="16"
+                :src="account.icon"
+              />
+              <span>{{ account.platform }}</span>
+            </div>
             <div :class="[$style.status, $style.verified]">已认证</div>
             <van-icon name="arrow" :class="$style.arrow" />
           </div>
@@ -319,9 +320,16 @@ const onAccountClick = (account) => {
   align-items: center;
   gap: 8px;
   cursor: pointer;
+  padding: 8px 0;
+}
+
+.platform {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
 
   span {
-    flex: 1;
     font-size: 13px;
     color: #323233;
   }
@@ -363,11 +371,6 @@ const onAccountClick = (account) => {
 
 .inviteBtn {
   margin-top: 16px;
-}
-
-.avatar {
-  border-radius: 4px;
-  overflow: hidden;
 }
 
 .arrow {

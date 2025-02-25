@@ -24,12 +24,6 @@
           @click="onItemClick(item)"
         >
           <div :class="$style.userInfo">
-            <van-image
-              round
-              width="40"
-              height="40"
-              :src="item.avatar"
-            />
             <div :class="$style.userMeta">
               <div :class="$style.userName">{{ item.name }}</div>
               <div :class="$style.platform">
@@ -186,7 +180,6 @@ const onItemClick = (item) => {
 }
 
 .userMeta {
-  margin-left: 12px;
   flex: 1;
 }
 
