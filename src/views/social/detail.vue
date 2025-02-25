@@ -13,6 +13,12 @@
 
     <!-- 详情内容 -->
     <div :class="$style.content">
+      <!-- 编辑提示 -->
+      <div v-if="isEditing" :class="$style.editTip">
+        <van-icon name="info-o" />
+        <span>修改名片信息需要重新认证审核</span>
+      </div>
+
       <div :class="$style.userInfo">
         <div :class="$style.platform">
           <van-image
@@ -328,6 +334,22 @@ const onClickRight = () => {
       display: flex;
       align-items: center;
     }
+  }
+}
+
+.editTip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: #fff7e6;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  color: #ed6a0c;
+
+  .van-icon {
+    font-size: 14px;
   }
 }
 </style> 
