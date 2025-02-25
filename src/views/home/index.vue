@@ -34,9 +34,39 @@ const refreshing = ref(false)
 
 // 模拟数据
 const mockData = [
-  { id: 1, title: '推荐商品1', desc: '这是一个很好的商品' },
-  { id: 2, title: '推荐商品2', desc: '这是一个不错的商品' },
-  { id: 3, title: '推荐商品3', desc: '这是一个很棒的商品' }
+  {
+    id: 1,
+    title: '测评新款化妆品',
+    price: 1500,
+    remainingSlots: 3,
+    category: '美妆/护肤',
+    deadline: '2025-03-10',
+    taskType: '图文',
+    followers: '10w+',
+    image: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
+  },
+  {
+    id: 2,
+    title: '亲子互动玩具测评',
+    price: 2000,
+    remainingSlots: 5,
+    category: '母婴/亲子',
+    deadline: '2025-03-15',
+    taskType: '视频',
+    followers: '100w+',
+    image: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
+  },
+  {
+    id: 3,
+    title: '新品零食开箱试吃',
+    price: 1000,
+    remainingSlots: 2,
+    category: '美食/饮品',
+    deadline: '2025-03-08',
+    taskType: '图文',
+    followers: '50w+',
+    image: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
+  }
 ]
 
 // 加载数据
@@ -79,6 +109,16 @@ const onPlatformChange = (index) => {
   loading.value = true
   onLoad()
 }
+
+// 格式化价格
+const formatPrice = (price) => {
+  return `¥${price}`
+}
+
+// 格式化日期
+const formatDate = (date) => {
+  return `截止：${date}`
+}
 </script>
 
 <template>
@@ -103,7 +143,7 @@ const onPlatformChange = (index) => {
           <van-list
             v-model:loading="loading"
             v-model:finished="finished"
-            finished-text="没有更多了"
+            :finished-text="t('home.finishedText')"
             @load="onLoad"
           >
             <div 
@@ -111,8 +151,48 @@ const onPlatformChange = (index) => {
               :key="item.id"
               :class="$style.listItem"
             >
-              <h3>{{ item.title }}</h3>
-              <p>{{ item.desc }}</p>
+              <div :class="$style.content">
+                <div :class="$style.header">
+                  <van-icon name="fire-o" :class="$style.icon" />
+                  <h3>{{ item.title }}</h3>
+                </div>
+                
+                <div :class="$style.info">
+                  <div :class="$style.price">{{ formatPrice(item.price) }}</div>
+                  <div :class="$style.slots">
+                    剩余名额：<span>{{ item.remainingSlots }}</span>
+                  </div>
+                </div>
+
+                <div :class="$style.category">
+                  <span>{{ item.category }}</span>
+                  <span :class="$style.deadline">{{ formatDate(item.deadline) }}</span>
+                </div>
+
+                <div :class="$style.tags">
+                  <van-tag 
+                    type="primary" 
+                    :class="$style.taskType"
+                  >
+                    {{ item.taskType }}
+                  </van-tag>
+                  <van-tag 
+                    type="warning"
+                    :class="$style.followers"
+                  >
+                    {{ item.followers }}
+                  </van-tag>
+                </div>
+              </div>
+
+              <div :class="$style.image">
+                <van-image
+                  width="100"
+                  height="100"
+                  fit="cover"
+                  :src="item.image"
+                />
+              </div>
             </div>
           </van-list>
         </van-pull-refresh>
@@ -151,19 +231,97 @@ const onPlatformChange = (index) => {
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  display: flex;
+  justify-content: space-between;
+}
+
+.content {
+  flex: 1;
+  margin-right: 12px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+
+  .icon {
+    color: var(--van-primary-color);
+    font-size: 18px;
+    margin-right: 6px;
+  }
 
   h3 {
     margin: 0;
     font-size: 16px;
     color: #333;
-    margin-bottom: 8px;
+    font-weight: bold;
+  }
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+
+  .price {
+    color: #ff4d4f;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 12px;
   }
 
-  p {
-    margin: 0;
-    font-size: 14px;
+  .slots {
     color: #666;
-    line-height: 1.5;
+    font-size: 14px;
+
+    span {
+      color: #ff4d4f;
+      font-weight: bold;
+    }
   }
+}
+
+.category {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .deadline {
+    color: #999;
+  }
+}
+
+.tags {
+  display: flex;
+  gap: 8px;
+
+  .taskType {
+    // 使用 :global 来覆盖 Vant 组件的默认样式
+    :global {
+      .van-tag {
+        padding: 0 8px;
+      }
+    }
+  }
+
+  .followers {
+    // 使用 :global 来覆盖 Vant 组件的默认样式
+    :global {
+      .van-tag {
+        padding: 0 8px;
+      }
+    }
+  }
+}
+
+.image {
+  width: 100px;
+  height: 100px;
+  border-radius: 4px;
+  overflow: hidden;
 }
 </style> 

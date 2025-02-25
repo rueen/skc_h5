@@ -27,7 +27,9 @@ import {
   Checkbox,
   CheckboxGroup,
   PullRefresh,
-  List
+  List,
+  Tag,
+  Image
 } from 'vant'
 
 const app = createApp(App)
@@ -49,5 +51,7 @@ app.use(Checkbox)
 app.use(CheckboxGroup)
 app.use(PullRefresh)
 app.use(List)
+app.use(Tag)
+app.use(Image)
 
 app.mount('#app')
