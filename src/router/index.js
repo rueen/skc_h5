@@ -82,6 +82,16 @@ const router = createRouter({
         requiresAuth: true,
         hideTabbar: true
       }
+    },
+    {
+      path: '/settings',
+      name: 'Settings',
+      component: () => import('../views/settings/index.vue'),
+      meta: {
+        title: '设置',
+        requiresAuth: true,
+        hideTabbar: true
+      }
     }
   ]
 })

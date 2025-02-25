@@ -184,7 +184,7 @@ const onSocialClick = () => {
 }
 
 const onSettingsClick = () => {
-  showToast('设置功能开发中')
+  router.push('/settings')
 }
 
 const onAccountClick = (account) => {
