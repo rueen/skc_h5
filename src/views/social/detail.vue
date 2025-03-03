@@ -2,9 +2,9 @@
   <div :class="$style.detailPage">
     <!-- 顶部导航 -->
     <van-nav-bar
-      title="账号详情"
+      :title="isNew ? '添加账号' : '账号详情'"
       left-arrow
-      :right-text="isEditing ? '保存' : '编辑'"
+      :right-text="!isNew ? (isEditing ? '保存' : '编辑') : ''"
       @click-left="onClickLeft"
       @click-right="onClickRight"
       :class="$style.navbar"
@@ -13,137 +13,165 @@
 
     <!-- 详情内容 -->
     <div :class="$style.content">
-
-      <div :class="$style.userInfo">
-        <div :class="$style.platform">
-          <img 
-            src="@/assets/icon/Facebook.png" 
-            :class="$style.platformIcon"
-            alt="platform"
-          />
-          <span>{{ detail.platform }}</span>
+      <div :class="$style.formGroup">
+        <!-- 表单项 -->
+        <div :class="$style.formItem">
+          <span :class="$style.label">平台</span>
+          <div 
+            :class="$style.value" 
+            @click="showPlatformPicker = true"
+          >
+            <span :class="[$style.text, !form.platform && $style.placeholder]">
+              {{ form.platform ? ChannelText[form.platform] : '请选择平台' }}
+            </span>
+            <van-icon name="arrow" />
+          </div>
         </div>
-        <div :class="[$style.status, detail.verified && $style.verified]">
-          {{ detail.verified ? '已认证' : '认证中' }}
-        </div>
-      </div>
 
-      <div :class="$style.stats">
-        <div :class="$style.statItem">
+        <div :class="$style.formItem">
           <span :class="$style.label">账号名称</span>
-          <div :class="$style.valueWrapper">
-            <template v-if="isEditing">
-              <div :class="$style.inputWrapper">
-                <van-field
-                  v-model="editForm.accountName"
-                  type="text"
-                  placeholder="请输入账号名称"
-                  :class="$style.input"
-                />
-              </div>
-            </template>
-            <template v-else>
-              <span :class="$style.value">{{ detail.accountName }}</span>
-            </template>
-          </div>
+          <van-field
+            v-model="form.name"
+            placeholder="请输入账号名称"
+            :class="$style.input"
+            :border="false"
+          />
         </div>
-        <div :class="$style.statItem">
+
+        <div :class="$style.formItem">
           <span :class="$style.label">粉丝</span>
-          <div :class="$style.valueWrapper">
-            <template v-if="isEditing">
-              <div :class="$style.inputWrapper">
-                <van-field
-                  v-model="editForm.followers"
-                  type="digit"
-                  placeholder="请输入粉丝数量"
-                  :class="$style.input"
-                />
-              </div>
-            </template>
-            <template v-else>
-              <span :class="$style.value">{{ detail.followers }}</span>
-            </template>
-          </div>
+          <van-field
+            v-model="form.followers"
+            type="digit"
+            placeholder="请输入粉丝数"
+            :class="$style.input"
+            :border="false"
+          />
         </div>
-        <div :class="$style.statItem">
-          <span :class="$style.label">{{ detail.platform === 'Instagram' ? '帖子' : '好友' }}</span>
-          <div :class="$style.valueWrapper">
-            <template v-if="isEditing">
-              <div :class="$style.inputWrapper">
-                <van-field
-                  v-model="editForm.friends"
-                  type="digit"
-                  :placeholder="`请输入${detail.platform === 'Instagram' ? '帖子' : '好友'}数量`"
-                  :class="$style.input"
-                />
-              </div>
-            </template>
-            <template v-else>
-              <span :class="$style.value">{{ detail.platform === 'Instagram' ? detail.posts : detail.friends }}</span>
-            </template>
-          </div>
+
+        <div :class="$style.formItem">
+          <span :class="$style.label">好友</span>
+          <van-field
+            v-model="form.friends"
+            type="digit"
+            placeholder="请输入好友数"
+            :class="$style.input"
+            :border="false"
+          />
         </div>
-        <div :class="$style.statItem">
+
+        <div :class="$style.formItem">
           <span :class="$style.label">发帖数</span>
-          <div :class="$style.valueWrapper">
-            <template v-if="isEditing">
-              <div :class="$style.inputWrapper">
-                <van-field
-                  v-model="editForm.posts"
-                  type="digit"
-                  placeholder="请输入发帖数量"
-                  :class="$style.input"
-                />
-              </div>
-            </template>
-            <template v-else>
-              <span :class="$style.value">{{ detail.posts }}</span>
-            </template>
-          </div>
+          <van-field
+            v-model="form.posts"
+            type="digit"
+            placeholder="请输入发帖数"
+            :class="$style.input"
+            :border="false"
+          />
         </div>
-        <div :class="$style.statItem">
+
+        <div :class="$style.formItem">
           <span :class="$style.label">主页链接</span>
-          <div :class="$style.valueWrapper">
-            <template v-if="isEditing">
-              <div :class="$style.inputWrapper">
-                <van-field
-                  v-model="editForm.homepage"
-                  type="text"
-                  placeholder="请输入主页链接"
-                  :class="$style.input"
-                />
-              </div>
-            </template>
-            <template v-else>
-              <span :class="$style.value">{{ detail.homepage || '-' }}</span>
-            </template>
-          </div>
+          <van-field
+            v-model="form.homepage"
+            placeholder="请输入主页链接"
+            :class="$style.input"
+            :border="false"
+          />
         </div>
       </div>
+
+      <!-- 添加账号时显示保存按钮 -->
+      <van-button 
+        v-if="isNew"
+        block 
+        type="primary"
+        :class="$style.submitBtn"
+        @click="onSubmit"
+      >
+        保存
+      </van-button>
     </div>
+
+    <!-- 平台选择器 -->
+    <van-popup
+      v-model:show="showPlatformPicker"
+      position="bottom"
+      round
+    >
+      <van-picker
+        :columns="platformColumns"
+        @confirm="onPlatformConfirm"
+        @cancel="showPlatformPicker = false"
+        show-toolbar
+      />
+    </van-popup>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { showToast } from 'vant'
+import { ref, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { showToast, showDialog } from 'vant'
+import { Channel, ChannelText } from '@/constants/enums'
 
+const route = useRoute()
 const router = useRouter()
+
+// 是否是新建账号
+const isNew = computed(() => route.params.id === 'new')
+
+// 编辑状态
 const isEditing = ref(false)
 
+// 表单数据
+const form = ref({
+  platform: '',
+  name: '',
+  avatar: '',
+  followers: '',
+  friends: '',
+  posts: '',
+  homepage: ''
+})
+
+// 详情数据（仅在编辑时使用）
 const detail = ref({
-  name: 'Chantal Lyric',
-  avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
+  id: 1,
+  accountName: 'Chantal Lyric',
   platform: 'Facebook',
-  platformIcon: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-  accountName: '@chantal_lyric',
   followers: 800,
   friends: 500,
   posts: 120,
-  homepage: 'https://facebook.com/chantal',
-  verified: true
+  homepage: 'https://facebook.com/chantal'
 })
+
+// 如果不是新建，则初始化表单数据
+if (!isNew.value) {
+  form.value = {
+    platform: detail.value.platform,
+    name: detail.value.accountName,
+    avatar: '',
+    followers: detail.value.followers,
+    friends: detail.value.friends,
+    posts: detail.value.posts,
+    homepage: detail.value.homepage
+  }
+}
+
+// 平台选择器
+const showPlatformPicker = ref(false)
+const platformColumns = Object.entries(Channel).map(([_, value]) => ({
+  text: ChannelText[value],
+  value
+}))
+
+// 选择平台
+const onPlatformConfirm = ({ selectedOptions }) => {
+  form.value.platform = selectedOptions[0].value
+  showPlatformPicker.value = false
+}
 
 const editForm = ref({
   accountName: '',
@@ -153,30 +181,46 @@ const editForm = ref({
   homepage: ''
 })
 
-const onClickLeft = () => {
-  if (isEditing.value) {
-    isEditing.value = false
+// 提交表单
+const onSubmit = () => {
+  if (!form.value.platform) {
+    showToast('请选择平台')
     return
   }
+  // ... 其他验证逻辑
+  showToast('保存成功')
   router.back()
 }
 
+// 切换编辑状态
 const onClickRight = () => {
   if (isEditing.value) {
-    // 保存逻辑
-    showToast('保存成功')
-    isEditing.value = false
+    onSubmit()
   } else {
     isEditing.value = true
-    // 初始化编辑表单
-    editForm.value = {
-      accountName: detail.value.accountName,
-      followers: detail.value.followers,
-      friends: detail.value.friends,
-      posts: detail.value.posts,
-      homepage: detail.value.homepage || ''
-    }
   }
+}
+
+const onClickLeft = () => {
+  if (isNew.value || isEditing.value) {
+    // 显示确认弹窗
+    showDialog({
+      title: '确认离开',
+      message: '当前内容未保存，确定要离开吗？',
+      showCancelButton: true
+    }).then((action) => {
+      if (action === 'confirm') {
+        router.back()
+      }
+    })
+  } else {
+    router.back()
+  }
+}
+
+// 获取平台图标
+const getPlatformIcon = (platform) => {
+  return new URL(`../../assets/icon/${platform}.png`, import.meta.url).href
 }
 </script>
 
@@ -195,147 +239,74 @@ const onClickRight = () => {
   z-index: 99;
   max-width: 750px;
   margin: 0 auto;
-
-  :global {
-    .van-nav-bar {
-      background: #fff;
-    }
-
-    .van-nav-bar__title {
-      color: #323233;
-      font-size: 16px;
-    }
-
-    .van-nav-bar__arrow {
-      color: #323233;
-      font-size: 18px;
-    }
-
-    .van-nav-bar__text {
-      color: var(--van-primary-color);
-      font-size: 14px;
-    }
-  }
 }
 
 .content {
-  padding: 16px;
+  padding: 12px;
 }
 
-.userInfo {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px;
+.formGroup {
   background: #fff;
   border-radius: 8px;
+  overflow: hidden;
 }
 
-.platform {
+.formItem {
   display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: 13px;
-  color: #969799;
+  padding: 0 16px;
+  min-height: 44px;
+  border-bottom: 1px solid #f5f6f7;
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
-.platformIcon {
-  width: 16px;
-  height: 16px;
-  margin-right: 6px;
+.label {
+  width: 70px;
+  font-size: 14px;
+  color: #323233;
   flex-shrink: 0;
 }
 
-.status {
-  font-size: 12px;
-  color: #ff4d4f;
-
-  &.verified {
-    color: #07c160;
-  }
-}
-
-.stats {
-  margin-top: 12px;
-  display: flex;
-  flex-direction: column;
-  background: #fff;
-  border-radius: 8px;
-  padding: 16px;
-  gap: 16px;
-}
-
-.statItem {
+.value {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 4px 0;
-
-  .label {
-    font-size: 14px;
-    color: #323233;
-  }
-}
-
-.valueWrapper {
-  flex: 1;
-  max-width: 300px;
-  margin-left: 16px;
-  display: flex;
-  justify-content: flex-end;
-  height: 28px;
-  align-items: center;
-}
-
-.value {
-  font-size: 14px;
-  color: #323233;
-  padding: 4px 12px;
-  border-radius: 4px;
-  line-height: 20px;
-}
-
-.inputWrapper {
-  background: #f7f8fa;
-  border-radius: 4px;
-  padding: 4px 12px;
-  width: 200px;
-  height: 100%;
-  display: flex;
-  align-items: center;
+  min-height: 44px;
+  cursor: pointer;
 }
 
 .input {
   flex: 1;
-  background: #f7f8fa;
-  height: 100%;
   padding: 0;
-  height: 100%;
-  
+  background: transparent;
+
   :global {
-    .van-field__body {
-      text-align: right;
-      height: 100%;
-    }
-
     .van-field__control {
-      text-align: right;
-      height: 20px;
-      min-height: 20px;
-      padding: 0;
-      font-size: 14px;
       color: #323233;
-      line-height: 20px;
-    }
+      font-size: 14px;
 
-    .van-cell {
-      padding: 0;
-      background: transparent;
-      line-height: normal;
-      height: 100%;
-      display: flex;
-      align-items: center;
+      &::placeholder {
+        color: #969799;
+      }
     }
   }
+}
+
+.text {
+  font-size: 14px;
+  color: #323233;
+
+  &.placeholder {
+    color: #969799;
+  }
+}
+
+.submitBtn {
+  margin-top: 24px;
+  --van-button-primary-background: var(--van-primary-color);
 }
 </style> 
