@@ -21,9 +21,11 @@
           v-for="item in list" 
           :key="item.id"
           :class="$style.listItem"
-          @click="onItemClick(item)"
         >
-          <div :class="$style.userInfo">
+          <div 
+            :class="$style.userInfo"
+            @click="onItemClick(item)"
+          >
             <div :class="$style.userMeta">
               <div :class="$style.userName">{{ item.name }}</div>
               <div :class="$style.platform">
@@ -36,9 +38,11 @@
               </div>
             </div>
           </div>
-          <div :class="[$style.status, item.verified && $style.verified]">
-            {{ item.verified ? '已认证' : '认证中' }}
-          </div>
+          <van-icon 
+            name="delete-o" 
+            :class="$style.deleteBtn"
+            @click.stop="onDeleteClick(item)"
+          />
           <van-icon name="arrow" :class="$style.arrow" />
         </div>
       </van-list>
@@ -49,18 +53,27 @@
       <van-button 
         type="primary" 
         block
-        @click="onAddClick"
+        @click="router.push('/social/detail/new')"
       >
-        添加名片
+        添加账号
       </van-button>
     </div>
+
+    <!-- 删除确认弹窗 -->
+    <van-dialog
+      v-model:show="showDeleteDialog"
+      title="确认删除"
+      :message="`确定要删除账号「${selectedCard?.name}」吗？`"
+      show-cancel-button
+      @confirm="onDeleteConfirm"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { showToast } from 'vant'
 import { useRouter } from 'vue-router'
+import { showToast } from 'vant'
 
 const router = useRouter()
 const loading = ref(false)
@@ -75,8 +88,7 @@ const list = ref([
     platform: 'Facebook',
     platformIcon: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
     followers: 800,
-    friends: 500,
-    verified: true
+    friends: 500
   },
   {
     id: 2,
@@ -85,10 +97,13 @@ const list = ref([
     platform: 'Instagram',
     platformIcon: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
     followers: 0,
-    posts: 0,
-    verified: false
+    posts: 0
   }
 ])
+
+// 删除相关
+const showDeleteDialog = ref(false)
+const selectedCard = ref(null)
 
 const onClickLeft = () => {
   router.back()
@@ -99,12 +114,18 @@ const onLoad = () => {
   finished.value = true
 }
 
-const onAddClick = () => {
-  showToast('添加名片功能开发中')
-}
-
 const onItemClick = (item) => {
   router.push(`/social/detail/${item.id}`)
+}
+
+const onDeleteClick = (item) => {
+  selectedCard.value = item
+  showDeleteDialog.value = true
+}
+
+const onDeleteConfirm = () => {
+  list.value = list.value.filter(item => item.id !== selectedCard.value.id)
+  showToast('删除成功')
 }
 </script>
 
@@ -208,17 +229,6 @@ const onItemClick = (item) => {
   flex-shrink: 0;
 }
 
-.status {
-  font-size: 12px;
-  color: #ff4d4f;
-  min-width: 48px;
-  text-align: right;
-
-  &.verified {
-    color: #07c160;
-  }
-}
-
 .footer {
   position: fixed;
   left: 0;
@@ -235,5 +245,13 @@ const onItemClick = (item) => {
   margin-left: 8px;
   font-size: 16px;
   color: #969799;
+}
+
+.deleteBtn {
+  font-size: 18px;
+  color: #969799;
+  padding: 8px;
+  margin-right: -4px;
+  cursor: pointer;
 }
 </style> 

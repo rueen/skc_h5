@@ -1,8 +1,8 @@
 /*
  * @Author: diaochan
  * @Date: 2025-02-25 10:10:45
- * @LastEditors: diaochan
- * @LastEditTime: 2025-02-25 10:19:33
+ * @LastEditors: rueen
+ * @LastEditTime: 2025-03-03 16:12:27
  * @Description: 
  */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -58,7 +58,7 @@ const router = createRouter({
       name: 'Social',
       component: Social,
       meta: {
-        title: '我的名片',
+        title: '我的账号',
         requiresAuth: true,
         hideTabbar: true
       }
@@ -68,7 +68,7 @@ const router = createRouter({
       name: 'SocialDetail',
       component: () => import('../views/social/detail.vue'),
       meta: {
-        title: '名片详情',
+        title: '账号详情',
         requiresAuth: true,
         hideTabbar: true
       }
