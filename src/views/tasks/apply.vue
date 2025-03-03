@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.applyPage">
     <van-nav-bar
-      title="任务报名"
+      title="任务提交"
       left-arrow
       @click-left="onClickLeft"
       :class="$style.navbar"
@@ -89,7 +89,7 @@
         :class="$style.submitBtn"
         @click="onSubmit"
       >
-        提交报名信息
+        提交
       </van-button>
     </div>
 
