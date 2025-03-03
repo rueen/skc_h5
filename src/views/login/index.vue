@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 21:11:56
+ * @LastEditTime: 2025-03-03 14:13:07
  * @Description: 登录页
  -->
 <script setup>
@@ -23,23 +23,10 @@ const activeTab = ref(0)
 const formData = reactive({
   phone: '',
   email: '',
-  code: '',
+  password: '',
   areaCode: '86',
   agreed: false
 })
-
-// 获取验证码
-const getVerifyCode = () => {
-  if (activeTab.value === 0 && !formData.phone) {
-    showToast(t('login.phoneRequired'))
-    return
-  }
-  if (activeTab.value === 1 && !formData.email) {
-    showToast(t('login.emailRequired'))
-    return
-  }
-  showToast(t('login.codeSent'))
-}
 
 // 提交登录
 const onSubmit = () => {
@@ -47,10 +34,11 @@ const onSubmit = () => {
     showToast(t('login.agreementRequired'))
     return
   }
-  if (!formData.code) {
-    showToast(t('login.codeRequired'))
+  if (!formData.password) {
+    showToast(t('login.passwordRequired'))
     return
   }
+
   userStore.setToken('mock_token')
   router.push('/')
 }
@@ -83,17 +71,12 @@ const toggleLang = () => {
               </template>
             </van-field>
             <van-field
-              v-model="formData.code"
-              center
-              :label="t('login.code')"
-              :placeholder="t('login.codePlaceholder')"
-            >
-              <template #button>
-                <van-button size="small" type="primary" @click="getVerifyCode">
-                  {{ t('login.getCode') }}
-                </van-button>
-              </template>
-            </van-field>
+              v-model="formData.password"
+              type="password"
+              :label="t('login.password')"
+              :placeholder="t('login.passwordPlaceholder')"
+              :rules="[{ required: true, message: t('login.passwordRequired') }]"
+            />
           </van-cell-group>
         </van-form>
       </van-tab>
@@ -108,17 +91,12 @@ const toggleLang = () => {
               :rules="[{ required: true, message: t('login.emailRequired') }]"
             />
             <van-field
-              v-model="formData.code"
-              center
-              :label="t('login.code')"
-              :placeholder="t('login.codePlaceholder')"
-            >
-              <template #button>
-                <van-button size="small" type="primary" @click="getVerifyCode">
-                  {{ t('login.getCode') }}
-                </van-button>
-              </template>
-            </van-field>
+              v-model="formData.password"
+              type="password"
+              :label="t('login.password')"
+              :placeholder="t('login.passwordPlaceholder')"
+              :rules="[{ required: true, message: t('login.passwordRequired') }]"
+            />
           </van-cell-group>
         </van-form>
       </van-tab>
