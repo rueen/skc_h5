@@ -11,7 +11,7 @@
         />
         <div :class="$style.userMeta">
           <div :class="$style.userName">{{ userInfo.name }}</div>
-          <div :class="$style.userId">ID: {{ userInfo.id }}</div>
+          <div :class="$style.userId">账号: {{ userInfo.id }}</div>
         </div>
       </div>
       <van-icon name="arrow" :class="$style.arrow" />
