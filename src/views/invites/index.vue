@@ -2,53 +2,61 @@
  * @Author: diaochan
  * @Date: 2025-02-25 15:00:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 15:40:23
+ * @LastEditTime: 2025-03-03 11:29:01
  * @Description: 我的邀请人列表页
  -->
 <template>
   <div :class="$style.invitesPage">
     <!-- 顶部导航 -->
     <van-nav-bar
-      title="我的邀请人"
+      title="邀请好友"
       left-arrow
       @click-left="onClickLeft"
       :class="$style.navbar"
       fixed
     />
 
-    <!-- 表头 -->
-    <div :class="$style.tableHeader">
-      <span>用户列表</span>
-      <span>邀请奖励</span>
+    <!-- 邀请统计 -->
+    <div :class="$style.statsCard">
+      <div :class="$style.statsItem">
+        <div :class="$style.label">累计邀请</div>
+        <div :class="$style.value">{{ stats.totalInvites }}人</div>
+      </div>
+      <div :class="$style.statsItem">
+        <div :class="$style.label">邀请奖励</div>
+        <div :class="$style.value">${{ stats.totalRewards }}</div>
+      </div>
     </div>
 
-    <!-- 列表内容 -->
+    <!-- 邀请列表 -->
     <div :class="$style.content">
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list
           v-model:loading="loading"
-          v-model:finished="finished"
+          :finished="finished"
           finished-text="没有更多了"
           @load="onLoad"
         >
-          <div 
-            v-for="item in list" 
-            :key="item.id"
-            :class="$style.listItem"
-          >
-            <div :class="$style.userInfo">
-              <van-image
-                round
-                width="40"
-                height="40"
-                :src="item.avatar"
-              />
-              <div :class="$style.userMeta">
-                <div :class="$style.userName">{{ item.name }}</div>
-                <div :class="$style.date">{{ item.date }}</div>
+          <div :class="$style.inviteList">
+            <div 
+              v-for="invite in invites" 
+              :key="invite.id"
+              :class="$style.inviteItem"
+            >
+              <div :class="$style.userInfo">
+                <van-image
+                  round
+                  width="40"
+                  height="40"
+                  :src="invite.avatar"
+                />
+                <div :class="$style.userMeta">
+                  <div :class="$style.userName">{{ invite.name }}</div>
+                  <div :class="$style.inviteTime">{{ invite.time }}</div>
+                </div>
               </div>
+              <div :class="$style.reward">+${{ invite.reward }}</div>
             </div>
-            <div :class="$style.reward">${{ item.reward }}</div>
           </div>
         </van-list>
       </van-pull-refresh>
@@ -73,73 +81,47 @@ import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
 
 const router = useRouter()
-const loading = ref(false)
-const finished = ref(false)
-const refreshing = ref(false)
-const list = ref([
+
+// 统计数据
+const stats = ref({
+  totalInvites: 128,
+  totalRewards: '1,280.00'
+})
+
+// 列表数据
+const invites = ref([
   {
     id: 1,
-    name: '爱可可的故事',
+    name: '李四',
     avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-    date: '2022-03-25',
-    reward: '15.00'
+    time: '2025-02-25 15:30',
+    reward: '10.00'
   },
   {
     id: 2,
-    name: '迷谷讲历史',
+    name: '王五',
     avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-    date: '2025-04-25',
-    reward: '15.00'
-  },
-  {
-    id: 3,
-    name: '新鲜事',
-    avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-    date: '2025-02-25',
-    reward: '15.00'
-  },
-  {
-    id: 4,
-    name: '新鲜事体育',
-    avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-    date: '2025-04-25',
-    reward: '00.00'
+    time: '2025-02-24 14:20',
+    reward: '10.00'
   }
 ])
 
+// 列表状态
+const loading = ref(false)
+const finished = ref(false)
+const refreshing = ref(false)
+
+// 事件处理
 const onClickLeft = () => {
   router.back()
 }
 
 const onLoad = () => {
-  // 模拟加载更多
-  setTimeout(() => {
-    if (refreshing.value) {
-      list.value = []
-      refreshing.value = false
-    }
-
-    for (let i = 0; i < 4; i++) {
-      list.value.push({
-        id: list.value.length + 1,
-        name: '新邀请用户' + (list.value.length + 1),
-        avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-        date: '2025-02-25',
-        reward: '15.00'
-      })
-    }
-    loading.value = false
-
-    if (list.value.length >= 20) {
-      finished.value = true
-    }
-  }, 1000)
+  loading.value = false
 }
 
 const onRefresh = () => {
-  finished.value = false
-  loading.value = true
-  onLoad()
+  refreshing.value = false
 }
 
 const onInvite = () => {
@@ -181,61 +163,75 @@ const onInvite = () => {
   }
 }
 
-.tableHeader {
-  position: fixed;
-  top: 46px;
-  left: 0;
-  right: 0;
-  z-index: 99;
+.statsCard {
+  margin: 12px;
   background: #fff;
+  border-radius: 8px;
+  padding: 16px;
   display: flex;
-  justify-content: space-between;
-  padding: 12px 24px;
-  font-size: 14px;
-  color: #323232;
-  border-bottom: 1px solid #f5f6f7;
-  max-width: 750px;
-  margin: 0 auto;
+  justify-content: space-around;
+}
+
+.statsItem {
+  text-align: center;
+
+  .label {
+    font-size: 14px;
+    color: #969799;
+    margin-bottom: 8px;
+  }
+
+  .value {
+    font-size: 20px;
+    color: #323233;
+    font-weight: 500;
+  }
 }
 
 .content {
   padding: 0 12px;
-  margin-top: 55px;
 }
 
-.listItem {
+.inviteList {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.inviteItem {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px;
-  background: #fff;
-  border-radius: 8px;
-  margin-bottom: 8px;
+  padding: 16px;
+  border-bottom: 1px solid #f5f6f7;
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .userInfo {
   display: flex;
   align-items: center;
+  gap: 12px;
 }
 
 .userMeta {
-  margin-left: 12px;
-}
+  .userName {
+    font-size: 14px;
+    color: #323233;
+    margin-bottom: 4px;
+  }
 
-.userName {
-  font-size: 14px;
-  color: #323233;
-  margin-bottom: 4px;
-}
-
-.date {
-  font-size: 12px;
-  color: #969799;
+  .inviteTime {
+    font-size: 12px;
+    color: #969799;
+  }
 }
 
 .reward {
-  font-size: 15px;
-  color: #ff4d4f;
+  font-size: 16px;
+  color: #ee0a24;
   font-weight: 500;
 }
 
