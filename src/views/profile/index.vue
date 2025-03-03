@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.profilePage">
     <!-- 用户信息 -->
-    <div :class="$style.userInfo">
+    <div :class="$style.userInfo" @click="router.push('/profile/edit')">
       <div :class="$style.userHeader">
         <van-image
           round
