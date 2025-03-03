@@ -2,110 +2,147 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 19:30:47
+ * @LastEditTime: 2025-03-03 14:48:50
  * @Description: 
 -->
 <template>
   <div :class="$style.editPage">
     <van-nav-bar
-      title="编辑个人信息"
+      title="个人信息"
       left-arrow
       @click-left="onClickLeft"
       :class="$style.navbar"
       fixed
-    />
+    >
+      <template #right>
+        <span :class="$style.navBtn" @click="onToggleEdit">
+          {{ isEdit ? '保存' : '编辑' }}
+        </span>
+      </template>
+    </van-nav-bar>
 
     <div :class="$style.content">
-      <!-- 头像 -->
-      <div :class="$style.avatarItem" @click="onAvatarClick">
-        <div :class="$style.avatarContent">
-          <van-image
-            round
-            width="70"
-            height="70"
-            :src="form.avatar"
-          />
-          <span :class="$style.avatarText">点击更换头像</span>
-        </div>
-      </div>
-
-      <!-- 基本信息 -->
       <div :class="$style.formGroup">
+        <!-- 头像 -->
         <div :class="$style.formItem">
-          <span :class="$style.label">名称</span>
-          <van-field
-            v-model="form.name"
-            placeholder="请输入名称"
-            :class="$style.input"
-          />
+          <span :class="$style.label">头像</span>
+          <div :class="$style.value">
+            <van-image
+              :src="form.avatar"
+              round
+              width="40"
+              height="40"
+            />
+            <van-icon name="arrow" v-if="isEdit" />
+          </div>
         </div>
 
+        <!-- 昵称 -->
+        <div :class="$style.formItem">
+          <span :class="$style.label">昵称</span>
+          <template v-if="isEdit">
+            <van-field
+              v-model="form.name"
+              placeholder="请输入昵称"
+              :class="$style.input"
+            />
+          </template>
+          <div v-else :class="$style.value">
+            <span :class="$style.text">{{ form.name }}</span>
+          </div>
+        </div>
+
+        <!-- 性别 -->
         <div :class="$style.formItem">
           <span :class="$style.label">性别</span>
-          <div :class="$style.value" @click="showGenderPicker = true">
-            <span :class="[$style.text, $style.pickerValue]">{{ form.gender || '请选择' }}</span>
-            <van-icon name="arrow" />
+          <template v-if="isEdit">
+            <div :class="$style.value" @click="showGenderPicker = true">
+              <span :class="[$style.text, $style.pickerValue]">
+                {{ getGenderText(form.gender) }}
+              </span>
+              <van-icon name="arrow" />
+            </div>
+          </template>
+          <div v-else :class="$style.value">
+            <span :class="$style.text">{{ getGenderText(form.gender) }}</span>
           </div>
         </div>
 
+        <!-- 职业 -->
         <div :class="$style.formItem">
           <span :class="$style.label">职业</span>
-          <div :class="$style.value" @click="showOccupationPicker = true">
-            <span :class="[$style.text, $style.pickerValue]">
-              {{ form.occupation ? getLangText(OccupationTypeLang, form.occupation) : '请选择' }}
+          <template v-if="isEdit">
+            <div :class="$style.value" @click="showOccupationPicker = true">
+              <span :class="[$style.text, $style.pickerValue]">
+                {{ form.occupation ? getLangText(OccupationTypeLang, form.occupation) : '请选择' }}
+              </span>
+              <van-icon name="arrow" />
+            </div>
+          </template>
+          <div v-else :class="$style.value">
+            <span :class="$style.text">
+              {{ form.occupation ? getLangText(OccupationTypeLang, form.occupation) : '未设置' }}
             </span>
-            <van-icon name="arrow" />
           </div>
         </div>
 
+        <!-- 城市 -->
         <div :class="$style.formItem">
           <span :class="$style.label">城市</span>
-          <div :class="$style.value" @click="showCityPicker = true">
-            <span :class="[$style.text, $style.pickerValue]">{{ form.city || '请选择' }}</span>
-            <van-icon name="arrow" />
+          <template v-if="isEdit">
+            <div :class="$style.value" @click="showCityPicker = true">
+              <span :class="[$style.text, $style.pickerValue]">{{ form.city || '请选择' }}</span>
+              <van-icon name="arrow" />
+            </div>
+          </template>
+          <div v-else :class="$style.value">
+            <span :class="$style.text">{{ form.city || '未设置' }}</span>
           </div>
         </div>
-      </div>
 
-      <!-- 联系方式 -->
-      <div :class="$style.formGroup">
+        <!-- 联系方式 -->
         <div :class="$style.formItem">
           <span :class="$style.label">电子邮箱</span>
-          <van-field
-            v-model="form.email"
-            placeholder="请输入邮箱"
-            :class="$style.input"
-          />
+          <template v-if="isEdit">
+            <van-field
+              v-model="form.email"
+              placeholder="请输入邮箱"
+              :class="$style.input"
+            />
+          </template>
+          <div v-else :class="$style.value">
+            <span :class="$style.text">{{ form.email }}</span>
+          </div>
         </div>
 
         <div :class="$style.formItem">
           <span :class="$style.label">手机号码</span>
-          <van-field
-            v-model="form.phone"
-            placeholder="请输入手机号"
-            :class="$style.input"
-          />
+          <template v-if="isEdit">
+            <van-field
+              v-model="form.phone"
+              placeholder="请输入手机号"
+              :class="$style.input"
+            />
+          </template>
+          <div v-else :class="$style.value">
+            <span :class="$style.text">{{ form.phone }}</span>
+          </div>
         </div>
 
         <div :class="$style.formItem">
           <span :class="$style.label">Telegram</span>
-          <van-field
-            v-model="form.telegram"
-            placeholder="请输入Telegram"
-            :class="$style.input"
-          />
+          <template v-if="isEdit">
+            <van-field
+              v-model="form.telegram"
+              placeholder="请输入Telegram"
+              :class="$style.input"
+            />
+          </template>
+          <div v-else :class="$style.value">
+            <span :class="$style.text">{{ form.telegram }}</span>
+          </div>
         </div>
       </div>
-
-      <!-- 保存按钮 -->
-      <van-button 
-        type="primary" 
-        block
-        :class="$style.saveBtn"
-        @click="onSave"
-      >
-        保存
-      </van-button>
     </div>
 
     <!-- 性别选择器 -->
@@ -160,6 +197,9 @@ import { OccupationType, OccupationTypeLang, getLangText } from '@/constants/enu
 
 const router = useRouter()
 
+// 编辑状态
+const isEdit = ref(false)
+
 // 表单数据
 const form = ref({
   avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
@@ -194,13 +234,12 @@ const onClickLeft = () => {
   router.back()
 }
 
-const onSave = () => {
-  showToast('保存成功')
-  router.back()
-}
-
-const onAvatarClick = () => {
-  showToast('头像上传功能开发中')
+const onToggleEdit = () => {
+  if (isEdit.value) {
+    // 保存数据
+    showToast('保存成功')
+  }
+  isEdit.value = !isEdit.value
 }
 
 const onGenderConfirm = (values) => {
@@ -216,6 +255,19 @@ const onCityConfirm = (values) => {
 const onOccupationConfirm = ({ selectedOptions }) => {
   form.value.occupation = selectedOptions[0].value
   showOccupationPicker.value = false
+}
+
+const getGenderText = (gender) => {
+  switch (gender) {
+    case '男':
+      return '男'
+    case '女':
+      return '女'
+    case '保密':
+      return '保密'
+    default:
+      return '未设置'
+  }
 }
 </script>
 
@@ -258,23 +310,6 @@ const onOccupationConfirm = ({ selectedOptions }) => {
 
 .content {
   padding: 12px;
-}
-
-.avatarItem {
-  padding: 24px 16px;
-  cursor: pointer;
-}
-
-.avatarContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.avatarText {
-  font-size: 12px;
-  color: #c8c9cc;
 }
 
 .formGroup {
@@ -348,7 +383,18 @@ const onOccupationConfirm = ({ selectedOptions }) => {
   }
 }
 
-.saveBtn {
-  margin-top: 24px;
+.navBtn {
+  font-size: 14px;
+  color: var(--van-primary-color);
+  cursor: pointer;
+}
+
+.text {
+  font-size: 14px;
+  color: #323233;
+
+  &.pickerValue {
+    color: #969799;
+  }
 }
 </style> 
