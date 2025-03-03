@@ -142,6 +142,15 @@
             <span :class="$style.text">{{ form.telegram }}</span>
           </div>
         </div>
+
+        <!-- 邀请链接 -->
+        <div :class="$style.formItem">
+          <span :class="$style.label">邀请链接</span>
+          <div :class="$style.value" @click="onCopyLink">
+            <span :class="$style.text">{{ inviteLink }}</span>
+            <van-icon name="copy" :class="$style.copyIcon" />
+          </div>
+        </div>
       </div>
     </div>
 
@@ -229,6 +238,9 @@ const occupationColumns = Object.entries(OccupationType).map(([_, value]) => ({
   value
 }))
 
+// 邀请链接
+const inviteLink = 'https://skc.com/invite/abc123'
+
 // 事件处理
 const onClickLeft = () => {
   router.back()
@@ -268,6 +280,13 @@ const getGenderText = (gender) => {
     default:
       return '未设置'
   }
+}
+
+// 复制邀请链接
+const onCopyLink = () => {
+  navigator.clipboard.writeText(inviteLink).then(() => {
+    showToast('复制成功')
+  })
 }
 </script>
 
@@ -396,5 +415,10 @@ const getGenderText = (gender) => {
   &.pickerValue {
     color: #969799;
   }
+}
+
+.copyIcon {
+  font-size: 16px;
+  color: #969799;
 }
 </style> 
