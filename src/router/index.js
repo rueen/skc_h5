@@ -162,6 +162,16 @@ const router = createRouter({
         requiresAuth: true,
         hideTabbar: true
       }
+    },
+    {
+      path: '/settings/password',
+      name: 'SettingsPassword',
+      component: () => import('../views/settings/password.vue'),
+      meta: {
+        title: '修改密码',
+        requiresAuth: true,
+        hideTabbar: true
+      }
     }
   ]
 })

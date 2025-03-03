@@ -9,20 +9,39 @@
     />
 
     <div :class="$style.content">
-      <!-- 语言设置 -->
-      <div :class="$style.menuItem" @click="showLanguagePicker = true">
-        <span>{{ t('settings.language') }}</span>
-        <div :class="$style.value">
-          <span>{{ currentLanguage }}</span>
+      <div :class="$style.menuList">
+        <!-- 语言设置 -->
+        <div 
+          :class="$style.menuItem"
+          @click="showLanguagePicker = true"
+        >
+          <div :class="$style.menuTitle">
+            <van-icon name="translate-o" />
+            <span>{{ t('settings.language') }}</span>
+          </div>
+          <div :class="$style.menuValue">
+            <span>{{ currentLanguage }}</span>
+            <van-icon name="arrow" />
+          </div>
+        </div>
+
+        <!-- 修改密码 -->
+        <div 
+          :class="$style.menuItem"
+          @click="router.push('/settings/password')"
+        >
+          <div :class="$style.menuTitle">
+            <van-icon name="lock" :class="$style.icon" />
+            <span>{{ t('settings.password') }}</span>
+          </div>
           <van-icon name="arrow" />
         </div>
       </div>
-
       <!-- 退出登录按钮 -->
       <van-button 
         block 
         :class="$style.logoutBtn"
-        @click="onLogoutClick"
+        @click="onLogout"
       >
         {{ t('settings.logout') }}
       </van-button>
@@ -82,7 +101,7 @@ const onConfirm = (value) => {
   localStorage.setItem('language', locale.value)
 }
 
-const onLogoutClick = () => {
+const onLogout = () => {
   showDialog({
     title: t('settings.logoutConfirm'),
     message: t('settings.logoutMessage'),
@@ -133,6 +152,12 @@ const onLogoutClick = () => {
   padding: 12px;
 }
 
+.menuList {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
 .menuItem {
   display: flex;
   align-items: center;
@@ -144,7 +169,13 @@ const onLogoutClick = () => {
   color: #323233;
 }
 
-.value {
+.menuTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.menuValue {
   display: flex;
   align-items: center;
   gap: 4px;

@@ -57,7 +57,16 @@ const zh = {
     selectLanguage: '选择语言',
     logout: '退出登录',
     logoutConfirm: '确认退出',
-    logoutMessage: '确定要退出登录吗？'
+    logoutMessage: '确定要退出登录吗？',
+    password: '修改密码',
+    currentPassword: '当前密码',
+    newPassword: '新密码',
+    confirmPassword: '确认密码',
+    currentPasswordPlaceholder: '请输入当前密码',
+    newPasswordPlaceholder: '请输入新密码',
+    confirmPasswordPlaceholder: '请再次输入新密码',
+    passwordTips: '* 密码长度为8-20位，必须包含字母和数字',
+    passwordSuccess: '修改成功'
   }
 }
 
@@ -118,7 +127,16 @@ const en = {
     selectLanguage: 'Select Language',
     logout: 'Logout',
     logoutConfirm: 'Confirm Logout',
-    logoutMessage: 'Are you sure you want to logout?'
+    logoutMessage: 'Are you sure you want to logout?',
+    password: 'Change Password',
+    currentPassword: 'Current Password',
+    newPassword: 'New Password',
+    confirmPassword: 'Confirm Password',
+    currentPasswordPlaceholder: 'Enter current password',
+    newPasswordPlaceholder: 'Enter new password',
+    confirmPasswordPlaceholder: 'Confirm new password',
+    passwordTips: '* Password must be 8-20 characters and contain both letters and numbers',
+    passwordSuccess: 'Password changed successfully'
   }
 }
 
