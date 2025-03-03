@@ -134,7 +134,7 @@ const onSubmit = () => {
   }
 
   showToast('提现申请已提交')
-  router.back()
+  router.push('/wallet/accounts')
 }
 </script>
 

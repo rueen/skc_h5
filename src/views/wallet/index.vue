@@ -12,14 +12,14 @@
       <!-- 账户余额 -->
       <div :class="$style.balance">
         <div :class="$style.amount">
-          <span :class="$style.label">账户余额</span>
-          <span :class="$style.value">${{ balance }}</span>
+          <div :class="$style.label">可提现余额</div>
+          <div :class="$style.value">${{ balance }}</div>
         </div>
         <van-button 
           type="primary" 
-          block 
+          block
           :class="$style.withdrawBtn"
-          @click="onWithdrawClick"
+          @click="onWithdraw"
         >
           提现
         </van-button>
@@ -32,7 +32,7 @@
           @click="router.push('/wallet/bills')"
         >
           <div :class="$style.menuTitle">
-            <van-icon name="balance-list-o" size="20" />
+            <van-icon name="balance-list-o" />
             <span>结算账单</span>
           </div>
           <van-icon name="arrow" />
@@ -43,7 +43,7 @@
           @click="router.push('/wallet/records')"
         >
           <div :class="$style.menuTitle">
-            <van-icon name="records-o" size="20" />
+            <van-icon name="records" />
             <span>提现记录</span>
           </div>
           <van-icon name="arrow" />
@@ -51,33 +51,101 @@
 
         <div 
           :class="$style.menuItem"
-          @click="router.push('/wallet/accounts')"
+          @click="onCheckAccount"
         >
           <div :class="$style.menuTitle">
-            <van-icon name="balance-pay" size="20" />
+            <van-icon name="credit-pay" />
             <span>提现账户</span>
           </div>
-          <van-icon name="arrow" />
+          <div :class="$style.menuValue">
+            <span :class="$style.accountText">
+              {{ hasAccount ? accountInfo.label : '未设置' }}
+            </span>
+            <van-icon name="arrow" />
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- 账户详情弹窗 -->
+    <van-dialog
+      v-model:show="showAccountDetail"
+      title="提现账户"
+      :show-cancel-button="false"
+      confirm-button-text="修改账户"
+      @confirm="onModifyAccount"
+      :class="$style.accountDialog"
+    >
+      <div :class="$style.accountInfo">
+        <div :class="$style.accountItem">
+          <span :class="$style.label">账户类型</span>
+          <span :class="$style.text">{{ accountInfo.label }}</span>
+        </div>
+        <div :class="$style.accountItem">
+          <span :class="$style.label">账号</span>
+          <span :class="$style.text">{{ accountInfo.account }}</span>
+        </div>
+        <div :class="$style.accountItem">
+          <span :class="$style.label">姓名</span>
+          <span :class="$style.text">{{ accountInfo.name }}</span>
+        </div>
+      </div>
+    </van-dialog>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
 
 const router = useRouter()
-const balance = ref(1234.56)
 
+// 余额
+const balance = ref('1,234.56')
+
+// 账户信息
+const accountInfo = ref({
+  type: 'gcash',
+  label: 'GCASH',
+  account: '0912345678',
+  name: '张三'
+})
+
+const hasAccount = computed(() => !!accountInfo.value)
+const showAccountDetail = ref(false)
+
+// 事件处理
 const onClickLeft = () => {
   router.back()
 }
 
-const onWithdrawClick = () => {
+const onWithdraw = () => {
+  if (!hasAccount.value) {
+    showToast('请先设置提现账户')
+    return
+  }
   router.push('/wallet/withdraw')
+}
+
+const onCheckAccount = () => {
+  if (hasAccount.value) {
+    // 如果已有账户，跳转到预览页面
+    router.push({
+      path: '/wallet/accounts',
+      query: { mode: 'preview' }
+    })
+  } else {
+    // 如果没有账户，跳转到添加页面
+    router.push({
+      path: '/wallet/accounts',
+      query: { mode: 'add' }
+    })
+  }
+}
+
+const onModifyAccount = () => {
+  router.push('/wallet/accounts-add')
 }
 </script>
 
@@ -181,6 +249,53 @@ const onWithdrawClick = () => {
   .van-icon {
     font-size: 16px;
     color: #969799;
+  }
+}
+
+.menuValue {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  .accountText {
+    font-size: 14px;
+    color: #969799;
+  }
+
+  .van-icon {
+    color: #969799;
+    font-size: 16px;
+  }
+}
+
+.accountDialog {
+  :global {
+    .van-dialog__header {
+      padding: 16px;
+      font-weight: 500;
+    }
+  }
+}
+
+.accountInfo {
+  padding: 0 16px 16px;
+}
+
+.accountItem {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+
+  .label {
+    width: 70px;
+    font-size: 14px;
+    color: #969799;
+  }
+
+  .text {
+    flex: 1;
+    font-size: 14px;
+    color: #323233;
   }
 }
 </style> 

@@ -1,111 +1,201 @@
 <template>
-  <div :class="$style.accountsPage">
+  <div :class="$style.accountPage">
     <van-nav-bar
-      title="提现账户"
+      :title="pageTitle"
       left-arrow
       @click-left="onClickLeft"
       :class="$style.navbar"
       fixed
-    />
+    >
+      <template #right v-if="mode === 'preview'">
+        <span @click="onEdit">编辑</span>
+      </template>
+    </van-nav-bar>
 
     <div :class="$style.content">
-      <div :class="$style.accountList">
-        <div 
-          v-for="account in accounts" 
-          :key="account.id"
-          :class="$style.accountItem"
-        >
-          <div :class="$style.accountInfo">
-            <van-icon :name="getAccountIcon(account.type)" :class="$style.icon" />
-            <div :class="$style.detail">
-              <div :class="$style.name">{{ account.name }}</div>
-              <div :class="$style.number">{{ account.number }}</div>
-            </div>
-          </div>
-          <div :class="$style.actions">
-            <van-icon 
-              name="delete-o" 
-              :class="$style.deleteIcon"
-              @click="onDeleteClick(account)"
-            />
+      <!-- 账户信息表单 -->
+      <div :class="$style.formGroup">
+        <div :class="$style.formItem" @click="showAccountTypePicker = true && mode !== 'preview'">
+          <span :class="$style.label">账户类型</span>
+          <div :class="$style.value">
+            <span :class="$style.text">{{ selectedType ? selectedType.label : '请选择' }}</span>
+            <van-icon name="arrow" v-if="mode !== 'preview'" />
           </div>
         </div>
+
+        <!-- GCASH/PAYMAYA表单 -->
+        <template v-if="['gcash', 'paymaya'].includes(selectedType?.value)">
+          <div :class="$style.formItem">
+            <span :class="$style.label">手机号</span>
+            <van-field
+              v-model="form.phone"
+              :placeholder="mode === 'preview' ? '' : `请输入${selectedType.label}账号`"
+              :readonly="mode === 'preview'"
+              :class="$style.input"
+            />
+          </div>
+          <div :class="$style.formItem">
+            <span :class="$style.label">姓名</span>
+            <van-field
+              v-model="form.name"
+              placeholder="请输入账户姓名"
+              :readonly="mode === 'preview'"
+              :class="$style.input"
+            />
+          </div>
+        </template>
+
+        <!-- 支付宝表单 -->
+        <template v-if="selectedType?.value === 'alipay'">
+          <div :class="$style.formItem">
+            <span :class="$style.label">账号</span>
+            <van-field
+              v-model="form.account"
+              placeholder="请输入支付宝账号"
+              :readonly="mode === 'preview'"
+              :class="$style.input"
+            />
+          </div>
+          <div :class="$style.formItem">
+            <span :class="$style.label">姓名</span>
+            <van-field
+              v-model="form.name"
+              placeholder="请输入账户姓名"
+              :readonly="mode === 'preview'"
+              :class="$style.input"
+            />
+          </div>
+        </template>
       </div>
 
+      <!-- 提交按钮 -->
       <van-button 
+        v-if="mode !== 'preview'"
         block 
         type="primary"
-        :class="$style.addBtn"
-        @click="onAddClick"
+        :class="$style.submitBtn"
+        @click="onSubmit"
       >
-        添加账户
+        {{ mode === 'add' ? '确认添加' : '保存修改' }}
       </van-button>
     </div>
+
+    <!-- 账户类型选择器 -->
+    <van-popup
+      v-model:show="showAccountTypePicker"
+      position="bottom"
+      round
+    >
+      <van-picker
+        :columns="accountTypes"
+        @confirm="onAccountTypeConfirm"
+        @cancel="showAccountTypePicker = false"
+        show-toolbar
+      />
+    </van-popup>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { showDialog, showToast } from 'vant'
+import { ref, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+import { showToast } from 'vant'
 
 const router = useRouter()
+const route = useRoute()
 
-// 账户数据
-const accounts = ref([
-  {
-    id: 1,
-    type: 'bank',
-    name: '工商银行',
-    number: '****1234'
-  },
-  {
-    id: 2,
-    type: 'alipay',
-    name: '支付宝',
-    number: '****5678'
-  },
-  {
-    id: 3,
-    type: 'wechat',
-    name: '微信',
-    number: '****9012'
-  }
-])
+// 页面模式：add-添加 edit-编辑 preview-预览
+const mode = ref(route.query.mode || 'add')
 
-// 获取账户图标
-const getAccountIcon = (type) => {
-  const iconMap = {
-    bank: 'balance-o',
-    alipay: 'alipay',
-    wechat: 'wechat'
+// 页面标题
+const pageTitle = computed(() => {
+  const titles = {
+    add: '添加账户',
+    edit: '编辑账户',
+    preview: '账户详情'
   }
-  return iconMap[type]
+  return titles[mode.value]
+})
+
+// 账户类型列表
+const accountTypes = [
+  { text: 'GCASH', value: 'gcash', label: 'GCASH' },
+  { text: 'PAYMAYA', value: 'paymaya', label: 'PAYMAYA' },
+  { text: '支付宝', value: 'alipay', label: '支付宝' }
+]
+
+// 表单数据
+const form = ref({
+  type: '',
+  phone: '',
+  account: '',
+  name: ''
+})
+
+// 选择器控制
+const showAccountTypePicker = ref(false)
+const selectedType = ref(null)
+
+// 如果是编辑/预览模式，回填数据
+if (['edit', 'preview'].includes(mode.value)) {
+  // 模拟获取账户数据
+  const mockAccount = {
+    type: 'gcash',
+    phone: '0912345678',
+    name: '张三'
+  }
+  form.value = { ...mockAccount }
+  selectedType.value = accountTypes.find(type => type.value === mockAccount.type)
 }
 
-// 事件处理
+// 选择账户类型
+const onAccountTypeConfirm = (value) => {
+  selectedType.value = value.selectedOptions[0]
+  form.value.type = selectedType.value.value
+  showAccountTypePicker.value = false
+}
+
+// 返回上一页
 const onClickLeft = () => {
   router.back()
 }
 
-const onAddClick = () => {
-  router.push('/wallet/accounts/add')
+// 切换到编辑模式
+const onEdit = () => {
+  mode.value = 'edit'
 }
 
-const onDeleteClick = (account) => {
-  showDialog({
-    title: '确认删除',
-    message: `确定要删除${account.name}账户吗？`,
-    showCancelButton: true
-  }).then(() => {
-    accounts.value = accounts.value.filter(item => item.id !== account.id)
-    showToast('删除成功')
-  })
+// 提交表单
+const onSubmit = () => {
+  if (!form.value.type) {
+    showToast('请选择账户类型')
+    return
+  }
+
+  if (['gcash', 'paymaya'].includes(form.value.type)) {
+    if (!form.value.phone) {
+      showToast('请输入手机号')
+      return
+    }
+  } else if (form.value.type === 'alipay') {
+    if (!form.value.account) {
+      showToast('请输入支付宝账号')
+      return
+    }
+  }
+
+  if (!form.value.name) {
+    showToast('请输入账户姓名')
+    return
+  }
+
+  showToast(mode.value === 'add' ? '添加成功' : '修改成功')
+  router.back()
 }
 </script>
 
 <style lang="less" module>
-.accountsPage {
+.accountPage {
   min-height: 100vh;
   background: #f7f8fa;
   padding-top: 46px;
@@ -134,6 +224,16 @@ const onDeleteClick = (account) => {
       color: #323233;
       font-size: 18px;
     }
+
+    .van-icon {
+      color: #323233 !important;
+    }
+
+    .van-nav-bar__right {
+      color: var(--van-primary-color);
+      font-size: 14px;
+      padding-right: 16px;
+    }
   }
 }
 
@@ -141,64 +241,63 @@ const onDeleteClick = (account) => {
   padding: 12px;
 }
 
-.accountList {
+.formGroup {
   background: #fff;
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 24px;
 }
 
-.accountItem {
+.formItem {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 16px;
+  padding: 12px 16px;
   border-bottom: 1px solid #f5f6f7;
 
   &:last-child {
     border-bottom: none;
   }
-}
 
-.accountInfo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.icon {
-  font-size: 24px;
-  color: var(--van-primary-color);
-}
-
-.detail {
-  .name {
+  .label {
+    width: 70px;
     font-size: 14px;
     color: #323233;
-    margin-bottom: 4px;
   }
 
-  .number {
-    font-size: 12px;
-    color: #969799;
-  }
-}
+  .value {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
 
-.actions {
-  padding-left: 16px;
-}
+    .text {
+      font-size: 14px;
+      color: #323233;
+    }
 
-.deleteIcon {
-  font-size: 18px;
-  color: #969799;
-  cursor: pointer;
-
-  &:hover {
-    color: #ff4d4f;
+    .van-icon {
+      color: #969799;
+      font-size: 16px;
+    }
   }
 }
 
-.addBtn {
+.input {
+  flex: 1;
+
+  :global {
+    .van-field__control {
+      text-align: right;
+    }
+
+    .van-field__control[readonly] {
+      color: #323233;
+    }
+  }
+}
+
+.submitBtn {
   --van-button-primary-background: var(--van-primary-color);
 }
 </style> 

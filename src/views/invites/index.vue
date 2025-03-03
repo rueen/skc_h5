@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 15:00:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-03 11:32:35
+ * @LastEditTime: 2025-03-03 11:39:57
  * @Description: 我的邀请人列表页
  -->
 <template>
