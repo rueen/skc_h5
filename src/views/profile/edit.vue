@@ -50,11 +50,12 @@
 
         <div :class="$style.formItem">
           <span :class="$style.label">职业</span>
-          <van-field
-            v-model="form.occupation"
-            placeholder="请输入职业"
-            :class="$style.input"
-          />
+          <div :class="$style.value" @click="showOccupationPicker = true">
+            <span :class="[$style.text, $style.pickerValue]">
+              {{ form.occupation ? getLangText(OccupationTypeLang, form.occupation) : '请选择' }}
+            </span>
+            <van-icon name="arrow" />
+          </div>
         </div>
 
         <div :class="$style.formItem">
@@ -133,6 +134,20 @@
         @cancel="showCityPicker = false"
       />
     </van-popup>
+
+    <!-- 职业类型选择器 -->
+    <van-popup
+      v-model:show="showOccupationPicker"
+      position="bottom"
+      round
+    >
+      <van-picker
+        :columns="occupationColumns"
+        @confirm="onOccupationConfirm"
+        @cancel="showOccupationPicker = false"
+        show-toolbar
+      />
+    </van-popup>
   </div>
 </template>
 
@@ -141,6 +156,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
 import { areaList } from '@vant/area-data'
+import { OccupationType, OccupationTypeLang, getLangText } from '@/constants/enums'
 
 const router = useRouter()
 
@@ -149,7 +165,7 @@ const form = ref({
   avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
   name: 'Hi Han',
   gender: '男',
-  occupation: '自由职业',
+  occupation: '',
   city: '广东省/深圳市/南山区',
   email: 'hihan@example.com',
   phone: '13800138000',
@@ -159,12 +175,19 @@ const form = ref({
 // 选择器相关
 const showGenderPicker = ref(false)
 const showCityPicker = ref(false)
+const showOccupationPicker = ref(false)
 
 const genderOptions = [
   { text: '男', value: 0 },
   { text: '女', value: 1 },
   { text: '保密', value: 2 }
 ]
+
+// 职业类型选项
+const occupationColumns = Object.entries(OccupationType).map(([_, value]) => ({
+  text: getLangText(OccupationTypeLang, value),
+  value
+}))
 
 // 事件处理
 const onClickLeft = () => {
@@ -188,6 +211,11 @@ const onGenderConfirm = (values) => {
 const onCityConfirm = (values) => {
   form.value.city = values.selectedOptions.map(item => item.text).join('/')
   showCityPicker.value = false
+}
+
+const onOccupationConfirm = ({ selectedOptions }) => {
+  form.value.occupation = selectedOptions[0].value
+  showOccupationPicker.value = false
 }
 </script>
 
