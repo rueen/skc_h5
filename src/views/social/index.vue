@@ -2,7 +2,7 @@
   <div :class="$style.socialPage">
     <!-- 顶部导航 -->
     <van-nav-bar
-      title="我的名片"
+      title="我的账号"
       left-arrow
       @click-left="onClickLeft"
       :class="$style.navbar"
@@ -138,6 +138,10 @@ const onItemClick = (item) => {
     .van-nav-bar__arrow {
       color: #323233;
       font-size: 18px;
+    }
+
+    .van-icon {
+      color: #323233 !important;
     }
   }
 }
