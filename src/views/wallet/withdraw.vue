@@ -29,10 +29,19 @@
 
       <!-- 提现账户 -->
       <div :class="$style.formGroup">
-        <div :class="$style.formItem" @click="showAccountPicker = true">
+        <div 
+          :class="$style.formItem"
+          @click="onAccountClick"
+        >
           <span :class="$style.label">提现账户</span>
           <div :class="$style.value">
-            <span :class="$style.text">{{ selectedAccount ? `${selectedAccount.name} (${selectedAccount.number})` : '请选择' }}</span>
+            <template v-if="hasAccount">
+              <span :class="$style.text">{{ accountInfo.label }}</span>
+              <span :class="$style.accountDetail">{{ accountInfo.account }}</span>
+            </template>
+            <template v-else>
+              <span :class="$style.text">未设置</span>
+            </template>
             <van-icon name="arrow" />
           </div>
         </div>
@@ -48,21 +57,6 @@
         确认提现
       </van-button>
     </div>
-
-    <!-- 账户选择器 -->
-    <van-popup
-      v-model:show="showAccountPicker"
-      position="bottom"
-      round
-    >
-      <van-picker
-        :columns="accountColumns"
-        @confirm="onAccountConfirm"
-        @cancel="showAccountPicker = false"
-        :default-index="defaultAccountIndex"
-        show-toolbar
-      />
-    </van-popup>
   </div>
 </template>
 
@@ -76,37 +70,17 @@ const router = useRouter()
 // 表单数据
 const form = ref({
   amount: '',
-  accountId: ''
 })
 
-// 账户数据
-const accounts = ref([
-  {
-    id: 1,
-    name: '工商银行',
-    number: '****1234'
-  },
-  {
-    id: 2,
-    name: '建设银行',
-    number: '****5678'
-  }
-])
-
-// 账户选择器
-const showAccountPicker = ref(false)
-const selectedAccount = ref(accounts.value[0])
-form.value.accountId = selectedAccount.value?.id
-
-// 账户选择器数据
-const accountColumns = computed(() => {
-  return accounts.value.map(account => ({
-    text: `${account.name} (${account.number})`,
-    value: account
-  }))
+// 账户信息
+const accountInfo = ref({
+  type: 'gcash',
+  label: 'GCASH',
+  account: '0912****678',
+  name: '张三'
 })
 
-const defaultAccountIndex = ref(0)
+const hasAccount = computed(() => !!accountInfo.value)
 
 // 事件处理
 const onClickLeft = () => {
@@ -117,10 +91,18 @@ const onWithdrawAll = () => {
   form.value.amount = '1234.56'
 }
 
-const onAccountConfirm = (value) => {
-  selectedAccount.value = value.selectedOptions[0].value
-  form.value.accountId = selectedAccount.value.id
-  showAccountPicker.value = false
+const onAccountClick = () => {
+  if (hasAccount.value) {
+    router.push({
+      path: '/wallet/accounts',
+      query: { mode: 'preview' }
+    })
+  } else {
+    router.push({
+      path: '/wallet/accounts',
+      query: { mode: 'add' }
+    })
+  }
 }
 
 const onSubmit = () => {
@@ -128,13 +110,13 @@ const onSubmit = () => {
     showToast('请输入提现金额')
     return
   }
-  if (!form.value.accountId) {
-    showToast('请选择提现账户')
+  if (!hasAccount.value) {
+    showToast('请先设置提现账户')
     return
   }
 
   showToast('提现申请已提交')
-  router.push('/wallet/accounts')
+  router.back()
 }
 </script>
 
@@ -254,6 +236,12 @@ const onSubmit = () => {
     .text {
       font-size: 14px;
       color: #323233;
+    }
+
+    .accountDetail {
+      font-size: 14px;
+      color: #969799;
+      margin-left: 8px;
     }
 
     .van-icon {
