@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-03 14:13:07
+ * @LastEditTime: 2025-03-15 20:56:34
  * @Description: 登录页
  -->
 <script setup>
@@ -11,6 +11,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/stores/user'
 import { showToast } from 'vant'
+import { handleApiError } from '@/utils/error'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -19,17 +20,22 @@ const { t, locale } = useI18n()
 // 当前登录方式
 const activeTab = ref(0)
 
+// 监听登录方式变化
+const onTabChange = (index) => {
+  // 切换登录方式时清空账号字段
+  formData.memberAccount = ''
+}
+
 // 表单数据
 const formData = reactive({
-  phone: '',
-  email: '',
+  memberAccount: '',
   password: '',
   areaCode: '86',
   agreed: false
 })
 
 // 提交登录
-const onSubmit = () => {
+const onSubmit = async () => {
   if (!formData.agreed) {
     showToast(t('login.agreementRequired'))
     return
@@ -39,8 +45,35 @@ const onSubmit = () => {
     return
   }
 
-  userStore.setToken('mock_token')
-  router.push('/')
+  // 根据当前选中的标签页确定登录类型
+  const loginType = activeTab.value === 0 ? 'phone' : 'email'
+  
+  // 验证必填字段
+  if (!formData.memberAccount) {
+    showToast(loginType === 'phone' ? t('login.phoneRequired') : t('login.emailRequired'))
+    return
+  }
+
+  try {
+    // 准备登录数据
+    const loginData = {
+      loginType,
+      memberAccount: formData.memberAccount,
+      password: formData.password
+    }
+
+    // 如果是手机号登录，添加区号
+    if (loginType === 'phone') {
+      loginData.areaCode = formData.areaCode
+    }
+
+    // 调用登录 API
+    await userStore.login(loginData)
+    showToast(t('login.loginSuccess'))
+    router.push('/')
+  } catch (error) {
+    handleApiError(error, showToast)
+  }
 }
 
 // 切换语言
@@ -56,12 +89,12 @@ const toggleLang = () => {
       <h1>{{ t('login.title') }}</h1>
     </div>
 
-    <van-tabs v-model:active="activeTab" :class="$style.tabs">
+    <van-tabs v-model:active="activeTab" :class="$style.tabs" @change="onTabChange">
       <van-tab :title="t('login.phoneLogin')">
         <van-form @submit="onSubmit">
           <van-cell-group inset>
             <van-field
-              v-model="formData.phone"
+              v-model="formData.memberAccount"
               :label="t('login.phone')"
               :placeholder="t('login.phonePlaceholder')"
               :rules="[{ required: true, message: t('login.phoneRequired') }]"
@@ -85,7 +118,7 @@ const toggleLang = () => {
         <van-form @submit="onSubmit">
           <van-cell-group inset>
             <van-field
-              v-model="formData.email"
+              v-model="formData.memberAccount"
               :label="t('login.email')"
               :placeholder="t('login.emailPlaceholder')"
               :rules="[{ required: true, message: t('login.emailRequired') }]"

@@ -7,11 +7,11 @@
           round
           width="50"
           height="50"
-          :src="userInfo.avatar"
+          :src="userInfo.avatar || 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'"
         />
         <div :class="$style.userMeta">
-          <div :class="$style.userName">{{ userInfo.name }}</div>
-          <div :class="$style.userId">账号: {{ userInfo.id }}</div>
+          <div :class="$style.userName">{{ userInfo.name || '未登录' }}</div>
+          <div :class="$style.userId">账号: {{ userInfo.id || '---' }}</div>
         </div>
       </div>
       <van-icon name="arrow" :class="$style.arrow" />
@@ -79,18 +79,55 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/user'
+import { showToast, showDialog } from 'vant'
+import { handleApiError } from '@/utils/error'
 
 const router = useRouter()
+const userStore = useUserStore()
 
 // 用户信息
 const userInfo = ref({
-  id: '888888',
-  name: '张三',
-  avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-  totalEarnings: '1,234.56',
-  availableBalance: '123.45'
+  id: '',
+  name: '',
+  avatar: '',
+  totalEarnings: '0.00',
+  availableBalance: '0.00'
+})
+
+// 获取用户信息
+const fetchUserInfo = async () => {
+  try {
+    // 如果 store 中已有用户信息，则直接使用
+    if (userStore.userInfo) {
+      userInfo.value = {
+        id: userStore.userInfo.id,
+        name: userStore.userInfo.nickname,
+        avatar: userStore.userInfo.avatar,
+        totalEarnings: '0.00', // 这些数据可能需要从其他 API 获取
+        availableBalance: '0.00'
+      }
+    } else {
+      // 否则从 API 获取
+      await userStore.fetchUserInfo()
+      userInfo.value = {
+        id: userStore.userInfo.id,
+        name: userStore.userInfo.nickname,
+        avatar: userStore.userInfo.avatar,
+        totalEarnings: '0.00',
+        availableBalance: '0.00'
+      }
+    }
+  } catch (error) {
+    handleApiError(error, showToast)
+  }
+}
+
+// 页面加载时获取用户信息
+onMounted(() => {
+  fetchUserInfo()
 })
 </script>
 

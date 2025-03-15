@@ -108,9 +108,14 @@ const onLogout = () => {
     showCancelButton: true,
     confirmButtonText: t('settings.logout'),
     cancelButtonText: t('common.cancel')
-  }).then(() => {
-    userStore.logout()
-    router.replace('/login')
+  }).then(async () => {
+    try {
+      await userStore.logout()
+      showToast('退出登录成功')
+      router.push('/login')
+    } catch (error) {
+      handleApiError(error, showToast)
+    }
   })
 }
 </script>
