@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 15:58:57
+ * @LastEditTime: 2025-03-16 19:32:31
  * @Description: 首页
  -->
 <script setup>
@@ -36,8 +36,8 @@ const onLoad = async () => {
   }
   try {
     const res = await get('task.list', {
-      page,
-      pageSize,
+      page: page.value,
+      pageSize: pageSize.value,
       channelId: activeChannelId.value,
     })
     list.value = res.data.list
@@ -61,6 +61,7 @@ const onRefresh = () => {
 
 // 切换平台
 const onChannelChange = (index) => {
+  activeChannelId.value = channelList.value[index].id
   list.value = []
   finished.value = false
   loading.value = true
@@ -78,7 +79,7 @@ const getChannelList = async () => {
       page: 1,
       pageSize: 100,
     })
-    channelList.value = res.data.list
+    channelList.value = res.data || []
     activeChannelId.value = channelList.value[0].id
   } catch (error) {
     console.log(error)
@@ -116,7 +117,6 @@ onMounted(() => {
           v-model:loading="loading"
           v-model:finished="finished"
           :finished-text="t('home.finishedText')"
-          @load="onLoad"
         >
           <div 
             v-for="item in list"
