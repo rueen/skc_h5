@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:35:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 10:21:41
+ * @LastEditTime: 2025-03-16 10:38:36
  * @Description: API 请求工具
  */
 
@@ -11,6 +11,10 @@ import { showToast } from 'vant'
 import config from '@/config/env'
 import { mockRequest } from './mock'
 import filterEmptyParams from './filterEmptyParams'
+import { useRoute, useRouter } from 'vue-router'
+
+const route = useRoute()
+const router = useRouter()
 
 const service = axios.create({
   baseURL: config.baseUrl,
@@ -54,9 +58,10 @@ service.interceptors.response.use(
   error => {
     // 如果是未登录状态，则跳转到登录页
     if(error.response.status === 401){
-      showToast('登录已过期，请重新登录')
       localStorage.removeItem('token')
-      window.location.href = '/login'
+      if (route.name !== 'Login') {
+        router.push('/login')
+      }
     }
     console.error('响应错误:', error)
     return Promise.reject(new Error(error.response.data.message || '未知错误'))
