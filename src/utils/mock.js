@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:30:15
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 15:29:45
+ * @LastEditTime: 2025-03-16 15:55:23
  * @Description: 模拟数据工具
  */
 
@@ -10,6 +10,53 @@ import config from '@/config/env';
 
 // 模拟数据映射
 const mockData = {
+  'task.list': ({
+    channelId,
+    page,
+    pageSize,
+  }) => {
+    return {
+      code: 0,
+      message: '获取任务列表成功',
+      data: {
+        total: 2,
+        list: [
+          {
+            id: 3,
+            taskName: "任务2",
+            taskStatus: "not_started",
+            channelId: 5,
+            channelName: "Instagram",
+            channelIcon: "http://localhost:3002/uploads/1742035638017-828581327.png",
+            reward: "100.00",
+            category: "旅行",
+            taskType: "image_text",
+            fansRequired: "3000万+",
+            startTime: "2025-03-16 07:34:52",
+            endTime: "2025-03-16 15:36:20",
+            createTime: "2025-03-16 15:36:20",
+          },
+          {
+            id: 4,
+            taskName: "任务1",
+            taskStatus: "not_started",
+            channelId: 6,
+            channelName: "facebook",
+            channelIcon: "http://localhost:3002/uploads/1742035626488-171861483.png",
+            reward: "100.00",
+            category: "宝妈",
+            taskType: "image_text",
+            fansRequired: "3000万+",
+            startTime: "2025-03-16 07:34:52",
+            endTime: "2025-03-16 15:36:20",
+            createTime: "2025-03-16 15:36:20",
+          },
+        ],
+        page: 1,
+        pageSize: 10,
+      },
+    };
+  },
   'channel.list': (params) => {
     return {
       code: 0,

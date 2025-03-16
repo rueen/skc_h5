@@ -2,13 +2,12 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 14:59:33
+ * @LastEditTime: 2025-03-16 15:58:57
  * @Description: 首页
  -->
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { showToast } from 'vant'
 import { useRouter } from 'vue-router'
 import { get } from '@/utils/request'
 
@@ -16,78 +15,41 @@ const { t } = useI18n()
 const router = useRouter()
 
 // 当前选中的平台
-const activePlatform = ref(0)
+const activeChannelId = ref(0)
 
 // 平台列表
 const channelList = ref([])
 
 // 列表数据
+const page = ref(1)
+const pageSize = ref(10)
 const list = ref([])
 const loading = ref(false)
 const finished = ref(false)
 const refreshing = ref(false)
 
-// 模拟数据
-const mockData = [
-  {
-    id: 1,
-    title: '测评新款化妆品测评新款化妆品',
-    price: 1500,
-    remainingSlots: 3,
-    category: '美妆/护肤',
-    deadline: '2025-03-10',
-    taskType: '图文',
-    followers: '10w+',
-    image: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-  },
-  {
-    id: 2,
-    title: '亲子互动玩具测评',
-    price: 2000,
-    remainingSlots: 5,
-    category: '母婴/亲子',
-    deadline: '2025-03-15',
-    taskType: '视频',
-    followers: '100w+',
-    image: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-  },
-  {
-    id: 3,
-    title: '新品零食开箱试吃',
-    price: 1000,
-    remainingSlots: 2,
-    category: '美食/饮品',
-    deadline: '2025-03-08',
-    taskType: '图文',
-    followers: '50w+',
-    image: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-  }
-]
-
 // 加载数据
-const onLoad = () => {
-  // 模拟异步加载
-  setTimeout(() => {
-    if (refreshing.value) {
-      list.value = []
-      refreshing.value = false
-    }
-
-    for (let i = 0; i < 10; i++) {
-      const item = mockData[Math.floor(Math.random() * mockData.length)]
-      list.value.push({
-        ...item,
-        id: list.value.length + 1
-      })
-    }
-
+const onLoad = async () => {
+  if (refreshing.value) {
+    list.value = []
+    refreshing.value = false
+  }
+  try {
+    const res = await get('task.list', {
+      page,
+      pageSize,
+      channelId: activeChannelId.value,
+    })
+    list.value = res.data.list
     loading.value = false
-
-    // 模拟数据加载完毕
-    if (list.value.length >= 40) {
+    finished.value = res.data.total <= list.value.length
+    refreshing.value = false
+    if (list.value.length >= res.data.total) {
       finished.value = true
     }
-  }, 1000)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 下拉刷新
@@ -98,7 +60,7 @@ const onRefresh = () => {
 }
 
 // 切换平台
-const onPlatformChange = (index) => {
+const onChannelChange = (index) => {
   list.value = []
   finished.value = false
   loading.value = true
@@ -117,8 +79,9 @@ const getChannelList = async () => {
       pageSize: 100,
     })
     channelList.value = res.data.list
+    activeChannelId.value = channelList.value[0].id
   } catch (error) {
-    showToast(error.message)
+    console.log(error)
   }
 }
 
@@ -133,10 +96,10 @@ onMounted(() => {
     <!-- 平台选择标签 -->
     <div :class="$style.tabsWrapper">
       <van-tabs
-        v-model:active="activePlatform"
+        v-model:active="activeChannelId"
         :class="$style.platformTabs"
         swipeable
-        @change="onPlatformChange"
+        @change="onChannelChange"
       >
         <van-tab 
           v-for="channel in channelList" 
@@ -164,17 +127,17 @@ onMounted(() => {
             <div :class="$style.mainContent">
               <div :class="$style.header">
                 <img 
-                  src="@/assets/icon/Facebook.png" 
+                  :src="item.channelIcon" 
                   :class="$style.platformIcon"
                   alt="platform"
                 />
-                <h3>{{ item.title }}</h3>
+                <h3>{{ item.taskName }}</h3>
               </div>
               
               <div :class="$style.contentRow">
                 <div :class="$style.leftContent">
                   <div :class="$style.price">
-                    {{ formatPrice(item.price) }}
+                    {{ formatPrice(item.reward) }}
                   </div>
                   <div :class="$style.tags">
                     <van-tag
@@ -187,7 +150,7 @@ onMounted(() => {
                       type="warning"
                       :class="$style.followers"
                     >
-                      {{ item.followers }}
+                      {{ item.fansRequired }}
                     </van-tag>
                   </div>
                 </div>
@@ -203,20 +166,10 @@ onMounted(() => {
                   </div>
                   <div :class="$style.infoItem">
                     <span :class="$style.label">截止日期：</span>
-                    <span :class="$style.value">{{ item.deadline }}</span>
+                    <span :class="$style.value">{{ item.endTime }}</span>
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div :class="$style.image">
-              <van-image
-                width="90"
-                height="90"
-                fit="cover"
-                :src="item.image"
-                radius="4"
-              />
             </div>
           </div>
         </van-list>
@@ -397,13 +350,5 @@ onMounted(() => {
   .value {
     color: #323233;
   }
-}
-
-.image {
-  width: 90px;
-  height: 90px;
-  flex-shrink: 0;
-  border-radius: 4px;
-  overflow: hidden;
 }
 </style> 
