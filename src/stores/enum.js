@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-16 20:34:47
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 20:48:40
+ * @LastEditTime: 2025-03-16 21:11:07
  * @Description: 
  */
 import { defineStore } from 'pinia'
@@ -10,7 +10,8 @@ import { getEnumAll } from '@/utils/enum'
 
 export const useEnumStore = defineStore('enum', {
   state: () => ({
-    enumJson: {}
+    allEnum: {},
+    arrEnum: {}
   }),
 
   actions: {
@@ -24,8 +25,10 @@ export const useEnumStore = defineStore('enum', {
           _json[item.value] = item.text
         })
         json[key] = _json
+        this[key] = _json
+        this.arrEnum[key] = Object.values(value)
       })
-      this.enumJson = json
+      this.allEnum = json
     }
   }
 })

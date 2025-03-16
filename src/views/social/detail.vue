@@ -22,7 +22,7 @@
             @click="showPlatformPicker = true"
           >
             <span :class="[$style.text, !form.platform && $style.placeholder]">
-              {{ form.platform ? ChannelText[form.platform] : '请选择平台' }}
+              {{ form.platform ? form.platform : '请选择平台' }}
             </span>
             <van-icon name="arrow" />
           </div>
@@ -114,11 +114,9 @@
 import { ref, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { showToast, showDialog } from 'vant'
-import { Channel, ChannelText } from '@/constants/enums'
 
 const route = useRoute()
 const router = useRouter()
-
 // 是否是新建账号
 const isNew = computed(() => route.params.id === 'new')
 
@@ -162,11 +160,16 @@ if (!isNew.value) {
 
 // 平台选择器
 const showPlatformPicker = ref(false)
-const platformColumns = Object.entries(Channel).map(([_, value]) => ({
-  text: ChannelText[value],
-  value
-}))
-
+const platformColumns = [{
+  text: 'Facebook',
+  value: 'Facebook'
+}, {
+  text: 'Twitter',
+  value: 'Twitter'
+}, {
+  text: 'Instagram',
+  value: 'Instagram'
+}]
 // 选择平台
 const onPlatformConfirm = ({ selectedOptions }) => {
   form.value.platform = selectedOptions[0].value

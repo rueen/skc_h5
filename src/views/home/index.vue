@@ -2,9 +2,96 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 20:50:21
+ * @LastEditTime: 2025-03-16 21:04:52
  * @Description: 首页
  -->
+
+<template>
+  <div :class="$style.homePage">
+    <!-- 平台选择标签 -->
+    <div :class="$style.tabsWrapper">
+      <van-tabs
+        v-model:active="activeChannelId"
+        :class="$style.platformTabs"
+        swipeable
+        @change="onChannelChange"
+      >
+        <van-tab 
+          v-for="channel in channelList" 
+          :key="channel.id"
+          :title="channel.name"
+        />
+      </van-tabs>
+    </div>
+
+    <!-- 列表内容区域 -->
+    <div :class="$style.content">
+      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+        <van-list
+          v-model:loading="loading"
+          v-model:finished="finished"
+          :finished-text="t('home.finishedText')"
+        >
+          <div 
+            v-for="item in list"
+            :key="item.id"
+            :class="$style.listItem"
+            @click="router.push(`/tasks/detail/${item.id}`)"
+          >
+            <div :class="$style.mainContent">
+              <div :class="$style.header">
+                <img 
+                  :src="item.channelIcon" 
+                  :class="$style.platformIcon"
+                  alt="platform"
+                />
+                <h3>{{ item.taskName }}</h3>
+              </div>
+              
+              <div :class="$style.contentRow">
+                <div :class="$style.leftContent">
+                  <div :class="$style.price">
+                    {{ formatPrice(item.reward) }}
+                  </div>
+                  <div :class="$style.tags">
+                    <van-tag
+                      type="primary" 
+                      :class="$style.taskType"
+                    >
+                      {{ enumStore.TaskType[item.taskType] }}
+                    </van-tag>
+                    <van-tag
+                      type="warning"
+                      :class="$style.followers"
+                    >
+                      {{ item.fansRequired }}
+                    </van-tag>
+                  </div>
+                </div>
+
+                <div :class="$style.info">
+                  <div :class="$style.infoItem">
+                    <span :class="$style.label">剩余名额：</span>
+                    <span :class="$style.value">{{ item.remainingSlots }}</span>
+                  </div>
+                  <div :class="$style.infoItem">
+                    <span :class="$style.label">达人领域：</span>
+                    <span :class="$style.value">{{ item.category }}</span>
+                  </div>
+                  <div :class="$style.infoItem">
+                    <span :class="$style.label">截止日期：</span>
+                    <span :class="$style.value">{{ item.endTime }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </van-list>
+      </van-pull-refresh>
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -93,92 +180,6 @@ onMounted(() => {
   getChannelList()
 })
 </script>
-
-<template>
-  <div :class="$style.homePage">
-    <!-- 平台选择标签 -->
-    <div :class="$style.tabsWrapper">
-      <van-tabs
-        v-model:active="activeChannelId"
-        :class="$style.platformTabs"
-        swipeable
-        @change="onChannelChange"
-      >
-        <van-tab 
-          v-for="channel in channelList" 
-          :key="channel.id"
-          :title="channel.name"
-        />
-      </van-tabs>
-    </div>
-
-    <!-- 列表内容区域 -->
-    <div :class="$style.content">
-      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-        <van-list
-          v-model:loading="loading"
-          v-model:finished="finished"
-          :finished-text="t('home.finishedText')"
-        >
-          <div 
-            v-for="item in list"
-            :key="item.id"
-            :class="$style.listItem"
-            @click="router.push(`/tasks/detail/${item.id}`)"
-          >
-            <div :class="$style.mainContent">
-              <div :class="$style.header">
-                <img 
-                  :src="item.channelIcon" 
-                  :class="$style.platformIcon"
-                  alt="platform"
-                />
-                <h3>{{ item.taskName }}</h3>
-              </div>
-              
-              <div :class="$style.contentRow">
-                <div :class="$style.leftContent">
-                  <div :class="$style.price">
-                    {{ formatPrice(item.reward) }}
-                  </div>
-                  <div :class="$style.tags">
-                    <van-tag
-                      type="primary" 
-                      :class="$style.taskType"
-                    >
-                      {{ enumStore.enumJson.TaskType[item.taskType] }}
-                    </van-tag>
-                    <van-tag
-                      type="warning"
-                      :class="$style.followers"
-                    >
-                      {{ item.fansRequired }}
-                    </van-tag>
-                  </div>
-                </div>
-
-                <div :class="$style.info">
-                  <div :class="$style.infoItem">
-                    <span :class="$style.label">剩余名额：</span>
-                    <span :class="$style.value">{{ item.remainingSlots }}</span>
-                  </div>
-                  <div :class="$style.infoItem">
-                    <span :class="$style.label">达人领域：</span>
-                    <span :class="$style.value">{{ item.category }}</span>
-                  </div>
-                  <div :class="$style.infoItem">
-                    <span :class="$style.label">截止日期：</span>
-                    <span :class="$style.value">{{ item.endTime }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </van-list>
-      </van-pull-refresh>
-    </div>
-  </div>
-</template>
 
 <style lang="less" module>
 .homePage {

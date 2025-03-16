@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-03 14:48:50
+ * @LastEditTime: 2025-03-16 21:13:54
  * @Description: 
 -->
 <template>
@@ -74,14 +74,14 @@
           <template v-if="isEdit">
             <div :class="$style.value" @click="showOccupationPicker = true">
               <span :class="[$style.text, $style.pickerValue]">
-                {{ form.occupation ? getLangText(OccupationTypeLang, form.occupation) : '请选择' }}
+                {{ form.occupation ? enumStore.OccupationType[form.occupation] : '请选择' }}
               </span>
               <van-icon name="arrow" />
             </div>
           </template>
           <div v-else :class="$style.value">
             <span :class="$style.text">
-              {{ form.occupation ? getLangText(OccupationTypeLang, form.occupation) : '未设置' }}
+              {{ form.occupation ? enumStore.OccupationType[form.occupation] : '未设置' }}
             </span>
           </div>
         </div>
@@ -202,9 +202,10 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
 import { areaList } from '@vant/area-data'
-import { OccupationType, OccupationTypeLang, getLangText } from '@/constants/enums'
+import { useEnumStore } from '@/stores'
 
 const router = useRouter()
+const enumStore = useEnumStore()
 
 // 编辑状态
 const isEdit = ref(false)
@@ -233,10 +234,7 @@ const genderOptions = [
 ]
 
 // 职业类型选项
-const occupationColumns = Object.entries(OccupationType).map(([_, value]) => ({
-  text: getLangText(OccupationTypeLang, value),
-  value
-}))
+const occupationColumns = enumStore.arrEnum.OccupationType
 
 // 邀请链接
 const inviteLink = 'https://skc.com/invite/abc123'
