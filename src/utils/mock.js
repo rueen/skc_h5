@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:30:15
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 14:53:22
+ * @LastEditTime: 2025-03-16 15:29:45
  * @Description: 模拟数据工具
  */
 
@@ -34,6 +34,19 @@ const mockData = {
         ],
         page: 1,
         pageSize: 10,
+      },
+    };
+  },
+  'user.info': (params) => {
+    return {
+      code: 0,
+      message: '获取用户信息成功',
+      data: {
+        avatar: '',
+        id: 9,
+        loginType: 'phone',
+        memberAccount: '13211111111',
+        nickname: '用户317448'
       },
     };
   },

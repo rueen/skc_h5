@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:25:10
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 14:48:28
+ * @LastEditTime: 2025-03-16 15:28:59
  * @Description: 环境配置文件
  */
 
@@ -34,7 +34,7 @@ const IMAGE_UPLOAD_URL_ENV = IMAGE_UPLOAD_URL[process.env.NODE_ENV || 'developme
 // 模拟数据配置
 const MOCK_CONFIG = {
   // 是否启用模拟数据（仅在开发环境启用）
-  enable: false,
+  enable: true,
   // 模拟数据延迟时间（毫秒）
   delay: 300,
 };
