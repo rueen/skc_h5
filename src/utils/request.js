@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:35:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 10:58:28
+ * @LastEditTime: 2025-03-16 15:15:46
  * @Description: API 请求工具
  */
 
@@ -11,10 +11,6 @@ import { showToast } from 'vant'
 import config from '@/config/env'
 import { mockRequest } from './mock'
 import filterEmptyParams from './filterEmptyParams'
-import { useRoute, useRouter } from 'vue-router'
-
-const route = useRoute()
-const router = useRouter()
 
 const service = axios.create({
   baseURL: config.baseUrl,
