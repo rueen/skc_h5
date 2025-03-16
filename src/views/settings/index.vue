@@ -114,7 +114,7 @@ const onLogout = () => {
       showToast('退出登录成功')
       router.push('/login')
     } catch (error) {
-      handleApiError(error, showToast)
+      showToast(error)
     }
   })
 }

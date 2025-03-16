@@ -83,7 +83,6 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { showToast, showDialog } from 'vant'
-import { handleApiError } from '@/utils/error'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -121,7 +120,7 @@ const fetchUserInfo = async () => {
       }
     }
   } catch (error) {
-    handleApiError(error, showToast)
+    showToast(error.message)
   }
 }
 

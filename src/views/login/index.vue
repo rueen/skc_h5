@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-15 20:56:34
+ * @LastEditTime: 2025-03-16 09:46:16
  * @Description: 登录页
  -->
 <script setup>
@@ -11,7 +11,6 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/stores/user'
 import { showToast } from 'vant'
-import { handleApiError } from '@/utils/error'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -72,7 +71,7 @@ const onSubmit = async () => {
     showToast(t('login.loginSuccess'))
     router.push('/')
   } catch (error) {
-    handleApiError(error, showToast)
+    showToast(error.message)
   }
 }
 
