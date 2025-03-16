@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 19:32:31
+ * @LastEditTime: 2025-03-16 20:50:21
  * @Description: 首页
  -->
 <script setup>
@@ -10,9 +10,11 @@ import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { get } from '@/utils/request'
+import { useEnumStore } from '@/stores'
 
 const { t } = useI18n()
 const router = useRouter()
+const enumStore = useEnumStore()
 
 // 当前选中的平台
 const activeChannelId = ref(0)
@@ -144,7 +146,7 @@ onMounted(() => {
                       type="primary" 
                       :class="$style.taskType"
                     >
-                      {{ item.taskType }}
+                      {{ enumStore.enumJson.TaskType[item.taskType] }}
                     </van-tag>
                     <van-tag
                       type="warning"
