@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:25:10
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 15:28:59
+ * @LastEditTime: 2025-03-16 19:18:15
  * @Description: 环境配置文件
  */
 
@@ -14,27 +14,36 @@ const isDev = process.env.NODE_ENV === 'development';
 // API 基础路径配置
 const API_BASE = {
   // 开发环境 API 基础路径
-  development: 'http://localhost:3001/api/h5',
+  development: 'http://localhost:3001',
   // 生产环境 API 基础路径
-  production: 'https://api.example.com/api',
+  production: 'https://api.example.com',
 };
 
-// 图片上传路径配置
-const IMAGE_UPLOAD_URL = {
-  development: 'http://localhost:3001/api/upload/image',
-  production: 'https://api.example.com/api/upload/image',
+// 公共 API 路径配置（用于图片上传、获取枚举常量等）
+const PUBLIC_API_PATH = {
+  development: '/api',
+  production: '/api',
 };
 
-// 当前环境的 API 基础路径
+// 业务 API 路径配置
+const BUSINESS_API_PATH = {
+  development: '/api/h5',
+  production: '/api/h5',
+};
+
+// 当前环境的基础 API 路径
 const BASE_URL = API_BASE[process.env.NODE_ENV || 'development'];
 
-// 当前环境的图片上传路径
-const IMAGE_UPLOAD_URL_ENV = IMAGE_UPLOAD_URL[process.env.NODE_ENV || 'development'];
+// 当前环境的公共 API 路径
+const PUBLIC_API_URL = BASE_URL + PUBLIC_API_PATH[process.env.NODE_ENV || 'development'];
+
+// 当前环境的业务 API 路径
+const BUSINESS_API_URL = BASE_URL + BUSINESS_API_PATH[process.env.NODE_ENV || 'development'];
 
 // 模拟数据配置
 const MOCK_CONFIG = {
   // 是否启用模拟数据（仅在开发环境启用）
-  enable: true,
+  enable: false,
   // 模拟数据延迟时间（毫秒）
   delay: 300,
 };
@@ -42,11 +51,15 @@ const MOCK_CONFIG = {
 // 导出配置
 export default {
   // 当前环境
-  isDev: true,
-  // API 基础路径
+  isDev,
+  // 基础 API 路径
   baseUrl: BASE_URL,
+  // 公共 API 路径（用于图片上传、获取枚举常量等）
+  publicApiUrl: PUBLIC_API_URL,
+  // 业务 API 路径（用于业务接口）
+  businessApiUrl: BUSINESS_API_URL,
   // 图片上传路径
-  imageUploadUrl: IMAGE_UPLOAD_URL_ENV,
+  imageUploadUrl: `${PUBLIC_API_URL}/upload/image`,
   // API 路径
   api: API_PATH,
   // 模拟数据配置
