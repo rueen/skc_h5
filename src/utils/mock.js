@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:30:15
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-15 21:38:26
+ * @LastEditTime: 2025-03-16 14:53:22
  * @Description: 模拟数据工具
  */
 
@@ -10,6 +10,33 @@ import config from '@/config/env';
 
 // 模拟数据映射
 const mockData = {
+  'channel.list': (params) => {
+    return {
+      code: 0,
+      message: '获取渠道列表成功',
+      data: {
+        total: 100,
+        list: [
+          {
+            createTime: '2025-03-13 16:28:04',
+            icon: 'http://localhost:3002/uploads/1742035626488-171861483.png',
+            id: 6,
+            name: 'facebook',
+            updateTime: '2025-03-15 18:47:07',
+          },
+          {
+            createTime: '2025-03-13 16:27:55',
+            icon: 'http://localhost:3002/uploads/1742035638017-828581327.png',
+            id: 5,
+            name: 'Instagram',
+            updateTime: '2025-03-15 18:47:19',
+          }
+        ],
+        page: 1,
+        pageSize: 10,
+      },
+    };
+  },
   'auth.login': (params) => {
     return {
       code: 0,

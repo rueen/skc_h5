@@ -2,14 +2,15 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 21:29:21
+ * @LastEditTime: 2025-03-16 14:59:33
  * @Description: 首页
  -->
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { showToast } from 'vant'
 import { useRouter } from 'vue-router'
+import { get } from '@/utils/request'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -18,15 +19,7 @@ const router = useRouter()
 const activePlatform = ref(0)
 
 // 平台列表
-const platforms = [
-  { name: t('home.all'), id: 'all' },
-  { name: 'Facebook', id: 'facebook' },
-  { name: 'Instagram', id: 'instagram' },
-  { name: 'Tiktok', id: 'tiktok' },
-  { name: 'YouTube', id: 'youtube' },
-  { name: 'Twitter', id: 'twitter' },
-  { name: 'Pinterest', id: 'pinterest' }
-]
+const channelList = ref([])
 
 // 列表数据
 const list = ref([])
@@ -117,10 +110,22 @@ const formatPrice = (price) => {
   return `¥${price}`
 }
 
-// 格式化日期
-const formatDate = (date) => {
-  return `截止：${date}`
+const getChannelList = async () => {
+  try {
+    const res = await get('channel.list', {
+      page: 1,
+      pageSize: 100,
+    })
+    channelList.value = res.data.list
+  } catch (error) {
+    showToast(error.message)
+  }
 }
+
+// 初始化
+onMounted(() => {
+  getChannelList()
+})
 </script>
 
 <template>
@@ -134,9 +139,9 @@ const formatDate = (date) => {
         @change="onPlatformChange"
       >
         <van-tab 
-          v-for="platform in platforms" 
-          :key="platform.id"
-          :title="platform.name"
+          v-for="channel in channelList" 
+          :key="channel.id"
+          :title="channel.name"
         />
       </van-tabs>
     </div>

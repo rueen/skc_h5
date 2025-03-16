@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:25:10
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-15 21:47:41
+ * @LastEditTime: 2025-03-16 14:48:28
  * @Description: 环境配置文件
  */
 
@@ -42,7 +42,7 @@ const MOCK_CONFIG = {
 // 导出配置
 export default {
   // 当前环境
-  isDev,
+  isDev: true,
   // API 基础路径
   baseUrl: BASE_URL,
   // 图片上传路径
