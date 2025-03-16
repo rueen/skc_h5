@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 21:13:54
+ * @LastEditTime: 2025-03-16 21:19:35
  * @Description: 
 -->
 <template>
@@ -74,14 +74,14 @@
           <template v-if="isEdit">
             <div :class="$style.value" @click="showOccupationPicker = true">
               <span :class="[$style.text, $style.pickerValue]">
-                {{ form.occupation ? enumStore.OccupationType[form.occupation] : '请选择' }}
+                {{ form.occupation ? enumStore.jsonEnum.OccupationType[form.occupation] : '请选择' }}
               </span>
               <van-icon name="arrow" />
             </div>
           </template>
           <div v-else :class="$style.value">
             <span :class="$style.text">
-              {{ form.occupation ? enumStore.OccupationType[form.occupation] : '未设置' }}
+              {{ form.occupation ? enumStore.jsonEnum.OccupationType[form.occupation] : '未设置' }}
             </span>
           </div>
         </div>

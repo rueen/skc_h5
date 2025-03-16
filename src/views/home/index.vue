@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 21:04:52
+ * @LastEditTime: 2025-03-16 21:19:21
  * @Description: 首页
  -->
 
@@ -58,7 +58,7 @@
                       type="primary" 
                       :class="$style.taskType"
                     >
-                      {{ enumStore.TaskType[item.taskType] }}
+                      {{ enumStore.jsonEnum.TaskType[item.taskType] }}
                     </van-tag>
                     <van-tag
                       type="warning"
