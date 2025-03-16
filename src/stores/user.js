@@ -2,10 +2,11 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:10:49
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-15 22:46:15
+ * @LastEditTime: 2025-03-16 10:22:59
  * @Description: 
  */
 import { defineStore } from 'pinia'
+import { showToast } from 'vant'
 import { post, get } from '@/utils/request'
 
 export const useUserStore = defineStore('user', {
@@ -34,6 +35,7 @@ export const useUserStore = defineStore('user', {
           this.setToken(res.data.token)
           this.setUserInfo(res.data.userInfo)
         }
+        showToast(res.message)
         return res
       } catch (error) {
         console.error('登录失败:', error)

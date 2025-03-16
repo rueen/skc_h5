@@ -69,7 +69,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { showDialog } from 'vant'
+import { showDialog, showToast } from 'vant'
 import { useUserStore } from '../../stores/user'
 
 const router = useRouter()
