@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:35:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 10:38:36
+ * @LastEditTime: 2025-03-16 10:58:28
  * @Description: API 请求工具
  */
 
@@ -59,8 +59,11 @@ service.interceptors.response.use(
     // 如果是未登录状态，则跳转到登录页
     if(error.response.status === 401){
       localStorage.removeItem('token')
-      if (route.name !== 'Login') {
-        router.push('/login')
+      // 获取当前路径
+      const currentPath = window.location.pathname
+      // 如果不是登录页，则跳转到登录页
+      if (currentPath !== '/login') {
+        window.location.href = '/login'
       }
     }
     console.error('响应错误:', error)
