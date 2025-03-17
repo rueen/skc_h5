@@ -1,13 +1,13 @@
 /*
  * @Author: diaochan
  * @Date: 2025-03-16 12:35:20
- * @LastEditors: diaochan
- * @LastEditTime: 2025-03-16 12:35:20
+ * @LastEditors: rueen
+ * @LastEditTime: 2025-03-17 20:41:04
  * @Description: 上传工具函数
  */
 
 import { post } from './request'
-import { message } from 'ant-design-vue'
+import { showToast, closeToast } from 'vant'
 
 /**
  * 上传图片
@@ -19,14 +19,14 @@ export const uploadImage = async (file, options = {}) => {
   // 检查文件类型
   const isImage = file.type.startsWith('image/')
   if (!isImage) {
-    message.error('请上传图片文件')
+    showToast('请上传图片文件')
     return Promise.reject(new Error('文件类型错误，请上传图片文件'))
   }
   
   // 检查文件大小（默认限制为 5MB）
   const maxSize = options.maxSize || 5 * 1024 * 1024
   if (file.size > maxSize) {
-    message.error(`图片大小不能超过 ${maxSize / 1024 / 1024}MB`)
+    showToast(`图片大小不能超过 ${maxSize / 1024 / 1024}MB`)
     return Promise.reject(new Error(`文件过大，请上传小于 ${maxSize / 1024 / 1024}MB 的图片`))
   }
   
@@ -41,18 +41,29 @@ export const uploadImage = async (file, options = {}) => {
     })
   }
   
+  // 调试日志
+  console.log('上传图片FormData:', {
+    fileName: file.name,
+    fileType: file.type,
+    fileSize: file.size,
+    formDataEntries: [...formData.entries()].map(entry => ({ key: entry[0], value: entry[1] instanceof File ? `File: ${entry[1].name}` : entry[1] }))
+  })
+  
   try {
     // 使用公共 API 上传图片
     const res = await post('upload.image', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       },
+      // 确保不过滤FormData
+      filterEmpty: false,
       ...options
     })
     
     return res.data
   } catch (error) {
-    message.error('图片上传失败')
+    console.error('图片上传失败详情:', error)
+    showToast('图片上传失败')
     return Promise.reject(error)
   }
 }
@@ -67,7 +78,7 @@ export const uploadFile = async (file, options = {}) => {
   // 检查文件大小（默认限制为 10MB）
   const maxSize = options.maxSize || 10 * 1024 * 1024
   if (file.size > maxSize) {
-    message.error(`文件大小不能超过 ${maxSize / 1024 / 1024}MB`)
+    showToast(`文件大小不能超过 ${maxSize / 1024 / 1024}MB`)
     return Promise.reject(new Error(`文件过大，请上传小于 ${maxSize / 1024 / 1024}MB 的文件`))
   }
   
@@ -93,7 +104,7 @@ export const uploadFile = async (file, options = {}) => {
     
     return res.data
   } catch (error) {
-    message.error('文件上传失败')
+    showToast('文件上传失败')
     return Promise.reject(error)
   }
 }

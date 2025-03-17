@@ -3,7 +3,7 @@
     <!-- 用户信息 -->
     <div :class="$style.userInfo" @click="router.push('/profile/edit')">
       <div :class="$style.userHeader">
-        <avatar :avatar="userInfo.avatar" width="50px" height="50px" />
+        <avatar :avatar="userInfo.avatar" width="50px" height="50px" round />
         <div :class="$style.userMeta">
           <div :class="$style.userName">{{ userInfo.memberNickname || '未登录' }}</div>
           <div :class="$style.userId">账号: {{ userInfo.memberAccount || '---' }}</div>

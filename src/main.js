@@ -1,8 +1,8 @@
 /*
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
- * @LastEditors: diaochan
- * @LastEditTime: 2025-02-25 10:11:13
+ * @LastEditors: rueen
+ * @LastEditTime: 2025-03-17 20:20:05
  * @Description: 
  */
 import { createApp } from 'vue'
@@ -34,7 +34,8 @@ import {
   Dialog,
   NavBar,
   Picker,
-  Popup
+  Popup,
+  Uploader
 } from 'vant'
 
 const app = createApp(App)
@@ -63,5 +64,6 @@ app.use(Dialog)
 app.use(NavBar)
 app.use(Picker)
 app.use(Popup)
+app.use(Uploader)
 
 app.mount('#app')

@@ -2,12 +2,12 @@
  * @Author: diaochan
  * @Date: 2025-03-17 20:04:30
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-17 20:16:38
+ * @LastEditTime: 2025-03-17 21:07:09
  * @Description: 
 -->
 <template>
-  <div :class="$style.avatar" :style="{ width: width, height: height }">
-    <van-image :src="avatar" :width="width" :height="height" round v-if="avatar" />
+  <div :class="$style.avatar" :style="{ width: width, height: height, borderRadius: round ? '50%' : '0' }">
+    <van-image :src="avatar" :width="width" :height="height" :round="round" v-if="avatar" />
     <van-icon name="contact-o" :class="$style.avatarIcon" :style="{ fontSize: fontSize }" v-else />
   </div>
 </template>
@@ -30,7 +30,7 @@ const props = defineProps({
   },
   round: {
     type: Boolean,
-    default: true
+    default: false
   }
 })
 
@@ -42,7 +42,6 @@ const fontSize = computed(() => {
 <style lang="less" module>
 .avatar {
   background-color: #f1f1f1;
-  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;

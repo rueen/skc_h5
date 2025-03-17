@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-17 20:15:20
+ * @LastEditTime: 2025-03-17 21:16:58
  * @Description: 
 -->
 <template>
@@ -16,7 +16,7 @@
     >
       <template #right>
         <span :class="$style.navBtn" @click="onToggleEdit">
-          {{ isEdit ? '保存' : '编辑' }}
+          {{ isEdit ? '取消' : '编辑' }}
         </span>
       </template>
     </van-nav-bar>
@@ -27,8 +27,14 @@
         <div :class="$style.formItem">
           <span :class="$style.label">头像</span>
           <div :class="$style.value">
-            <avatar :avatar="form.avatar" width="40px" height="40px" />
-            <van-icon name="arrow" v-if="isEdit" />
+            <van-uploader
+              :max-count="1"
+              :after-read="afterRead"
+              v-model="avatarFile"
+              :class="$style.avatarUpload"
+              v-if="isEdit"
+            />
+            <avatar v-else :avatar="form.avatar" width="40px" height="40px" />
           </div>
         </div>
 
@@ -155,6 +161,12 @@
           </div>
         </div>
       </div>
+      <van-button 
+        block 
+        type="primary"
+        :class="$style.submitBtn"
+        @click="onSubmit"
+      >保存</van-button>
     </div>
 
     <!-- 性别选择器 -->
@@ -203,11 +215,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { showToast } from 'vant'
+import { showToast, closeToast } from 'vant'
 import { areaList } from '@vant/area-data'
 import { useUserStore, useEnumStore } from '@/stores'
 import { put } from '@/utils/request'
 import avatar from '@/components/avatar.vue'
+import { uploadImage } from '@/utils/upload'
 
 const router = useRouter()
 const enumStore = useEnumStore()
@@ -228,6 +241,9 @@ const form = ref({
   phone: userInfo.phone,
   telegram: userInfo.telegram
 })
+const avatarFile = ref([{
+  url: userInfo.avatar
+}])
 
 // 选择器相关
 const showGenderPicker = ref(false)
@@ -239,23 +255,63 @@ const genderOptions = enumStore.getEnumOptions('GenderType')
 // 职业类型选项
 const occupationColumns = enumStore.getEnumOptions('OccupationType')
 
+// 处理头像上传
+const afterRead = async (file) => {
+  // 移除调试日志
+  // console.log(file)
+  
+  // 检查文件对象
+  if (!file || !file.file) {
+    showToast('文件无效')
+    return
+  }
+  
+  // 打印文件信息以便调试
+  console.log('上传文件信息:', {
+    name: file.file.name,
+    type: file.file.type,
+    size: file.file.size,
+    lastModified: file.file.lastModified
+  })
+  
+  try {
+    // 显示上传中提示
+    showToast({
+      type: 'loading',
+      message: '上传中...',
+      forbidClick: true,
+      duration: 0
+    })
+    
+    // 调用上传图片接口
+    const result = await uploadImage(file.file)
+    
+    // 关闭上传中提示
+    closeToast()
+    
+    // 更新头像地址
+    if (result && result.url) {
+      form.value.avatar = result.url
+      showToast('上传成功')
+    } else {
+      console.error('头像上传返回数据异常:', result)
+      showToast('上传失败，返回数据异常')
+    }
+  } catch (error) {
+    // 关闭上传中提示
+    closeToast()
+    
+    console.error('头像上传失败:', error)
+    showToast('上传失败，请重试')
+  }
+}
+
 // 事件处理
 const onClickLeft = () => {
   router.back()
 }
 
 const onToggleEdit = async () => {
-  if (isEdit.value) {
-    // 保存数据
-    try {
-      const res = await put('member.update', form.value)
-      if (res.code === 0) {
-        showToast('保存成功')
-      }
-    } catch (error) {
-      showToast('保存失败')
-    }
-  }
   isEdit.value = !isEdit.value
 }
 
@@ -279,6 +335,33 @@ const handleCopy = (text) => {
   navigator.clipboard.writeText(text).then(() => {
     showToast('复制成功')
   })
+}
+
+const onSubmit = async () => {
+  if (isEdit.value) {
+    // 保存数据
+    try {
+      // 构建提交数据
+      const submitData = {
+        ...form.value,
+        // 确保头像字段名称正确
+        avatar: form.value.avatar || ''
+      }
+      
+      const res = await put('member.update', submitData)
+      if (res.code === 0) {
+        showToast('保存成功')
+        // 更新用户信息
+        userStore.setUserInfo({
+          ...userStore.userInfo,
+          ...submitData
+        })
+      }
+    } catch (error) {
+      console.error('保存个人信息失败:', error)
+      showToast('保存失败')
+    }
+  }
 }
 
 onMounted(async () => {
@@ -415,5 +498,15 @@ onMounted(async () => {
 .copyIcon {
   font-size: 16px;
   color: #969799;
+}
+
+.avatarUpload{
+  --van-uploader-size: 40px;
+  --van-padding-xs: 0;
+}
+
+.submitBtn {
+  --van-button-primary-background: var(--van-primary-color);
+  margin-top: 30px;
 }
 </style> 

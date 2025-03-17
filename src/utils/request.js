@@ -40,6 +40,23 @@ const setupInterceptors = (service) => {
       if (token) {
         config.headers['Authorization'] = `Bearer ${token}`
       }
+      
+      // 如果是FormData类型的请求，确保不修改Content-Type
+      if (config.data instanceof FormData) {
+        // 确保不覆盖已设置的Content-Type
+        if (!config.headers['Content-Type']) {
+          config.headers['Content-Type'] = 'multipart/form-data'
+        }
+        
+        // 调试日志
+        console.log('发送FormData请求:', {
+          url: config.url,
+          method: config.method,
+          hasFormData: config.data instanceof FormData,
+          contentType: config.headers['Content-Type']
+        })
+      }
+      
       return config
     },
     error => {
@@ -101,8 +118,11 @@ const isPublicApi = (apiName) => {
  * @return {Promise} - 返回请求结果
  */
 export const request = async (apiName, params = {}, options = {}) => {
-  // 过滤掉参数中的空字符串
-  const filteredParams = options.filterEmpty !== false ? filterEmptyParams(params) : params;
+  // 如果参数是FormData类型，则不进行过滤处理
+  const isFormData = params instanceof FormData;
+  
+  // 过滤掉参数中的空字符串（仅对非FormData类型的参数进行处理）
+  const filteredParams = isFormData ? params : (options.filterEmpty !== false ? filterEmptyParams(params) : params);
   
   // 如果启用了模拟数据，则使用模拟数据
   if (config.mock.enable) {
