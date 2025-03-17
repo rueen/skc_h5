@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-17 22:06:28
+ * @LastEditTime: 2025-03-17 22:18:26
  * @Description: 任务详情页
  -->
 <template>
@@ -19,9 +19,9 @@
       <!-- 基本信息 -->
       <div :class="$style.basicInfo">
         <div :class="$style.priceRow">
-          <div :class="$style.price">$ {{ task.price }}</div>
+          <div :class="$style.price">$ {{ task.reward }}</div>
           <div :class="$style.deadline">
-            截止时间：{{ task.deadline }}
+            截止时间：{{ task.endTime }}
           </div>
         </div>
         <div :class="$style.platform">
@@ -30,11 +30,11 @@
             :class="$style.platformIcon"
             alt="platform"
           />
-          {{ task.platform }}
+          {{ task.taskName }}
         </div>
         <div :class="$style.extraInfo">
           <div :class="$style.description">
-            {{ task.description }}
+            {{ task.category }}
           </div>
           <div :class="$style.slots">
             剩余名额：<span :class="$style.highlight">{{ task.slots }}</span>
@@ -67,22 +67,20 @@
         <div :class="$style.requirements">
           <div :class="$style.reqItem">
             <span :class="$style.label">发布时间</span>
-            <span :class="$style.value">{{ task.publishTime }}</span>
+            <span :class="$style.value"></span>
           </div>
           <div :class="$style.reqItem">
             <span :class="$style.label">发布形式</span>
-            <span :class="$style.value">{{ task.publishType }}</span>
+            <span :class="$style.value">{{ enumStore.getEnumText('TaskType', task.taskType) }}</span>
           </div>
           <div :class="$style.reqItem">
             <span :class="$style.label">粉丝要求</span>
-            <span :class="$style.value">{{ task.fansRequirement }}</span>
+            <span :class="$style.value">{{ task.fansRequired }}</span>
           </div>
           <div :class="$style.reqItem">
             <span :class="$style.label">作品要求</span>
             <div :class="$style.workRequirements">
-              <div v-for="(req, index) in task.workRequirements" :key="index">
-                {{ index + 1 }}. {{ req }}
-              </div>
+              {{ task.contentRequirement }}
             </div>
           </div>
         </div>
@@ -92,7 +90,7 @@
       <div :class="$style.section">
         <h3 :class="$style.sectionTitle">任务信息</h3>
         <div :class="$style.taskInfo">
-          {{ task.description }}
+          {{ task.taskInfo }}
         </div>
       </div>
     </div>
@@ -118,29 +116,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { showToast } from 'vant'
+import { get } from '@/utils/request'
+import { useEnumStore } from '@/stores/enum'
 
 const router = useRouter()
 const route = useRoute()
+const enumStore = useEnumStore()
 
 // 任务数据
-const task = ref({
-  price: 50,
-  platform: '美国-雅诗兰黛口红种草',
-  deadline: '2025-2-20 23:59:59',
-  slots: 125,
-  publishTime: 'Feb.25 8:00 ~ Feb.25 20:00',
-  publishType: '图文',
-  fansRequirement: '1k+',
-  workRequirements: [
-    '作品发布后在平台保留30天',
-    '发布置顶评论@所有粉丝',
-    '分享至200人以上公开社群1~2个'
-  ],
-  description: '护肤 爱生活 喜欢护肤品的素人'
-})
+const task = ref({})
 
 // 任务流程步骤
 const processSteps = ['报名', '审核', '发帖', '完成']
@@ -159,6 +146,25 @@ const onShare = () => {
 const onSubmit = () => {
   router.push(`/tasks/apply/${route.params.id}`)
 }
+
+const getDetail = async () => {
+  try {
+    const res = await get('task.detail', {
+      id: route.params.id
+    }, {
+      urlParams: {
+        id: route.params.id
+      }
+    })
+    task.value = res.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+onMounted(() => {
+  getDetail()
+})
 
 </script>
 

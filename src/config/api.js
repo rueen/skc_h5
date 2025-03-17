@@ -2,12 +2,13 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-17 21:27:03
+ * @LastEditTime: 2025-03-17 22:07:37
  * @Description: API 路径配置
  */
 const API_PATH = {
   task: {
     list: '/tasks',
+    detail: '/tasks/:id',
   },
   channel: {
     list: '/channels',
