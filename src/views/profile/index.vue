@@ -3,14 +3,9 @@
     <!-- 用户信息 -->
     <div :class="$style.userInfo" @click="router.push('/profile/edit')">
       <div :class="$style.userHeader">
-        <van-image
-          round
-          width="50"
-          height="50"
-          :src="userInfo.avatar || 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'"
-        />
+        <avatar :avatar="userInfo.avatar" width="50px" height="50px" />
         <div :class="$style.userMeta">
-          <div :class="$style.userName">{{ userInfo.nickname || '未登录' }}</div>
+          <div :class="$style.userName">{{ userInfo.memberNickname || '未登录' }}</div>
           <div :class="$style.userId">账号: {{ userInfo.memberAccount || '---' }}</div>
         </div>
       </div>
@@ -79,9 +74,10 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
+import avatar from '@/components/avatar.vue'
 
 const router = useRouter()
 const userStore = useUserStore()

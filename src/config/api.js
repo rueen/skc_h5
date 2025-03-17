@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 20:42:19
+ * @LastEditTime: 2025-03-17 19:40:00
  * @Description: API 路径配置
  */
 const API_PATH = {
@@ -11,6 +11,9 @@ const API_PATH = {
   },
   channel: {
     list: '/channels',
+  },
+  member: {
+    update: '/members/profile',
   },
   auth: {
     login: '/auth/login',

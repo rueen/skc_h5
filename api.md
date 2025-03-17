@@ -2,9 +2,10 @@
  * @Author: diaochan
  * @Date: 2025-03-16 19:42:26
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 19:50:56
+ * @LastEditTime: 2025-03-17 18:14:18
  * @Description: 
 -->
+### 任务详情
 - **响应示例**：
 ```json
   {
@@ -25,5 +26,20 @@
     groupMode: 1,  // 是否指定群组
     groupIds: [5],  // 指定群组ID
     createTime: "2025-03-16 15:36:20",
+  }
+  ```
+
+### 编辑个人信息
+- **请求参数**：
+```json
+  {
+    id: 1,
+    avatar: '', // 头像
+    nickname: '', // 昵称
+    gender: 0, // 性别 0:男 1:女 2:保密 使用系统枚举常量定义（如果没有则添加）
+    occupation: 'Housewife', // 职业 使用系统枚举常量定义
+    email: '', // 电子邮箱
+    phone: '', // 手机号码
+    telegram: '', // Telegram
   }
   ```

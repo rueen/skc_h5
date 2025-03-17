@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-17 16:04:22
+ * @LastEditTime: 2025-03-17 20:15:20
  * @Description: 
 -->
 <template>
@@ -27,12 +27,7 @@
         <div :class="$style.formItem">
           <span :class="$style.label">头像</span>
           <div :class="$style.value">
-            <van-image
-              :src="form.avatar"
-              round
-              width="40"
-              height="40"
-            />
+            <avatar :avatar="form.avatar" width="40px" height="40px" />
             <van-icon name="arrow" v-if="isEdit" />
           </div>
         </div>
@@ -42,13 +37,13 @@
           <span :class="$style.label">昵称</span>
           <template v-if="isEdit">
             <van-field
-              v-model="form.name"
+              v-model="form.memberNickname"
               placeholder="请输入昵称"
               :class="$style.input"
             />
           </template>
           <div v-else :class="$style.value">
-            <span :class="$style.text">{{ form.name }}</span>
+            <span :class="$style.text">{{ form.memberNickname }}</span>
           </div>
         </div>
 
@@ -58,13 +53,13 @@
           <template v-if="isEdit">
             <div :class="$style.value" @click="showGenderPicker = true">
               <span :class="[$style.text, $style.pickerValue]">
-                {{ getGenderText(form.gender) }}
+                {{ enumStore.getEnumText('GenderType', form.gender) }}
               </span>
               <van-icon name="arrow" />
             </div>
           </template>
           <div v-else :class="$style.value">
-            <span :class="$style.text">{{ getGenderText(form.gender) }}</span>
+            <span :class="$style.text">{{ enumStore.getEnumText('GenderType', form.gender) }}</span>
           </div>
         </div>
 
@@ -87,7 +82,7 @@
         </div>
 
         <!-- 城市 -->
-        <div :class="$style.formItem">
+        <!-- <div :class="$style.formItem">
           <span :class="$style.label">城市</span>
           <template v-if="isEdit">
             <div :class="$style.value" @click="showCityPicker = true">
@@ -98,7 +93,7 @@
           <div v-else :class="$style.value">
             <span :class="$style.text">{{ form.city || '未设置' }}</span>
           </div>
-        </div>
+        </div> -->
 
         <!-- 联系方式 -->
         <div :class="$style.formItem">
@@ -146,9 +141,17 @@
         <!-- 邀请链接 -->
         <div :class="$style.formItem">
           <span :class="$style.label">邀请链接</span>
-          <div :class="$style.value" @click="onCopyLink">
-            <span :class="$style.text">{{ inviteLink }}</span>
-            <van-icon name="copy" :class="$style.copyIcon" />
+          <div :class="$style.value" @click="handleCopy(userInfo.inviteCode)">
+            <span :class="$style.text">{{ userInfo.inviteCode }}</span>
+            <!-- <van-icon name="copy" :class="$style.copyIcon" /> -->
+          </div>
+        </div>
+        <!-- 群链接 -->
+        <div :class="$style.formItem">
+          <span :class="$style.label">群链接</span>
+          <div :class="$style.value" @click="handleCopy(userInfo.groupLink)">
+            <span :class="$style.text">{{ userInfo.groupLink }}</span>
+            <!-- <van-icon name="copy-o" :class="$style.copyIcon" /> -->
           </div>
         </div>
       </div>
@@ -198,28 +201,32 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
 import { areaList } from '@vant/area-data'
-import { useEnumStore } from '@/stores'
+import { useUserStore, useEnumStore } from '@/stores'
+import { put } from '@/utils/request'
+import avatar from '@/components/avatar.vue'
 
 const router = useRouter()
 const enumStore = useEnumStore()
+const userStore = useUserStore()
 
 // 编辑状态
 const isEdit = ref(false)
 
+const userInfo = userStore.userInfo
 // 表单数据
 const form = ref({
-  avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-  name: 'Hi Han',
-  gender: '男',
-  occupation: '',
-  city: '广东省/深圳市/南山区',
-  email: 'hihan@example.com',
-  phone: '13800138000',
-  telegram: '@hihan'
+  id: userInfo.id,
+  avatar: userInfo.avatar,
+  memberNickname: userInfo.memberNickname,
+  gender: userInfo.gender,
+  occupation: userInfo.occupation,
+  email: userInfo.email,
+  phone: userInfo.phone,
+  telegram: userInfo.telegram
 })
 
 // 选择器相关
@@ -227,33 +234,33 @@ const showGenderPicker = ref(false)
 const showCityPicker = ref(false)
 const showOccupationPicker = ref(false)
 
-const genderOptions = [
-  { text: '男', value: 0 },
-  { text: '女', value: 1 },
-  { text: '保密', value: 2 }
-]
+const genderOptions = enumStore.getEnumOptions('GenderType')
 
 // 职业类型选项
 const occupationColumns = enumStore.getEnumOptions('OccupationType')
-
-// 邀请链接
-const inviteLink = 'https://skc.com/invite/abc123'
 
 // 事件处理
 const onClickLeft = () => {
   router.back()
 }
 
-const onToggleEdit = () => {
+const onToggleEdit = async () => {
   if (isEdit.value) {
     // 保存数据
-    showToast('保存成功')
+    try {
+      const res = await put('member.update', form.value)
+      if (res.code === 0) {
+        showToast('保存成功')
+      }
+    } catch (error) {
+      showToast('保存失败')
+    }
   }
   isEdit.value = !isEdit.value
 }
 
 const onGenderConfirm = (values) => {
-  form.value.gender = values.selectedOptions[0].text
+  form.value.gender = values.selectedOptions[0].value
   showGenderPicker.value = false
 }
 
@@ -267,25 +274,15 @@ const onOccupationConfirm = ({ selectedOptions }) => {
   showOccupationPicker.value = false
 }
 
-const getGenderText = (gender) => {
-  switch (gender) {
-    case '男':
-      return '男'
-    case '女':
-      return '女'
-    case '保密':
-      return '保密'
-    default:
-      return '未设置'
-  }
-}
-
 // 复制邀请链接
-const onCopyLink = () => {
-  navigator.clipboard.writeText(inviteLink).then(() => {
+const handleCopy = (text) => {
+  navigator.clipboard.writeText(text).then(() => {
     showToast('复制成功')
   })
 }
+
+onMounted(async () => {
+})
 </script>
 
 <style lang="less" module>
