@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-17 22:05:16
+ * @LastEditTime: 2025-03-17 22:06:28
  * @Description: 任务详情页
  -->
 <template>
@@ -100,10 +100,6 @@
     <!-- 底部操作栏 -->
     <div :class="$style.footer">
       <div :class="$style.actions">
-        <div :class="$style.actionItem" @click="onContact">
-          <van-icon name="service" size="20" />
-          <span>联系管理员</span>
-        </div>
         <div :class="$style.actionItem" @click="onShare">
           <van-icon name="share" size="20" />
           <span>邀请好友</span>
@@ -154,11 +150,6 @@ const onClickLeft = () => {
   router.back()
 }
 
-// 联系管理员
-const onContact = () => {
-  showToast('联系管理员功能开发中')
-}
-
 // 分享
 const onShare = () => {
   showToast('分享功能开发中')
@@ -177,6 +168,7 @@ const onSubmit = () => {
   background: #f7f8fa;
   display: flex;
   flex-direction: column;
+  padding-top: 46px;
 }
 
 .content {
