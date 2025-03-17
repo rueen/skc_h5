@@ -10,8 +10,8 @@
           :src="userInfo.avatar || 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'"
         />
         <div :class="$style.userMeta">
-          <div :class="$style.userName">{{ userInfo.name || '未登录' }}</div>
-          <div :class="$style.userId">账号: {{ userInfo.id || '---' }}</div>
+          <div :class="$style.userName">{{ userInfo.nickname || '未登录' }}</div>
+          <div :class="$style.userId">账号: {{ userInfo.memberAccount || '---' }}</div>
         </div>
       </div>
       <van-icon name="arrow" :class="$style.arrow" />
@@ -79,54 +79,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
-import { showToast, showDialog } from 'vant'
 
 const router = useRouter()
 const userStore = useUserStore()
 
 // 用户信息
-const userInfo = ref({
-  id: '',
-  name: '',
-  avatar: '',
-  totalEarnings: '0.00',
-  availableBalance: '0.00'
-})
-
-// 获取用户信息
-const fetchUserInfo = async () => {
-  try {
-    // 如果 store 中已有用户信息，则直接使用
-    if (userStore.userInfo) {
-      userInfo.value = {
-        id: userStore.userInfo.id,
-        name: userStore.userInfo.nickname,
-        avatar: userStore.userInfo.avatar,
-        totalEarnings: '0.00', // 这些数据可能需要从其他 API 获取
-        availableBalance: '0.00'
-      }
-    } else {
-      // 否则从 API 获取
-      await userStore.fetchUserInfo()
-      userInfo.value = {
-        id: userStore.userInfo.id,
-        name: userStore.userInfo.nickname,
-        avatar: userStore.userInfo.avatar,
-        totalEarnings: '0.00',
-        availableBalance: '0.00'
-      }
-    }
-  } catch (error) {
-    showToast(error.message)
-  }
-}
+const userInfo = userStore.userInfo
 
 // 页面加载时获取用户信息
 onMounted(() => {
-  fetchUserInfo()
+  
 })
 </script>
 
