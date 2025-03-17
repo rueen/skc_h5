@@ -31,7 +31,6 @@
           @click="router.push('/settings/password')"
         >
           <div :class="$style.menuTitle">
-            <van-icon name="lock" :class="$style.icon" />
             <span>{{ t('settings.password') }}</span>
           </div>
           <van-icon name="arrow" />

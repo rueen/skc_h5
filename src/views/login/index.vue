@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 10:22:38
+ * @LastEditTime: 2025-03-17 21:41:25
  * @Description: 登录页
  -->
 <script setup>
@@ -68,9 +68,10 @@ const onSubmit = async () => {
 
     // 调用登录 API
     await userStore.login(loginData)
+    await userStore.fetchUserInfo()
     router.push('/')
   } catch (error) {
-    showToast(error.message)
+    console.log(error)
   }
 }
 

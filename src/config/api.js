@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-17 19:40:00
+ * @LastEditTime: 2025-03-17 21:27:03
  * @Description: API 路径配置
  */
 const API_PATH = {
@@ -18,6 +18,7 @@ const API_PATH = {
   auth: {
     login: '/auth/login',
     logout: '/auth/logout',
+    changePassword: '/auth/change-password',
   },
   user: {
     info: '/user/info',

@@ -65,8 +65,9 @@ const zh = {
     currentPasswordPlaceholder: '请输入当前密码',
     newPasswordPlaceholder: '请输入新密码',
     confirmPasswordPlaceholder: '请再次输入新密码',
+    confirmPasswordPlaceholder2: '两次输入的密码不一致',
     passwordTips: '* 密码长度为8-20位，必须包含字母和数字',
-    passwordSuccess: '修改成功'
+    passwordSuccess: '修改成功，请重新登录'
   }
 }
 
@@ -135,8 +136,9 @@ const en = {
     currentPasswordPlaceholder: 'Enter current password',
     newPasswordPlaceholder: 'Enter new password',
     confirmPasswordPlaceholder: 'Confirm new password',
+    confirmPasswordPlaceholder2: 'The two passwords entered are not consistent',
     passwordTips: '* Password must be 8-20 characters and contain both letters and numbers',
-    passwordSuccess: 'Password changed successfully'
+    passwordSuccess: 'Password changed successfully, please login again'
   }
 }
 

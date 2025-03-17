@@ -11,7 +11,7 @@
     <div :class="$style.content">
       <div :class="$style.formGroup">
         <van-field
-          v-model="form.oldPassword"
+          v-model="form.currentPassword"
           type="password"
           :label="t('settings.currentPassword')"
           :placeholder="t('settings.currentPasswordPlaceholder')"
@@ -54,12 +54,13 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { showToast } from 'vant'
+import { post } from '@/utils/request'
 
 const router = useRouter()
 const { t } = useI18n()
 
 const form = ref({
-  oldPassword: '',
+  currentPassword: '',
   newPassword: '',
   confirmPassword: ''
 })
@@ -68,8 +69,8 @@ const onClickLeft = () => {
   router.back()
 }
 
-const onSubmit = () => {
-  if (!form.value.oldPassword) {
+const onSubmit = async () => {
+  if (!form.value.currentPassword) {
     showToast(t('settings.currentPasswordPlaceholder'))
     return
   }
@@ -90,12 +91,27 @@ const onSubmit = () => {
   }
 
   if (form.value.newPassword !== form.value.confirmPassword) {
-    showToast(t('settings.confirmPasswordPlaceholder'))
+    showToast(t('settings.confirmPasswordPlaceholder2'))
     return
   }
 
-  showToast(t('settings.passwordSuccess'))
-  router.back()
+  try {
+    const res = await post('auth.changePassword', {
+      currentPassword: form.value.currentPassword,
+      newPassword: form.value.newPassword,
+      confirmPassword: form.value.confirmPassword
+    })
+    if(res.code === 0) {
+      showToast(t('settings.passwordSuccess'))
+      setTimeout(() => {
+        router.push('/login')
+      }, 1000)
+    } else {
+      showToast(res.message)
+    }
+  } catch (error) {
+    console.log(error)
+  }
 }
 </script>
 
