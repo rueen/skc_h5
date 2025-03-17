@@ -2,24 +2,18 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 21:59:00
+ * @LastEditTime: 2025-03-17 22:00:31
  * @Description: 任务详情页
  -->
 <template>
   <div :class="$style.detailPage">
-    <!-- Banner图片 -->
-    <div :class="$style.banner">
-      <van-image
-        :src="task.banner"
-        width="100%"
-        height="200"
-        fit="cover"
-      />
-      <!-- 返回按钮覆盖在banner上 -->
-      <div :class="$style.backBtn" @click="onClickLeft">
-        <van-icon name="arrow-left" />
-      </div>
-    </div>
+    <van-nav-bar
+      title="任务详情"
+      left-arrow
+      @click-left="onClickLeft"
+      :class="$style.navbar"
+      fixed
+    />
 
     <!-- 主要内容区域 -->
     <div :class="$style.content">
@@ -150,8 +144,7 @@ const task = ref({
     '发布置顶评论@所有粉丝',
     '分享至200人以上公开社群1~2个'
   ],
-  description: '护肤 爱生活 喜欢护肤品的素人',
-  banner: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
+  description: '护肤 爱生活 喜欢护肤品的素人'
 })
 
 // 任务流程步骤
@@ -185,28 +178,6 @@ const onSubmit = () => {
   background: #f7f8fa;
   display: flex;
   flex-direction: column;
-}
-
-.banner {
-  background: #fff;
-  position: relative;
-}
-
-.backBtn {
-  position: absolute;
-  left: 16px;
-  top: 16px;
-  width: 32px;
-  height: 32px;
-  background: rgba(0, 0, 0, 0.35);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 18px;
-  cursor: pointer;
-  z-index: 1;
 }
 
 .content {

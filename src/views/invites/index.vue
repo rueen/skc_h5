@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 15:00:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-03 11:39:57
+ * @LastEditTime: 2025-03-17 22:02:17
  * @Description: 我的邀请人列表页
  -->
 <template>
@@ -12,7 +12,6 @@
       title="邀请好友"
       left-arrow
       @click-left="onClickLeft"
-      :class="$style.navbar"
       fixed
     />
 
@@ -135,32 +134,6 @@ const onInvite = () => {
   background: #f7f8fa;
   padding-bottom: 80px;
   padding-top: 46px;
-}
-
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 99;
-  max-width: 750px;
-  margin: 0 auto;
-
-  :global {
-    .van-nav-bar {
-      background: #fff;
-    }
-
-    .van-nav-bar__title {
-      color: #323233;
-      font-size: 16px;
-    }
-
-    .van-nav-bar__arrow {
-      color: #323233;
-      font-size: 18px;
-    }
-  }
 }
 
 .statsCard {

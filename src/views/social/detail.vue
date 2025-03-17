@@ -7,7 +7,6 @@
       :right-text="!isNew ? (isEditing ? '保存' : '编辑') : ''"
       @click-left="onClickLeft"
       @click-right="onClickRight"
-      :class="$style.navbar"
       fixed
     />
 
@@ -232,16 +231,6 @@ const getPlatformIcon = (platform) => {
   min-height: 100vh;
   background: #f7f8fa;
   padding-top: 46px;
-}
-
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 99;
-  max-width: 750px;
-  margin: 0 auto;
 }
 
 .content {
