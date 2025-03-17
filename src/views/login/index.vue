@@ -2,9 +2,86 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-17 21:41:25
+ * @LastEditTime: 2025-03-17 21:54:27
  * @Description: 登录页
  -->
+ <template>
+  <div :class="$style.loginPage">
+    <div :class="$style.logo">
+      <h1>{{ t('login.title') }}</h1>
+    </div>
+
+    <van-tabs v-model:active="activeTab" :class="$style.tabs" @change="onTabChange">
+      <van-tab :title="t('login.phoneLogin')">
+        <van-form @submit="onSubmit">
+          <van-cell-group inset>
+            <van-field
+              v-model="formData.memberAccount"
+              :label="t('login.phone')"
+              :placeholder="t('login.phonePlaceholder')"
+              :rules="[{ required: true, message: t('login.phoneRequired') }]"
+            >
+              <template #label>
+                <span :class="$style.areaCode">+{{ formData.areaCode }}</span>
+              </template>
+            </van-field>
+            <van-field
+              v-model="formData.password"
+              type="password"
+              :label="t('login.password')"
+              :placeholder="t('login.passwordPlaceholder')"
+              :rules="[{ required: true, message: t('login.passwordRequired') }]"
+              :class="$style.passwordInput"
+            />
+          </van-cell-group>
+        </van-form>
+      </van-tab>
+
+      <van-tab :title="t('login.emailLogin')">
+        <van-form @submit="onSubmit">
+          <van-cell-group inset>
+            <van-field
+              v-model="formData.memberAccount"
+              :label="t('login.email')"
+              :placeholder="t('login.emailPlaceholder')"
+              :rules="[{ required: true, message: t('login.emailRequired') }]"
+            />
+            <van-field
+              v-model="formData.password"
+              type="password"
+              :label="t('login.password')"
+              :placeholder="t('login.passwordPlaceholder')"
+              :rules="[{ required: true, message: t('login.passwordRequired') }]"
+            />
+          </van-cell-group>
+        </van-form>
+      </van-tab>
+    </van-tabs>
+
+    <div :class="$style.tips">
+      {{ t('settings.passwordTips') }}
+    </div>
+      
+    <div :class="$style.submit">
+      <div :class="$style.tip">未注册的手机号/邮箱将自动创建账号</div>
+      <van-button type="primary" block @click="onSubmit">
+        {{ t('login.login') }}
+      </van-button>
+
+      <van-checkbox v-model="formData.agreed" :class="$style.agreement">
+        {{ t('login.agreement') }}
+        <a href="#">{{ t('login.userAgreement') }}</a>
+        {{ t('login.and') }}
+        <a href="#">{{ t('login.privacyPolicy') }}</a>
+      </van-checkbox>
+    </div>
+
+    <div :class="$style.langSwitch" @click="toggleLang">
+      {{ locale === 'zh' ? 'English' : '中文' }}
+    </div>
+  </div>
+</template>
+
 <script setup>
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
@@ -82,78 +159,6 @@ const toggleLang = () => {
 }
 </script>
 
-<template>
-  <div :class="$style.loginPage">
-    <div :class="$style.logo">
-      <h1>{{ t('login.title') }}</h1>
-    </div>
-
-    <van-tabs v-model:active="activeTab" :class="$style.tabs" @change="onTabChange">
-      <van-tab :title="t('login.phoneLogin')">
-        <van-form @submit="onSubmit">
-          <van-cell-group inset>
-            <van-field
-              v-model="formData.memberAccount"
-              :label="t('login.phone')"
-              :placeholder="t('login.phonePlaceholder')"
-              :rules="[{ required: true, message: t('login.phoneRequired') }]"
-            >
-              <template #label>
-                <span :class="$style.areaCode">+{{ formData.areaCode }}</span>
-              </template>
-            </van-field>
-            <van-field
-              v-model="formData.password"
-              type="password"
-              :label="t('login.password')"
-              :placeholder="t('login.passwordPlaceholder')"
-              :rules="[{ required: true, message: t('login.passwordRequired') }]"
-            />
-          </van-cell-group>
-        </van-form>
-      </van-tab>
-
-      <van-tab :title="t('login.emailLogin')">
-        <van-form @submit="onSubmit">
-          <van-cell-group inset>
-            <van-field
-              v-model="formData.memberAccount"
-              :label="t('login.email')"
-              :placeholder="t('login.emailPlaceholder')"
-              :rules="[{ required: true, message: t('login.emailRequired') }]"
-            />
-            <van-field
-              v-model="formData.password"
-              type="password"
-              :label="t('login.password')"
-              :placeholder="t('login.passwordPlaceholder')"
-              :rules="[{ required: true, message: t('login.passwordRequired') }]"
-            />
-          </van-cell-group>
-        </van-form>
-      </van-tab>
-    </van-tabs>
-
-    <div :class="$style.submit">
-      <div :class="$style.tip">未注册的手机号/邮箱将自动创建账号</div>
-      <van-button type="primary" block @click="onSubmit">
-        {{ t('login.login') }}
-      </van-button>
-
-      <van-checkbox v-model="formData.agreed" :class="$style.agreement">
-        {{ t('login.agreement') }}
-        <a href="#">{{ t('login.userAgreement') }}</a>
-        {{ t('login.and') }}
-        <a href="#">{{ t('login.privacyPolicy') }}</a>
-      </van-checkbox>
-    </div>
-
-    <div :class="$style.langSwitch" @click="toggleLang">
-      {{ locale === 'zh' ? 'English' : '中文' }}
-    </div>
-  </div>
-</template>
-
 <style lang="less" module>
 .loginPage {
   min-height: 100vh;
@@ -219,6 +224,14 @@ const toggleLang = () => {
     color: var(--van-primary-color);
     text-decoration: none;
   }
+}
+
+.tips {
+  font-size: 12px;
+  color: #969799;
+  margin: 16px 0 24px;
+  padding: 0 4px;
+  margin: var(--van-cell-group-inset-padding) 0;
 }
 
 .langSwitch {
