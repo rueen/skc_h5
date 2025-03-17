@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-17 22:00:31
+ * @LastEditTime: 2025-03-17 22:05:16
  * @Description: 任务详情页
  -->
 <template>
@@ -11,7 +11,6 @@
       title="任务详情"
       left-arrow
       @click-left="onClickLeft"
-      :class="$style.navbar"
       fixed
     />
 
