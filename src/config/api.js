@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-17 22:07:37
+ * @LastEditTime: 2025-03-19 08:11:55
  * @Description: API 路径配置
  */
 const API_PATH = {
@@ -15,6 +15,10 @@ const API_PATH = {
   },
   member: {
     update: '/members/profile',
+    account: '/members/accounts',
+    addAccount: '/members/accounts',
+    updateAccount: '/members/accounts/:id',
+    deleteAccount: '/members/accounts/:id',
   },
   auth: {
     login: '/auth/login',

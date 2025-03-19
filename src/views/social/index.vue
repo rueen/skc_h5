@@ -70,35 +70,17 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
+import { get } from '@/utils/request'
 
 const router = useRouter()
 const loading = ref(false)
 const finished = ref(false)
 
 // 列表数据
-const list = ref([
-  {
-    id: 1,
-    name: 'Chantal Lyric',
-    avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-    platform: 'Facebook',
-    platformIcon: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-    followers: 800,
-    friends: 500
-  },
-  {
-    id: 2,
-    name: 'Chantal Lyric',
-    avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-    platform: 'Instagram',
-    platformIcon: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-    followers: 0,
-    posts: 0
-  }
-])
+const list = ref([])
 
 // 删除相关
 const showDeleteDialog = ref(false)
@@ -126,6 +108,18 @@ const onDeleteConfirm = () => {
   list.value = list.value.filter(item => item.id !== selectedCard.value.id)
   showToast('删除成功')
 }
+
+const loadList = async () => {
+  try {
+    const res = await get('member.account')
+    list.value = res.data || []
+  } catch (error) {
+    console.log(error)
+  }
+}
+onMounted(async () => {
+  loadList()
+})
 </script>
 
 <style lang="less" module>

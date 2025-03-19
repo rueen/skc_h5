@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-17 16:02:40
+ * @LastEditTime: 2025-03-19 08:42:15
  * @Description: 首页
  -->
 
@@ -162,12 +162,9 @@ const formatPrice = (price) => {
   return `¥${price}`
 }
 
-const getChannelList = async () => {
+const loadChannelList = async () => {
   try {
-    const res = await get('channel.list', {
-      page: 1,
-      pageSize: 100,
-    })
+    const res = await get('channel.list')
     channelList.value = res.data || []
     activeChannelId.value = channelList.value[0].id
   } catch (error) {
@@ -177,7 +174,7 @@ const getChannelList = async () => {
 
 // 初始化
 onMounted(() => {
-  getChannelList()
+  loadChannelList()
 })
 </script>
 

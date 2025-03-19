@@ -38,6 +38,16 @@
         </div>
 
         <div :class="$style.formItem">
+          <span :class="$style.label">主页链接</span>
+          <van-field
+            v-model="form.homepage"
+            placeholder="请输入主页链接"
+            :class="$style.input"
+            :border="false"
+          />
+        </div>
+
+        <div :class="$style.formItem">
           <span :class="$style.label">粉丝</span>
           <van-field
             v-model="form.followers"
@@ -69,16 +79,6 @@
             :border="false"
           />
         </div>
-
-        <div :class="$style.formItem">
-          <span :class="$style.label">主页链接</span>
-          <van-field
-            v-model="form.homepage"
-            placeholder="请输入主页链接"
-            :class="$style.input"
-            :border="false"
-          />
-        </div>
       </div>
 
       <!-- 添加账号时显示保存按钮 -->
@@ -100,7 +100,7 @@
       round
     >
       <van-picker
-        :columns="platformColumns"
+        :columns="channelColumns"
         @confirm="onPlatformConfirm"
         @cancel="showPlatformPicker = false"
         show-toolbar
@@ -110,9 +110,10 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { showToast, showDialog } from 'vant'
+import { get, post } from '@/utils/request'
 
 const route = useRoute()
 const router = useRouter()
@@ -159,29 +160,13 @@ if (!isNew.value) {
 
 // 平台选择器
 const showPlatformPicker = ref(false)
-const platformColumns = [{
-  text: 'Facebook',
-  value: 'Facebook'
-}, {
-  text: 'Twitter',
-  value: 'Twitter'
-}, {
-  text: 'Instagram',
-  value: 'Instagram'
-}]
+// 平台列表
+const channelColumns = ref([])
 // 选择平台
 const onPlatformConfirm = ({ selectedOptions }) => {
   form.value.platform = selectedOptions[0].value
   showPlatformPicker.value = false
 }
-
-const editForm = ref({
-  accountName: '',
-  followers: '',
-  friends: '',
-  posts: '',
-  homepage: ''
-})
 
 // 提交表单
 const onSubmit = () => {
@@ -220,10 +205,23 @@ const onClickLeft = () => {
   }
 }
 
-// 获取平台图标
-const getPlatformIcon = (platform) => {
-  return new URL(`../../assets/icon/${platform}.png`, import.meta.url).href
+const loadChannelList = async () => {
+  try {
+    const res = await get('channel.list')
+    const list = res.data || []
+    channelColumns.value = list.map(item => ({
+      text: item.name,
+      value: item.id
+    }))
+  } catch (error) {
+    console.log(error)
+  }
 }
+
+// 初始化
+onMounted(() => {
+  loadChannelList()
+})
 </script>
 
 <style lang="less" module>

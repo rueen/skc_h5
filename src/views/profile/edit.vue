@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-17 22:02:27
+ * @LastEditTime: 2025-03-19 07:57:10
  * @Description: 
 -->
 <template>
@@ -165,6 +165,7 @@
         type="primary"
         :class="$style.submitBtn"
         @click="onSubmit"
+        v-if="isEdit"
       >保存</van-button>
     </div>
 
@@ -355,6 +356,7 @@ const onSubmit = async () => {
           ...userStore.userInfo,
           ...submitData
         })
+        isEdit.value = false
       }
     } catch (error) {
       console.error('保存个人信息失败:', error)
