@@ -20,65 +20,66 @@
             :class="$style.value" 
             @click="showPlatformPicker = true"
           >
-            <span :class="[$style.text, !form.platform && $style.placeholder]">
-              {{ form.platform ? form.platform : '请选择平台' }}
+            <span :class="[$style.text, !selectedChannel.id && $style.placeholder]">
+              {{ selectedChannel.id ? selectedChannel.name : '请选择平台' }}
             </span>
             <van-icon name="arrow" />
           </div>
         </div>
-
-        <div :class="$style.formItem">
-          <span :class="$style.label">账号名称</span>
-          <van-field
-            v-model="form.name"
+        <template v-if="selectedChannel.id">
+          <div :class="$style.formItem">
+            <span :class="$style.label">账号名称</span>
+            <van-field
+            v-model="form.account"
             placeholder="请输入账号名称"
             :class="$style.input"
             :border="false"
-          />
-        </div>
+            />
+          </div>
 
-        <div :class="$style.formItem">
-          <span :class="$style.label">主页链接</span>
-          <van-field
-            v-model="form.homepage"
-            placeholder="请输入主页链接"
-            :class="$style.input"
-            :border="false"
-          />
-        </div>
+          <div :class="$style.formItem">
+            <span :class="$style.label">主页链接</span>
+            <van-field
+              v-model="form.homeUrl"
+              placeholder="请输入主页链接"
+              :class="$style.input"
+              :border="false"
+            />
+          </div>
 
-        <div :class="$style.formItem">
-          <span :class="$style.label">粉丝</span>
-          <van-field
-            v-model="form.followers"
-            type="digit"
-            placeholder="请输入粉丝数"
-            :class="$style.input"
-            :border="false"
-          />
-        </div>
+          <div :class="$style.formItem" v-if="selectedChannel.customFields.includes('fansCount')">
+            <span :class="$style.label">粉丝数</span>
+            <van-field
+              v-model="form.fansCount"
+              type="digit"
+              placeholder="请输入粉丝数"
+              :class="$style.input"
+              :border="false"
+            />
+          </div>
 
-        <div :class="$style.formItem">
-          <span :class="$style.label">好友</span>
-          <van-field
-            v-model="form.friends"
-            type="digit"
-            placeholder="请输入好友数"
-            :class="$style.input"
-            :border="false"
-          />
-        </div>
+          <div :class="$style.formItem" v-if="selectedChannel.customFields.includes('friendsCount')">
+            <span :class="$style.label">好友数</span>
+            <van-field
+              v-model="form.friendsCount"
+              type="digit"
+              placeholder="请输入好友数"
+              :class="$style.input"
+              :border="false"
+            />
+          </div>
 
-        <div :class="$style.formItem">
-          <span :class="$style.label">发帖数</span>
-          <van-field
-            v-model="form.posts"
-            type="digit"
-            placeholder="请输入发帖数"
-            :class="$style.input"
-            :border="false"
-          />
-        </div>
+          <div :class="$style.formItem" v-if="selectedChannel.customFields.includes('postsCount')">
+            <span :class="$style.label">发帖数</span>
+            <van-field
+              v-model="form.postsCount"
+              type="digit"
+              placeholder="请输入发帖数"
+              :class="$style.input"
+              :border="false"
+            />
+          </div>
+        </template>
       </div>
 
       <!-- 添加账号时显示保存按钮 -->
@@ -113,7 +114,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { showToast, showDialog } from 'vant'
-import { get, post } from '@/utils/request'
+import { get, post, put } from '@/utils/request'
 
 const route = useRoute()
 const router = useRouter()
@@ -125,13 +126,12 @@ const isEditing = ref(false)
 
 // 表单数据
 const form = ref({
-  platform: '',
-  name: '',
-  avatar: '',
-  followers: '',
-  friends: '',
-  posts: '',
-  homepage: ''
+  channelId: '',
+  account: '',
+  homeUrl: '',
+  fansCount: '',
+  friendsCount: '',
+  postsCount: ''
 })
 
 // 详情数据（仅在编辑时使用）
@@ -160,23 +160,91 @@ if (!isNew.value) {
 
 // 平台选择器
 const showPlatformPicker = ref(false)
-// 平台列表
+// 已选择的渠道
+const selectedChannel = ref({
+  id: '',
+  name: '',
+  customFields: []
+})
+// 渠道列表
 const channelColumns = ref([])
-// 选择平台
+// 选择渠道
 const onPlatformConfirm = ({ selectedOptions }) => {
-  form.value.platform = selectedOptions[0].value
+  selectedChannel.value = selectedOptions[0]
   showPlatformPicker.value = false
+  form.value.channelId = selectedChannel.value.id
 }
 
-// 提交表单
-const onSubmit = () => {
-  if (!form.value.platform) {
+const checkForm = () => {
+  if (form.value.channelId == null) {
     showToast('请选择平台')
     return
   }
-  // ... 其他验证逻辑
-  showToast('保存成功')
-  router.back()
+  if(!form.value.account) {
+    showToast('请输入账号名称')
+    return
+  }
+  if(!form.value.homeUrl) {
+    showToast('请输入主页链接')
+    return
+  }
+  if(selectedChannel.value.customFields.includes('fansCount') && !form.value.fansCount) {
+    showToast('请输入粉丝数')
+    return
+  }
+  if(selectedChannel.value.customFields.includes('friendsCount') && !form.value.friendsCount) {
+    showToast('请输入好友数')
+    return
+  }
+  if(selectedChannel.value.customFields.includes('postsCount') && !form.value.postsCount) {
+    showToast('请输入发帖数')
+    return
+  }
+  return true
+}
+
+const addAccount = async () => {
+  try {
+    const res = await post('member.addAccount', form.value)
+    if(res.code === 0) {
+      showToast('保存成功')
+    router.back()
+    } else {
+      showToast(res.message)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const updateAccount = async () => {
+  try { 
+    const res = await put('member.updateAccount', form.value, {
+      urlParams: {
+        id: route.params.id
+      }
+    })
+    if(res.code === 0) {
+      showToast('保存成功')
+      router.back()
+    } else {
+      showToast(res.message)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// 提交表单
+const onSubmit = async () => {
+  if(!checkForm()) {
+    return
+  }
+  if(isNew.value) {
+    await addAccount()
+  } else {
+    await updateAccount()
+  }
 }
 
 // 切换编辑状态
@@ -211,7 +279,8 @@ const loadChannelList = async () => {
     const list = res.data || []
     channelColumns.value = list.map(item => ({
       text: item.name,
-      value: item.id
+      value: item.id,
+      ...item
     }))
   } catch (error) {
     console.log(error)
