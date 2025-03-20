@@ -26,7 +26,10 @@
             @click="onItemClick(item)"
           >
             <div :class="$style.userMeta">
-              <div :class="$style.userName">{{ item.account }}</div>
+              <div :class="$style.userName">
+                <span>{{ item.account }}</span>
+                <tag :process="item.accountAuditStatus">{{ enumStore.getEnumText('AccountAuditStatus', item.accountAuditStatus) }}</tag>
+              </div>
               <div :class="$style.platform">
                 <img 
                   :src="item.channelIcon" 
@@ -74,7 +77,10 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
 import { get, del } from '@/utils/request'
+import { useEnumStore } from '@/stores/enum'
+import tag from '@/components/tag.vue'
 
+const enumStore = useEnumStore()
 const router = useRouter()
 const loading = ref(false)
 const finished = ref(false)
