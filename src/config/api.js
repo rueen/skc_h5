@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-20 11:35:18
+ * @LastEditTime: 2025-03-20 22:02:00
  * @Description: API 路径配置
  */
 const API_PATH = {
@@ -44,6 +44,10 @@ const API_PATH = {
   upload: {
     image: '/upload/image',
     file: '/upload/file',
+  },
+  article: {
+    byId: '/articles/:id',
+    byLocation: '/articles/location/:location',
   },
 }
 

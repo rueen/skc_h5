@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:10:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-03 16:12:27
+ * @LastEditTime: 2025-03-20 21:34:02
  * @Description: 
  */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -171,6 +171,15 @@ const router = createRouter({
         title: '修改密码',
         requiresAuth: true,
         hideTabbar: true
+      }
+    },
+    {
+      path: '/article/:id',
+      name: 'Article',
+      component: () => import('../views/article/index.vue'),
+      meta: {
+        title: '文章详情',
+        requiresAuth: false,
       }
     }
   ]

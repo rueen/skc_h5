@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-20 09:08:57
+ * @LastEditTime: 2025-03-20 22:11:09
  * @Description: 登录页
  -->
  <template>
@@ -70,9 +70,9 @@
 
       <van-checkbox v-model="formData.agreed" :class="$style.agreement">
         {{ t('login.agreement') }}
-        <a href="#">{{ t('login.userAgreement') }}</a>
+        <a @click.stop="handleOpenArticle('0', 'userAgreement')">{{ t('login.userAgreement') }}</a>
         {{ t('login.and') }}
-        <a href="#">{{ t('login.privacyPolicy') }}</a>
+        <a @click.stop="handleOpenArticle('0', 'privacyPolicy')">{{ t('login.privacyPolicy') }}</a>
       </van-checkbox>
     </div>
 
@@ -158,6 +158,11 @@ const onSubmit = async () => {
 const toggleLang = () => {
   locale.value = locale.value === 'zh' ? 'en' : 'zh'
   localStorage.setItem('language', locale.value)
+}
+
+// 打开文章
+const handleOpenArticle = (id, location) => {
+  router.push(`/article/${id}?location=${location}`)
 }
 </script>
 
