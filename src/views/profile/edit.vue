@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-19 07:57:10
+ * @LastEditTime: 2025-03-20 15:39:58
  * @Description: 
 -->
 <template>
@@ -148,15 +148,19 @@
           <span :class="$style.label">邀请链接</span>
           <div :class="$style.value" @click="handleCopy(userInfo.inviteCode)">
             <span :class="$style.text">{{ userInfo.inviteCode }}</span>
-            <!-- <van-icon name="copy" :class="$style.copyIcon" /> -->
+            <van-icon name="copy" :class="$style.copyIcon" />
           </div>
         </div>
         <!-- 群链接 -->
         <div :class="$style.formItem">
           <span :class="$style.label">群链接</span>
-          <div :class="$style.value" @click="handleCopy(userInfo.groupLink)">
-            <span :class="$style.text">{{ userInfo.groupLink }}</span>
-            <!-- <van-icon name="copy-o" :class="$style.copyIcon" /> -->
+          <div :class="$style.groupList">
+            <div v-for="item in userInfo.groups">
+              <div @click="handleJoinGroup(item.groupLink)">
+                <span :class="$style.text">{{ item.groupLink }}</span>
+                <span :class="$style.joinBtn">入群</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -337,6 +341,10 @@ const handleCopy = (text) => {
   })
 }
 
+const handleJoinGroup = (groupLink) => {
+  window.open(groupLink, '_blank')
+}
+
 const onSubmit = async () => {
   if (isEdit.value) {
     // 保存数据
@@ -465,7 +473,21 @@ onMounted(async () => {
     color: #969799;
   }
 }
-
+.formItem{
+  justify-content: space-between;
+}
+.groupList{
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: flex-end;
+}
+.joinBtn{
+  font-size: 14px;
+  color: var(--van-primary-color);
+  cursor: pointer;
+  margin-left: 12px;
+}
 .copyIcon {
   font-size: 16px;
   color: #969799;
