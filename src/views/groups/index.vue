@@ -50,7 +50,7 @@
             :class="[$style.tab, activeTab === tab.id && $style.active]"
             @click="activeTab = tab.id"
           >
-            {{ tab.name }}
+            {{ tab.groupName }}
           </div>
         </div>
       </div>
@@ -59,21 +59,17 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
+import { useGroupsStore } from '@/stores'
 
-const activeTab = ref(1)
+const groupsStore = useGroupsStore()
 const loading = ref(false)
 const finished = ref(false)
 const refreshing = ref(false)
 
 // 底部标签数据
-const tabs = ref([
-  { id: 1, name: '群1' },
-  { id: 2, name: '群2' },
-  { id: 3, name: '群3' },
-  { id: 4, name: '群4' },
-  { id: 5, name: '群5' }
-])
+const tabs = ref(groupsStore.groups)
+const activeTab = ref(groupsStore.groups[0].id)
 
 // 监听标签切换
 watch(activeTab, (newVal) => {
@@ -132,9 +128,6 @@ const loadData = () => {
   }, 500)
 }
 
-// 初始加载
-loadData()
-
 const onLoad = () => {
   loadData()
 }
@@ -145,6 +138,10 @@ const onRefresh = () => {
   refreshing.value = false
   loadData()
 }
+
+onMounted(async () => {
+  loadData()
+})
 </script>
 
 <style lang="less" module>
