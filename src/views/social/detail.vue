@@ -12,6 +12,10 @@
 
     <!-- 详情内容 -->
     <div :class="$style.content">
+      <div :class="$style.status">
+        <span :class="$style.statusText">账号状态:</span>
+        <tag :process="detail.accountAuditStatus">{{ enumStore.getEnumText('AccountAuditStatus', detail.accountAuditStatus) }}</tag>
+      </div>
       <div :class="$style.formGroup">
         <!-- 表单项 -->
         <div :class="$style.formItem">
@@ -86,7 +90,10 @@
           </div>
         </template>
       </div>
-
+      <div :class="$style.tips" v-if="isEditing">
+        <van-icon name="warning-o" :class="$style.warningIcon" />
+        <span :class="$style.warningText">修改账号信息需要重新审核</span>
+      </div>
       <!-- 添加账号时显示保存按钮 -->
       <van-button 
         v-if="isNew || isEditing"
@@ -120,7 +127,10 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { showToast, showDialog } from 'vant'
 import { get, post, put } from '@/utils/request'
+import { useEnumStore } from '@/stores/enum'
+import tag from '@/components/tag.vue'
 
+const enumStore = useEnumStore()
 const route = useRoute()
 const router = useRouter()
 // 是否是新建账号
@@ -130,6 +140,8 @@ const isEditing = ref(false)
 
 const isView = computed(() => route.params.id !== 'new' && !isEditing.value)
 
+// 账号详情
+const detail = ref({})
 // 表单数据
 const form = ref({
   channelId: '',
@@ -274,6 +286,7 @@ const loadAccountDetail = async () => {
     })
     if(res.code === 0) {
       const data = res.data || {}
+      detail.value = data
       form.value = {
         channelId: data.channelId,
         account: data.account,
@@ -373,4 +386,33 @@ onMounted(async () => {
   margin-top: 24px;
   --van-button-primary-background: var(--van-primary-color);
 }
+
+.status {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.statusText {
+  font-size: 14px;
+  color: #323233;
+}
+
+.tips {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.warningIcon {
+  color: #faad14;
+}
+
+.warningText {
+  font-size: 14px;
+  color: #faad14;
+  margin-left: 4px;
+}
+
 </style> 
