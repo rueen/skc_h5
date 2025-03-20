@@ -4,7 +4,7 @@
     <van-nav-bar
       :title="isNew ? '添加账号' : '账号详情'"
       left-arrow
-      :right-text="!isNew ? (isEditing ? '保存' : '编辑') : ''"
+      :right-text="!isNew ? (isEditing ? '取消' : '编辑') : ''"
       @click-left="onClickLeft"
       @click-right="onClickRight"
       fixed
@@ -23,17 +23,18 @@
             <span :class="[$style.text, !selectedChannel.id && $style.placeholder]">
               {{ selectedChannel.id ? selectedChannel.name : '请选择平台' }}
             </span>
-            <van-icon name="arrow" />
+            <van-icon name="arrow" v-if="!isView" />
           </div>
         </div>
         <template v-if="selectedChannel.id">
           <div :class="$style.formItem">
             <span :class="$style.label">账号名称</span>
             <van-field
-            v-model="form.account"
-            placeholder="请输入账号名称"
-            :class="$style.input"
-            :border="false"
+              v-model="form.account"
+              placeholder="请输入账号名称"
+              :class="$style.input"
+              :border="false"
+              :readonly="isView"
             />
           </div>
 
@@ -44,6 +45,7 @@
               placeholder="请输入主页链接"
               :class="$style.input"
               :border="false"
+              :readonly="isView"
             />
           </div>
 
@@ -55,6 +57,7 @@
               placeholder="请输入粉丝数"
               :class="$style.input"
               :border="false"
+              :readonly="isView"
             />
           </div>
 
@@ -66,6 +69,7 @@
               placeholder="请输入好友数"
               :class="$style.input"
               :border="false"
+              :readonly="isView"
             />
           </div>
 
@@ -77,6 +81,7 @@
               placeholder="请输入发帖数"
               :class="$style.input"
               :border="false"
+              :readonly="isView"
             />
           </div>
         </template>
@@ -84,7 +89,7 @@
 
       <!-- 添加账号时显示保存按钮 -->
       <van-button 
-        v-if="isNew"
+        v-if="isNew || isEditing"
         block 
         type="primary"
         :class="$style.submitBtn"
@@ -120,9 +125,10 @@ const route = useRoute()
 const router = useRouter()
 // 是否是新建账号
 const isNew = computed(() => route.params.id === 'new')
-
 // 编辑状态
 const isEditing = ref(false)
+
+const isView = computed(() => route.params.id !== 'new' && !isEditing.value)
 
 // 表单数据
 const form = ref({
@@ -133,30 +139,6 @@ const form = ref({
   friendsCount: '',
   postsCount: ''
 })
-
-// 详情数据（仅在编辑时使用）
-const detail = ref({
-  id: 1,
-  accountName: 'Chantal Lyric',
-  platform: 'Facebook',
-  followers: 800,
-  friends: 500,
-  posts: 120,
-  homepage: 'https://facebook.com/chantal'
-})
-
-// 如果不是新建，则初始化表单数据
-if (!isNew.value) {
-  form.value = {
-    platform: detail.value.platform,
-    name: detail.value.accountName,
-    avatar: '',
-    followers: detail.value.followers,
-    friends: detail.value.friends,
-    posts: detail.value.posts,
-    homepage: detail.value.homepage
-  }
-}
 
 // 平台选择器
 const showPlatformPicker = ref(false)
@@ -205,7 +187,7 @@ const checkForm = () => {
 
 const addAccount = async () => {
   try {
-    const res = await post('member.addAccount', form.value)
+    const res = await post('account.create', form.value)
     if(res.code === 0) {
       showToast('保存成功')
     router.back()
@@ -219,7 +201,7 @@ const addAccount = async () => {
 
 const updateAccount = async () => {
   try { 
-    const res = await put('member.updateAccount', form.value, {
+    const res = await put('account.update', form.value, {
       urlParams: {
         id: route.params.id
       }
@@ -249,11 +231,7 @@ const onSubmit = async () => {
 
 // 切换编辑状态
 const onClickRight = () => {
-  if (isEditing.value) {
-    onSubmit()
-  } else {
-    isEditing.value = true
-  }
+  isEditing.value = !isEditing.value
 }
 
 const onClickLeft = () => {
@@ -287,9 +265,36 @@ const loadChannelList = async () => {
   }
 }
 
-// 初始化
-onMounted(() => {
-  loadChannelList()
+const loadAccountDetail = async () => {
+  try {
+    const res = await get('account.detail', {}, {
+      urlParams: {
+        id: route.params.id
+      }
+    })
+    if(res.code === 0) {
+      const data = res.data || {}
+      form.value = {
+        channelId: data.channelId,
+        account: data.account,
+        homeUrl: data.homeUrl,
+        fansCount: data.fansCount,
+        friendsCount: data.friendsCount,
+        postsCount: data.postsCount
+      }
+      selectedChannel.value = channelColumns.value.find(item => item.id === data.channelId)
+    } else {
+      showToast(res.message)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+onMounted(async () => {
+  await loadChannelList()
+  if(!isNew.value) {
+    await loadAccountDetail()
+  }
 })
 </script>
 

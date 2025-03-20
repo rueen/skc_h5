@@ -26,14 +26,14 @@
             @click="onItemClick(item)"
           >
             <div :class="$style.userMeta">
-              <div :class="$style.userName">{{ item.name }}</div>
+              <div :class="$style.userName">{{ item.account }}</div>
               <div :class="$style.platform">
                 <img 
-                  src="@/assets/icon/Facebook.png" 
+                  :src="item.channelIcon" 
                   :class="$style.platformIcon"
                   alt="platform"
                 />
-                <span>{{ item.platform }}</span>
+                <span>{{ item.channelName }}</span>
               </div>
             </div>
           </div>
@@ -62,7 +62,7 @@
     <van-dialog
       v-model:show="showDeleteDialog"
       title="确认删除"
-      :message="`确定要删除账号「${selectedCard?.name}」吗？`"
+      :message="`确定要删除账号「${selectedCard?.account}」吗？`"
       show-cancel-button
       @confirm="onDeleteConfirm"
     />
@@ -73,7 +73,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
-import { get } from '@/utils/request'
+import { get, del } from '@/utils/request'
 
 const router = useRouter()
 const loading = ref(false)
@@ -104,15 +104,32 @@ const onDeleteClick = (item) => {
   showDeleteDialog.value = true
 }
 
-const onDeleteConfirm = () => {
-  list.value = list.value.filter(item => item.id !== selectedCard.value.id)
-  showToast('删除成功')
+const onDeleteConfirm = async () => {
+  try {
+    const res = await del('account.delete', {}, {
+      urlParams: {
+        id: selectedCard.value.id
+      }
+    })
+    if(res.code === 0) {
+      list.value = list.value.filter(item => item.id !== selectedCard.value.id)
+      showToast('删除成功')
+    } else {
+      showToast(res.message)
+    }
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 const loadList = async () => {
   try {
-    const res = await get('member.account')
-    list.value = res.data || []
+    const res = await get('account.list')
+    if(res.code === 0) {
+      list.value = res.data || []
+    } else {
+      showToast(res.message)
+    }
   } catch (error) {
     console.log(error)
   }
