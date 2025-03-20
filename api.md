@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-16 19:42:26
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-20 08:51:41
+ * @LastEditTime: 2025-03-20 11:29:36
  * @Description: 
 -->
 ### 任务详情
@@ -50,5 +50,13 @@
   {
     id: 1,
     groupName: '', // 群名称
+  }
+  ```
+
+### 获取以该会员为群主的群成员列表
+- **请求参数**：
+```json
+  {
+    groupId: 1, // 群ID
   }
   ```

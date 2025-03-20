@@ -29,8 +29,8 @@
                 :src="item.avatar"
               />
               <div :class="$style.userMeta">
-                <div :class="$style.userName">{{ item.name }}</div>
-                <div :class="$style.date">{{ item.date }}</div>
+                <div :class="$style.userName">{{ item.nickname }}</div>
+                <div :class="$style.date">{{ item.joinTime }}</div>
               </div>
             </div>
             <div :class="$style.taskCount">{{ item.taskCount }}</div>
@@ -61,6 +61,7 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue'
 import { useGroupsStore } from '@/stores'
+import { get } from '@/utils/request'
 
 const groupsStore = useGroupsStore()
 const loading = ref(false)
@@ -85,47 +86,16 @@ watch(activeTab, (newVal) => {
 const list = ref([])
 
 // 加载数据的方法
-const loadData = () => {
+const loadData = async () => {
   loading.value = true
-  setTimeout(() => {
-    const newData = [
-      {
-        id: 1,
-        name: `群${activeTab.value}-成员1`,
-        avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-        date: '2022-03-25',
-        taskCount: Math.floor(Math.random() * 5),
-        reward: (Math.random() * 20).toFixed(2)
-      },
-      {
-        id: 2,
-        name: `群${activeTab.value}-成员2`,
-        avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-        date: '2025-04-25',
-        taskCount: Math.floor(Math.random() * 5),
-        reward: (Math.random() * 20).toFixed(2)
-      },
-      {
-        id: 3,
-        name: `群${activeTab.value}-成员3`,
-        avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-        date: '2025-02-25',
-        taskCount: Math.floor(Math.random() * 5),
-        reward: (Math.random() * 20).toFixed(2)
-      },
-      {
-        id: 4,
-        name: `群${activeTab.value}-成员4`,
-        avatar: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-        date: '2025-04-25',
-        taskCount: Math.floor(Math.random() * 5),
-        reward: (Math.random() * 20).toFixed(2)
-      }
-    ]
-    list.value = [...list.value, ...newData]
+  const res = await get('groups.members', {
+    groupId: activeTab.value
+  })
+  if(res.code === 0){
+    list.value = [...list.value, ...res.data]
     loading.value = false
     finished.value = true
-  }, 500)
+  }
 }
 
 const onLoad = () => {

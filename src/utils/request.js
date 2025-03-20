@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:35:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-17 21:35:31
+ * @LastEditTime: 2025-03-20 10:08:38
  * @Description: API 请求工具
  */
 
@@ -78,7 +78,7 @@ const setupInterceptors = (service) => {
     },
     error => {
       // 如果是未登录状态，则跳转到登录页
-      if(error.response && error.response.status === 401){
+      if(error.response && [401, 404].indexOf(error.response.status) > -1){
         localStorage.removeItem('token')
         // 获取当前路径
         const currentPath = window.location.pathname

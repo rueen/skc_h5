@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-20 09:08:31
+ * @LastEditTime: 2025-03-20 10:10:07
  * @Description: 
 -->
 <template>
@@ -40,18 +40,7 @@ const showTabbar = computed(() => {
 onMounted(async () => {
   // 如果有 token，则获取用户信息
   if (userStore.token) {
-    try {
-      await userStore.fetchUserInfo()
-    } catch (error) {
-      showToast(error.message)
-      // 如果获取用户信息失败，可能是 token 过期，清除 token 并跳转到登录页
-      if (error.code === 401) {
-        userStore.clearToken()
-        if (route.name !== 'Login') {
-          router.push('/login')
-        }
-      }
-    }
+    await userStore.fetchUserInfo()
     await groupsStore.getOwnedGroups()
   }
   // 加载枚举数据

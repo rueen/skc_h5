@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-20 08:58:17
+ * @LastEditTime: 2025-03-20 11:35:18
  * @Description: API 路径配置
  */
 const API_PATH = {
@@ -25,6 +25,7 @@ const API_PATH = {
   },
   groups: {
     list: '/members/owned-groups',
+    members: '/members/group-members',
   },
   auth: {
     login: '/auth/login',
