@@ -15,7 +15,6 @@
           @click="showLanguagePicker = true"
         >
           <div :class="$style.menuTitle">
-            <van-icon name="translate-o" />
             <span>{{ t('settings.language') }}</span>
           </div>
           <div :class="$style.menuValue">
