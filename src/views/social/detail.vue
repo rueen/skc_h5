@@ -4,7 +4,7 @@
     <van-nav-bar
       :title="isNew ? '添加账号' : '账号详情'"
       left-arrow
-      :right-text="!isNew ? (isEditing ? '取消' : '编辑') : ''"
+      :right-text="isNew ? '' : isRejected ? '' : (isEditing ? '取消' : '编辑')"
       @click-left="onClickLeft"
       @click-right="onClickRight"
       fixed
@@ -12,9 +12,15 @@
 
     <!-- 详情内容 -->
     <div :class="$style.content">
-      <div :class="$style.status">
-        <span :class="$style.statusText">账号状态:</span>
-        <tag :process="detail.accountAuditStatus">{{ enumStore.getEnumText('AccountAuditStatus', detail.accountAuditStatus) }}</tag>
+      <div v-if="!isNew">
+        <div :class="$style.status">
+          <span :class="$style.statusText">账号状态:</span>
+          <tag :process="detail.accountAuditStatus">{{ enumStore.getEnumText('AccountAuditStatus', detail.accountAuditStatus) }}</tag>
+        </div>
+        <div :class="$style.status" v-if="isRejected">
+          <span :class="$style.statusText">拒绝原因:</span>
+          <span :class="$style.statusText">{{ detail.rejectReason }}</span>
+        </div>
       </div>
       <div :class="$style.formGroup">
         <!-- 表单项 -->
@@ -96,13 +102,13 @@
       </div>
       <!-- 添加账号时显示保存按钮 -->
       <van-button 
-        v-if="isNew || isEditing"
+        v-if="isNew || isEditing || isRejected"
         block 
         type="primary"
         :class="$style.submitBtn"
         @click="onSubmit"
       >
-        保存
+        {{isRejected ? '重新提交' : '保存'}}
       </van-button>
     </div>
 
@@ -137,8 +143,10 @@ const router = useRouter()
 const isNew = computed(() => route.params.id === 'new')
 // 编辑状态
 const isEditing = ref(false)
-
-const isView = computed(() => route.params.id !== 'new' && !isEditing.value)
+// 是否是查看状态
+const isView = computed(() => route.params.id !== 'new' && !isEditing.value && !isRejected.value)
+// 是否是拒绝状态
+const isRejected = computed(() => detail.value.accountAuditStatus === 'rejected')
 
 // 账号详情
 const detail = ref({})
