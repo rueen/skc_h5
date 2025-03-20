@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-16 19:42:26
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-19 09:11:02
+ * @LastEditTime: 2025-03-20 08:51:41
  * @Description: 
 -->
 ### 任务详情
@@ -41,5 +41,14 @@
     email: '', // 电子邮箱
     phone: '', // 手机号码
     telegram: '', // Telegram
+  }
+  ```
+
+### 获取以该会员为群主的群列表
+- **响应示例**：
+```json
+  {
+    id: 1,
+    groupName: '', // 群名称
   }
   ```

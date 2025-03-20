@@ -2,14 +2,26 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-17 21:25:30
+ * @LastEditTime: 2025-03-20 09:08:31
  * @Description: 
 -->
+<template>
+  <div class="app-container">
+    <router-view />
+    <van-tabbar v-if="showTabbar" v-model="active" route>
+      <van-tabbar-item to="/" icon="home-o">{{ t('tabbar.home') }}</van-tabbar-item>
+      <van-tabbar-item to="/tasks" icon="notes-o">{{ t('tabbar.tasks') }}</van-tabbar-item>
+      <van-tabbar-item to="/groups" icon="friends-o" v-if="groupsStore.isShowGroups">{{ t('tabbar.groups') }}</van-tabbar-item>
+      <van-tabbar-item to="/profile" icon="user-o">{{ t('tabbar.profile') }}</van-tabbar-item>
+    </van-tabbar>
+  </div>
+</template>
+
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useUserStore, useEnumStore } from '@/stores'
+import { useUserStore, useEnumStore, useGroupsStore } from '@/stores'
 import { showToast } from 'vant'
 
 const route = useRoute()
@@ -18,12 +30,12 @@ const { t } = useI18n()
 const active = ref(0)
 const userStore = useUserStore()
 const enumStore = useEnumStore()
+const groupsStore = useGroupsStore()
 // 计算是否显示底部导航栏
 const showTabbar = computed(() => {
   // 在登录页、任务详情页、邀请人列表页、账号列表页、设置页、个人信息编辑页、账号详情页、钱包页、结算账单页、提现记录页、提现账户页、添加账户页、提现页、任务报名页和报名详情页不显示底部导航
   return !['Login', 'TaskDetail', 'Invites', 'Social', 'Settings', 'ProfileEdit', 'SocialDetail', 'Wallet', 'WalletBills', 'WalletRecords', 'WalletAccounts', 'WalletAccountsAdd', 'WalletWithdraw', 'TaskApply', 'TaskApplyDetail', 'SettingsPassword'].includes(route.name)
 })
-
 // 在应用启动时获取用户信息
 onMounted(async () => {
   // 如果有 token，则获取用户信息
@@ -40,23 +52,12 @@ onMounted(async () => {
         }
       }
     }
+    await groupsStore.getOwnedGroups()
   }
   // 加载枚举数据
   await enumStore.fetchEnum()
 })
 </script>
-
-<template>
-  <div class="app-container">
-    <router-view />
-    <van-tabbar v-if="showTabbar" v-model="active" route>
-      <van-tabbar-item to="/" icon="home-o">{{ t('tabbar.home') }}</van-tabbar-item>
-      <van-tabbar-item to="/tasks" icon="notes-o">{{ t('tabbar.tasks') }}</van-tabbar-item>
-      <van-tabbar-item to="/groups" icon="friends-o">{{ t('tabbar.groups') }}</van-tabbar-item>
-      <van-tabbar-item to="/profile" icon="user-o">{{ t('tabbar.profile') }}</van-tabbar-item>
-    </van-tabbar>
-  </div>
-</template>
 
 <style lang="less">
 .app-container {
