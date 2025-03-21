@@ -317,6 +317,10 @@ onMounted(async () => {
   if(!isNew.value) {
     await loadAccountDetail()
   }
+  if(route.query.channelId != null) {
+    selectedChannel.value = channelColumns.value.find(item => item.id === (route.query.channelId - 0))
+    form.value.channelId = route.query.channelId
+  }
 })
 </script>
 

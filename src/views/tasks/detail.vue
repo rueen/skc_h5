@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-21 16:14:13
+ * @LastEditTime: 2025-03-21 16:40:01
  * @Description: 任务详情页
  -->
 <template>
@@ -105,7 +105,41 @@
         type="primary" 
         block 
         :class="$style.submitBtn"
+        v-if="!currentChannelAccount"
+        @click="onAddAccount"
+      >
+        添加账号
+      </van-button>
+      <van-button 
+        type="warning" 
+        block 
+        :class="$style.submitBtn"
+        v-else-if="currentChannelAccount.accountAuditStatus === 'pending'"
+      >
+        账号审核中
+      </van-button>
+      <van-button 
+        type="warning" 
+        block 
+        :class="$style.submitBtn"
+        v-else-if="currentChannelAccount.accountAuditStatus === 'rejected'"
+      >
+        账号审核不通过
+      </van-button>
+      <van-button 
+        type="danger" 
+        block 
+        :class="$style.submitBtn"
+        v-else-if="currentChannelAccount.fansCount - taskInfo.fansRequired < 0"
+      >
+        粉丝不达标
+      </van-button>
+      <van-button 
+        type="primary" 
+        block 
+        :class="$style.submitBtn"
         @click="onSubmit"
+        v-else
       >
         立即报名
       </van-button>
@@ -127,6 +161,7 @@ const router = useRouter()
 const route = useRoute()
 const enumStore = useEnumStore()
 const userStore = useUserStore()
+const currentChannelAccount = ref(null)
 
 // 任务数据
 const taskInfo = ref({})
@@ -153,6 +188,11 @@ const onShare = () => {
   shareInviteLink(`/tasks/detail/${route.params.id}`, inviteCode)
 }
 
+// 添加账号
+const onAddAccount = () => {
+  router.push(`/social/detail/new?channelId=${taskInfo.value.channelId}`)
+}
+
 // 提交报名
 const onSubmit = () => {
   router.push(`/tasks/apply/${route.params.id}`)
@@ -177,8 +217,20 @@ const getDetail = async () => {
   }
 }
 
-onMounted(() => {
-  getDetail()
+const getAccountList = async () => {
+  try {
+    const res = await get('account.list')
+    if(res.code === 0 && res.data && res.data.length > 0) {
+      currentChannelAccount.value = res.data.find(item => item.channelId === taskInfo.value.channelId)
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+onMounted(async () => {
+  await getDetail()
+  await getAccountList()
 })
 
 </script>
