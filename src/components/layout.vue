@@ -2,16 +2,16 @@
  * @Author: diaochan
  * @Date: 2025-03-21 10:50:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-21 10:59:05
+ * @LastEditTime: 2025-03-21 11:12:15
  * @Description: 
 -->
 <template>
-  <div class="layout">
+  <div :class="$style.layout">
     <slot></slot>
   </div>
 </template>
 
-<style lang="less" scoped>
+<style lang="less" module>
 .layout{
   padding-top: var(--van-nav-bar-height);
   min-height: 100vh;
