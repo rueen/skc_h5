@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.accountPage">
+  <Layout>
     <van-nav-bar
       :title="pageTitle"
       left-arrow
@@ -92,13 +92,14 @@
         show-toolbar
       />
     </van-popup>
-  </div>
+  </Layout>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { showToast } from 'vant'
+import Layout from '@/components/layout.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -194,12 +195,6 @@ const onSubmit = () => {
 </script>
 
 <style lang="less" module>
-.accountPage {
-  min-height: 100vh;
-  background: #f7f8fa;
-  padding-top: 46px;
-}
-
 .content {
   padding: 12px;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.detailPage">
+  <Layout>
     <van-nav-bar
       title="报名详情"
       left-arrow
@@ -101,15 +101,15 @@
         </div>
       </div>
     </div>
-  </div>
+  </Layout>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
+import Layout from '@/components/layout.vue'
 
 const router = useRouter()
-const route = useRoute()
 
 // 报名信息数据
 const applyInfo = ref({
@@ -177,12 +177,6 @@ const getStatusIcon = (status) => {
 </script>
 
 <style lang="less" module>
-.detailPage {
-  min-height: 100vh;
-  background: #f7f8fa;
-  padding-top: 46px;
-}
-
 .content {
   padding: 12px;
 }

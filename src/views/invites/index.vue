@@ -2,11 +2,11 @@
  * @Author: diaochan
  * @Date: 2025-02-25 15:00:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-17 22:02:17
+ * @LastEditTime: 2025-03-21 10:59:38
  * @Description: 我的邀请人列表页
  -->
 <template>
-  <div :class="$style.invitesPage">
+  <Layout :class="$style.invitesPage">
     <!-- 顶部导航 -->
     <van-nav-bar
       title="邀请好友"
@@ -71,14 +71,14 @@
         去邀请好友
       </van-button>
     </div>
-  </div>
+  </Layout>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
-
+import Layout from '@/components/layout.vue'
 const router = useRouter()
 
 // 统计数据
@@ -130,10 +130,7 @@ const onInvite = () => {
 
 <style lang="less" module>
 .invitesPage {
-  min-height: 100vh;
-  background: #f7f8fa;
   padding-bottom: 80px;
-  padding-top: 46px;
 }
 
 .statsCard {

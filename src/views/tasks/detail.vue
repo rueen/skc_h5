@@ -2,11 +2,11 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-17 22:18:26
+ * @LastEditTime: 2025-03-21 11:06:05
  * @Description: 任务详情页
  -->
 <template>
-  <div :class="$style.detailPage">
+  <Layout>
     <van-nav-bar
       title="任务详情"
       left-arrow
@@ -112,7 +112,7 @@
         立即报名
       </van-button>
     </div>
-  </div>
+  </Layout>
 </template>
 
 <script setup>
@@ -121,6 +121,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { showToast } from 'vant'
 import { get } from '@/utils/request'
 import { useEnumStore } from '@/stores/enum'
+import Layout from '@/components/layout.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -170,11 +171,8 @@ onMounted(() => {
 
 <style lang="less" module>
 .detailPage {
-  min-height: 100vh;
-  background: #f7f8fa;
   display: flex;
   flex-direction: column;
-  padding-top: 46px;
 }
 
 .content {

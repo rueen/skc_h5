@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.walletPage">
+  <Layout>
     <van-nav-bar
       title="我的钱包"
       left-arrow
@@ -90,13 +90,14 @@
         </div>
       </div>
     </van-dialog>
-  </div>
+  </Layout>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
+import Layout from '@/components/layout.vue'
 
 const router = useRouter()
 
@@ -149,12 +150,6 @@ const onModifyAccount = () => {
 </script>
 
 <style lang="less" module>
-.walletPage {
-  min-height: 100vh;
-  background: #f7f8fa;
-  padding-top: 46px;
-}
-
 .content {
   padding: 12px;
 }

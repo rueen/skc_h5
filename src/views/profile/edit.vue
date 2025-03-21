@@ -2,11 +2,11 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-20 15:39:58
+ * @LastEditTime: 2025-03-21 10:58:25
  * @Description: 
 -->
 <template>
-  <div :class="$style.editPage">
+  <Layout>
     <van-nav-bar
       title="个人信息"
       left-arrow
@@ -213,7 +213,7 @@
         show-toolbar
       />
     </van-popup>
-  </div>
+  </Layout>
 </template>
 
 <script setup>
@@ -225,6 +225,7 @@ import { useUserStore, useEnumStore } from '@/stores'
 import { put } from '@/utils/request'
 import avatar from '@/components/avatar.vue'
 import { uploadImage } from '@/utils/upload'
+import Layout from '@/components/layout.vue'
 
 const router = useRouter()
 const enumStore = useEnumStore()
@@ -378,12 +379,6 @@ onMounted(async () => {
 </script>
 
 <style lang="less" module>
-.editPage {
-  min-height: 100vh;
-  background: #f7f8fa;
-  padding-top: 46px;
-}
-
 .content {
   padding: 12px;
 }

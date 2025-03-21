@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.settingsPage">
+  <Layout>
     <van-nav-bar
       title="设置"
       left-arrow
@@ -59,7 +59,7 @@
         show-toolbar
       />
     </van-popup>
-  </div>
+  </Layout>
 </template>
 
 <script setup>
@@ -68,6 +68,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { showDialog, showToast } from 'vant'
 import { useUserStore } from '../../stores/user'
+import Layout from '@/components/layout.vue'
 
 const router = useRouter()
 const { t, locale } = useI18n()
@@ -118,12 +119,6 @@ const onLogout = () => {
 </script>
 
 <style lang="less" module>
-.settingsPage {
-  min-height: 100vh;
-  background: #f7f8fa;
-  padding-top: 46px;
-}
-
 .content {
   padding: 12px;
 }

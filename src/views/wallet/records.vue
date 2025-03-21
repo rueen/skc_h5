@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.recordsPage">
+  <Layout>
     <van-nav-bar
       title="提现记录"
       left-arrow
@@ -34,12 +34,13 @@
         </van-list>
       </van-pull-refresh>
     </div>
-  </div>
+  </Layout>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import Layout from '@/components/layout.vue'
 
 const router = useRouter()
 
@@ -100,12 +101,6 @@ const onRefresh = () => {
 </script>
 
 <style lang="less" module>
-.recordsPage {
-  min-height: 100vh;
-  background: #f7f8fa;
-  padding-top: 46px;
-}
-
 .content {
   padding: 12px;
 }

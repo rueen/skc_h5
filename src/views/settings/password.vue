@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.passwordPage">
+  <Layout>
     <van-nav-bar
       :title="t('settings.password')"
       left-arrow
@@ -45,7 +45,7 @@
         {{ t('settings.password') }}
       </van-button>
     </div>
-  </div>
+  </Layout>
 </template>
 
 <script setup>
@@ -54,6 +54,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { showToast } from 'vant'
 import { post } from '@/utils/request'
+import Layout from '@/components/layout.vue'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -115,12 +116,6 @@ const onSubmit = async () => {
 </script>
 
 <style lang="less" module>
-.passwordPage {
-  min-height: 100vh;
-  background: #f7f8fa;
-  padding-top: 46px;
-}
-
 .content {
   padding: 12px;
 }

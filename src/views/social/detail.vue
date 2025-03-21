@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.detailPage">
+  <Layout>
     <!-- 顶部导航 -->
     <van-nav-bar
       :title="isNew ? '添加账号' : '账号详情'"
@@ -125,7 +125,7 @@
         show-toolbar
       />
     </van-popup>
-  </div>
+  </Layout>
 </template>
 
 <script setup>
@@ -135,6 +135,7 @@ import { showToast, showDialog } from 'vant'
 import { get, post, put } from '@/utils/request'
 import { useEnumStore } from '@/stores/enum'
 import tag from '@/components/tag.vue'
+import Layout from '@/components/layout.vue'
 
 const enumStore = useEnumStore()
 const route = useRoute()
@@ -320,12 +321,6 @@ onMounted(async () => {
 </script>
 
 <style lang="less" module>
-.detailPage {
-  min-height: 100vh;
-  background: #f7f8fa;
-  padding-top: 46px;
-}
-
 .content {
   padding: 12px;
 }

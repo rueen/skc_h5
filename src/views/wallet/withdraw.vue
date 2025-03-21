@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.withdrawPage">
+  <Layout>
     <van-nav-bar
       title="提现"
       left-arrow
@@ -56,13 +56,14 @@
         确认提现
       </van-button>
     </div>
-  </div>
+  </Layout>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
+import Layout from '@/components/layout.vue'
 
 const router = useRouter()
 
@@ -120,12 +121,6 @@ const onSubmit = () => {
 </script>
 
 <style lang="less" module>
-.withdrawPage {
-  min-height: 100vh;
-  background: #f7f8fa;
-  padding-top: 46px;
-}
-
 .content {
   padding: 12px;
 }

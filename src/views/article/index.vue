@@ -2,26 +2,25 @@
  * @Author: diaochan
  * @Date: 2025-03-20 21:33:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-21 10:43:24
+ * @LastEditTime: 2025-03-21 10:56:34
  * @Description: 
 -->
 <template>
-  <div>
+  <Layout>
     <van-nav-bar
       :title="title"
       left-arrow
       fixed
       @click-left="onClickLeft"
     />
-    <div class="article-container">
-      <div v-html="content" class="article-content"></div>
-    </div>
-  </div>
+    <div v-html="content" class="article-content"></div>
+  </Layout>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import Layout from '@/components/layout.vue'
 import { get } from '@/utils/request'
 
 const route = useRoute()
@@ -58,8 +57,10 @@ onMounted(() => {
 })
 </script>
 
-<style lang="less" module>
-.article-container {
-  padding: 56px 16px 20px;
+<style lang="less" scoped>
+.article-content{
+  padding: 16px;
+  min-height: 100vh;
+  background-color: #fff;
 }
 </style>

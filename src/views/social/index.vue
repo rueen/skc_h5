@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.socialPage">
+  <Layout :class="$style.socialPage">
     <!-- 顶部导航 -->
     <van-nav-bar
       title="我的账号"
@@ -69,7 +69,7 @@
       show-cancel-button
       @confirm="onDeleteConfirm"
     />
-  </div>
+  </Layout>
 </template>
 
 <script setup>
@@ -79,7 +79,7 @@ import { showToast } from 'vant'
 import { get, del } from '@/utils/request'
 import { useEnumStore } from '@/stores/enum'
 import tag from '@/components/tag.vue'
-
+import Layout from '@/components/layout.vue'
 const enumStore = useEnumStore()
 const router = useRouter()
 const loading = ref(false)
@@ -147,10 +147,7 @@ onMounted(async () => {
 
 <style lang="less" module>
 .socialPage {
-  min-height: 100vh;
-  background: #f7f8fa;
   padding-bottom: 80px;
-  padding-top: 46px;
 }
 
 .tableHeader {
