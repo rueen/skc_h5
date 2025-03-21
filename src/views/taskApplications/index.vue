@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-21 18:50:34
+ * @LastEditTime: 2025-03-21 20:20:08
  * @Description: 任务页
  -->
 <template>
@@ -13,7 +13,7 @@
         v-model:active="activeTab"
         :class="$style.statusTabs"
         swipeable
-        @change="onTabChange"
+        @click-tab="onTabChange"
       >
         <van-tab :title="t('tasks.applied')" :name="'applied'" />
         <van-tab :title="t('tasks.submitted')" :name="'submitted'" />
@@ -28,7 +28,6 @@
           v-model:loading="loading"
           v-model:finished="finished"
           :finished-text="t('tasks.finishedText')"
-          @load="onLoad"
         >
           <div 
             v-for="item in list"
@@ -44,25 +43,14 @@
                     :class="$style.platformIcon"
                     alt="platform"
                   />
-                  <h3>{{ item.title }}</h3>
+                  <h3>{{ item.taskName }}</h3>
                 </div>
-                <span :class="$style.status">{{ item.status }}</span>
               </div>
               
               <div :class="$style.contentWrapper">
-                <div :class="$style.image">
-                  <van-image
-                    width="70"
-                    height="70"
-                    fit="cover"
-                    :src="item.image"
-                    radius="4"
-                  />
-                </div>
-
                 <div :class="$style.contentRow">
                   <div :class="$style.price">
-                    {{ formatPrice(item.price) }}
+                    {{ formatPrice(item.reward) }}
                   </div>
                   <div :class="$style.bottomInfo">
                     <div :class="$style.tags">
@@ -89,7 +77,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { get } from '@/utils/request'
@@ -140,8 +128,8 @@ const onRefresh = () => {
 }
 
 // 切换任务状态
-const onTabChange = (index) => {
-  console.log(index)
+const onTabChange = ({name}) => {
+  activeTab.value = name
   list.value = []
   finished.value = false
   loading.value = true
@@ -152,6 +140,10 @@ const onTabChange = (index) => {
 const formatPrice = (price) => {
   return `¥${price}`
 }
+
+onMounted(async () => {
+  onLoad()
+})
 </script>
 
 <style lang="less" module>

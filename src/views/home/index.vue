@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-19 08:42:15
+ * @LastEditTime: 2025-03-21 20:14:59
  * @Description: 首页
  -->
 
@@ -14,12 +14,13 @@
         v-model:active="activeChannelId"
         :class="$style.platformTabs"
         swipeable
-        @change="onChannelChange"
+        @click-tab="onChannelChange"
       >
         <van-tab 
           v-for="channel in channelList" 
           :key="channel.id"
           :title="channel.name"
+          :name="channel.id"
         />
       </van-tabs>
     </div>
@@ -46,6 +47,7 @@
                   alt="platform"
                 />
                 <h3>{{ item.taskName }}</h3>
+                <span :class="$style.status" v-if="item.isApplied">已报名</span>
               </div>
               
               <div :class="$style.contentRow">
@@ -149,8 +151,8 @@ const onRefresh = () => {
 }
 
 // 切换平台
-const onChannelChange = (index) => {
-  activeChannelId.value = channelList.value[index].id
+const onChannelChange = ({name}) => {
+  activeChannelId.value = name
   list.value = []
   finished.value = false
   loading.value = true
@@ -173,8 +175,9 @@ const loadChannelList = async () => {
 }
 
 // 初始化
-onMounted(() => {
-  loadChannelList()
+onMounted(async () => {
+  await loadChannelList()
+  onLoad()
 })
 </script>
 
@@ -272,6 +275,13 @@ onMounted(() => {
   align-items: flex-start;
   flex: 1;
   padding-top: 2px;
+}
+
+.status {
+  font-size: 13px;
+  color: #1989fa;
+  margin-left: 12px;
+  flex-shrink: 0;
 }
 
 .leftContent {

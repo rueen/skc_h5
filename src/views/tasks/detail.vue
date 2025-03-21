@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-21 19:00:28
+ * @LastEditTime: 2025-03-21 20:02:50
  * @Description: 任务详情页
  -->
 <template>
@@ -138,6 +138,15 @@
         type="primary" 
         block 
         :class="$style.submitBtn"
+        @click="handleSubmitTask"
+        v-else-if="!!taskInfo.isApplied"
+      >
+        提交任务
+      </van-button>
+      <van-button 
+        type="primary" 
+        block 
+        :class="$style.submitBtn"
         @click="handleApply"
         v-else
       >
@@ -193,6 +202,10 @@ const onAddAccount = () => {
   router.push(`/social/detail/new?channelId=${taskInfo.value.channelId}`)
 }
 
+const handleSubmitTask = async () => {
+  router.push(`/tasks/apply/0`)
+}
+
 // 提交报名
 const handleApply = async () => {
   try {
@@ -212,9 +225,7 @@ const handleApply = async () => {
 
 const getDetail = async () => {
   try {
-    const res = await get('task.detail', {
-      id: route.params.id
-    }, {
+    const res = await get('task.detail', {}, {
       urlParams: {
         id: route.params.id
       }
