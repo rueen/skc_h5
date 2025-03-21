@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-20 21:33:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-20 22:13:00
+ * @LastEditTime: 2025-03-21 10:43:24
  * @Description: 
 -->
 <template>
@@ -13,7 +13,9 @@
       fixed
       @click-left="onClickLeft"
     />
-    {{ content }}
+    <div class="article-container">
+      <div v-html="content" class="article-content"></div>
+    </div>
   </div>
 </template>
 
@@ -57,4 +59,7 @@ onMounted(() => {
 </script>
 
 <style lang="less" module>
+.article-container {
+  padding: 56px 16px 20px;
+}
 </style>
