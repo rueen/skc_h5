@@ -144,11 +144,32 @@ const onSubmit = async () => {
       loginData.areaCode = formData.areaCode
     }
 
+    // 检查会话存储中是否有邀请码
+    const inviteCode = sessionStorage.getItem('inviteCode')
+    if (inviteCode) {
+      // 将邀请码添加到登录数据中，后端可以处理用户注册时的邀请关系
+      loginData.inviteCode = inviteCode
+    }
+
     // 调用登录 API
     await userStore.login(loginData)
     await userStore.fetchUserInfo()
     await groupsStore.getOwnedGroups()
-    router.push('/')
+    
+    // 检查是否有重定向URL
+    const redirectUrl = sessionStorage.getItem('redirectUrl')
+    if (redirectUrl) {
+      // 清除会话存储中的重定向URL
+      sessionStorage.removeItem('redirectUrl')
+      // 跳转到重定向URL
+      router.push(redirectUrl)
+    } else {
+      // 没有重定向URL，跳转到首页
+      router.push('/')
+    }
+    
+    // 登录成功后清除邀请码
+    sessionStorage.removeItem('inviteCode')
   } catch (error) {
     console.log(error)
   }

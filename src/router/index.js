@@ -189,7 +189,15 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
   
+  // 如果URL中包含邀请码参数，则保存到会话存储
+  if (to.query.inviteCode) {
+    sessionStorage.setItem('inviteCode', to.query.inviteCode)
+  }
+  
   if (to.meta.requiresAuth && !userStore.token) {
+    // 如果需要登录但用户未登录，重定向到登录页
+    // 保存当前路径，登录成功后可以跳回来
+    sessionStorage.setItem('redirectUrl', to.fullPath)
     next('/login')
   } else {
     next()

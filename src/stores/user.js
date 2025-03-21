@@ -14,6 +14,10 @@ export const useUserStore = defineStore('user', {
     userInfo: null,
     token: localStorage.getItem('token') || null
   }),
+  getters: {
+    // 获取用户邀请码
+    inviteCode: (state) => state.userInfo?.inviteCode || ''
+  },
   actions: {
     setUserInfo(info) {
       this.userInfo = info

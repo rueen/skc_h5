@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-21 11:06:05
+ * @LastEditTime: 2025-03-21 14:33:59
  * @Description: 任务详情页
  -->
 <template>
@@ -121,11 +121,14 @@ import { useRouter, useRoute } from 'vue-router'
 import { showToast } from 'vant'
 import { get } from '@/utils/request'
 import { useEnumStore } from '@/stores/enum'
+import { useUserStore } from '@/stores/user'
+import { shareInviteLink } from '@/utils/share'
 import Layout from '@/components/layout.vue'
 
 const router = useRouter()
 const route = useRoute()
 const enumStore = useEnumStore()
+const userStore = useUserStore()
 
 // 任务数据
 const task = ref({})
@@ -138,9 +141,18 @@ const onClickLeft = () => {
   router.back()
 }
 
-// 分享
+// 分享/邀请功能
 const onShare = () => {
-  showToast('分享功能开发中')
+  if (!userStore.userInfo) {
+    showToast('请先登录')
+    return
+  }
+  
+  // 获取当前用户的邀请码
+  const inviteCode = userStore.inviteCode
+  
+  // 使用分享工具方法生成并复制邀请链接
+  shareInviteLink(`/tasks/detail/${route.params.id}`, inviteCode)
 }
 
 // 提交报名
