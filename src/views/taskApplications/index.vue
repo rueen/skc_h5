@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-25 20:51:14
+ * @LastEditTime: 2025-03-21 18:50:34
  * @Description: 任务页
  -->
 <template>
@@ -15,9 +15,9 @@
         swipeable
         @change="onTabChange"
       >
-        <van-tab :title="t('tasks.enrolled')" />
-        <van-tab :title="t('tasks.published')" />
-        <van-tab :title="t('tasks.completed')" />
+        <van-tab :title="t('tasks.applied')" :name="'applied'" />
+        <van-tab :title="t('tasks.submitted')" :name="'submitted'" />
+        <van-tab :title="t('tasks.completed')" :name="'completed'" />
       </van-tabs>
     </div>
 
@@ -91,69 +91,45 @@
 <script setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { showToast } from 'vant'
 import { useRouter } from 'vue-router'
+import { get } from '@/utils/request'
 
 const { t } = useI18n()
 const router = useRouter()
 
 // 当前选中的任务状态
-const activeTab = ref(0)
+const activeTab = ref('applied')
 
 // 列表数据
+const page = ref(1)
+const pageSize = ref(10)
 const list = ref([])
 const loading = ref(false)
 const finished = ref(false)
 const refreshing = ref(false)
 
-// 模拟数据
-const mockData = [
-  {
-    id: 1,
-    title: '测评新款化妆品',
-    price: 1500,
-    status: '待接单', // 或 '进行中'、'已完成'
-    category: '美妆/护肤',
-    deadline: '2025-03-10',
-    taskType: '图文',
-    followers: '10w+',
-    image: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-  },
-  {
-    id: 2,
-    title: '亲子互动玩具测评',
-    price: 2000,
-    status: '进行中',
-    category: '母婴/亲子',
-    deadline: '2025-03-15',
-    taskType: '视频',
-    followers: '100w+',
-    image: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-  }
-]
-
 // 加载数据
-const onLoad = () => {
-  setTimeout(() => {
-    if (refreshing.value) {
-      list.value = []
-      refreshing.value = false
-    }
-
-    for (let i = 0; i < 10; i++) {
-      const item = mockData[Math.floor(Math.random() * mockData.length)]
-      list.value.push({
-        ...item,
-        id: list.value.length + 1
-      })
-    }
-
+const onLoad = async () => {
+  if (refreshing.value) {
+    list.value = []
+    refreshing.value = false
+  }
+  try {
+    const res = await get('task.applications', {
+      page: page.value,
+      pageSize: pageSize.value,
+      status: activeTab.value,
+    })
+    list.value = res.data.list
     loading.value = false
-
-    if (list.value.length >= 40) {
+    finished.value = res.data.total <= list.value.length
+    refreshing.value = false
+    if (list.value.length >= res.data.total) {
       finished.value = true
     }
-  }, 1000)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 下拉刷新
@@ -165,6 +141,7 @@ const onRefresh = () => {
 
 // 切换任务状态
 const onTabChange = (index) => {
+  console.log(index)
   list.value = []
   finished.value = false
   loading.value = true

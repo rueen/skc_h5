@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-21 16:40:01
+ * @LastEditTime: 2025-03-21 19:00:28
  * @Description: 任务详情页
  -->
 <template>
@@ -138,7 +138,7 @@
         type="primary" 
         block 
         :class="$style.submitBtn"
-        @click="onSubmit"
+        @click="handleApply"
         v-else
       >
         立即报名
@@ -151,7 +151,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { showToast } from 'vant'
-import { get } from '@/utils/request'
+import { get, post } from '@/utils/request'
 import { useEnumStore } from '@/stores/enum'
 import { useUserStore } from '@/stores/user'
 import { shareInviteLink } from '@/utils/share'
@@ -194,8 +194,20 @@ const onAddAccount = () => {
 }
 
 // 提交报名
-const onSubmit = () => {
-  router.push(`/tasks/apply/${route.params.id}`)
+const handleApply = async () => {
+  try {
+    const res = await post('task.apply', {}, {
+      urlParams: {
+        id: route.params.id
+      }
+    })
+    if(res.code === 0) {
+      showToast('报名成功')
+      // router.push(`/taskApplications`)
+    }
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 const getDetail = async () => {

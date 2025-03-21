@@ -44,8 +44,8 @@ const zh = {
     loadingText: '加载中...'
   },
   tasks: {
-    enrolled: '已报名',
-    published: '已发布',
+    applied: '已报名',
+    submitted: '已发布',
     completed: '已完成',
     finishedText: '没有更多了',
     loadingText: '加载中...',
@@ -115,8 +115,8 @@ const en = {
     loadingText: 'Loading...'
   },
   tasks: {
-    enrolled: 'Enrolled',
-    published: 'Published',
+    applied: 'Applied',
+    submitted: 'Submitted',
     completed: 'Completed',
     finishedText: 'No more data',
     loadingText: 'Loading...',
