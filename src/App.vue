@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-20 21:44:31
+ * @LastEditTime: 2025-03-21 18:38:07
  * @Description: 
 -->
 <template>
@@ -10,7 +10,7 @@
     <router-view />
     <van-tabbar v-if="showTabbar" v-model="active" route>
       <van-tabbar-item to="/" icon="home-o">{{ t('tabbar.home') }}</van-tabbar-item>
-      <van-tabbar-item to="/tasks" icon="notes-o">{{ t('tabbar.tasks') }}</van-tabbar-item>
+      <van-tabbar-item to="/taskApplications" icon="notes-o">{{ t('tabbar.taskApplications') }}</van-tabbar-item>
       <van-tabbar-item to="/groups" icon="friends-o" v-if="groupsStore.isShowGroups">{{ t('tabbar.groups') }}</van-tabbar-item>
       <van-tabbar-item to="/profile" icon="user-o">{{ t('tabbar.profile') }}</van-tabbar-item>
     </van-tabbar>

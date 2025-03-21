@@ -31,7 +31,7 @@ const zh = {
   },
   tabbar: {
     home: '首页',
-    tasks: '任务',
+    taskApplications: '任务',
     groups: '小组',
     profile: '我的'
   },
@@ -102,7 +102,7 @@ const en = {
   },
   tabbar: {
     home: 'Home',
-    tasks: 'Tasks',
+    taskApplications: 'Tasks',
     groups: 'Groups',
     profile: 'Profile'
   },

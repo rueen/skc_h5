@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:10:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-20 21:34:02
+ * @LastEditTime: 2025-03-21 18:37:31
  * @Description: 
  */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -24,9 +24,9 @@ const router = createRouter({
       meta: { requiresAuth: true }
     },
     {
-      path: '/tasks',
-      name: 'Tasks',
-      component: () => import('../views/tasks/index.vue'),
+      path: '/taskApplications',
+      name: 'TaskApplications',
+      component: () => import('../views/taskApplications/index.vue'),
       meta: { requiresAuth: true }
     },
     {
