@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-21 14:33:59
+ * @LastEditTime: 2025-03-21 16:14:13
  * @Description: 任务详情页
  -->
 <template>
@@ -19,9 +19,9 @@
       <!-- 基本信息 -->
       <div :class="$style.basicInfo">
         <div :class="$style.priceRow">
-          <div :class="$style.price">$ {{ task.reward }}</div>
+          <div :class="$style.price">$ {{ taskInfo.reward }}</div>
           <div :class="$style.deadline">
-            截止时间：{{ task.endTime }}
+            截止时间：{{ taskInfo.endTime }}
           </div>
         </div>
         <div :class="$style.platform">
@@ -30,14 +30,14 @@
             :class="$style.platformIcon"
             alt="platform"
           />
-          {{ task.taskName }}
+          {{ taskInfo.taskName }}
         </div>
         <div :class="$style.extraInfo">
           <div :class="$style.description">
-            {{ task.category }}
+            {{ taskInfo.category }}
           </div>
           <div :class="$style.slots">
-            剩余名额：<span :class="$style.highlight">{{ task.slots }}</span>
+            剩余名额：<span :class="$style.highlight">{{ taskInfo.slots }}</span>
           </div>
         </div>
       </div>
@@ -71,17 +71,15 @@
           </div>
           <div :class="$style.reqItem">
             <span :class="$style.label">发布形式</span>
-            <span :class="$style.value">{{ enumStore.getEnumText('TaskType', task.taskType) }}</span>
+            <span :class="$style.value">{{ enumStore.getEnumText('TaskType', taskInfo.taskType) }}</span>
           </div>
           <div :class="$style.reqItem">
             <span :class="$style.label">粉丝要求</span>
-            <span :class="$style.value">{{ task.fansRequired }}</span>
+            <span :class="$style.value">{{ taskInfo.fansRequired }}</span>
           </div>
           <div :class="$style.reqItem">
             <span :class="$style.label">作品要求</span>
-            <div :class="$style.workRequirements">
-              {{ task.contentRequirement }}
-            </div>
+            <div :class="$style.workRequirements" v-html="taskInfo.contentRequirement" />
           </div>
         </div>
       </div>
@@ -90,7 +88,7 @@
       <div :class="$style.section">
         <h3 :class="$style.sectionTitle">任务信息</h3>
         <div :class="$style.taskInfo">
-          {{ task.taskInfo }}
+          {{ taskInfo.taskInfo }}
         </div>
       </div>
     </div>
@@ -131,7 +129,7 @@ const enumStore = useEnumStore()
 const userStore = useUserStore()
 
 // 任务数据
-const task = ref({})
+const taskInfo = ref({})
 
 // 任务流程步骤
 const processSteps = ['报名', '审核', '发帖', '完成']
@@ -169,7 +167,11 @@ const getDetail = async () => {
         id: route.params.id
       }
     })
-    task.value = res.data
+    taskInfo.value = {
+      ...res.data,
+      contentRequirement: res.data.contentRequirement.replace(/\n/g, '<br>'),
+      notice: res.data.notice.replace(/\n/g, '<br>')
+    }
   } catch (error) {
     console.log(error)
   }

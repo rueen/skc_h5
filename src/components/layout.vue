@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-21 10:50:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-21 11:12:15
+ * @LastEditTime: 2025-03-21 16:15:27
  * @Description: 
 -->
 <template>
@@ -17,5 +17,6 @@
   min-height: 100vh;
   background: #f7f8fa;
   box-sizing: border-box;
+  overflow-y: auto;
 }
 </style>
