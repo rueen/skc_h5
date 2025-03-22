@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-21 20:14:59
+ * @LastEditTime: 2025-03-22 19:01:18
  * @Description: 首页
  -->
 
@@ -74,7 +74,10 @@
                 <div :class="$style.info">
                   <div :class="$style.infoItem">
                     <span :class="$style.label">剩余名额：</span>
-                    <span :class="$style.value">{{ item.remainingSlots }}</span>
+                    <span :class="$style.value">
+                      <span v-if="item.unlimitedQuota">不限</span>
+                      <span v-else>{{ item.remainingQuota }}</span>
+                    </span>
                   </div>
                   <div :class="$style.infoItem">
                     <span :class="$style.label">达人领域：</span>

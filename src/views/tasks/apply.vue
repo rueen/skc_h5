@@ -10,33 +10,26 @@
     <div :class="$style.content">
       <!-- 任务信息 -->
       <div :class="$style.taskInfo">
-        <van-image
-          :src="task.banner"
-          width="80"
-          height="80"
-          radius="4"
-          :class="$style.taskImage"
-        />
         <div :class="$style.taskDetail">
           <div :class="$style.taskTitle">
             <img 
-              src="@/assets/icon/Facebook.png" 
+              :src="taskInfo.channelIcon"
               :class="$style.platformIcon"
               alt="platform"
             />
-            <div :class="$style.taskName">{{ task.title }}</div>
+            <div :class="$style.taskName">{{ taskInfo.taskName }}</div>
           </div>
-          <div :class="$style.taskPrice">${{ task.price }}</div>
+          <div :class="$style.taskPrice">${{ taskInfo.reward }}</div>
           <div :class="$style.taskBottom">
             <div :class="$style.tags">
               <van-tag type="primary" :class="$style.taskType">
-                {{ task.taskType }}
+                {{ enumStore.getEnumText('TaskType', taskInfo.taskType) }}
               </van-tag>
               <van-tag type="warning" :class="$style.followers">
-                {{ task.followers }}
+                {{ taskInfo.fansRequired }}
               </van-tag>
             </div>
-            <div :class="$style.taskDeadline">截止日期：{{ task.deadline }}</div>
+            <div :class="$style.taskDeadline">截止日期：{{ taskInfo.endTime }}</div>
           </div>
         </div>
       </div>
@@ -45,38 +38,26 @@
       <div :class="$style.tips">
         <h3 :class="$style.tipsTitle">温馨提示</h3>
         <div :class="$style.tipsList">
-          <div :class="$style.tipItem">1.请尽快完成发布，填写发布链接。</div>
-          <div :class="$style.tipItem">2.任务结束后无法填写，不能结算。</div>
-          <div :class="$style.tipItem">3.发布内容不符合要求，将无法审核通过。</div>
-          <div :class="$style.tipItem">4.填写链接无法访问或其他无关链接，视为放弃结算。</div>
+          <div :class="$style.tipItem" v-html="taskInfo.notice"></div>
         </div>
       </div>
 
       <!-- 表单内容 -->
       <div :class="$style.formGroup">
-        <div :class="$style.formItem">
-          <div :class="$style.label">帖子链接</div>
+        <div :class="$style.formItem" v-for="(item, index) in taskInfo.customFields" :key="index">
+          <div :class="$style.label">{{item.title}}</div>
           <van-field
-            v-model="form.postLink"
-            placeholder="请输入帖子链接"
+            v-model="customFields[index].value"
+            :placeholder="`请输入${item.title}`"
             :class="$style.input"
+            v-if="item.type === 'input'"
           />
-        </div>
-        <div :class="$style.formItem">
-          <div :class="$style.label">分享链接</div>
-          <van-field
-            v-model="form.shareLink"
-            placeholder="请输入分享链接"
-            :class="$style.input"
-          />
-        </div>
-        <div :class="$style.formItem">
-          <div :class="$style.label">数据截图</div>
           <van-uploader
-            v-model="form.screenshots"
+            v-model="customFields[index].value"
             multiple
             :max-count="3"
             :class="$style.uploader"
+            v-if="item.type === 'image'"
           />
         </div>
       </div>
@@ -119,29 +100,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { showToast } from 'vant'
 import Layout from '@/components/layout.vue'
+import { get } from '@/utils/request'
+import { useEnumStore } from '@/stores/enum'
 
 const router = useRouter()
-
+const route = useRoute()
+const enumStore = useEnumStore()
 // 任务数据
-const task = ref({
-  price: 50,
-  title: '美国-雅诗兰黛口红种草',
-  taskType: '图文',
-  followers: '10w+',
-  deadline: '2025-02-20',
-  banner: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
-})
-
-// 表单数据
-const form = ref({
-  postLink: '',
-  shareLink: '',
-  screenshots: []
-})
+const taskInfo = ref({})
+const customFields = ref([])
 
 // 控制成功弹窗显示
 const showSuccessDialog = ref(false)
@@ -152,18 +123,7 @@ const onClickLeft = () => {
 }
 
 const onSubmit = () => {
-  if (!form.value.postLink) {
-    showToast('请输入帖子链接')
-    return
-  }
-  if (!form.value.shareLink) {
-    showToast('请输入分享链接')
-    return
-  }
-  // if (form.value.screenshots.length === 0) {
-  //   showToast('请上传数据截图')
-  //   return
-  // }
+  console.log(customFields.value)
 
   showSuccessDialog.value = true
 }
@@ -173,6 +133,27 @@ const onCheckTask = () => {
   showSuccessDialog.value = false
   router.push('/tasks')
 }
+
+const getDetail = async () => {
+  try {
+    const res = await get('task.detail', {}, {
+      urlParams: {
+        id: route.params.id
+      }
+    })
+    taskInfo.value = {
+      ...res.data,
+      notice: res.data.notice.replace(/\n/g, '<br>')
+    }
+    customFields.value = res.data.customFields
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+onMounted(async () => {
+  await getDetail()
+})
 </script>
 
 <style lang="less" module>

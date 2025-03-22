@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-21 20:02:50
+ * @LastEditTime: 2025-03-22 19:20:44
  * @Description: 任务详情页
  -->
 <template>
@@ -18,26 +18,28 @@
     <div :class="$style.content">
       <!-- 基本信息 -->
       <div :class="$style.basicInfo">
+        <div :class="$style.platform">
+          <img 
+            :src="taskInfo.channelIcon" 
+            :class="$style.platformIcon"
+            alt="platform"
+          />
+          {{ taskInfo.taskName }}
+        </div>
         <div :class="$style.priceRow">
           <div :class="$style.price">$ {{ taskInfo.reward }}</div>
           <div :class="$style.deadline">
             截止时间：{{ taskInfo.endTime }}
           </div>
         </div>
-        <div :class="$style.platform">
-          <img 
-            src="@/assets/icon/Facebook.png" 
-            :class="$style.platformIcon"
-            alt="platform"
-          />
-          {{ taskInfo.taskName }}
-        </div>
         <div :class="$style.extraInfo">
           <div :class="$style.description">
             {{ taskInfo.category }}
           </div>
           <div :class="$style.slots">
-            剩余名额：<span :class="$style.highlight">{{ taskInfo.slots }}</span>
+            <span>剩余名额：</span>
+            <span v-if="taskInfo.unlimitedQuota">不限</span>
+            <span v-else>{{ taskInfo.remainingQuota }}</span>
           </div>
         </div>
       </div>
@@ -139,6 +141,15 @@
         block 
         :class="$style.submitBtn"
         @click="handleSubmitTask"
+        v-else-if="taskInfo.remainingQuota === 0"
+      >
+        名额已满
+      </van-button>
+      <van-button 
+        type="primary" 
+        block 
+        :class="$style.submitBtn"
+        @click="handleSubmitTask"
         v-else-if="!!taskInfo.isApplied"
       >
         提交任务
@@ -203,7 +214,7 @@ const onAddAccount = () => {
 }
 
 const handleSubmitTask = async () => {
-  router.push(`/tasks/apply/0`)
+  router.push(`/tasks/apply/${route.params.id}`)
 }
 
 // 提交报名
@@ -216,7 +227,7 @@ const handleApply = async () => {
     })
     if(res.code === 0) {
       showToast('报名成功')
-      // router.push(`/taskApplications`)
+      getDetail()
     }
   } catch (error) {
     console.log(error)
@@ -322,11 +333,6 @@ onMounted(async () => {
   .slots {
     font-size: 14px;
     color: #969799;
-
-    .highlight {
-      color: #ff4d4f;
-      font-weight: 500;
-    }
   }
 }
 
