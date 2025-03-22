@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:10:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-21 18:37:31
+ * @LastEditTime: 2025-03-22 21:28:30
  * @Description: 
  */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -144,9 +144,9 @@ const router = createRouter({
       }
     },
     {
-      path: '/tasks/apply/:id',
-      name: 'TaskApply',
-      component: () => import('../views/tasks/apply.vue'),
+      path: '/tasks/submit/:taskId',
+      name: 'TaskSubmit',
+      component: () => import('../views/tasks/submit.vue'),
       meta: {
         title: '任务报名',
         requiresAuth: true,
@@ -154,9 +154,9 @@ const router = createRouter({
       }
     },
     {
-      path: '/tasks/apply/detail/:id',
-      name: 'TaskApplyDetail',
-      component: () => import('../views/tasks/apply-detail.vue'),
+      path: '/tasks/submit/detail/:taskId',
+      name: 'TaskSubmitDetail',
+      component: () => import('../views/tasks/submitDetail.vue'),
       meta: {
         title: '报名详情',
         requiresAuth: true,

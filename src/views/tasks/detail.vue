@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-22 19:20:44
+ * @LastEditTime: 2025-03-22 19:39:19
  * @Description: 任务详情页
  -->
 <template>
@@ -214,7 +214,7 @@ const onAddAccount = () => {
 }
 
 const handleSubmitTask = async () => {
-  router.push(`/tasks/apply/${route.params.id}`)
+  router.push(`/tasks/submit/${route.params.id}`)
 }
 
 // 提交报名

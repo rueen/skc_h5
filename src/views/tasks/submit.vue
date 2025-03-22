@@ -57,7 +57,9 @@
             multiple
             :max-count="3"
             :class="$style.uploader"
+            :name="index"
             v-if="item.type === 'image'"
+            :after-read="afterRead"
           />
         </div>
       </div>
@@ -68,6 +70,7 @@
         type="primary"
         :class="$style.submitBtn"
         @click="onSubmit"
+        :loading="loading"
       >
         提交
       </van-button>
@@ -83,16 +86,16 @@
       <div :class="$style.successContent">
         <van-icon name="cross" :class="$style.closeBtn" @click="showSuccessDialog = false" />
         <van-icon name="checked" :class="$style.successIcon" />
-        <h3 :class="$style.successTitle">报名成功</h3>
+        <h3 :class="$style.successTitle">提交成功</h3>
         <p :class="$style.successTip">请在心等待，留意审核结果</p>
-        <p :class="$style.successDesc">管理员将在5小时以内完成审核</p>
+        <!-- <p :class="$style.successDesc">管理员将在5小时以内完成审核</p> -->
         <van-button 
           type="primary" 
           block 
           :class="$style.checkTaskBtn"
           @click="onCheckTask"
         >
-          查看任务
+          查看详情
         </van-button>
       </div>
     </van-dialog>
@@ -102,10 +105,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { showToast } from 'vant'
+import { showToast, closeToast } from 'vant'
 import Layout from '@/components/layout.vue'
-import { get } from '@/utils/request'
+import { get, post } from '@/utils/request'
 import { useEnumStore } from '@/stores/enum'
+import { uploadImage } from '@/utils/upload'
 
 const router = useRouter()
 const route = useRoute()
@@ -113,7 +117,7 @@ const enumStore = useEnumStore()
 // 任务数据
 const taskInfo = ref({})
 const customFields = ref([])
-
+const loading = ref(false)
 // 控制成功弹窗显示
 const showSuccessDialog = ref(false)
 
@@ -122,30 +126,80 @@ const onClickLeft = () => {
   router.back()
 }
 
-const onSubmit = () => {
-  console.log(customFields.value)
+const afterRead = async (file, {name, index}) => {
+  const _index = parseInt(name)
+  // 检查文件对象
+  if (!file || !file.file) {
+    showToast('文件无效')
+    return
+  }
+  // 显示上传中提示
+  showToast({
+    type: 'loading',
+    message: '上传中...',
+    forbidClick: true,
+    duration: 0
+  })
+  
+  // 调用上传图片接口
+  const result = await uploadImage(file.file)
+  
+  // 关闭上传中提示
+  closeToast()
+  
+  // 更新头像地址
+  if (result && result.url) {
+    customFields.value[_index].value[index] = {
+      url: result.url,
+    }
+    showToast('上传成功')
+  } else {
+    console.error('头像上传返回数据异常:', result)
+    showToast('上传失败，返回数据异常')
+  }
+}
 
-  showSuccessDialog.value = true
+const onSubmit = async () => {
+  loading.value = true
+  const res = await post('task.submit', {
+    id: route.params.taskId,
+    submitContent: {
+      customFields: customFields.value
+    }
+  }, {
+    urlParams: {
+      id: route.params.taskId
+    }
+  })
+  loading.value = false
+  if(res.code === 0) {
+    showSuccessDialog.value = true
+  } else {
+    showToast(res.message)
+  }
 }
 
 // 查看任务
 const onCheckTask = () => {
   showSuccessDialog.value = false
-  router.push('/tasks')
+  router.push(`/tasks/submit/detail/${route.params.taskId}`)
 }
 
 const getDetail = async () => {
   try {
     const res = await get('task.detail', {}, {
       urlParams: {
-        id: route.params.id
+        id: route.params.taskId
       }
     })
     taskInfo.value = {
       ...res.data,
       notice: res.data.notice.replace(/\n/g, '<br>')
     }
-    customFields.value = res.data.customFields
+    customFields.value = res.data.customFields.map(item => ({
+      ...item,
+      value: item.type === 'image' ? [] : ''
+    }))
   } catch (error) {
     console.log(error)
   }

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-21 10:58:25
+ * @LastEditTime: 2025-03-22 19:42:38
  * @Description: 
 -->
 <template>
@@ -262,22 +262,11 @@ const occupationColumns = enumStore.getEnumOptions('OccupationType')
 
 // 处理头像上传
 const afterRead = async (file) => {
-  // 移除调试日志
-  // console.log(file)
-  
   // 检查文件对象
   if (!file || !file.file) {
     showToast('文件无效')
     return
   }
-  
-  // 打印文件信息以便调试
-  console.log('上传文件信息:', {
-    name: file.file.name,
-    type: file.file.type,
-    size: file.file.size,
-    lastModified: file.file.lastModified
-  })
   
   try {
     // 显示上传中提示
@@ -305,7 +294,6 @@ const afterRead = async (file) => {
   } catch (error) {
     // 关闭上传中提示
     closeToast()
-    
     console.error('头像上传失败:', error)
     showToast('上传失败，请重试')
   }

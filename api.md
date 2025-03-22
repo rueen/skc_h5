@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-16 19:42:26
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-20 11:29:36
+ * @LastEditTime: 2025-03-22 20:49:50
  * @Description: 
 -->
 ### 任务详情
@@ -60,3 +60,35 @@
     groupId: 1, // 群ID
   }
   ```
+
+### 任务提交
+- **请求参数示例**：
+```json
+  {
+    taskId: 1, // 关联的任务ID
+    submitContent: {
+      "customFields":[
+        {
+          "type":"input",
+          "title":"帖子链接",
+          "value":"http://url-1.com"
+        },
+        {
+          "type":"input",
+          "title":"分享链接",
+          "value":"http://url-2.com"
+        },
+        {
+          "type":"image",
+          "title":"数据截图",
+          "value":[
+            {"url":"http://localhost:3001/uploads/1742647141386-802015074.jpg"},
+            {"url":"http://localhost:3001/uploads/1742647144788-834912775.jpg"},
+            {"url":"http://localhost:3001/uploads/1742647148543-801372270.jpg"}
+          ]
+        }
+      ]
+    }
+  }
+  ```
+  

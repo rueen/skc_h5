@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-22 19:10:25
+ * @LastEditTime: 2025-03-22 20:34:53
  * @Description: API 路径配置
  */
 const API_PATH = {
@@ -11,6 +11,7 @@ const API_PATH = {
     detail: '/tasks/:id',
     applications: '/tasks/applications',
     apply: '/tasks/apply/:id',
+    submit: '/tasks/submit/:id',
   },
   channel: {
     list: '/channels',
