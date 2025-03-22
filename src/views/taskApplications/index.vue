@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-22 19:36:47
+ * @LastEditTime: 2025-03-22 21:36:53
  * @Description: 任务页
  -->
 <template>
@@ -33,7 +33,7 @@
             v-for="item in list"
             :key="item.id"
             :class="$style.listItem"
-            @click="router.push(`/tasks/apply/detail/${item.id}`)"
+            @click="handleClickItem(item)"
           >
             <div :class="$style.mainContent">
               <div :class="$style.header">
@@ -139,6 +139,20 @@ const onTabChange = ({name}) => {
 // 格式化价格
 const formatPrice = (price) => {
   return `¥${price}`
+}
+
+// 点击任务项
+const handleClickItem = (item) => {
+  if(item.status === 'applied') {
+    // 已报名
+    router.push(`/tasks/submit/${item.taskId}`)
+  } else if(item.status === 'submitted') {
+    // 已提交
+    router.push(`/tasks/submit/detail/${item.taskId}`)
+  } else {
+    // 已完成
+    router.push(`/tasks/apply/detail/${item.taskId}`)
+  }
 }
 
 onMounted(async () => {

@@ -45,7 +45,7 @@ const zh = {
   },
   tasks: {
     applied: '已报名',
-    submitted: '已发布',
+    submitted: '已提交',
     completed: '已完成',
     finishedText: '没有更多了',
     loadingText: '加载中...',
