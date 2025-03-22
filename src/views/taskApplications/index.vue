@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-21 20:20:08
+ * @LastEditTime: 2025-03-22 19:36:47
  * @Description: 任务页
  -->
 <template>
@@ -39,7 +39,7 @@
               <div :class="$style.header">
                 <div :class="$style.titleWrapper">
                   <img 
-                    src="@/assets/icon/Facebook.png" 
+                    :src="item.channelIcon"
                     :class="$style.platformIcon"
                     alt="platform"
                   />
