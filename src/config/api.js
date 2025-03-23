@@ -2,16 +2,23 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-22 20:34:53
+ * @LastEditTime: 2025-03-23 15:55:46
  * @Description: API 路径配置
  */
 const API_PATH = {
   task: {
     list: '/tasks',
     detail: '/tasks/:id',
-    applications: '/tasks/applications',
-    apply: '/tasks/apply/:id',
-    submit: '/tasks/submit/:id',
+    // 任务报名
+    enroll: '/task-enroll/:taskId',
+    // 取消报名
+    cancelEnroll: '/task-enroll/:taskId', // DELETE
+    // 检查是否已报名
+    checkEnroll: '/task-enroll/:taskId/check',
+    // 任务报名列表
+    enrolled: '/enrolled-tasks',
+    // 提交任务 POST
+    submit: '/task-submit',
   },
   channel: {
     list: '/channels',

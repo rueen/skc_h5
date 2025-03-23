@@ -162,13 +162,9 @@ const afterRead = async (file, {name, index}) => {
 const onSubmit = async () => {
   loading.value = true
   const res = await post('task.submit', {
-    id: route.params.taskId,
+    taskId: route.params.taskId,
     submitContent: {
       customFields: customFields.value
-    }
-  }, {
-    urlParams: {
-      id: route.params.taskId
     }
   })
   loading.value = false

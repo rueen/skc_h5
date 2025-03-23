@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-22 19:01:18
+ * @LastEditTime: 2025-03-23 12:00:53
  * @Description: 首页
  -->
 
@@ -47,7 +47,7 @@
                   alt="platform"
                 />
                 <h3>{{ item.taskName }}</h3>
-                <span :class="$style.status" v-if="item.isApplied">已报名</span>
+                <span :class="$style.status" v-if="item.isEnrolled">已报名</span>
               </div>
               
               <div :class="$style.contentRow">

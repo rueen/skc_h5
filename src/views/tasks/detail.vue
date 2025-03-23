@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-22 19:39:19
+ * @LastEditTime: 2025-03-23 12:00:27
  * @Description: 任务详情页
  -->
 <template>
@@ -150,7 +150,7 @@
         block 
         :class="$style.submitBtn"
         @click="handleSubmitTask"
-        v-else-if="!!taskInfo.isApplied"
+        v-else-if="!!taskInfo.isEnrolled"
       >
         提交任务
       </van-button>
@@ -220,9 +220,9 @@ const handleSubmitTask = async () => {
 // 提交报名
 const handleApply = async () => {
   try {
-    const res = await post('task.apply', {}, {
+    const res = await post('task.enroll', {}, {
       urlParams: {
-        id: route.params.id
+        taskId: route.params.id
       }
     })
     if(res.code === 0) {

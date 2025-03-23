@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-22 21:36:53
+ * @LastEditTime: 2025-03-23 14:47:07
  * @Description: 任务页
  -->
 <template>
@@ -55,7 +55,7 @@
                   <div :class="$style.bottomInfo">
                     <div :class="$style.tags">
                       <van-tag type="primary" :class="$style.taskType">
-                        {{ item.taskType }}
+                        {{ enumStore.getEnumText('TaskType', item.taskType) }}
                       </van-tag>
                       <van-tag type="warning" :class="$style.followers">
                         {{ item.followers }}
@@ -81,9 +81,11 @@ import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { get } from '@/utils/request'
+import { useEnumStore } from '@/stores/enum'
 
 const { t } = useI18n()
 const router = useRouter()
+const enumStore = useEnumStore()
 
 // 当前选中的任务状态
 const activeTab = ref('applied')
@@ -103,10 +105,9 @@ const onLoad = async () => {
     refreshing.value = false
   }
   try {
-    const res = await get('task.applications', {
+    const res = await get('task.enrolled', {
       page: page.value,
       pageSize: pageSize.value,
-      status: activeTab.value,
     })
     list.value = res.data.list
     loading.value = false
@@ -143,10 +144,10 @@ const formatPrice = (price) => {
 
 // 点击任务项
 const handleClickItem = (item) => {
-  if(item.status === 'applied') {
+  if(activeTab.value === 'applied') {
     // 已报名
     router.push(`/tasks/submit/${item.taskId}`)
-  } else if(item.status === 'submitted') {
+  } else if(activeTab.value === 'submitted') {
     // 已提交
     router.push(`/tasks/submit/detail/${item.taskId}`)
   } else {
