@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-22 21:28:42
+ * @LastEditTime: 2025-03-23 21:44:17
  * @Description: 
 -->
 <template>
@@ -47,7 +47,6 @@ const showTabbar = computed(() => {
     'WalletAccountsAdd',
     'WalletWithdraw',
     'TaskSubmit',
-    'TaskSubmitDetail',
     'SettingsPassword',
     'Article'
   ].includes(route.name)

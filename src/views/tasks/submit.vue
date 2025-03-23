@@ -8,6 +8,22 @@
     />
 
     <div :class="$style.content">
+      <!-- 审核状态 -->
+      <div 
+        :class="[$style.statusBar, $style[`status${submittedInfo.taskAuditStatus}`]]"
+        v-if="!isNew"
+      >
+        <div :class="$style.statusIcon">
+          <van-icon 
+            :name="getStatusIcon(submittedInfo.taskAuditStatus)"
+            :class="$style.icon"
+          />
+        </div>
+        <div :class="$style.statusContent">
+          <div :class="$style.statusText">{{ enumStore.getEnumText('TaskAuditStatus', submittedInfo.taskAuditStatus) }}</div>
+          <div :class="$style.statusDesc" v-if="submittedInfo.taskAuditStatus === 'rejected'">{{ submittedInfo.rejectReason }}</div>
+        </div>
+      </div>
       <!-- 任务信息 -->
       <div :class="$style.taskInfo">
         <div :class="$style.taskDetail">
@@ -50,17 +66,29 @@
             v-model="customFields[index].value"
             :placeholder="`请输入${item.title}`"
             :class="$style.input"
+            :readonly="isView"
             v-if="item.type === 'input'"
           />
-          <van-uploader
-            v-model="customFields[index].value"
-            multiple
-            :max-count="3"
-            :class="$style.uploader"
-            :name="index"
-            v-if="item.type === 'image'"
-            :after-read="afterRead"
-          />
+          <template v-if="item.type === 'image'">
+            <van-image
+              v-for="(img, index) in customFields[index].value"
+              :key="index"
+              :src="img.url"
+              width="80"
+              height="80"
+              radius="4"
+              v-if="isView"
+            />
+            <van-uploader
+              v-model="customFields[index].value"
+              multiple
+              :max-count="3"
+              :class="$style.uploader"
+              :name="index"
+              v-else
+              :after-read="afterRead"
+            />
+          </template>
         </div>
       </div>
 
@@ -71,8 +99,9 @@
         :class="$style.submitBtn"
         @click="onSubmit"
         :loading="loading"
+        v-if="!isView"
       >
-        提交
+        {{ isEdit ? '重新提交' : '提交' }}
       </van-button>
     </div>
 
@@ -84,27 +113,17 @@
       class="success-dialog"
     >
       <div :class="$style.successContent">
-        <van-icon name="cross" :class="$style.closeBtn" @click="showSuccessDialog = false" />
+        <van-icon name="cross" :class="$style.closeBtn" @click="handleCloseDialog" />
         <van-icon name="checked" :class="$style.successIcon" />
         <h3 :class="$style.successTitle">提交成功</h3>
         <p :class="$style.successTip">请在心等待，留意审核结果</p>
-        <!-- <p :class="$style.successDesc">管理员将在5小时以内完成审核</p> -->
-        <van-button 
-          type="primary" 
-          block 
-          :class="$style.checkTaskBtn"
-          @click="onCheckTask"
-          v-if="submittedId !== null"
-        >
-          查看详情
-        </van-button>
       </div>
     </van-dialog>
   </Layout>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { showToast, closeToast } from 'vant'
 import Layout from '@/components/layout.vue'
@@ -115,17 +134,37 @@ import { uploadImage } from '@/utils/upload'
 const router = useRouter()
 const route = useRoute()
 const enumStore = useEnumStore()
-// 任务数据
+
+const taskId = ref(route.query.taskId)
 const taskInfo = ref({})
 const customFields = ref([])
 const loading = ref(false)
+// 已提交数据
+const submittedInfo = ref({})
 // 控制成功弹窗显示
 const showSuccessDialog = ref(false)
 const submittedId = ref(null)
+const isNew = ref(route.params.id === 'new')
+const isEdit = computed(() => {
+  return route.params.id !== 'new' && submittedInfo.value.taskAuditStatus === 'rejected'
+})
+const isView = computed(() => {
+  return route.params.id !== 'new' && submittedInfo.value.taskAuditStatus === 'approved'
+})
 
 // 事件处理
 const onClickLeft = () => {
   router.back()
+}
+
+// 获取状态图标
+const getStatusIcon = (status) => {
+  const icons = {
+    pending: 'clock-o',
+    approved: 'passed',
+    rejected: 'close'
+  }
+  return icons[status]
 }
 
 const afterRead = async (file, {name, index}) => {
@@ -161,10 +200,20 @@ const afterRead = async (file, {name, index}) => {
   }
 }
 
+const checkForm = () => {
+  return customFields.value.every(item => item.value)
+}
+
 const onSubmit = async () => {
+  const checkResult = checkForm()
+  if(!checkResult){
+    showToast('请填写完整信息')
+    return 
+  }
+
   loading.value = true
   const res = await post('task.submit', {
-    taskId: route.params.taskId,
+    taskId: taskId.value,
     submitContent: {
       customFields: customFields.value
     }
@@ -178,40 +227,107 @@ const onSubmit = async () => {
   }
 }
 
-// 查看任务
-const onCheckTask = () => {
+const handleCloseDialog = () => {
   showSuccessDialog.value = false
-  router.push(`/tasks/submit/detail/${submittedId.value}`)
+  router.push({
+    name: 'TaskApplications',
+    params: {
+      activeTab: 'submitted'
+    }
+  })
 }
 
-const getDetail = async () => {
+const getTaskDetail = async () => {
   try {
     const res = await get('task.detail', {}, {
       urlParams: {
-        id: route.params.taskId
+        id: taskId.value
       }
     })
     taskInfo.value = {
       ...res.data,
       notice: res.data.notice.replace(/\n/g, '<br>')
     }
-    customFields.value = res.data.customFields.map(item => ({
-      ...item,
-      value: item.type === 'image' ? [] : ''
-    }))
+    if(!isNew.value) {
+      customFields.value = submittedInfo.value.submitContent.customFields;
+    } else {
+      customFields.value = res.data.customFields.map(item => ({
+        ...item,
+        value: item.type === 'image' ? [] : ''
+      }))
+    }
   } catch (error) {
     console.log(error)
   }
 }
 
+const loadSubmittedDetail = async () => {
+  const res = await get('task.submittedDetail', {}, {
+    urlParams: {
+      id: route.params.id
+    }
+  })
+  if(res.code === 0) {
+    submittedInfo.value = res.data
+    taskId.value = res.data.taskId
+  }
+}
+
 onMounted(async () => {
-  await getDetail()
+  if(!isNew.value) {
+    await loadSubmittedDetail()
+  }
+  await getTaskDetail()
 })
 </script>
 
 <style lang="less" module>
 .content {
   padding: 12px;
+}
+
+.statusBar {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &.statuspending {
+    background: #fffbe8;
+    .statusIcon {
+      background: #ffd21e;
+    }
+  }
+
+  &.statusapproved {
+    background: #f0fff0;
+    .statusIcon {
+      background: #07c160;
+    }
+  }
+
+  &.statusrejected {
+    background: #fff2f0;
+    .statusIcon {
+      background: #ff4d4f;
+    }
+  }
+  .statusIcon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .icon {
+      font-size: 24px;
+      color: #fff;
+    }
+  }
 }
 
 .taskInfo {

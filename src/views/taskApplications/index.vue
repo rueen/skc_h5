@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-23 19:59:09
+ * @LastEditTime: 2025-03-23 21:59:23
  * @Description: 任务页
  -->
 <template>
@@ -90,9 +90,8 @@ import { useEnumStore } from '@/stores/enum'
 const { t } = useI18n()
 const router = useRouter()
 const enumStore = useEnumStore()
-
 // 当前选中的任务状态
-const activeTab = ref('applied')
+const activeTab = ref('applied') // applied | submitted | completed
 
 // 列表数据
 const page = ref(1)
@@ -152,7 +151,7 @@ const onLoad = async () => {
       await getEnrolledList()
       break
     case 'submitted':
-      await getSubmittedList('pending')
+      await getSubmittedList('rejected')
       break
     case 'completed':
       await getSubmittedList('approved')
@@ -185,10 +184,10 @@ const formatPrice = (price) => {
 const handleClickItem = (item) => {
   if(activeTab.value === 'applied') {
     // 已报名
-    router.push(`/tasks/submit/${item.taskId}`)
+    router.push(`/tasks/submit/new?taskId=${item.taskId}`)
   } else {
     // 已提交 | 已完成
-    router.push(`/tasks/submit/detail/${item.id}`)
+    router.push(`/tasks/submit/${item.id}?taskId=${item.taskId}`)
   }
 }
 
