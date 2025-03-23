@@ -94,6 +94,7 @@
           block 
           :class="$style.checkTaskBtn"
           @click="onCheckTask"
+          v-if="submittedId !== null"
         >
           查看详情
         </van-button>
@@ -120,6 +121,7 @@ const customFields = ref([])
 const loading = ref(false)
 // 控制成功弹窗显示
 const showSuccessDialog = ref(false)
+const submittedId = ref(null)
 
 // 事件处理
 const onClickLeft = () => {
@@ -170,6 +172,7 @@ const onSubmit = async () => {
   loading.value = false
   if(res.code === 0) {
     showSuccessDialog.value = true
+    submittedId.value = res.data.id
   } else {
     showToast(res.message)
   }
@@ -178,7 +181,7 @@ const onSubmit = async () => {
 // 查看任务
 const onCheckTask = () => {
   showSuccessDialog.value = false
-  router.push(`/tasks/submit/detail/${route.params.taskId}`)
+  router.push(`/tasks/submit/detail/${submittedId.value}`)
 }
 
 const getDetail = async () => {
