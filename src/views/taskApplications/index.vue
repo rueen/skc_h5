@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-23 14:47:07
+ * @LastEditTime: 2025-03-23 19:59:09
  * @Description: 任务页
  -->
 <template>
@@ -45,6 +45,10 @@
                   />
                   <h3>{{ item.taskName }}</h3>
                 </div>
+                <span :class="$style.status" v-if="activeTab === 'applied'">已报名</span>
+                <span :class="$style.status" v-else>
+                  {{ enumStore.getEnumText('TaskAuditStatus', item.taskAuditStatus) }}
+                </span>
               </div>
               
               <div :class="$style.contentWrapper">
@@ -98,8 +102,7 @@ const loading = ref(false)
 const finished = ref(false)
 const refreshing = ref(false)
 
-// 加载数据
-const onLoad = async () => {
+const getEnrolledList = async () => {
   if (refreshing.value) {
     list.value = []
     refreshing.value = false
@@ -118,6 +121,42 @@ const onLoad = async () => {
     }
   } catch (error) {
     console.log(error)
+  }
+}
+const getSubmittedList = async (taskAuditStatus) => {
+  if (refreshing.value) {
+    list.value = []
+    refreshing.value = false
+  }
+  try {
+    const res = await get('task.submitted', {
+      page: page.value,
+      pageSize: pageSize.value,
+      taskAuditStatus
+    })
+    list.value = res.data.list
+    loading.value = false
+    finished.value = res.data.total <= list.value.length
+    refreshing.value = false
+    if (list.value.length >= res.data.total) {
+      finished.value = true
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+// 加载数据
+const onLoad = async () => {
+  switch (activeTab.value) {
+    case 'applied':
+      await getEnrolledList()
+      break
+    case 'submitted':
+      await getSubmittedList('pending')
+      break
+    case 'completed':
+      await getSubmittedList('approved')
+      break
   }
 }
 
@@ -147,12 +186,9 @@ const handleClickItem = (item) => {
   if(activeTab.value === 'applied') {
     // 已报名
     router.push(`/tasks/submit/${item.taskId}`)
-  } else if(activeTab.value === 'submitted') {
-    // 已提交
-    router.push(`/tasks/submit/detail/${item.taskId}`)
   } else {
-    // 已完成
-    router.push(`/tasks/apply/detail/${item.taskId}`)
+    // 已提交 | 已完成
+    router.push(`/tasks/submit/detail/${item.id}`)
   }
 }
 
@@ -221,6 +257,13 @@ onMounted(async () => {
   width: 0;
   display: flex;
   flex-direction: column;
+}
+
+.status {
+  font-size: 13px;
+  color: #1989fa;
+  margin-left: 12px;
+  flex-shrink: 0;
 }
 
 .header {

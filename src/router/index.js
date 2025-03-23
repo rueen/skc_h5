@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:10:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-22 21:28:30
+ * @LastEditTime: 2025-03-23 20:07:21
  * @Description: 
  */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -154,7 +154,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/tasks/submit/detail/:taskId',
+      path: '/tasks/submit/detail/:id',
       name: 'TaskSubmitDetail',
       component: () => import('../views/tasks/submitDetail.vue'),
       meta: {

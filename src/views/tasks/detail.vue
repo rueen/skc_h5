@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-23 12:00:27
+ * @LastEditTime: 2025-03-23 20:08:54
  * @Description: 任务详情页
  -->
 <template>
@@ -235,19 +235,15 @@ const handleApply = async () => {
 }
 
 const getDetail = async () => {
-  try {
-    const res = await get('task.detail', {}, {
-      urlParams: {
-        id: route.params.id
-      }
-    })
-    taskInfo.value = {
-      ...res.data,
-      contentRequirement: res.data.contentRequirement.replace(/\n/g, '<br>'),
-      notice: res.data.notice.replace(/\n/g, '<br>')
+  const res = await get('task.detail', {}, {
+    urlParams: {
+      id: route.params.id
     }
-  } catch (error) {
-    console.log(error)
+  })
+  taskInfo.value = {
+    ...res.data,
+    contentRequirement: res.data.contentRequirement.replace(/\n/g, '<br>'),
+    notice: res.data.notice.replace(/\n/g, '<br>')
   }
 }
 

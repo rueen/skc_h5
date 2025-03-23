@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <van-nav-bar
-      title="报名详情"
+      title="已提交详情"
       left-arrow
       @click-left="onClickLeft"
       fixed
@@ -10,49 +10,42 @@
     <div :class="$style.content">
       <!-- 审核状态 -->
       <div 
-        :class="[$style.statusBar, $style[`status${applyInfo.status}`]]"
+        :class="[$style.statusBar, $style[`status${submittedInfo.taskAuditStatus}`]]"
       >
         <div :class="$style.statusIcon">
           <van-icon 
-            :name="getStatusIcon(applyInfo.status)"
+            :name="getStatusIcon(submittedInfo.taskAuditStatus)"
             :class="$style.icon"
           />
         </div>
         <div :class="$style.statusContent">
-          <div :class="$style.statusText">{{ getStatusText(applyInfo.status) }}</div>
-          <div :class="$style.statusDesc">{{ getStatusDesc(applyInfo.status) }}</div>
+          <div :class="$style.statusText">{{ enumStore.getEnumText('TaskAuditStatus', submittedInfo.taskAuditStatus) }}</div>
+          <div :class="$style.statusDesc">{{ getStatusDesc(submittedInfo.taskAuditStatus) }}</div>
         </div>
       </div>
 
       <!-- 任务信息 -->
       <div :class="$style.taskInfo">
-        <van-image
-          :src="applyInfo.task.banner"
-          width="80"
-          height="80"
-          radius="4"
-          :class="$style.taskImage"
-        />
         <div :class="$style.taskDetail">
           <div :class="$style.taskTitle">
             <img 
-              src="@/assets/icon/Facebook.png" 
+              :src="taskInfo.channelIcon" 
               :class="$style.platformIcon"
               alt="platform"
             />
-            <div :class="$style.taskName">{{ applyInfo.task.title }}</div>
+            <div :class="$style.taskName">{{ taskInfo.taskName }}</div>
           </div>
-          <div :class="$style.taskPrice">${{ applyInfo.task.price }}</div>
+          <div :class="$style.taskPrice">${{ taskInfo.reward }}</div>
           <div :class="$style.taskBottom">
             <div :class="$style.tags">
               <van-tag type="primary" :class="$style.taskType">
-                {{ applyInfo.task.taskType }}
+                {{ enumStore.getEnumText('TaskType', taskInfo.taskType) }}
               </van-tag>
               <van-tag type="warning" :class="$style.followers">
-                {{ applyInfo.task.followers }}
+                {{ taskInfo.followers }}
               </van-tag>
             </div>
-            <div :class="$style.taskDeadline">截止日期：{{ applyInfo.task.deadline }}</div>
+            <div :class="$style.taskDeadline">截止日期：{{ taskInfo.deadline }}</div>
           </div>
         </div>
       </div>
@@ -61,38 +54,25 @@
       <div :class="$style.tips">
         <h3 :class="$style.tipsTitle">温馨提示</h3>
         <div :class="$style.tipsList">
-          <div :class="$style.tipItem">1.请尽快完成发布，填写发布链接。</div>
-          <div :class="$style.tipItem">2.任务结束后无法填写，不能结算。</div>
-          <div :class="$style.tipItem">3.发布内容不符合要求，将无法审核通过。</div>
-          <div :class="$style.tipItem">4.填写链接无法访问或其他无关链接，视为放弃结算。</div>
+          <div :class="$style.tipItem" v-html="taskInfo.notice"></div>
         </div>
       </div>
 
       <!-- 表单内容 -->
       <div :class="$style.formGroup">
-        <div :class="$style.formItem">
-          <div :class="$style.label">帖子链接</div>
+        <div :class="$style.formItem" v-for="(item, index) in submittedInfo?.submitContent?.customFields" :key="index">
+          <div :class="$style.label">{{item.title}}</div>
           <van-field
-            v-model="applyInfo.postLink"
+            v-model="item.value"
             readonly
             :class="$style.input"
+            v-if="item.type === 'input'"
           />
-        </div>
-        <div :class="$style.formItem">
-          <div :class="$style.label">分享链接</div>
-          <van-field
-            v-model="applyInfo.shareLink"
-            readonly
-            :class="$style.input"
-          />
-        </div>
-        <div :class="$style.formItem">
-          <div :class="$style.label">数据截图</div>
-          <div :class="$style.screenshots">
+          <div :class="$style.screenshots" v-if="item.type === 'image'">
             <van-image
-              v-for="(img, index) in applyInfo.screenshots"
+              v-for="(img, index) in item.value"
               :key="index"
-              :src="img"
+              :src="img.url"
               width="80"
               height="80"
               radius="4"
@@ -105,54 +85,25 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import Layout from '@/components/layout.vue'
+import { get } from '@/utils/request'
+import { useEnumStore } from '@/stores/enum'
 
 const router = useRouter()
+const route = useRoute()
+const enumStore = useEnumStore()
 
-// 报名信息数据
-const applyInfo = ref({
-  status: 'pending', // pending-审核中 approved-已通过 rejected-已拒绝
-  postLink: 'https://example.com/post/123',
-  shareLink: 'https://example.com/share/456',
-  screenshots: [
-    'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',
-    'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
-  ],
-  task: {
-    price: 50,
-    title: '美国-雅诗兰黛口红种草',
-    taskType: '图文',
-    followers: '10w+',
-    deadline: '2025-02-20',
-    banner: 'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg'
-  }
-})
+// 已提交数据
+const submittedInfo = ref({})
+const taskId = ref(null)
+// 任务数据
+const taskInfo = ref({})
 
 // 返回上一页
 const onClickLeft = () => {
   router.back()
-}
-
-// 获取状态类型
-const getStatusType = (status) => {
-  const types = {
-    pending: 'warning',
-    approved: 'success',
-    rejected: 'danger'
-  }
-  return types[status]
-}
-
-// 获取状态文本
-const getStatusText = (status) => {
-  const texts = {
-    pending: '审核中',
-    approved: '已通过',
-    rejected: '已拒绝'
-  }
-  return texts[status]
 }
 
 // 获取状态描述
@@ -174,6 +125,35 @@ const getStatusIcon = (status) => {
   }
   return icons[status]
 }
+
+const loadSubmittedDetail = async () => {
+  const res = await get('task.submittedDetail', {}, {
+    urlParams: {
+      id: route.params.id
+    }
+  })
+  if(res.code === 0) {
+    submittedInfo.value = res.data
+    taskId.value = res.data.taskId
+  }
+}
+
+const getTaskDetail = async () => {
+  const res = await get('task.detail', {}, {
+    urlParams: {
+      id: taskId.value
+    }
+  })
+  taskInfo.value = {
+    ...res.data,
+    notice: res.data.notice.replace(/\n/g, '<br>')
+  }
+}
+
+onMounted(async () => {
+  await loadSubmittedDetail()
+  await getTaskDetail()
+})
 </script>
 
 <style lang="less" module>

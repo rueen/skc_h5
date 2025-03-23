@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-23 15:55:46
+ * @LastEditTime: 2025-03-23 20:04:47
  * @Description: API 路径配置
  */
 const API_PATH = {
@@ -19,6 +19,10 @@ const API_PATH = {
     enrolled: '/enrolled-tasks',
     // 提交任务 POST
     submit: '/task-submit',
+    // 获取已提交任务列表
+    submitted: '/submitted-tasks',
+    // 获取已提交任务详情
+    submittedDetail: '/submitted-tasks/:id',
   },
   channel: {
     list: '/channels',
