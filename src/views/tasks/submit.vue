@@ -229,12 +229,7 @@ const onSubmit = async () => {
 
 const handleCloseDialog = () => {
   showSuccessDialog.value = false
-  router.push({
-    name: 'TaskApplications',
-    params: {
-      activeTab: 'submitted'
-    }
-  })
+  router.push(`/taskApplications?activeTab=submitted`)
 }
 
 const getTaskDetail = async () => {

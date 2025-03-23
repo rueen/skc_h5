@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-23 21:59:23
+ * @LastEditTime: 2025-03-23 22:14:11
  * @Description: 任务页
  -->
 <template>
@@ -83,15 +83,16 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { get } from '@/utils/request'
 import { useEnumStore } from '@/stores/enum'
 
 const { t } = useI18n()
 const router = useRouter()
+const route = useRoute()
 const enumStore = useEnumStore()
 // 当前选中的任务状态
-const activeTab = ref('applied') // applied | submitted | completed
+const activeTab = ref(route.query.activeTab || 'applied') // applied | submitted | completed
 
 // 列表数据
 const page = ref(1)
@@ -151,7 +152,7 @@ const onLoad = async () => {
       await getEnrolledList()
       break
     case 'submitted':
-      await getSubmittedList('rejected')
+      await getSubmittedList('pending | rejected')
       break
     case 'completed':
       await getSubmittedList('approved')

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-23 20:04:47
+ * @LastEditTime: 2025-03-23 22:04:35
  * @Description: API 路径配置
  */
 const API_PATH = {
@@ -16,7 +16,7 @@ const API_PATH = {
     // 检查是否已报名
     checkEnroll: '/task-enroll/:taskId/check',
     // 任务报名列表
-    enrolled: '/enrolled-tasks',
+    enrolled: '/enrolled-tasks?excludeSubmitted=true', // excludeSubmitted=true 排除已提交任务
     // 提交任务 POST
     submit: '/task-submit',
     // 获取已提交任务列表
