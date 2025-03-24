@@ -149,7 +149,7 @@ const isEdit = computed(() => {
   return route.params.id !== 'new' && submittedInfo.value.taskAuditStatus === 'rejected'
 })
 const isView = computed(() => {
-  return route.params.id !== 'new' && submittedInfo.value.taskAuditStatus === 'approved'
+  return route.params.id !== 'new' && submittedInfo.value.taskAuditStatus !== 'rejected'
 })
 
 // 事件处理
