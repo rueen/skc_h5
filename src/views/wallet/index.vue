@@ -12,7 +12,7 @@
       <div :class="$style.balance">
         <div :class="$style.amount">
           <div :class="$style.label">可提现余额</div>
-          <div :class="$style.value">${{ balance }}</div>
+          <div :class="$style.value">{{ balance }}</div>
         </div>
         <van-button 
           type="primary" 
@@ -94,15 +94,16 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
 import Layout from '@/components/layout.vue'
+import { get } from '@/utils/request'
 
 const router = useRouter()
 
 // 余额
-const balance = ref('1,234.56')
+const balance = ref(0)
 
 // 账户信息
 const accountInfo = ref({
@@ -147,6 +148,18 @@ const onCheckAccount = () => {
 const onModifyAccount = () => {
   router.push('/wallet/accounts-add')
 }
+
+const getBalance = async () => {
+  const res = await get('member.balance')
+  if(res.code === 0){
+    balance.value = res.data.balance
+  }
+}
+
+// 初始化
+onMounted(async () => {
+  getBalance()
+})
 </script>
 
 <style lang="less" module>

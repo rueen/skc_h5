@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-23 12:00:53
+ * @LastEditTime: 2025-03-24 22:13:01
  * @Description: 首页
  -->
 
@@ -128,21 +128,17 @@ const onLoad = async () => {
     list.value = []
     refreshing.value = false
   }
-  try {
-    const res = await get('task.list', {
-      page: page.value,
-      pageSize: pageSize.value,
-      channelId: activeChannelId.value,
-    })
-    list.value = res.data.list
-    loading.value = false
-    finished.value = res.data.total <= list.value.length
-    refreshing.value = false
-    if (list.value.length >= res.data.total) {
-      finished.value = true
-    }
-  } catch (error) {
-    console.log(error)
+  const res = await get('task.list', {
+    page: page.value,
+    pageSize: pageSize.value,
+    channelId: activeChannelId.value,
+  })
+  list.value = res.data.list
+  loading.value = false
+  finished.value = res.data.total <= list.value.length
+  refreshing.value = false
+  if (list.value.length >= res.data.total) {
+    finished.value = true
   }
 }
 
