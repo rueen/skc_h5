@@ -2,7 +2,7 @@
   <Layout :class="$style.groupsPage">
     <!-- 顶部导航 -->
     <van-nav-bar
-      title="我的小组"
+      title="我的群组"
       left-arrow
       @click-left="onClickLeft"
       fixed
