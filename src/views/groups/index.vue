@@ -1,11 +1,12 @@
 <template>
-  <div :class="$style.groupsPage">
-    <!-- 表头 -->
-    <div :class="$style.tableHeader">
-      <span :class="$style.tableHeaderItem1">用户列表</span>
-      <span :class="$style.tableHeaderItem2">任务次数</span>
-      <span :class="$style.tableHeaderItem3">奖励</span>
-    </div>
+  <Layout :class="$style.groupsPage">
+    <!-- 顶部导航 -->
+    <van-nav-bar
+      title="我的小组"
+      left-arrow
+      @click-left="onClickLeft"
+      fixed
+    />
 
     <!-- 列表内容 -->
     <div :class="$style.content">
@@ -14,7 +15,6 @@
           v-model:loading="loading"
           v-model:finished="finished"
           finished-text="没有更多了"
-          @load="onLoad"
         >
           <div 
             v-for="item in list" 
@@ -55,35 +55,35 @@
         </div>
       </div>
     </div>
-  </div>
+  </Layout>
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useGroupsStore } from '@/stores'
 import { get } from '@/utils/request'
+import Layout from '@/components/layout.vue'
 
+const router = useRouter()
 const groupsStore = useGroupsStore()
+
+// 底部标签数据
+const tabs = ref([])
+const activeTab = ref(null)
+
+// 列表数据
+const page = ref(1)
+const pageSize = ref(10)
+const list = ref([])
 const loading = ref(false)
 const finished = ref(false)
 const refreshing = ref(false)
 
-// 底部标签数据
-const tabs = computed(() => groupsStore.groups)
-const activeTab = computed(() => groupsStore.groups[0].id)
-
-// 监听标签切换
-watch(activeTab, (newVal) => {
-  // 重置列表状态
-  list.value = []
-  finished.value = false
-  loading.value = false
-  // 加载新数据
-  loadData()
-})
-
-// 列表数据
-const list = ref([])
+// 事件处理
+const onClickLeft = () => {
+  router.back()
+}
 
 // 加载数据的方法
 const loadData = async () => {
@@ -110,6 +110,9 @@ const onRefresh = () => {
 }
 
 onMounted(async () => {
+  await groupsStore.getOwnedGroups()
+  tabs.value = groupsStore.groups
+  activeTab.value = groupsStore.groups[0].id
   loadData()
 })
 </script>
@@ -122,33 +125,6 @@ onMounted(async () => {
   padding-top: 0;
 }
 
-.tableHeader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 99;
-  background: #fff;
-  display: flex;
-  justify-content: space-between;
-  padding: 12px 24px;
-  font-size: 14px;
-  color: #323232;
-  border-bottom: 1px solid #f5f6f7;
-  max-width: 750px;
-  margin: 0 auto;
-  .tableHeaderItem1 {
-    flex: 1;
-  }
-  .tableHeaderItem2 {
-    width: 70px;
-    text-align: center;
-  }
-  .tableHeaderItem3 {
-    width: 70px;
-    text-align: center;
-  }
-}
 .content {
   padding: 52px 12px 0;
 }
