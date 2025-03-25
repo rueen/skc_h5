@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-24 22:08:25
+ * @LastEditTime: 2025-03-25 11:03:20
  * @Description: API 路径配置
  */
 const API_PATH = {
@@ -33,6 +33,10 @@ const API_PATH = {
     balance: '/members/balance',
     // 结算账单
     bills: '/members/bills',
+  },
+  invite: {
+    stats: '/members/invite/stats',
+    list: '/members/invite/friends',
   },
   account: {
     list: '/members/accounts',
