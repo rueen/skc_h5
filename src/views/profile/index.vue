@@ -61,6 +61,18 @@
 
       <div 
         :class="$style.menuItem"
+        @click="router.push('/groups')"
+        v-if="groupsStore.isShowGroups"
+      >
+        <div :class="$style.menuTitle">
+          <van-icon name="friends-o" />
+          <span>我的小组</span>
+        </div>
+        <van-icon name="arrow" />
+      </div>
+
+      <div 
+        :class="$style.menuItem"
         @click="router.push('/settings')"
       >
         <div :class="$style.menuTitle">
@@ -76,18 +88,19 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/user'
+import { useUserStore, useGroupsStore } from '@/stores'
 import avatar from '@/components/avatar.vue'
 
 const router = useRouter()
 const userStore = useUserStore()
+const groupsStore = useGroupsStore()
 
 // 用户信息
 const userInfo = userStore.userInfo
 
 // 页面加载时获取用户信息
-onMounted(() => {
-  
+onMounted(async () => {
+  await groupsStore.getOwnedGroups()
 })
 </script>
 

@@ -77,7 +77,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
 import { get, del } from '@/utils/request'
-import { useEnumStore } from '@/stores/enum'
+import { useEnumStore } from '@/stores'
 import tag from '@/components/tag.vue'
 import Layout from '@/components/layout.vue'
 const enumStore = useEnumStore()

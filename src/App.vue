@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-23 21:44:17
+ * @LastEditTime: 2025-03-25 11:27:13
  * @Description: 
 -->
 <template>
@@ -11,7 +11,6 @@
     <van-tabbar v-if="showTabbar" v-model="active" route>
       <van-tabbar-item to="/" icon="home-o">{{ t('tabbar.home') }}</van-tabbar-item>
       <van-tabbar-item to="/taskApplications" icon="notes-o">{{ t('tabbar.taskApplications') }}</van-tabbar-item>
-      <van-tabbar-item to="/groups" icon="friends-o" v-if="groupsStore.isShowGroups">{{ t('tabbar.groups') }}</van-tabbar-item>
       <van-tabbar-item to="/profile" icon="user-o">{{ t('tabbar.profile') }}</van-tabbar-item>
     </van-tabbar>
   </div>
@@ -21,14 +20,14 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useUserStore, useEnumStore, useGroupsStore } from '@/stores'
+import { useUserStore, useEnumStore } from '@/stores'
 
 const route = useRoute()
 const { t } = useI18n()
 const active = ref(0)
 const userStore = useUserStore()
 const enumStore = useEnumStore()
-const groupsStore = useGroupsStore()
+
 // 计算是否显示底部导航栏
 const showTabbar = computed(() => {
   // 在登录页、任务详情页、邀请人列表页、账号列表页、设置页、个人信息编辑页、账号详情页、钱包页、结算账单页、提现记录页、提现账户页、添加账户页、提现页、任务报名页和报名详情页不显示底部导航
@@ -48,7 +47,8 @@ const showTabbar = computed(() => {
     'WalletWithdraw',
     'TaskSubmit',
     'SettingsPassword',
-    'Article'
+    'Article',
+    'Groups'
   ].includes(route.name)
 })
 // 在应用启动时获取用户信息
@@ -56,7 +56,6 @@ onMounted(async () => {
   // 如果有 token，则获取用户信息
   if (userStore.token) {
     await userStore.fetchUserInfo()
-    await groupsStore.getOwnedGroups()
   }
   // 加载枚举数据
   await enumStore.fetchEnum()

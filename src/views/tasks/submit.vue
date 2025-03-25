@@ -128,7 +128,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { showToast, closeToast } from 'vant'
 import Layout from '@/components/layout.vue'
 import { get, post } from '@/utils/request'
-import { useEnumStore } from '@/stores/enum'
+import { useEnumStore } from '@/stores'
 import { uploadImage } from '@/utils/upload'
 
 const router = useRouter()

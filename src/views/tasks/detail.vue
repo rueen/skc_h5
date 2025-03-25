@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-24 15:33:23
+ * @LastEditTime: 2025-03-25 11:26:22
  * @Description: 任务详情页
  -->
 <template>
@@ -172,8 +172,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { showToast } from 'vant'
 import { get, post } from '@/utils/request'
-import { useEnumStore } from '@/stores/enum'
-import { useUserStore } from '@/stores/user'
+import { useEnumStore, useUserStore } from '@/stores'
 import { shareInviteLink } from '@/utils/share'
 import Layout from '@/components/layout.vue'
 

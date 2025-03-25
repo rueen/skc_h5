@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 15:00:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-25 11:10:05
+ * @LastEditTime: 2025-03-25 11:26:00
  * @Description: 我的邀请人列表页
  -->
 <template>
@@ -79,7 +79,7 @@ import { useRouter } from 'vue-router'
 import { shareInviteLink } from '@/utils/share'
 import Layout from '@/components/layout.vue'
 import { get } from '@/utils/request'
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores'
 
 const router = useRouter()
 const userStore = useUserStore()

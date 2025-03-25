@@ -133,7 +133,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { showToast, showDialog } from 'vant'
 import { get, post, put } from '@/utils/request'
-import { useEnumStore } from '@/stores/enum'
+import { useEnumStore } from '@/stores'
 import tag from '@/components/tag.vue'
 import Layout from '@/components/layout.vue'
 

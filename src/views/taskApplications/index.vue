@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-23 22:14:11
+ * @LastEditTime: 2025-03-25 11:26:11
  * @Description: 任务页
  -->
 <template>
@@ -85,7 +85,7 @@ import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter, useRoute } from 'vue-router'
 import { get } from '@/utils/request'
-import { useEnumStore } from '@/stores/enum'
+import { useEnumStore } from '@/stores'
 
 const { t } = useI18n()
 const router = useRouter()

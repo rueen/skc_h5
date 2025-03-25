@@ -59,7 +59,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useGroupsStore } from '@/stores'
 import { get } from '@/utils/request'
 
@@ -69,8 +69,8 @@ const finished = ref(false)
 const refreshing = ref(false)
 
 // 底部标签数据
-const tabs = ref(groupsStore.groups)
-const activeTab = ref(groupsStore.groups[0].id)
+const tabs = computed(() => groupsStore.groups)
+const activeTab = computed(() => groupsStore.groups[0].id)
 
 // 监听标签切换
 watch(activeTab, (newVal) => {
