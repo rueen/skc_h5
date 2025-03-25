@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-20 22:11:09
+ * @LastEditTime: 2025-03-25 11:46:05
  * @Description: 登录页
  -->
  <template>
@@ -86,12 +86,12 @@
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useUserStore, useGroupsStore } from '@/stores'
+import { useUserStore } from '@/stores'
 import { showToast } from 'vant'
 
 const router = useRouter()
 const userStore = useUserStore()
-const groupsStore = useGroupsStore()
+
 const { t, locale } = useI18n()
 
 // 当前登录方式
@@ -154,7 +154,6 @@ const onSubmit = async () => {
     // 调用登录 API
     await userStore.login(loginData)
     await userStore.fetchUserInfo()
-    await groupsStore.getOwnedGroups()
     
     // 检查是否有重定向URL
     const redirectUrl = sessionStorage.getItem('redirectUrl')

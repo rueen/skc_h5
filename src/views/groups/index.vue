@@ -61,12 +61,10 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useGroupsStore } from '@/stores'
 import { get } from '@/utils/request'
 import Layout from '@/components/layout.vue'
 
 const router = useRouter()
-const groupsStore = useGroupsStore()
 
 // 底部标签数据
 const tabs = ref([])
@@ -109,10 +107,16 @@ const onRefresh = () => {
   loadData()
 }
 
+const getGroups = async () => {
+  const res = await get('groups.list')
+  if (res.code === 0 && res.data) {
+    tabs.value =  res.data
+    activeTab.value =  res.data[0].id
+  }
+}
+
 onMounted(async () => {
-  await groupsStore.getOwnedGroups()
-  tabs.value = groupsStore.groups
-  activeTab.value = groupsStore.groups[0].id
+  await getGroups()
   loadData()
 })
 </script>
