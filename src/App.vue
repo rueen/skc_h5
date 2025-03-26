@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-25 11:27:13
+ * @LastEditTime: 2025-03-26 11:02:06
  * @Description: 
 -->
 <template>
@@ -48,7 +48,8 @@ const showTabbar = computed(() => {
     'TaskSubmit',
     'SettingsPassword',
     'Article',
-    'Groups'
+    'Groups',
+    'GroupsMembers'
   ].includes(route.name)
 })
 // 在应用启动时获取用户信息

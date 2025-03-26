@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:10:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-23 21:34:54
+ * @LastEditTime: 2025-03-26 11:03:43
  * @Description: 
  */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -33,6 +33,12 @@ const router = createRouter({
       path: '/groups',
       name: 'Groups',
       component: () => import('../views/groups/index.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/groups/members/:groupId',
+      name: 'GroupsMembers',
+      component: () => import('../views/groups/members.vue'),
       meta: { requiresAuth: true }
     },
     {

@@ -54,7 +54,7 @@
       >
         <div :class="$style.menuTitle">
           <van-icon name="friends-o" />
-          <span>邀请好友</span>
+          <span>我的邀请</span>
         </div>
         <van-icon name="arrow" />
       </div>
@@ -65,7 +65,7 @@
       >
         <div :class="$style.menuTitle">
           <van-icon name="friends-o" />
-          <span>我的小组</span>
+          <span>我的群组</span>
         </div>
         <van-icon name="arrow" />
       </div>
