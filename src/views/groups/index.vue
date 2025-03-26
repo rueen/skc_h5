@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-21 11:10:52
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-26 11:15:00
+ * @LastEditTime: 2025-03-26 15:00:06
  * @Description: 
 -->
 <template>
@@ -16,7 +16,7 @@
     />
 
     <!-- 收益信息 -->
-    <div :class="$style.earnings" v-if="isGroupOwner">
+    <div :class="$style.earningsWrapper" v-if="isGroupOwner">
       <div :class="$style.earningItem">
         <div :class="$style.label">群数量</div>
         <div :class="$style.amount">{{ groupStats.groupCount }}</div>
@@ -34,7 +34,7 @@
           <div :class="$style.label">{{ group.groupName }}</div>
           <div :class="$style.value">
             <span :class="$style.text">{{ group.memberCount }}</span>
-            <span :class="$style.text">{{ group.totalEarnings }}</span>
+            <div :class="[$style.text, $style.earnings]">{{ group.totalEarnings }}</div>
             <van-icon name="arrow" />
           </div>
         </div>
@@ -106,7 +106,7 @@ onMounted(async () => {
 </script>
 
 <style lang="less" module>
-.earnings {
+.earningsWrapper {
   margin: 12px 12px 0;
   background: #fff;
   border-radius: 8px;
@@ -167,6 +167,11 @@ onMounted(async () => {
         .text {
           font-size: 14px;
           color: #323233;
+        }
+        .earnings {
+          color: #FF951C;
+          width: 100px;
+          text-align: right;
         }
       }
     }

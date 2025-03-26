@@ -57,39 +57,18 @@
             <span>提现账户</span>
           </div>
           <div :class="$style.menuValue">
-            <span :class="$style.accountText">
-              {{ hasAccount ? accountInfo.label : '未设置' }}
-            </span>
+            <template v-if="hasAccount">
+              <span :class="$style.text">{{ enumStore.getEnumText('WithdrawalAccountType', withdrawalAccount.accountType) }}</span>
+              <span :class="$style.accountDetail">{{ withdrawalAccount.account }}</span>
+            </template>
+            <template v-else>
+              <span :class="$style.text">未设置</span>
+            </template>
             <van-icon name="arrow" />
           </div>
         </div>
       </div>
     </div>
-
-    <!-- 账户详情弹窗 -->
-    <van-dialog
-      v-model:show="showAccountDetail"
-      title="提现账户"
-      :show-cancel-button="false"
-      confirm-button-text="修改账户"
-      @confirm="onModifyAccount"
-      :class="$style.accountDialog"
-    >
-      <div :class="$style.accountInfo">
-        <div :class="$style.accountItem">
-          <span :class="$style.label">账户类型</span>
-          <span :class="$style.text">{{ accountInfo.label }}</span>
-        </div>
-        <div :class="$style.accountItem">
-          <span :class="$style.label">账号</span>
-          <span :class="$style.text">{{ accountInfo.account }}</span>
-        </div>
-        <div :class="$style.accountItem">
-          <span :class="$style.label">姓名</span>
-          <span :class="$style.text">{{ accountInfo.name }}</span>
-        </div>
-      </div>
-    </van-dialog>
   </Layout>
 </template>
 
@@ -99,22 +78,16 @@ import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
 import Layout from '@/components/layout.vue'
 import { get } from '@/utils/request'
+import { useEnumStore } from '@/stores'
 
+const enumStore = useEnumStore()
 const router = useRouter()
 
 // 余额
 const balance = ref(0)
-
-// 账户信息
-const accountInfo = ref({
-  type: 'gcash',
-  label: 'GCASH',
-  account: '0912345678',
-  name: '张三'
-})
-
-const hasAccount = computed(() => !!accountInfo.value)
-const showAccountDetail = ref(false)
+// 提现账户
+const withdrawalAccount = ref(null)
+const hasAccount = computed(() => !!withdrawalAccount.value)
 
 // 事件处理
 const onClickLeft = () => {
@@ -145,10 +118,6 @@ const onCheckAccount = () => {
   }
 }
 
-const onModifyAccount = () => {
-  router.push('/wallet/accounts-add')
-}
-
 const getBalance = async () => {
   const res = await get('member.balance')
   if(res.code === 0){
@@ -156,9 +125,18 @@ const getBalance = async () => {
   }
 }
 
+// 获取提现账户
+const getWithdrawalAccount = async () => {
+  const res = await get('withdrawals.accounts')
+  if(res.code === 0 && res.data.length > 0){
+    withdrawalAccount.value = res.data[0]
+  }
+}
+
 // 初始化
 onMounted(async () => {
   getBalance()
+  getWithdrawalAccount()
 })
 </script>
 
@@ -238,45 +216,20 @@ onMounted(async () => {
   align-items: center;
   gap: 4px;
 
-  .accountText {
+  .text {
+    font-size: 14px;
+    color: #323233;
+  }
+
+  .accountDetail {
     font-size: 14px;
     color: #969799;
+    margin-left: 8px;
   }
 
   .van-icon {
     color: #969799;
     font-size: 16px;
-  }
-}
-
-.accountDialog {
-  :global {
-    .van-dialog__header {
-      padding: 16px;
-      font-weight: 500;
-    }
-  }
-}
-
-.accountInfo {
-  padding: 0 16px 16px;
-}
-
-.accountItem {
-  display: flex;
-  align-items: center;
-  padding: 8px 0;
-
-  .label {
-    width: 70px;
-    font-size: 14px;
-    color: #969799;
-  }
-
-  .text {
-    flex: 1;
-    font-size: 14px;
-    color: #323233;
   }
 }
 </style> 

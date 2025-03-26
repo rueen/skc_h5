@@ -17,54 +17,28 @@
         <div :class="$style.formItem" @click="showAccountTypePicker = true && mode !== 'preview'">
           <span :class="$style.label">账户类型</span>
           <div :class="$style.value">
-            <span :class="$style.text">{{ selectedType ? selectedType.label : '请选择' }}</span>
+            <span :class="$style.text">{{ selectedType ? selectedType.text : '请选择' }}</span>
             <van-icon name="arrow" v-if="mode !== 'preview'" />
           </div>
         </div>
-
-        <!-- GCASH/PAYMAYA表单 -->
-        <template v-if="['gcash', 'paymaya'].includes(selectedType?.value)">
-          <div :class="$style.formItem">
-            <span :class="$style.label">手机号</span>
-            <van-field
-              v-model="form.phone"
-              :placeholder="mode === 'preview' ? '' : `请输入${selectedType.label}账号`"
-              :readonly="mode === 'preview'"
-              :class="$style.input"
-            />
-          </div>
-          <div :class="$style.formItem">
-            <span :class="$style.label">姓名</span>
-            <van-field
-              v-model="form.name"
-              placeholder="请输入账户姓名"
-              :readonly="mode === 'preview'"
-              :class="$style.input"
-            />
-          </div>
-        </template>
-
-        <!-- 支付宝表单 -->
-        <template v-if="selectedType?.value === 'alipay'">
-          <div :class="$style.formItem">
-            <span :class="$style.label">账号</span>
-            <van-field
-              v-model="form.account"
-              placeholder="请输入支付宝账号"
-              :readonly="mode === 'preview'"
-              :class="$style.input"
-            />
-          </div>
-          <div :class="$style.formItem">
-            <span :class="$style.label">姓名</span>
-            <van-field
-              v-model="form.name"
-              placeholder="请输入账户姓名"
-              :readonly="mode === 'preview'"
-              :class="$style.input"
-            />
-          </div>
-        </template>
+        <div :class="$style.formItem">
+          <span :class="$style.label">账号</span>
+          <van-field
+            v-model="form.account"
+            placeholder="请输入账号"
+            :readonly="mode === 'preview'"
+            :class="$style.input"
+          />
+        </div>
+        <div :class="$style.formItem">
+          <span :class="$style.label">姓名</span>
+          <van-field
+            v-model="form.name"
+            placeholder="请输入姓名"
+            :readonly="mode === 'preview'"
+            :class="$style.input"
+          />
+        </div>
       </div>
 
       <!-- 提交按钮 -->
@@ -86,7 +60,7 @@
       round
     >
       <van-picker
-        :columns="accountTypes"
+        :columns="accountTypesOptions"
         @confirm="onAccountTypeConfirm"
         @cancel="showAccountTypePicker = false"
         show-toolbar
@@ -96,11 +70,14 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { showToast } from 'vant'
 import Layout from '@/components/layout.vue'
+import { useEnumStore } from '@/stores'
+import { get, post, put } from '@/utils/request'
 
+const enumStore = useEnumStore()
 const router = useRouter()
 const route = useRoute()
 
@@ -118,16 +95,11 @@ const pageTitle = computed(() => {
 })
 
 // 账户类型列表
-const accountTypes = [
-  { text: 'GCASH', value: 'gcash', label: 'GCASH' },
-  { text: 'PAYMAYA', value: 'paymaya', label: 'PAYMAYA' },
-  { text: '支付宝', value: 'alipay', label: '支付宝' }
-]
+const accountTypesOptions = enumStore.getEnumOptions('WithdrawalAccountType')
 
 // 表单数据
 const form = ref({
-  type: '',
-  phone: '',
+  accountType: '',
   account: '',
   name: ''
 })
@@ -136,22 +108,10 @@ const form = ref({
 const showAccountTypePicker = ref(false)
 const selectedType = ref(null)
 
-// 如果是编辑/预览模式，回填数据
-if (['edit', 'preview'].includes(mode.value)) {
-  // 模拟获取账户数据
-  const mockAccount = {
-    type: 'gcash',
-    phone: '0912345678',
-    name: '张三'
-  }
-  form.value = { ...mockAccount }
-  selectedType.value = accountTypes.find(type => type.value === mockAccount.type)
-}
-
 // 选择账户类型
-const onAccountTypeConfirm = (value) => {
-  selectedType.value = value.selectedOptions[0]
-  form.value.type = selectedType.value.value
+const onAccountTypeConfirm = ({ selectedOptions }) => {
+  selectedType.value = selectedOptions[0]
+  form.value.accountType = selectedType.value.value
   showAccountTypePicker.value = false
 }
 
@@ -165,33 +125,70 @@ const onEdit = () => {
   mode.value = 'edit'
 }
 
+// 创建账户
+const onCreate = async() => {
+  const res = await post('withdrawals.create', form.value)
+  if(res.code === 0){
+    showToast('创建成功')
+    router.back()
+  } else {
+    showToast(res.message)
+  }
+}
+
+// 更新账户
+const onUpdate = async() => {  
+  const res = await put('withdrawals.update', form.value, {
+    urlParams: {
+      id: form.value.id
+    }
+  })
+  if(res.code === 0){
+    showToast('更新成功')
+    router.back()
+  } else {
+    showToast(res.message)
+  }
+}
+
 // 提交表单
 const onSubmit = () => {
-  if (!form.value.type) {
+  if (!form.value.accountType) {
     showToast('请选择账户类型')
     return
   }
 
-  if (['gcash', 'paymaya'].includes(form.value.type)) {
-    if (!form.value.phone) {
-      showToast('请输入手机号')
-      return
-    }
-  } else if (form.value.type === 'alipay') {
-    if (!form.value.account) {
-      showToast('请输入支付宝账号')
-      return
-    }
-  }
-
-  if (!form.value.name) {
-    showToast('请输入账户姓名')
+  if (!form.value.account) {
+    showToast('请输入账号')
     return
   }
 
-  showToast(mode.value === 'add' ? '添加成功' : '修改成功')
-  router.back()
+  if (!form.value.name) {
+    showToast('请输入姓名')
+    return
+  }
+
+  if(mode.value === 'add'){
+    onCreate()
+  } else {
+    onUpdate()
+  }
 }
+
+// 获取提现账户
+const getWithdrawalAccount = async () => {
+  const res = await get('withdrawals.accounts')
+  if(res.code === 0 && res.data.length > 0){
+    form.value = res.data[0]
+    selectedType.value = accountTypesOptions.find(item => item.value === form.value.accountType)
+  }
+}
+
+onMounted(() => {
+  if(['edit', 'preview'].indexOf(mode.value) > -1){
+    getWithdrawalAccount()
+  }
+})
 </script>
 
 <style lang="less" module>

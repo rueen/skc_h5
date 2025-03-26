@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-26 11:00:41
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-26 11:17:11
+ * @LastEditTime: 2025-03-26 15:01:08
  * @Description: 
 -->
 <template>
@@ -70,6 +70,13 @@ const refreshing = ref(false)
 // 事件处理
 const onClickLeft = () => {
   router.back()
+}
+
+// 下拉刷新
+const onRefresh = () => {
+  finished.value = false
+  loading.value = true
+  loadMembers()
 }
 
 const loadMembers = async () => {

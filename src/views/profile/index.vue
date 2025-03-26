@@ -20,7 +20,7 @@
       </div>
       <div :class="$style.earningItem">
         <div :class="$style.label">可提现</div>
-        <div :class="$style.amount">${{ userInfo.availableBalance }}</div>
+        <div :class="$style.amount">{{ balanceInfo.balance }}</div>
       </div>
     </div>
 
@@ -85,20 +85,32 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores'
 import avatar from '@/components/avatar.vue'
+import { get } from '@/utils/request'
 
 const router = useRouter()
 const userStore = useUserStore()
+// 余额
+const balanceInfo = ref({
+  balance: 0,
+})
 
 // 用户信息
 const userInfo = userStore.userInfo
 
+const getBalance = async () => {
+  const res = await get('member.balance')
+  if(res.code === 0){
+    balanceInfo.value = res.data
+  }
+}
+
 // 页面加载时获取用户信息
 onMounted(async () => {
-
+  getBalance()
 })
 </script>
 

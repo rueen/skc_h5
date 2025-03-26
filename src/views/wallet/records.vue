@@ -13,21 +13,20 @@
           v-model:loading="loading"
           :finished="finished"
           finished-text="没有更多了"
-          @load="onLoad"
         >
           <div :class="$style.recordList">
             <div 
-              v-for="record in records" 
+              v-for="record in list" 
               :key="record.id"
               :class="$style.recordItem"
             >
               <div :class="$style.recordInfo">
                 <div :class="$style.recordTitle">提现到{{ record.account }}</div>
-                <div :class="$style.recordTime">{{ record.time }}</div>
+                <div :class="$style.recordTime">{{ record.createTime }}</div>
               </div>
               <div :class="$style.recordStatus">
-                <div :class="$style.recordAmount">-${{ record.amount }}</div>
-                <div :class="[$style.status, $style[record.status]]">{{ getStatusText(record.status) }}</div>
+                <div :class="$style.recordAmount">{{ record.amount }}</div>
+                <div :class="[$style.status, $style[record.withdrawalStatus]]">{{ enumStore.getEnumText('WithdrawalStatus', record.withdrawalStatus) }}</div>
               </div>
             </div>
           </div>
@@ -38,66 +37,55 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Layout from '@/components/layout.vue'
+import { get } from '@/utils/request'
+import { useEnumStore } from '@/stores'
 
 const router = useRouter()
+const enumStore = useEnumStore()
 
 // 列表数据
-const records = ref([
-  {
-    id: 1,
-    account: '工商银行(1234)',
-    time: '2025-02-25 15:30',
-    amount: '100.00',
-    status: 'success'
-  },
-  {
-    id: 2,
-    account: '支付宝(5678)',
-    time: '2025-02-24 14:20',
-    amount: '50.00',
-    status: 'pending'
-  },
-  {
-    id: 3,
-    account: '微信(9012)',
-    time: '2025-02-23 10:10',
-    amount: '200.00',
-    status: 'failed'
-  }
-])
-
-// 列表状态
+const page = ref(1)
+const pageSize = ref(10)
+const list = ref([])
 const loading = ref(false)
-const finished = ref(true)
+const finished = ref(false)
 const refreshing = ref(false)
-
-// 状态文案
-const getStatusText = (status) => {
-  const statusMap = {
-    success: '提现成功',
-    pending: '处理中',
-    failed: '提现失败'
-  }
-  return statusMap[status]
-}
 
 // 事件处理
 const onClickLeft = () => {
   router.back()
 }
 
-const onLoad = () => {
-  // 加载更多数据
-  loading.value = false
+// 下拉刷新
+const onRefresh = () => {
+  finished.value = false
+  loading.value = true
+  getWithdrawalRecords()
 }
 
-const onRefresh = () => {
-  // 刷新数据
-  refreshing.value = false
+// 获取提现记录
+const getWithdrawalRecords = async () => {
+  const res = await get('withdrawals.records', {
+    page: page.value,
+    pageSize: pageSize.value,
+  })
+  if(res.code === 0){
+    list.value = res.data.list
+    loading.value = false
+    finished.value = res.data.total <= list.value.length
+    refreshing.value = false
+    if (list.value.length >= res.data.total) {
+      finished.value = true
+    }
+  }
 }
+
+onMounted(async () => {
+  getWithdrawalRecords()
+})
 </script>
 
 <style lang="less" module>

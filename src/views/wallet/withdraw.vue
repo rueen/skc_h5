@@ -21,7 +21,7 @@
           />
         </div>
         <div :class="$style.balance">
-          可提现余额：$1234.56
+          可提现余额：$ {{ balance }}
           <span :class="$style.all" @click="onWithdrawAll">全部提现</span>
         </div>
       </div>
@@ -35,8 +35,8 @@
           <span :class="$style.label">提现账户</span>
           <div :class="$style.value">
             <template v-if="hasAccount">
-              <span :class="$style.text">{{ accountInfo.label }}</span>
-              <span :class="$style.accountDetail">{{ accountInfo.account }}</span>
+              <span :class="$style.text">{{ enumStore.getEnumText('WithdrawalAccountType', withdrawalAccount.accountType) }}</span>
+              <span :class="$style.accountDetail">{{ withdrawalAccount.account }}</span>
             </template>
             <template v-else>
               <span :class="$style.text">未设置</span>
@@ -60,27 +60,25 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
 import Layout from '@/components/layout.vue'
+import { get, post } from '@/utils/request'
+import { useEnumStore } from '@/stores'
 
+const enumStore = useEnumStore()
 const router = useRouter()
 
+const balance = ref(0)
 // 表单数据
 const form = ref({
   amount: '',
 })
 
 // 账户信息
-const accountInfo = ref({
-  type: 'gcash',
-  label: 'GCASH',
-  account: '0912****678',
-  name: '张三'
-})
-
-const hasAccount = computed(() => !!accountInfo.value)
+const withdrawalAccount = ref(null)
+const hasAccount = computed(() => !!withdrawalAccount.value)
 
 // 事件处理
 const onClickLeft = () => {
@@ -88,7 +86,7 @@ const onClickLeft = () => {
 }
 
 const onWithdrawAll = () => {
-  form.value.amount = '1234.56'
+  form.value.amount = balance.value
 }
 
 const onAccountClick = () => {
@@ -105,7 +103,7 @@ const onAccountClick = () => {
   }
 }
 
-const onSubmit = () => {
+const onSubmit = async () => {
   if (!form.value.amount) {
     showToast('请输入提现金额')
     return
@@ -114,10 +112,38 @@ const onSubmit = () => {
     showToast('请先设置提现账户')
     return
   }
-
-  showToast('提现申请已提交')
-  router.back()
+  const res = await post('withdrawals.apply', {
+    withdrawalAccountId: withdrawalAccount.value.id,
+    amount: form.value.amount
+  })
+  if(res.code === 0){
+    showToast('提现申请已提交')
+    router.back()
+  } else {
+    showToast(res.message)
+  }
 }
+
+const getBalance = async () => {
+  const res = await get('member.balance')
+  if(res.code === 0){
+    balance.value = res.data.balance
+  }
+}
+
+// 获取提现账户
+const getWithdrawalAccount = async () => {
+  const res = await get('withdrawals.accounts')
+  if(res.code === 0 && res.data.length > 0){
+    withdrawalAccount.value = res.data[0]
+  }
+}
+
+// 初始化
+onMounted(async () => {
+  getBalance()
+  getWithdrawalAccount()
+})
 </script>
 
 <style lang="less" module>
