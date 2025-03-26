@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-26 11:00:41
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-26 11:10:38
+ * @LastEditTime: 2025-03-26 11:17:11
  * @Description: 
 -->
 <template>
@@ -23,13 +23,25 @@
           v-model:finished="finished"
           finished-text="没有更多了"
         >
-          <div 
-            v-for="item in list"
+        <div 
+            v-for="item in list" 
             :key="item.id"
+            :class="$style.listItem"
           >
-            <div>
-              
+            <div :class="$style.userInfo">
+              <van-image
+                round
+                width="40"
+                height="40"
+                :src="item.avatar"
+              />
+              <div :class="$style.userMeta">
+                <div :class="$style.userName">{{ item.nickname }}</div>
+                <div :class="$style.date">{{ item.joinTime }}</div>
+              </div>
             </div>
+            <div :class="$style.taskCount">{{ item.taskCount }}</div>
+            <div :class="$style.reward">{{ item.earnings }}</div>
           </div>
         </van-list>
       </van-pull-refresh>
@@ -86,4 +98,51 @@ onMounted(async () => {
 </script>
 
 <style lang="less" module>
+.listItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.userMeta {
+  margin-left: 12px;
+}
+
+.userName {
+  font-size: 14px;
+  color: #323233;
+  margin-bottom: 4px;
+}
+
+.date {
+  font-size: 12px;
+  color: #969799;
+}
+
+.taskCount {
+  font-size: 14px;
+  color: #323233;
+  width: 70px;
+  text-align: center;
+}
+
+.reward {
+  font-size: 15px;
+  color: #ff4d4f;
+  font-weight: 500;
+  min-width: 60px;
+  text-align: right;
+  width: 70px;
+  text-align: center;
+}
 </style>

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-21 11:10:52
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-26 11:03:51
+ * @LastEditTime: 2025-03-26 11:15:00
  * @Description: 
 -->
 <template>
@@ -34,6 +34,7 @@
           <div :class="$style.label">{{ group.groupName }}</div>
           <div :class="$style.value">
             <span :class="$style.text">{{ group.memberCount }}</span>
+            <span :class="$style.text">{{ group.totalEarnings }}</span>
             <van-icon name="arrow" />
           </div>
         </div>
