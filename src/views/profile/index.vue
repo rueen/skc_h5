@@ -16,7 +16,7 @@
     <div :class="$style.earnings">
       <div :class="$style.earningItem">
         <div :class="$style.label">已提现</div>
-        <div :class="$style.amount">${{ userInfo.totalEarnings }}</div>
+        <div :class="$style.amount">${{ balanceInfo.withdrawalAmount }}</div>
       </div>
       <div :class="$style.earningItem">
         <div :class="$style.label">可提现</div>
