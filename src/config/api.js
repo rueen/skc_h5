@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-26 21:04:39
+ * @LastEditTime: 2025-03-27 18:55:09
  * @Description: API 路径配置
  */
 const API_PATH = {
@@ -16,13 +16,13 @@ const API_PATH = {
     // 检查是否已报名
     checkEnroll: '/task-enroll/:taskId/check',
     // 任务报名列表
-    enrolled: '/enrolled-tasks?excludeSubmitted=true', // excludeSubmitted=true 排除已提交任务
+    enrolled: '/task-enroll/record?excludeSubmitted=true', // excludeSubmitted=true 排除已提交任务
     // 提交任务 POST
     submit: '/task-submit',
     // 获取已提交任务列表
-    submitted: '/submitted-tasks',
+    submitted: '/task-submit',
     // 获取已提交任务详情
-    submittedDetail: '/submitted-tasks/:id',
+    submittedDetail: '/task-submit/:id',
   },
   channel: {
     list: '/channels',
@@ -60,12 +60,12 @@ const API_PATH = {
   },
   // 提现账户
   withdrawals: {
-    accounts: '/withdrawal-accounts', // 提现账户列表 GET
-    create: '/withdrawal-accounts', // 创建提现账户 POST
-    update: '/withdrawal-accounts/:id', // 更新提现账户 PUT
-    delete: '/withdrawal-accounts/:id', // 删除提现账户 DELETE
-    apply: '/withdrawals', // 申请提现 POST
-    records: '/withdrawals', // 提现记录列表 GET
+    accounts: '/withdrawal/accounts', // 提现账户列表 GET
+    create: '/withdrawal/accounts', // 创建提现账户 POST
+    update: '/withdrawal/accounts/:id', // 更新提现账户 PUT
+    delete: '/withdrawal/accounts/:id', // 删除提现账户 DELETE
+    apply: '/withdrawal', // 申请提现 POST
+    records: '/withdrawal', // 提现记录列表 GET
   },
   // 系统相关接口（公共API）
   system: {

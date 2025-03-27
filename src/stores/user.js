@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:10:49
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-25 20:15:48
+ * @LastEditTime: 2025-03-27 15:54:19
  * @Description: 
  */
 import { defineStore } from 'pinia'
@@ -54,7 +54,7 @@ export const useUserStore = defineStore('user', {
         return res.data
       } catch (error) {
         console.error('获取用户信息失败:', error)
-        if(error.response.status === 404){
+        if([401, 404].indexOf(error.response.status) > -1){
           this.clearToken()
           this.userInfo = null
         }
