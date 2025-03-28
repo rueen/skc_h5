@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-22 19:42:38
+ * @LastEditTime: 2025-03-28 20:21:28
  * @Description: 
 -->
 <template>
@@ -146,21 +146,9 @@
         <!-- 邀请链接 -->
         <div :class="$style.formItem">
           <span :class="$style.label">邀请链接</span>
-          <div :class="$style.value" @click="handleCopy(userInfo.inviteCode)">
-            <span :class="$style.text">{{ userInfo.inviteCode }}</span>
+          <div :class="$style.value" @click="handleCopy(inviteUrl)">
+            <span :class="$style.text">{{ inviteUrl }}</span>
             <van-icon name="copy" :class="$style.copyIcon" />
-          </div>
-        </div>
-        <!-- 群链接 -->
-        <div :class="$style.formItem">
-          <span :class="$style.label">群链接</span>
-          <div :class="$style.groupList">
-            <div v-for="item in userInfo.groups">
-              <div @click="handleJoinGroup(item.groupLink)">
-                <span :class="$style.text">{{ item.groupLink }}</span>
-                <span :class="$style.joinBtn">入群</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -217,7 +205,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { showToast, closeToast } from 'vant'
 import { areaList } from '@vant/area-data'
@@ -235,6 +223,9 @@ const userStore = useUserStore()
 const isEdit = ref(false)
 
 const userInfo = userStore.userInfo
+const inviteUrl = computed(() => {
+  return `${window.location.origin}?inviteCode=${userInfo.inviteCode}`
+})
 // 表单数据
 const form = ref({
   id: userInfo.id,
@@ -458,18 +449,6 @@ onMounted(async () => {
 }
 .formItem{
   justify-content: space-between;
-}
-.groupList{
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  justify-content: flex-end;
-}
-.joinBtn{
-  font-size: 14px;
-  color: var(--van-primary-color);
-  cursor: pointer;
-  margin-left: 12px;
 }
 .copyIcon {
   font-size: 16px;
