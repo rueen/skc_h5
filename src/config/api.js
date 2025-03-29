@@ -2,10 +2,14 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-27 18:55:09
+ * @LastEditTime: 2025-03-29 23:08:45
  * @Description: API 路径配置
  */
 const API_PATH = {
+  notification: {
+    list: '/notifications',
+    read: '/notifications/:id/read',
+  },
   task: {
     list: '/tasks',
     detail: '/tasks/:id',

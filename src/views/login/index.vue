@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-25 11:46:05
+ * @LastEditTime: 2025-03-29 23:11:10
  * @Description: 登录页
  -->
  <template>
@@ -88,6 +88,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/stores'
 import { showToast } from 'vant'
+import { checkNotification } from '@/utils/notification'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -166,9 +167,10 @@ const onSubmit = async () => {
       // 没有重定向URL，跳转到首页
       router.push('/')
     }
-    
     // 登录成功后清除邀请码
     sessionStorage.removeItem('inviteCode')
+    // 检查是否有未读通知
+    checkNotification()
   } catch (error) {
     console.log(error)
   }

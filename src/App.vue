@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-26 11:02:06
+ * @LastEditTime: 2025-03-29 22:30:39
  * @Description: 
 -->
 <template>
@@ -21,6 +21,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useUserStore, useEnumStore } from '@/stores'
+import { checkNotification } from '@/utils/notification'
 
 const route = useRoute()
 const { t } = useI18n()
@@ -57,6 +58,7 @@ onMounted(async () => {
   // 如果有 token，则获取用户信息
   if (userStore.token) {
     await userStore.fetchUserInfo()
+    await checkNotification()
   }
   // 加载枚举数据
   await enumStore.fetchEnum()
