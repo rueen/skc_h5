@@ -5,8 +5,8 @@
       <div :class="$style.userHeader">
         <avatar :avatar="userInfo.avatar" width="50px" height="50px" round />
         <div :class="$style.userMeta">
-          <div :class="$style.userName">{{ userInfo.memberNickname || '未登录' }}</div>
-          <div :class="$style.userId">账号: {{ userInfo.memberAccount || '---' }}</div>
+          <div :class="$style.userName">{{ userInfo.nickname || '未登录' }}</div>
+          <div :class="$style.userId">账号: {{ userInfo.account || '---' }}</div>
         </div>
       </div>
       <van-icon name="arrow" :class="$style.arrow" />
