@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:10:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-26 11:03:43
+ * @LastEditTime: 2025-03-29 22:25:36
  * @Description: 
  */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -176,6 +176,16 @@ const router = createRouter({
       meta: {
         title: '文章详情',
         requiresAuth: false,
+      }
+    },
+    {
+      path: '/examples/popup',
+      name: 'PopupExample',
+      component: () => import('../views/examples/PopupExample.vue'),
+      meta: {
+        title: '弹窗示例',
+        requiresAuth: false,
+        hideTabbar: true
       }
     }
   ]

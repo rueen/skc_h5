@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-17 20:20:05
+ * @LastEditTime: 2025-03-31 10:25:00
  * @Description: 
  */
 import { createApp } from 'vue'
@@ -10,6 +10,7 @@ import { createPinia } from 'pinia'
 import router from './router'
 import i18n from './i18n'
 import App from './App.vue'
+import PopupPlugin from './plugins/popup'
 
 // 导入Vant样式
 import 'vant/lib/index.css'
@@ -43,6 +44,7 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 app.use(i18n)
+app.use(PopupPlugin) // 注册弹窗插件
 // 注册Vant组件
 app.use(Tabbar)
 app.use(TabbarItem)
