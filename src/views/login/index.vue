@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-29 23:11:10
+ * @LastEditTime: 2025-03-30 20:04:26
  * @Description: 登录页
  -->
  <template>
@@ -170,7 +170,7 @@ const onSubmit = async () => {
     // 登录成功后清除邀请码
     sessionStorage.removeItem('inviteCode')
     // 检查是否有未读通知
-    checkNotification()
+    checkNotification(router)
   } catch (error) {
     console.log(error)
   }
