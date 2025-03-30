@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-29 22:29:04
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-29 23:13:11
+ * @LastEditTime: 2025-03-29 23:25:24
  * @Description: 
  */
 import { get, put } from '@/utils/request'
@@ -31,7 +31,7 @@ export const checkNotification = async () => {
         onConfirm: async () => {
           popup.destroy()
           await readNotification(joinGroupNotice.id)
-          window.location.href = joinGroupNotice.content.groupLink
+          window.open(joinGroupNotice.content.groupLink, '_blank')
         }
       }).show()
     }

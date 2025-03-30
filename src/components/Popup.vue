@@ -2,7 +2,7 @@
  * @Author: rueen
  * @Date: 2025-03-31 10:00:00
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-31 10:00:00
+ * @LastEditTime: 2025-03-30 09:30:17
  * @Description: 简易弹窗组件
  -->
 <template>
@@ -25,7 +25,6 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue'
 
 const props = defineProps({
   visible: {
