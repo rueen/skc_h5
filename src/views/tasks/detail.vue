@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-25 11:26:22
+ * @LastEditTime: 2025-03-30 11:35:48
  * @Description: 任务详情页
  -->
 <template>
@@ -28,11 +28,28 @@
         </div>
         <div :class="$style.priceRow">
           <div :class="$style.price">$ {{ taskInfo.reward }}</div>
+        </div>
+        <div :class="$style.extraInfo">
+          <div :class="$style.extraInfoItem">
+            <span :class="$style.label">剩余名额：</span>
+            <span :class="$style.value">
+              <span v-if="taskInfo.unlimitedQuota">不限</span>
+              <span v-else>{{ taskInfo.remainingQuota }}</span>
+            </span>
+          </div>
+          <div :class="$style.extraInfoItem">
+            <span :class="$style.label">达人领域：</span>
+            <span :class="$style.value">{{ taskInfo.category }}</span>
+          </div>
+          <div :class="$style.extraInfoItem">
+            <span :class="$style.label">截止日期：</span>
+            <span :class="$style.value">{{ taskInfo.endTime }}</span>
+          </div>
+        </div>
+        <!-- <div :class="$style.extraInfo">
           <div :class="$style.deadline">
             截止时间：{{ taskInfo.endTime }}
           </div>
-        </div>
-        <div :class="$style.extraInfo">
           <div :class="$style.description">
             {{ taskInfo.category }}
           </div>
@@ -41,7 +58,7 @@
             <span v-if="taskInfo.unlimitedQuota">不限</span>
             <span v-else>{{ taskInfo.remainingQuota }}</span>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <!-- 任务流程 -->
@@ -294,11 +311,6 @@ onMounted(async () => {
     font-weight: bold;
   }
 
-  .deadline {
-    font-size: 14px;
-    color: #969799;
-  }
-
   .platform {
     display: flex;
     align-items: center;
@@ -317,17 +329,25 @@ onMounted(async () => {
     display: flex;
     flex-direction: column;
     gap: 8px;
-  }
 
-  .description {
-    font-size: 14px;
-    color: #969799;
-    line-height: 1.3;
-  }
+    .extraInfoItem {
+      font-size: 12px;
+      line-height: 1.3;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      white-space: nowrap;
 
-  .slots {
-    font-size: 14px;
-    color: #969799;
+      .label {
+        color: #969799;
+        margin-right: 3px;
+        min-width: 60px;
+      }
+
+      .value {
+        color: #323233;
+      }
+    }
   }
 }
 
