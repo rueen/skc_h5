@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:10:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-29 22:25:36
+ * @LastEditTime: 2025-03-30 17:32:38
  * @Description: 
  */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -212,8 +212,19 @@ router.beforeEach((to, from, next) => {
   
   if (to.meta.requiresAuth && !userStore.token) {
     // 如果需要登录但用户未登录，重定向到登录页
-    // 保存当前路径，登录成功后可以跳回来
-    sessionStorage.setItem('redirectUrl', to.fullPath)
+    // 保存当前路径，但过滤掉 inviteCode 参数，登录成功后可以跳回来
+    const redirectQuery = { ...to.query }
+    delete redirectQuery.inviteCode // 从重定向URL中移除邀请码参数
+    
+    // 构建不包含邀请码的重定向URL
+    const redirectPath = to.path
+    const queryString = Object.keys(redirectQuery).length > 0 
+      ? '?' + new URLSearchParams(redirectQuery).toString() 
+      : ''
+    const redirectUrl = redirectPath + queryString + (to.hash || '')
+    
+    // 保存过滤后的重定向URL
+    sessionStorage.setItem('redirectUrl', redirectUrl)
     next('/login')
   } else {
     next()
