@@ -206,19 +206,25 @@ const onSubmit = async () => {
     return 
   }
 
-  loading.value = true
-  const res = await post('task.submit', {
-    taskId: taskId.value,
-    submitContent: {
-      customFields: customFields.value
+  try {
+    loading.value = true
+    const res = await post('task.submit', {
+      taskId: taskId.value,
+      submitContent: {
+        customFields: customFields.value
+      }
+    })
+    loading.value = false
+    if(res.code === 0) {
+      showSuccessDialog.value = true
+      submittedId.value = res.data.id
+    } else {
+      showToast(res.message)
     }
-  })
-  loading.value = false
-  if(res.code === 0) {
-    showSuccessDialog.value = true
-    submittedId.value = res.data.id
-  } else {
-    showToast(res.message)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    loading.value = false
   }
 }
 
