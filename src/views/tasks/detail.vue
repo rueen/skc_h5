@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-30 11:35:48
+ * @LastEditTime: 2025-03-30 15:26:04
  * @Description: 任务详情页
  -->
 <template>
@@ -146,7 +146,7 @@
         账号审核不通过
       </van-button>
       <van-button 
-        type="danger" 
+        type="warning" 
         block 
         :class="$style.submitBtn"
         v-else-if="currentChannelAccount.fansCount - taskInfo.fansRequired < 0"
@@ -154,13 +154,20 @@
         粉丝不达标
       </van-button>
       <van-button 
-        type="primary" 
+        type="warning" 
         block 
         :class="$style.submitBtn"
-        @click="handleSubmitTask"
         v-else-if="taskInfo.remainingQuota === 0"
       >
         名额已满
+      </van-button>
+      <van-button 
+        type="warning" 
+        block 
+        :class="$style.submitBtn"
+        v-else-if="!taskInfo.eligibleToEnroll"
+      >
+        不满足报名条件
       </van-button>
       <van-button 
         type="primary" 
