@@ -187,6 +187,16 @@ const router = createRouter({
         requiresAuth: false,
         hideTabbar: true
       }
+    },
+    {
+      path: '/examples/navbar',
+      name: 'NavBarExample',
+      component: () => import('../views/examples/NavBarExample.vue'),
+      meta: {
+        title: '导航栏示例',
+        requiresAuth: false,
+        hideTabbar: true
+      }
     }
   ]
 })
