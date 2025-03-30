@@ -1,9 +1,8 @@
 <template>
   <Layout>
-    <van-nav-bar
+    <nav-bar
       title="设置"
       left-arrow
-      @click-left="onClickLeft"
       fixed
     />
 
@@ -69,6 +68,7 @@ import { useI18n } from 'vue-i18n'
 import { showDialog, showToast } from 'vant'
 import { useUserStore } from '../../stores/user'
 import Layout from '@/components/layout.vue'
+import NavBar from '@/components/NavBar.vue'
 
 const router = useRouter()
 const { t, locale } = useI18n()
@@ -88,10 +88,6 @@ const currentLanguage = computed(() => {
 const currentLangIndex = computed(() => {
   return languages.findIndex(lang => lang.value === locale.value)
 })
-
-const onClickLeft = () => {
-  router.back()
-}
 
 const onConfirm = (value) => {
   locale.value = value.selectedValues[0];

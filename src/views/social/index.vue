@@ -1,10 +1,9 @@
 <template>
   <Layout :class="$style.socialPage">
     <!-- 顶部导航 -->
-    <van-nav-bar
+    <nav-bar
       title="我的账号"
       left-arrow
-      @click-left="onClickLeft"
       fixed
     />
 
@@ -80,6 +79,8 @@ import { get, del } from '@/utils/request'
 import { useEnumStore } from '@/stores'
 import tag from '@/components/tag.vue'
 import Layout from '@/components/layout.vue'
+import NavBar from '@/components/NavBar.vue'
+
 const enumStore = useEnumStore()
 const router = useRouter()
 const loading = ref(false)
@@ -91,10 +92,6 @@ const list = ref([])
 // 删除相关
 const showDeleteDialog = ref(false)
 const selectedCard = ref(null)
-
-const onClickLeft = () => {
-  router.back()
-}
 
 const onLoad = () => {
   loading.value = false

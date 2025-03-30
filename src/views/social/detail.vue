@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <!-- 顶部导航 -->
-    <van-nav-bar
+    <nav-bar
       :title="isNew ? '添加账号' : '账号详情'"
       left-arrow
       :right-text="isNew ? '' : isRejected ? '' : (isEditing ? '取消' : '编辑')"
@@ -136,6 +136,7 @@ import { get, post, put } from '@/utils/request'
 import { useEnumStore } from '@/stores'
 import tag from '@/components/tag.vue'
 import Layout from '@/components/layout.vue'
+import NavBar from '@/components/NavBar.vue'
 
 const enumStore = useEnumStore()
 const route = useRoute()
@@ -252,6 +253,7 @@ const onSubmit = async () => {
 
 // 切换编辑状态
 const onClickRight = () => {
+  console.log(isEditing.value)
   isEditing.value = !isEditing.value
 }
 

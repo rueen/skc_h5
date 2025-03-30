@@ -2,15 +2,14 @@
  * @Author: rueen
  * @Date: 2025-03-31 10:30:00
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-31 10:30:00
+ * @LastEditTime: 2025-03-30 16:50:34
  * @Description: 弹窗示例
  -->
 <template>
   <div class="popup-example">
-    <van-nav-bar
+    <nav-bar
       title="弹窗示例"
       left-arrow
-      @click-left="onClickLeft"
       fixed
     />
     
@@ -55,17 +54,13 @@ import {
   showPopup, 
   showPopupPromise 
 } from '@/utils/popup'
+import NavBar from '@/components/NavBar.vue'
 
 const router = useRouter()
 const $popup = inject('$popup')
 
 // 控制组件方式弹窗显示
 const popupVisible = ref(false)
-
-// 返回上一页
-const onClickLeft = () => {
-  router.back()
-}
 
 // 基础弹窗
 const showBasicPopup = () => {

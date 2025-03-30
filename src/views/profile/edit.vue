@@ -2,15 +2,14 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-28 20:21:28
+ * @LastEditTime: 2025-03-30 16:51:23
  * @Description: 
 -->
 <template>
   <Layout>
-    <van-nav-bar
+    <nav-bar
       title="个人信息"
       left-arrow
-      @click-left="onClickLeft"
       fixed
     >
       <template #right>
@@ -18,7 +17,7 @@
           {{ isEdit ? '取消' : '编辑' }}
         </span>
       </template>
-    </van-nav-bar>
+    </nav-bar>
 
     <div :class="$style.content">
       <div :class="$style.formGroup">
@@ -214,6 +213,7 @@ import { put } from '@/utils/request'
 import avatar from '@/components/avatar.vue'
 import { uploadImage } from '@/utils/upload'
 import Layout from '@/components/layout.vue'
+import NavBar from '@/components/NavBar.vue'
 
 const router = useRouter()
 const enumStore = useEnumStore()
@@ -288,11 +288,6 @@ const afterRead = async (file) => {
     console.error('头像上传失败:', error)
     showToast('上传失败，请重试')
   }
-}
-
-// 事件处理
-const onClickLeft = () => {
-  router.back()
 }
 
 const onToggleEdit = async () => {

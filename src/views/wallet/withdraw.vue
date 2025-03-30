@@ -1,9 +1,8 @@
 <template>
   <Layout>
-    <van-nav-bar
+    <nav-bar
       title="提现"
       left-arrow
-      @click-left="onClickLeft"
       fixed
     />
 
@@ -66,6 +65,7 @@ import { showToast } from 'vant'
 import Layout from '@/components/layout.vue'
 import { get, post } from '@/utils/request'
 import { useEnumStore } from '@/stores'
+import NavBar from '@/components/NavBar.vue'
 
 const enumStore = useEnumStore()
 const router = useRouter()
@@ -79,11 +79,6 @@ const form = ref({
 // 账户信息
 const withdrawalAccount = ref(null)
 const hasAccount = computed(() => !!withdrawalAccount.value)
-
-// 事件处理
-const onClickLeft = () => {
-  router.back()
-}
 
 const onWithdrawAll = () => {
   form.value.amount = balance.value

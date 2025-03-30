@@ -2,15 +2,14 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-30 16:13:47
+ * @LastEditTime: 2025-03-30 16:43:39
  * @Description: 任务详情页
  -->
 <template>
   <Layout>
-    <van-nav-bar
+    <nav-bar
       title="任务详情"
       left-arrow
-      @click-left="onClickLeft"
       fixed
     />
 
@@ -217,6 +216,7 @@ import { get, post } from '@/utils/request'
 import { useEnumStore, useUserStore } from '@/stores'
 import { shareInviteLink } from '@/utils/share'
 import Layout from '@/components/layout.vue'
+import NavBar from '@/components/NavBar.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -229,11 +229,6 @@ const taskInfo = ref({})
 
 // 任务流程步骤
 const processSteps = ['报名', '审核', '发帖', '完成']
-
-// 返回上一页
-const onClickLeft = () => {
-  router.back()
-}
 
 // 分享/邀请功能
 const onShare = () => {

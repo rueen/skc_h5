@@ -1,15 +1,14 @@
 <template>
   <Layout>
-    <van-nav-bar
+    <nav-bar
       :title="pageTitle"
       left-arrow
-      @click-left="onClickLeft"
       fixed
     >
       <template #right v-if="mode === 'preview'">
         <span @click="onEdit">编辑</span>
       </template>
-    </van-nav-bar>
+    </nav-bar>
 
     <div :class="$style.content">
       <!-- 账户信息表单 -->
@@ -76,6 +75,7 @@ import { showToast } from 'vant'
 import Layout from '@/components/layout.vue'
 import { useEnumStore } from '@/stores'
 import { get, post, put } from '@/utils/request'
+import NavBar from '@/components/NavBar.vue'
 
 const enumStore = useEnumStore()
 const router = useRouter()
@@ -113,11 +113,6 @@ const onAccountTypeConfirm = ({ selectedOptions }) => {
   selectedType.value = selectedOptions[0]
   form.value.accountType = selectedType.value.value
   showAccountTypePicker.value = false
-}
-
-// 返回上一页
-const onClickLeft = () => {
-  router.back()
 }
 
 // 切换到编辑模式

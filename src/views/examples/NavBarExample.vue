@@ -74,6 +74,20 @@
       <h3>使用插槽</h3>
       <p>通过插槽可以自定义导航栏左右两侧的内容。</p>
     </div>
+    
+    <!-- 直接提供 onClickLeft 和 onClickRight 回调 -->
+    <nav-bar
+      title="直接提供回调"
+      left-text="自定义左侧"
+      right-text="自定义右侧"
+      :on-click-left="customLeftClick"
+      :on-click-right="customRightClick"
+    />
+    
+    <div class="section">
+      <h3>直接提供回调</h3>
+      <p>通过 onClickLeft 和 onClickRight 属性可以直接提供回调函数，这些函数会优先于组件的默认行为执行。</p>
+    </div>
   </div>
 </template>
 
@@ -93,6 +107,16 @@ const customBack = () => {
   setTimeout(() => {
     window.history.back()
   }, 1000)
+}
+
+// 自定义左侧按钮点击
+const customLeftClick = () => {
+  showToast('自定义左侧按钮点击')
+}
+
+// 自定义右侧按钮点击
+const customRightClick = () => {
+  showToast('自定义右侧按钮点击')
 }
 </script>
 

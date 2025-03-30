@@ -2,16 +2,15 @@
  * @Author: diaochan
  * @Date: 2025-03-21 11:10:52
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-26 15:00:06
+ * @LastEditTime: 2025-03-30 16:50:46
  * @Description: 
 -->
 <template>
   <Layout>
     <!-- 顶部导航 -->
-    <van-nav-bar
+    <nav-bar
       title="我的群组"
       left-arrow
-      @click-left="onClickLeft"
       fixed
     />
 
@@ -67,6 +66,7 @@ import { ref, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { get } from '@/utils/request'
 import Layout from '@/components/layout.vue'
+import NavBar from '@/components/NavBar.vue'
 
 const router = useRouter()
 
@@ -78,10 +78,6 @@ const groupStats = ref({
   groupCount: 0,
   totalEarnings: 0
 })
-// 事件处理
-const onClickLeft = () => {
-  router.back()
-}
 
 const loadGroups = async () => {
   const res = await get('groups.groups')

@@ -2,16 +2,15 @@
  * @Author: diaochan
  * @Date: 2025-03-26 11:00:41
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-26 15:01:08
+ * @LastEditTime: 2025-03-30 16:51:01
  * @Description: 
 -->
 <template>
   <Layout>
     <!-- 顶部导航 -->
-    <van-nav-bar
+    <nav-bar
       title="群组成员"
       left-arrow
-      @click-left="onClickLeft"
       fixed
     />
 
@@ -54,6 +53,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { get } from '@/utils/request'
 import Layout from '@/components/layout.vue'
+import NavBar from '@/components/NavBar.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -66,11 +66,6 @@ const list = ref([])
 const loading = ref(false)
 const finished = ref(false)
 const refreshing = ref(false)
-
-// 事件处理
-const onClickLeft = () => {
-  router.back()
-}
 
 // 下拉刷新
 const onRefresh = () => {

@@ -1,9 +1,8 @@
 <template>
   <Layout>
-    <van-nav-bar
+    <nav-bar
       :title="t('settings.password')"
       left-arrow
-      @click-left="onClickLeft"
       fixed
     />
 
@@ -55,6 +54,7 @@ import { useI18n } from 'vue-i18n'
 import { showToast } from 'vant'
 import { post } from '@/utils/request'
 import Layout from '@/components/layout.vue'
+import NavBar from '@/components/NavBar.vue'
 
 const router = useRouter()
 const { t } = useI18n()
@@ -64,10 +64,6 @@ const form = ref({
   newPassword: '',
   confirmPassword: ''
 })
-
-const onClickLeft = () => {
-  router.back()
-}
 
 const onSubmit = async () => {
   if (!form.value.currentPassword) {

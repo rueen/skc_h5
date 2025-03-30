@@ -1,9 +1,8 @@
 <template>
   <Layout>
-    <van-nav-bar
+    <nav-bar
       title="提现记录"
       left-arrow
-      @click-left="onClickLeft"
       fixed
     />
 
@@ -42,6 +41,7 @@ import { useRouter } from 'vue-router'
 import Layout from '@/components/layout.vue'
 import { get } from '@/utils/request'
 import { useEnumStore } from '@/stores'
+import NavBar from '@/components/NavBar.vue'
 
 const router = useRouter()
 const enumStore = useEnumStore()
@@ -53,11 +53,6 @@ const list = ref([])
 const loading = ref(false)
 const finished = ref(false)
 const refreshing = ref(false)
-
-// 事件处理
-const onClickLeft = () => {
-  router.back()
-}
 
 // 下拉刷新
 const onRefresh = () => {

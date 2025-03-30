@@ -2,16 +2,15 @@
  * @Author: diaochan
  * @Date: 2025-02-25 15:00:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-25 11:26:00
+ * @LastEditTime: 2025-03-30 16:51:12
  * @Description: 我的邀请人列表页
  -->
 <template>
   <Layout :class="$style.invitesPage">
     <!-- 顶部导航 -->
-    <van-nav-bar
+    <nav-bar
       title="邀请好友"
       left-arrow
-      @click-left="onClickLeft"
       fixed
     />
 
@@ -80,6 +79,7 @@ import { shareInviteLink } from '@/utils/share'
 import Layout from '@/components/layout.vue'
 import { get } from '@/utils/request'
 import { useUserStore } from '@/stores'
+import NavBar from '@/components/NavBar.vue'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -97,11 +97,6 @@ const list = ref([])
 const loading = ref(false)
 const finished = ref(false)
 const refreshing = ref(false)
-
-// 事件处理
-const onClickLeft = () => {
-  router.back()
-}
 
 // 下拉刷新
 const onRefresh = () => {

@@ -1,9 +1,8 @@
 <template>
   <Layout>
-    <van-nav-bar
+    <nav-bar
       title="任务提交"
       left-arrow
-      @click-left="onClickLeft"
       fixed
     />
 
@@ -130,6 +129,7 @@ import Layout from '@/components/layout.vue'
 import { get, post } from '@/utils/request'
 import { useEnumStore } from '@/stores'
 import { uploadImage } from '@/utils/upload'
+import NavBar from '@/components/NavBar.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -151,11 +151,6 @@ const isEdit = computed(() => {
 const isView = computed(() => {
   return route.params.id !== 'new' && submittedInfo.value.taskAuditStatus !== 'rejected'
 })
-
-// 事件处理
-const onClickLeft = () => {
-  router.back()
-}
 
 // 获取状态图标
 const getStatusIcon = (status) => {

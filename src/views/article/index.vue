@@ -2,12 +2,12 @@
  * @Author: diaochan
  * @Date: 2025-03-20 21:33:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-21 10:56:34
+ * @LastEditTime: 2025-03-30 16:47:05
  * @Description: 
 -->
 <template>
   <Layout>
-    <van-nav-bar
+    <nav-bar
       :title="title"
       left-arrow
       fixed
@@ -22,6 +22,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Layout from '@/components/layout.vue'
 import { get } from '@/utils/request'
+import NavBar from '@/components/NavBar.vue'
 
 const route = useRoute()
 const router = useRouter()
