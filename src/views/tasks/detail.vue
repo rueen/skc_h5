@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-30 15:26:04
+ * @LastEditTime: 2025-03-30 16:13:47
  * @Description: 任务详情页
  -->
 <template>
@@ -142,8 +142,17 @@
         block 
         :class="$style.submitBtn"
         v-else-if="currentChannelAccount.accountAuditStatus === 'rejected'"
+        @click="router.push(`/social/detail/${currentChannelAccount.id}`)"
       >
         账号审核不通过
+      </van-button>
+      <van-button 
+        type="warning" 
+        block 
+        :class="$style.submitBtn"
+        v-else-if="taskInfo.taskStatus === 'ended'"
+      >
+        任务已结束
       </van-button>
       <van-button 
         type="warning" 
@@ -168,6 +177,15 @@
         v-else-if="!taskInfo.eligibleToEnroll"
       >
         不满足报名条件
+      </van-button>
+      <van-button 
+        type="primary" 
+        block 
+        :class="$style.submitBtn"
+        @click="router.push(`/tasks/submit/${taskInfo.submittedId}?taskId=${taskInfo.id}`)"
+        v-else-if="!!taskInfo.isSubmitted"
+      >
+        查看提交详情
       </van-button>
       <van-button 
         type="primary" 
