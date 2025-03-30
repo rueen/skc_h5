@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-29 22:29:04
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-29 23:25:24
+ * @LastEditTime: 2025-03-30 17:24:31
  * @Description: 
  */
 import { get, put } from '@/utils/request'
@@ -18,12 +18,13 @@ const readNotification = async (id) => {
 }
 
 export const checkNotification = async () => {
-  const res = await get('notification.list')
-  if(res.code === 0) {
-    const notifications = res.data;
-    // 入群通知
-    const joinGroupNotice = notifications.find(item => item.type === 0);
-    if(joinGroupNotice){
+  try {
+    const res = await get('notification.list')
+    if(res.code === 0) {
+      const notifications = res.data;
+      // 入群通知
+      const joinGroupNotice = notifications.find(item => item.type === 0);
+      if(joinGroupNotice){
       const popup = createPopup({
         title: '入群通知',
         message: `欢迎加入【${joinGroupNotice.content.groupName}】`,
@@ -34,7 +35,10 @@ export const checkNotification = async () => {
           window.open(joinGroupNotice.content.groupLink, '_blank')
         }
       }).show()
+      }
     }
+  } catch (error) {
+    console.error('检查通知失败:', error)
   }
 }
 
