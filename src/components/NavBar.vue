@@ -2,7 +2,7 @@
  * @Author: rueen
  * @Date: 2025-04-01 10:00:00
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-01 16:00:00
+ * @LastEditTime: 2025-03-30 17:07:55
  * @Description: 导航栏组件，支持智能返回功能
  -->
 <template>
@@ -10,6 +10,7 @@
     v-bind="$attrs"
     :left-arrow="leftArrow"
     @click-left="handleClickLeft"
+    @click-right="handleClickRight"
   >
     <!-- 正确处理插槽，避免 null 错误 -->
     <template v-if="$slots.left" #left>
@@ -44,11 +45,18 @@ const props = defineProps({
   onBack: {
     type: Function,
     default: null
+  },
+  // 左侧按钮点击回调，如果提供则会覆盖默认的返回行为
+  onClickLeft: {
+    type: Function,
+    default: null
+  },
+  // 右侧按钮点击回调
+  onClickRight: {
+    type: Function,
+    default: null
   }
 })
-
-// 定义emit
-const emit = defineEmits(['click-left', 'click-right'])
 
 // 获取router实例
 const router = useRouter()
@@ -68,8 +76,12 @@ onMounted(() => {
 
 // 处理左侧按钮点击事件
 const handleClickLeft = (event) => {
-  // 先触发原始的click-left事件
-  emit('click-left', event)
+  
+  // 如果提供了onClickLeft回调，则优先执行它并返回
+  if (props.onClickLeft) {
+    props.onClickLeft(event)
+    return
+  }
   
   // 如果提供了onBack回调，则执行它并返回
   if (props.onBack) {
@@ -95,6 +107,14 @@ const handleClickLeft = (event) => {
       // 否则正常返回上一页
       router.back()
     }
+  }
+}
+
+// 处理右侧按钮点击事件
+const handleClickRight = (event) => {
+  // 如果提供了onClickRight回调，则执行它
+  if (props.onClickRight) {
+    props.onClickRight(event)
   }
 }
 </script>
