@@ -13,18 +13,29 @@
           :finished="finished"
           finished-text="没有更多了"
         >
-          <div :class="$style.billList">
-            <div 
+          <div :class="$style.recordList">
+            <div
               v-for="bill in list" 
               :key="bill.id"
-              :class="$style.billItem"
+              :class="$style.recordItem"
             >
-              <div :class="$style.billInfo">
-                <div :class="$style.billTitle">{{ enumStore.getEnumText('BillType', bill.billType) }}</div>
-                <div :class="$style.billTime">{{ bill.createTime }}</div>
+              <div :class="$style.recordItemWrapper">
+                <div :class="$style.recordInfo">
+                  <div :class="$style.title">{{ enumStore.getEnumText('BillType', bill.billType) }}</div>
+                  <div :class="$style.time">{{ bill.createTime }}</div>
+                </div>
+                <div :class="$style.rightWrapper">
+                  <div :class="$style.amount">{{ bill.amount }}</div>
+                  <div :class="[$style.status, $style[bill.withdrawalStatus]]" v-if="bill.billType === 'withdrawal'">
+                    {{ enumStore.getEnumText('WithdrawalStatus', bill.withdrawalStatus) }}
+                  </div>
+                  <div :class="[$style.status, $style[bill.settlementStatus]]" v-else>
+                    {{ enumStore.getEnumText('SettlementStatus', bill.settlementStatus) }}
+                  </div>
+                </div>
               </div>
-              <div :class="$style.billAmount">
-                {{ bill.amount }}
+              <div :class="$style.reason" v-if="bill.settlementStatus === 'failed' || bill.withdrawalStatus === 'failed'">
+                失败原因：{{ bill.failureReason }}
               </div>
             </div>
           </div>
@@ -87,41 +98,71 @@ onMounted(async () => {
   padding: 12px;
 }
 
-.billList {
+.recordList {
   background: #fff;
   border-radius: 8px;
   overflow: hidden;
 }
 
-.billItem {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px;
+.recordItem {
   border-bottom: 1px solid #f5f6f7;
+  padding: 16px;
 
   &:last-child {
     border-bottom: none;
   }
-}
 
-.billInfo {
-  flex: 1;
-  margin-right: 12px;
-}
+  .recordItemWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-.billTitle {
-  font-size: 14px;
-  color: #323233;
-  margin-bottom: 4px;
-}
+    .recordInfo {
+      flex: 1;
+      margin-right: 12px;
+    }
 
-.billTime {
-  font-size: 12px;
-  color: #969799;
-}
+    .title {
+      font-size: 14px;
+      color: #323233;
+      margin-bottom: 4px;
+    }
 
-.billAmount {
-  font-size: 16px;
+    .time {
+      font-size: 12px;
+      color: #969799;
+    }
+    .rightWrapper {
+      text-align: right;
+
+      .amount {
+        font-size: 16px;
+        font-weight: 500;
+        color: #323233;
+        margin-bottom: 4px;
+      }
+      .status {
+        font-size: 12px;
+
+        &.success {
+          color: #07c160;
+        }
+
+        &.pending {
+          color: #ff976a;
+        }
+
+        &.failed {
+          color: #ff4d4f;
+        }
+      }
+    }
+  }
+
+  .reason {
+    font-size: 12px;
+    color: #ff4d4f;
+    text-align: right;
+  }
 }
 </style> 

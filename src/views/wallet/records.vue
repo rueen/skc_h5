@@ -19,13 +19,18 @@
               :key="record.id"
               :class="$style.recordItem"
             >
-              <div :class="$style.recordInfo">
-                <div :class="$style.recordTitle">提现到{{ record.account }}</div>
-                <div :class="$style.recordTime">{{ record.createTime }}</div>
+              <div :class="$style.recordItemWrapper">
+                <div :class="$style.recordInfo">
+                  <div :class="$style.title">提现到{{ record.account }}</div>
+                  <div :class="$style.time">{{ record.createTime }}</div>
+                </div>
+                <div :class="$style.rightWrapper">
+                  <div :class="$style.amount">{{ record.amount }}</div>
+                  <div :class="[$style.status, $style[record.withdrawalStatus]]">{{ enumStore.getEnumText('WithdrawalStatus', record.withdrawalStatus) }}</div>
+                </div>
               </div>
-              <div :class="$style.recordStatus">
-                <div :class="$style.recordAmount">{{ record.amount }}</div>
-                <div :class="[$style.status, $style[record.withdrawalStatus]]">{{ enumStore.getEnumText('WithdrawalStatus', record.withdrawalStatus) }}</div>
+              <div :class="$style.reason" v-if="record.withdrawalStatus === 'failed'">
+                失败原因：{{ record.rejectReason }}
               </div>
             </div>
           </div>
@@ -95,57 +100,64 @@ onMounted(async () => {
 }
 
 .recordItem {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px;
   border-bottom: 1px solid #f5f6f7;
+  padding: 16px;
 
   &:last-child {
     border-bottom: none;
   }
-}
 
-.recordInfo {
-  flex: 1;
-  margin-right: 12px;
-}
+  .recordItemWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-.recordTitle {
-  font-size: 14px;
-  color: #323233;
-  margin-bottom: 4px;
-}
+    .recordInfo {
+      flex: 1;
+      margin-right: 12px;
+    }
 
-.recordTime {
-  font-size: 12px;
-  color: #969799;
-}
+    .title {
+      font-size: 14px;
+      color: #323233;
+      margin-bottom: 4px;
+    }
 
-.recordStatus {
-  text-align: right;
-}
+    .time {
+      font-size: 12px;
+      color: #969799;
+    }
+    .rightWrapper {
+      text-align: right;
 
-.recordAmount {
-  font-size: 16px;
-  font-weight: 500;
-  color: #323233;
-  margin-bottom: 4px;
-}
+      .amount {
+        font-size: 16px;
+        font-weight: 500;
+        color: #323233;
+        margin-bottom: 4px;
+      }
+      .status {
+        font-size: 12px;
 
-.status {
-  font-size: 12px;
+        &.success {
+          color: #07c160;
+        }
 
-  &.success {
-    color: #07c160;
+        &.pending {
+          color: #ff976a;
+        }
+
+        &.failed {
+          color: #ff4d4f;
+        }
+      }
+    }
   }
 
-  &.pending {
-    color: #ff976a;
-  }
-
-  &.failed {
+  .reason {
+    font-size: 12px;
     color: #ff4d4f;
+    text-align: right;
   }
 }
 </style> 
