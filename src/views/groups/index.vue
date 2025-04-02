@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-21 11:10:52
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-30 16:50:46
+ * @LastEditTime: 2025-04-02 16:36:18
  * @Description: 
 -->
 <template>
@@ -13,30 +13,34 @@
       left-arrow
       fixed
     />
-
-    <!-- 收益信息 -->
-    <div :class="$style.earningsWrapper" v-if="isGroupOwner">
-      <div :class="$style.earningItem">
-        <div :class="$style.label">群数量</div>
-        <div :class="$style.amount">{{ groupStats.groupCount }}</div>
-      </div>
-      <div :class="$style.earningItem">
-        <div :class="$style.label">群收益</div>
-        <div :class="$style.amount">{{ groupStats.totalEarnings }}</div>
-      </div>
-    </div>
-
+    <!-- 未加入任何群组 -->
+    <div :class="$style.noData" v-if="groups.length === 0">您还没有加入任何群组</div>
     <!-- 群组列表 群主 -->
     <div :class="$style.groups" v-if="isGroupOwner">
-      <div :class="$style.groupItem" v-for="group in groups" :key="group.id">
-        <div :class="$style.formItem" @click="router.push(`/groups/members/${group.id}`)">
-          <div :class="$style.label">{{ group.groupName }}</div>
-          <div :class="$style.value">
-            <span :class="$style.text">{{ group.memberCount }}</span>
-            <div :class="[$style.text, $style.earnings]">{{ group.totalEarnings }}</div>
-            <van-icon name="arrow" />
-          </div>
+      <div :class="$style.header">
+        <div :class="[$style.headerItem, $style.headerItemLeft]">群名称</div>
+        <div :class="[$style.headerItem, $style.headerItemCenter]">成员数</div>
+        <div :class="[$style.headerItem, $style.headerItemRight]">
+          贡献
+          <span :class="$style.earnings">({{ groupStats.totalEarnings }})</span>
         </div>
+      </div>
+      <div
+        :class="$style.listItem"
+        @click="router.push(`/groups/members/${group.id}`)"
+        v-for="group in groups"
+        :key="group.id"
+      >
+        <div :class="$style.listItemLeft">
+          <span :class="$style.text">{{ group.groupName }}</span>
+        </div>
+        <div :class="$style.listItemCenter">
+          <span :class="$style.text">{{ group.memberCount }}</span>
+        </div>
+        <div :class="$style.listItemRight">
+          <div :class="[$style.text, $style.earnings]">{{ group.totalEarnings }}</div>
+        </div>
+        <van-icon name="arrow" />
       </div>
     </div>
 
@@ -45,14 +49,12 @@
       <div :class="$style.groupItem" v-for="group in groups" :key="group.id">
         <div :class="$style.formItem">
           <div :class="$style.label">群组名称</div>
-          <div :class="$style.value">
-            <span :class="$style.text">{{ group.groupName }}</span>
-          </div>
+          <div :class="$style.value">{{ group.groupName }}</div>
         </div>
         <div :class="$style.formItem">
           <div :class="$style.label">群组链接</div>
           <div :class="$style.value">
-            <span :class="$style.text">{{ group.groupLink }}</span>
+            <span>{{ group.groupLink }}</span>
             <van-icon name="copy" />
           </div>
         </div>
@@ -102,37 +104,67 @@ onMounted(async () => {
 </script>
 
 <style lang="less" module>
-.earningsWrapper {
-  margin: 12px 12px 0;
-  background: #fff;
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  justify-content: space-around;
+.noData{
+  font-size: 14px;
+  color: #999;
+  text-align: center;
+  padding: 12px;
+}
+.groups{
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
 
-  .earningItem {
-    text-align: center;
-
-    .label {
+    .headerItem {
+      text-align: center;
       font-size: 14px;
-      color: #969799;
-      margin-bottom: 8px;
+      color: #323233;
     }
 
-    .amount {
-      font-size: 20px;
-      color: #323233;
-      font-weight: 500;
+    .headerItemLeft {
+      flex: 1;
+      text-align: left;
+    }
+
+    .headerItemCenter {
+      width: 70px;
+      text-align: center;
+    } 
+
+    .headerItemRight {
+      width: 136px;
+      text-align: center;
     }
   }
-}
+  .listItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: #fff;
+    border-bottom: 1px solid #f5f6f7;
+    &:last-child {
+      border-bottom: none;
+    }
 
-.groups{
-  margin: 12px;
+    .listItemLeft{
+      flex: 1;
+    }
 
+    .listItemCenter{
+      width: 70px;
+      text-align: center;
+    }
+
+    .listItemRight{
+      width: 120px;
+      text-align: center;
+    }
+  }
   .groupItem {
     background: #fff;
-    border-radius: 8px;
     margin-bottom: 12px;
     overflow: hidden;
     
@@ -153,24 +185,17 @@ onMounted(async () => {
       }
 
       .value {
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        cursor: pointer;
-        gap: 4px;
-
-        .text {
-          font-size: 14px;
-          color: #323233;
-        }
-        .earnings {
-          color: #FF951C;
-          width: 100px;
-          text-align: right;
-        }
+        font-size: 14px;
+        color: #323233;
       }
     }
+  }
+  .text {
+    font-size: 14px;
+    color: #323233;
+  }
+  .earnings {
+    color: #FF951C;
   }
 }
 

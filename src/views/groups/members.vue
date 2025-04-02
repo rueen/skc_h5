@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-26 11:00:41
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-02 11:58:58
+ * @LastEditTime: 2025-04-02 16:24:53
  * @Description: 
 -->
 <template>
@@ -20,9 +20,9 @@
     </div>
     <div :class="$style.content">
       <div :class="$style.header">
-        <div :class="[$style.headerItem, $style.headerItem1]">成员信息</div>
-        <div :class="[$style.headerItem, $style.headerItem2]">完成任务</div>
-        <div :class="[$style.headerItem, $style.headerItem3]">贡献</div>
+        <div :class="[$style.headerItem, $style.headerItemLeft]">成员信息</div>
+        <div :class="[$style.headerItem, $style.headerItemCenter]">完成任务</div>
+        <div :class="[$style.headerItem, $style.headerItemRight]">贡献</div>
       </div>
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list
@@ -35,7 +35,7 @@
             :key="item.id"
             :class="$style.listItem"
           >
-            <div :class="$style.userInfo">
+            <div :class="[$style.userInfo, $style.listItemLeft]">
               <van-image
                 round
                 width="40"
@@ -47,8 +47,8 @@
                 <div :class="$style.date">{{ item.joinTime }}</div>
               </div>
             </div>
-            <div :class="$style.taskCount">{{ item.taskCount }}</div>
-            <div :class="$style.reward">{{ item.earnings }}</div>
+            <div :class="$style.listItemCenter">{{ item.taskCount }}</div>
+            <div :class="[$style.listItemRight, $style.earnings]">{{ item.earnings }}</div>
           </div>
         </van-list>
       </van-pull-refresh>
@@ -118,57 +118,11 @@ onMounted(async () => {
   padding: 10px;
 }
 
-.listItem {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px;
-  background: #fff;
-  margin-bottom: 8px;
-}
-
-.userInfo {
-  display: flex;
-  align-items: center;
-  flex: 1;
-}
-
-.userMeta {
-  margin-left: 12px;
-}
-
-.userName {
-  font-size: 14px;
-  color: #323233;
-  margin-bottom: 4px;
-}
-
-.date {
-  font-size: 12px;
-  color: #969799;
-}
-
-.taskCount {
-  font-size: 14px;
-  color: #323233;
-  width: 70px;
-  text-align: center;
-}
-
-.reward {
-  font-size: 15px;
-  color: #ff4d4f;
-  font-weight: 500;
-  text-align: right;
-  width: 70px;
-  text-align: center;
-}
-
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px;
+  padding: 12px 16px;
 
   .headerItem {
     text-align: center;
@@ -176,19 +130,63 @@ onMounted(async () => {
     color: #323233;
   }
 
-  .headerItem1 {
+  .headerItemLeft {
     flex: 1;
     text-align: left;
   }
 
-  .headerItem2 {
+  .headerItemCenter {
     width: 70px;
     text-align: center;
   } 
 
-  .headerItem3 {
+  .headerItemRight {
     width: 70px;
     text-align: center;
   }
+}
+.listItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  background: #fff;
+  margin-bottom: 8px;
+
+  .listItemLeft{
+    flex: 1;
+  }
+
+  .listItemCenter{
+    width: 70px;
+    text-align: center;
+  }
+
+  .listItemRight{
+    width: 70px;
+    text-align: center;
+  }
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+
+  .userMeta {
+    margin-left: 12px;
+  }
+  .userName {
+    font-size: 14px;
+    color: #323233;
+    margin-bottom: 4px;
+  }
+  .date {
+    font-size: 12px;
+    color: #969799;
+  }
+}
+
+.earnings {
+  color: #ff4d4f;
 }
 </style>
