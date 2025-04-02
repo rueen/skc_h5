@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-26 11:00:41
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-30 16:51:01
+ * @LastEditTime: 2025-04-02 11:58:58
  * @Description: 
 -->
 <template>
@@ -15,7 +15,15 @@
     />
 
     <!-- 列表内容区域 -->
-    <div>
+    <div :class="$style.tips">
+      新会员首次任务不计算群主收益
+    </div>
+    <div :class="$style.content">
+      <div :class="$style.header">
+        <div :class="[$style.headerItem, $style.headerItem1]">成员信息</div>
+        <div :class="[$style.headerItem, $style.headerItem2]">完成任务</div>
+        <div :class="[$style.headerItem, $style.headerItem3]">贡献</div>
+      </div>
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list
           v-model:loading="loading"
@@ -55,7 +63,6 @@ import { get } from '@/utils/request'
 import Layout from '@/components/layout.vue'
 import NavBar from '@/components/NavBar.vue'
 
-const router = useRouter()
 const route = useRoute()
 const groupId = ref(route.params.groupId)
 
@@ -100,13 +107,23 @@ onMounted(async () => {
 </script>
 
 <style lang="less" module>
+.content {
+}
+.tips {
+  font-size: 12px;
+  color: #E82134;
+  text-align: center;
+  background: #FFF3EE;
+  border-radius: 8px 8px 0 0;
+  padding: 10px;
+}
+
 .listItem {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 12px;
   background: #fff;
-  border-radius: 8px;
   margin-bottom: 8px;
 }
 
@@ -142,9 +159,36 @@ onMounted(async () => {
   font-size: 15px;
   color: #ff4d4f;
   font-weight: 500;
-  min-width: 60px;
   text-align: right;
   width: 70px;
   text-align: center;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+
+  .headerItem {
+    text-align: center;
+    font-size: 14px;
+    color: #323233;
+  }
+
+  .headerItem1 {
+    flex: 1;
+    text-align: left;
+  }
+
+  .headerItem2 {
+    width: 70px;
+    text-align: center;
+  } 
+
+  .headerItem3 {
+    width: 70px;
+    text-align: center;
+  }
 }
 </style>
