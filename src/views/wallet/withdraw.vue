@@ -111,12 +111,12 @@ const onSubmit = async () => {
     return
   }
   // 余额不足
-  if (balance.value < form.value.amount) {
+  if (balance.value - form.value.amount < 0) {
     showToast('余额不足')
     return
   }
   // 提现金额不能小于提现门槛 
-  if (form.value.amount < withdrawThreshold.value) {
+  if (form.value.amount - withdrawThreshold.value < 0) {
     showToast(`提现金额不能小于${withdrawThreshold.value}元`)
     return
   }
