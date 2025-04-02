@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-25 11:26:11
+ * @LastEditTime: 2025-04-02 10:00:22
  * @Description: 任务页
  -->
 <template>
@@ -62,12 +62,16 @@
                         {{ enumStore.getEnumText('TaskType', item.taskType) }}
                       </van-tag>
                       <van-tag type="warning" :class="$style.followers">
-                        {{ item.followers }}
+                        {{ item.fansRequired }}
                       </van-tag>
                     </div>
-                    <div :class="$style.deadline">
-                      <span :class="$style.label">截止日期：</span>
-                      <span :class="$style.value">{{ item.deadline }}</span>
+                    <div :class="$style.deadline" v-if="activeTab === 'applied'">
+                      <span :class="$style.label">报名时间：</span>
+                      <span :class="$style.value">{{ item.enrollTime }}</span>
+                    </div>
+                    <div :class="$style.deadline" v-else>
+                      <span :class="$style.label">提交时间：</span>
+                      <span :class="$style.value">{{ item.submitTime }}</span>
                     </div>
                   </div>
                 </div>

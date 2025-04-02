@@ -44,7 +44,7 @@
                 {{ taskInfo.fansRequired }}
               </van-tag>
             </div>
-            <div :class="$style.taskDeadline">截止日期：{{ taskInfo.endTime }}</div>
+            <div :class="$style.taskDeadline">结束时间：{{ taskInfo.endTime }}</div>
           </div>
         </div>
       </div>
