@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 15:00:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-30 16:51:12
+ * @LastEditTime: 2025-04-02 11:24:52
  * @Description: 我的邀请人列表页
  -->
 <template>
@@ -25,7 +25,10 @@
         <div :class="$style.value">{{ stats.totalReward }}</div>
       </div>
     </div>
-
+    <div :class="$style.tips">
+      <van-icon name="info-o" />
+      好友完成任务后才会发放奖励
+    </div>
     <!-- 邀请列表 -->
     <div :class="$style.content">
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
@@ -171,6 +174,16 @@ onMounted(async () => {
     color: #323233;
     font-weight: 500;
   }
+}
+
+.tips {
+  font-size: 12px;
+  color: #E82134;
+  margin: 0 12px 0;
+  text-align: center;
+  background: #FFF3EE;
+  border-radius: 8px 8px 0 0;
+  padding: 10px;
 }
 
 .content {
