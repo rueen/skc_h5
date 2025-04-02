@@ -18,7 +18,7 @@
         <div :class="$style.label">已提现</div>
         <div :class="$style.amount">${{ balanceInfo.withdrawalAmount }}</div>
       </div>
-      <div :class="$style.earningItem">
+      <div :class="$style.earningItem" @click="router.push('/wallet')">
         <div :class="$style.label">可提现</div>
         <div :class="$style.amount">{{ balanceInfo.balance }}</div>
       </div>

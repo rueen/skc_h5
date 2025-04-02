@@ -20,7 +20,8 @@
           />
         </div>
         <div :class="$style.balance">
-          可提现余额：$ {{ balance }}
+          <span>提现门槛：$ {{ withdrawThreshold }}</span>
+          <span>可提现余额：$ {{ balance }}</span>
           <span :class="$style.all" @click="onWithdrawAll">全部提现</span>
         </div>
       </div>
@@ -70,6 +71,8 @@ import NavBar from '@/components/NavBar.vue'
 const enumStore = useEnumStore()
 const router = useRouter()
 
+// 提现门槛
+const withdrawThreshold = ref(0)
 const balance = ref(0)
 // 表单数据
 const form = ref({
@@ -99,12 +102,22 @@ const onAccountClick = () => {
 }
 
 const onSubmit = async () => {
+  if (!hasAccount.value) {
+    showToast('请先设置提现账户')
+    return
+  }
   if (!form.value.amount) {
     showToast('请输入提现金额')
     return
   }
-  if (!hasAccount.value) {
-    showToast('请先设置提现账户')
+  // 余额不足
+  if (balance.value < form.value.amount) {
+    showToast('余额不足')
+    return
+  }
+  // 提现金额不能小于提现门槛 
+  if (form.value.amount < withdrawThreshold.value) {
+    showToast(`提现金额不能小于${withdrawThreshold.value}元`)
     return
   }
   const res = await post('withdrawals.apply', {
@@ -134,8 +147,17 @@ const getWithdrawalAccount = async () => {
   }
 }
 
+// 获取系统配置
+const getSystemConfigs = async () => {
+  const res = await get('systemConfig.list')
+  if(res.code === 0){
+    withdrawThreshold.value = res.data.find(item => item.config_key === 'withdrawal_threshold').config_value
+  }
+}
+
 // 初始化
 onMounted(async () => {
+  await getSystemConfigs()
   getBalance()
   getWithdrawalAccount()
 })

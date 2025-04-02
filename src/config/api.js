@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-30 19:47:19
+ * @LastEditTime: 2025-04-02 10:55:56
  * @Description: API 路径配置
  */
 const API_PATH = {
@@ -76,6 +76,10 @@ const API_PATH = {
   system: {
     enum: '/enums/:enumType',
     enumAll: '/enums',
+  },
+  // 系统配置
+  systemConfig: {
+    list: '/system-configs',
   },
   // 上传相关接口（公共API）
   upload: {
