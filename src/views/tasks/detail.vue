@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-30 16:43:39
+ * @LastEditTime: 2025-04-02 09:45:39
  * @Description: 任务详情页
  -->
 <template>
@@ -40,24 +40,15 @@
             <span :class="$style.label">达人领域：</span>
             <span :class="$style.value">{{ taskInfo.category }}</span>
           </div>
-          <div :class="$style.extraInfoItem">
-            <span :class="$style.label">截止日期：</span>
+          <div :class="$style.extraInfoItem" v-if="!isStart">
+            <span :class="$style.label">开始时间：</span>
+            <span :class="$style.value">{{ taskInfo.startTime }}</span>
+          </div>
+          <div :class="$style.extraInfoItem" v-else>
+            <span :class="$style.label">结束时间：</span>
             <span :class="$style.value">{{ taskInfo.endTime }}</span>
           </div>
         </div>
-        <!-- <div :class="$style.extraInfo">
-          <div :class="$style.deadline">
-            截止时间：{{ taskInfo.endTime }}
-          </div>
-          <div :class="$style.description">
-            {{ taskInfo.category }}
-          </div>
-          <div :class="$style.slots">
-            <span>剩余名额：</span>
-            <span v-if="taskInfo.unlimitedQuota">不限</span>
-            <span v-else>{{ taskInfo.remainingQuota }}</span>
-          </div>
-        </div> -->
       </div>
 
       <!-- 任务流程 -->
@@ -83,10 +74,6 @@
       <div :class="$style.section">
         <h3 :class="$style.sectionTitle">任务要求</h3>
         <div :class="$style.requirements">
-          <div :class="$style.reqItem">
-            <span :class="$style.label">发布时间</span>
-            <span :class="$style.value"></span>
-          </div>
           <div :class="$style.reqItem">
             <span :class="$style.label">发布形式</span>
             <span :class="$style.value">{{ enumStore.getEnumText('TaskType', taskInfo.taskType) }}</span>
@@ -132,6 +119,14 @@
         type="warning" 
         block 
         :class="$style.submitBtn"
+        v-else-if="!isStart"
+      >
+        任务未开始
+      </van-button>
+      <van-button 
+        type="warning" 
+        block 
+        :class="$style.submitBtn"
         v-else-if="currentChannelAccount.accountAuditStatus === 'pending'"
       >
         账号审核中
@@ -141,7 +136,6 @@
         block 
         :class="$style.submitBtn"
         v-else-if="currentChannelAccount.accountAuditStatus === 'rejected'"
-        @click="router.push(`/social/detail/${currentChannelAccount.id}`)"
       >
         账号审核不通过
       </van-button>
@@ -209,7 +203,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { showToast } from 'vant'
 import { get, post } from '@/utils/request'
@@ -226,6 +220,9 @@ const currentChannelAccount = ref(null)
 
 // 任务数据
 const taskInfo = ref({})
+const isStart = computed(() => {
+  return new Date() > new Date(taskInfo.value.startTime)
+})
 
 // 任务流程步骤
 const processSteps = ['报名', '审核', '发帖', '完成']

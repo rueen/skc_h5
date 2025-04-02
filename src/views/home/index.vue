@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-24 22:13:01
+ * @LastEditTime: 2025-04-02 09:47:01
  * @Description: 首页
  -->
 
@@ -83,8 +83,12 @@
                     <span :class="$style.label">达人领域：</span>
                     <span :class="$style.value">{{ item.category }}</span>
                   </div>
-                  <div :class="$style.infoItem">
-                    <span :class="$style.label">截止日期：</span>
+                  <div :class="$style.infoItem" v-if="new Date(item.startTime) > new Date()">
+                    <span :class="$style.label">开始时间：</span>
+                    <span :class="$style.value">{{ item.startTime }}</span>
+                  </div>
+                  <div :class="$style.infoItem" v-else>
+                    <span :class="$style.label">结束时间：</span>
                     <span :class="$style.value">{{ item.endTime }}</span>
                   </div>
                 </div>
