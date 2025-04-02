@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-02 10:55:56
+ * @LastEditTime: 2025-04-02 17:15:21
  * @Description: API 路径配置
  */
 const API_PATH = {
@@ -54,6 +54,7 @@ const API_PATH = {
     groups: '/members/groups',
     stats: '/members/groups/stats',
     members: '/members/groups/:groupId/members',
+    commissionTasks: '/members/groups/commission-tasks', // 获取为群主带来收益的任务列表
   },
   auth: {
     login: '/auth/login',

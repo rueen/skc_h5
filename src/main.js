@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-31 10:25:00
+ * @LastEditTime: 2025-04-02 16:50:03
  * @Description: 
  */
 import { createApp } from 'vue'
@@ -36,7 +36,8 @@ import {
   NavBar,
   Picker,
   Popup,
-  Uploader
+  Uploader,
+  Space
 } from 'vant'
 
 const app = createApp(App)
@@ -67,5 +68,6 @@ app.use(NavBar)
 app.use(Picker)
 app.use(Popup)
 app.use(Uploader)
+app.use(Space)
 
 app.mount('#app')
