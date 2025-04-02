@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-02 10:00:22
+ * @LastEditTime: 2025-04-02 20:45:15
  * @Description: 任务页
  -->
 <template>
@@ -47,7 +47,12 @@
                 </div>
                 <span :class="$style.status" v-if="activeTab === 'applied'">已报名</span>
                 <span :class="$style.status" v-else>
-                  {{ enumStore.getEnumText('TaskAuditStatus', item.taskAuditStatus) }}
+                  <span v-if="item.taskPreAuditStatus === 'approved'">
+                    {{ enumStore.getEnumText('TaskAuditStatus', item.taskAuditStatus) }}
+                  </span>
+                  <span v-else>
+                    {{ enumStore.getEnumText('TaskPreAuditStatus', item.taskPreAuditStatus) }}
+                  </span>
                 </span>
               </div>
               

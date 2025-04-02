@@ -9,18 +9,18 @@
     <div :class="$style.content">
       <!-- 审核状态 -->
       <div 
-        :class="[$style.statusBar, $style[`status${submittedInfo.taskAuditStatus}`]]"
+        :class="[$style.statusBar, $style[`status${auditStatus}`]]"
         v-if="!isNew"
       >
         <div :class="$style.statusIcon">
           <van-icon 
-            :name="getStatusIcon(submittedInfo.taskAuditStatus)"
+            :name="getStatusIcon(auditStatus)"
             :class="$style.icon"
           />
         </div>
         <div :class="$style.statusContent">
-          <div :class="$style.statusText">{{ enumStore.getEnumText('TaskAuditStatus', submittedInfo.taskAuditStatus) }}</div>
-          <div :class="$style.statusDesc" v-if="submittedInfo.taskAuditStatus === 'rejected'">{{ submittedInfo.rejectReason }}</div>
+          <div :class="$style.statusText">{{ enumStore.getEnumText('TaskAuditStatus', auditStatus) }}</div>
+          <div :class="$style.statusDesc" v-if="auditStatus === 'rejected'">{{ submittedInfo.rejectReason }}</div>
         </div>
       </div>
       <!-- 任务信息 -->
@@ -141,15 +141,22 @@ const customFields = ref([])
 const loading = ref(false)
 // 已提交数据
 const submittedInfo = ref({})
+const auditStatus = computed(() => {
+  if(submittedInfo.value.taskPreAuditStatus === 'approved') {
+    return submittedInfo.value.taskAuditStatus
+  } else {
+    return submittedInfo.value.taskPreAuditStatus
+  }
+})
 // 控制成功弹窗显示
 const showSuccessDialog = ref(false)
 const submittedId = ref(null)
 const isNew = ref(route.params.id === 'new')
 const isEdit = computed(() => {
-  return route.params.id !== 'new' && submittedInfo.value.taskAuditStatus === 'rejected'
+  return route.params.id !== 'new' && auditStatus.value === 'rejected'
 })
 const isView = computed(() => {
-  return route.params.id !== 'new' && submittedInfo.value.taskAuditStatus !== 'rejected'
+  return route.params.id !== 'new' && auditStatus.value !== 'rejected'
 })
 
 // 获取状态图标
