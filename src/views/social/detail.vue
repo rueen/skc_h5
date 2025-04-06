@@ -38,21 +38,21 @@
         </div>
         <template v-if="selectedChannel.id">
           <div :class="$style.formItem">
-            <span :class="$style.label">账号名称</span>
+            <span :class="$style.label">主页链接</span>
             <van-field
-              v-model="form.account"
-              placeholder="请输入账号名称"
+              v-model="form.homeUrl"
+              placeholder="请输入主页链接"
               :class="$style.input"
               :border="false"
               :readonly="isView"
             />
           </div>
-
+          
           <div :class="$style.formItem">
-            <span :class="$style.label">主页链接</span>
+            <span :class="$style.label">账号名称</span>
             <van-field
-              v-model="form.homeUrl"
-              placeholder="请输入主页链接"
+              v-model="form.account"
+              placeholder="请输入账号名称"
               :class="$style.input"
               :border="false"
               :readonly="isView"
@@ -253,7 +253,6 @@ const onSubmit = async () => {
 
 // 切换编辑状态
 const onClickRight = () => {
-  console.log(isEditing.value)
   isEditing.value = !isEditing.value
 }
 
