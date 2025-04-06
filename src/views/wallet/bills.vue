@@ -30,6 +30,7 @@
                     <span v-else> {{ bill.amount }}</span>
                   </div>
                   <div :class="[$style.status, $style.failed]" v-if="bill.billType === 'reward_deduction'">{{ bill.remark }}</div>
+                  <div :class="[$style.status, $style.success]" v-else-if="bill.billType === 'reward_grant'">{{ bill.remark }}</div>
                   <template v-else>
                     <div :class="[$style.status, $style[bill.withdrawalStatus]]" v-if="bill.billType === 'withdrawal'">
                       {{ enumStore.getEnumText('WithdrawalStatus', bill.withdrawalStatus) }}
