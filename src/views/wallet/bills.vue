@@ -25,13 +25,19 @@
                   <div :class="$style.time">{{ bill.createTime }}</div>
                 </div>
                 <div :class="$style.rightWrapper">
-                  <div :class="$style.amount">{{ bill.amount }}</div>
-                  <div :class="[$style.status, $style[bill.withdrawalStatus]]" v-if="bill.billType === 'withdrawal'">
-                    {{ enumStore.getEnumText('WithdrawalStatus', bill.withdrawalStatus) }}
+                  <div :class="$style.amount">
+                    <span v-if="bill.billType === 'reward_deduction'"> - {{ bill.amount }}</span>
+                    <span v-else> {{ bill.amount }}</span>
                   </div>
-                  <div :class="[$style.status, $style[bill.settlementStatus]]" v-else>
-                    {{ enumStore.getEnumText('SettlementStatus', bill.settlementStatus) }}
-                  </div>
+                  <div :class="[$style.status, $style.failed]" v-if="bill.billType === 'reward_deduction'">{{ bill.remark }}</div>
+                  <template v-else>
+                    <div :class="[$style.status, $style[bill.withdrawalStatus]]" v-if="bill.billType === 'withdrawal'">
+                      {{ enumStore.getEnumText('WithdrawalStatus', bill.withdrawalStatus) }}
+                    </div>
+                    <div :class="[$style.status, $style[bill.settlementStatus]]" v-else>
+                      {{ enumStore.getEnumText('SettlementStatus', bill.settlementStatus) }}
+                    </div>
+                  </template>
                 </div>
               </div>
               <div :class="$style.reason" v-if="bill.settlementStatus === 'failed' || bill.withdrawalStatus === 'failed'">
