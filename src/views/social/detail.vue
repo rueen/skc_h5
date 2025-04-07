@@ -59,6 +59,7 @@
               :disabled="!form.homeUrl"
               :readonly="isView"
             />
+            <van-button type="primary" size="mini" @click="findFacebookId" v-if="isShowFindIdBtn">Find Facebook ID</van-button>
           </div>
           
           <div :class="$style.formItem">
@@ -162,6 +163,7 @@ const isEditing = ref(false)
 const isView = computed(() => route.params.id !== 'new' && !isEditing.value && !isRejected.value)
 // 是否是拒绝状态
 const isRejected = computed(() => detail.value.accountAuditStatus === 'rejected')
+const isShowFindIdBtn = ref(false)
 
 // 账号详情
 const detail = ref({})
@@ -200,7 +202,13 @@ const extractFacebookId = (url) => {
     form.value.uid = idFromUrlMatch[1]
   } else {
     // 方法2: 使用第三方工具
+    isShowFindIdBtn.value = true
   }
+}
+
+const findFacebookId = () => {
+  const url = form.value.homeUrl
+  
 }
 
 const onHomeUrlChange = () => {
