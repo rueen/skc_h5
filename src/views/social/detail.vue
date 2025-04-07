@@ -45,6 +45,19 @@
               :class="$style.input"
               :border="false"
               :readonly="isView"
+              @change="onHomeUrlChange"
+            />
+          </div>
+
+          <div :class="$style.formItem">
+            <span :class="$style.label">{{ selectedChannel.name }}ID</span>
+            <van-field
+              v-model="form.uid"
+              :placeholder="`请输入${selectedChannel.name}ID`"
+              :class="$style.input"
+              :border="false"
+              :disabled="!form.homeUrl"
+              :readonly="isView"
             />
           </div>
           
@@ -155,8 +168,9 @@ const detail = ref({})
 // 表单数据
 const form = ref({
   channelId: '',
-  account: '',
   homeUrl: '',
+  uid: '',
+  account: '',
   fansCount: '',
   friendsCount: '',
   postsCount: ''
@@ -179,17 +193,25 @@ const onPlatformConfirm = ({ selectedOptions }) => {
   form.value.channelId = selectedChannel.value.id
 }
 
+const onHomeUrlChange = () => {
+  console.log(form.value.homeUrl)
+}
+
 const checkForm = () => {
   if (form.value.channelId == null) {
     showToast('请选择平台')
     return
   }
-  if(!form.value.account) {
-    showToast('请输入账号名称')
-    return
-  }
   if(!form.value.homeUrl) {
     showToast('请输入主页链接')
+    return
+  }
+  if(!form.value.uid) {
+    showToast(`请输入${selectedChannel.value.name}ID`)
+    return
+  }
+  if(!form.value.account) {
+    showToast('请输入账号名称')
     return
   }
   if(selectedChannel.value.customFields.includes('fansCount') && !form.value.fansCount) {
@@ -299,8 +321,9 @@ const loadAccountDetail = async () => {
       detail.value = data
       form.value = {
         channelId: data.channelId,
-        account: data.account,
         homeUrl: data.homeUrl,
+        uid: data.uid,
+        account: data.account,
         fansCount: data.fansCount,
         friendsCount: data.friendsCount,
         postsCount: data.postsCount
@@ -349,7 +372,7 @@ onMounted(async () => {
 }
 
 .label {
-  width: 70px;
+  width: 80px;
   font-size: 14px;
   color: #323233;
   flex-shrink: 0;
