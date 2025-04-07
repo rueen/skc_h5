@@ -193,8 +193,21 @@ const onPlatformConfirm = ({ selectedOptions }) => {
   form.value.channelId = selectedChannel.value.id
 }
 
+const extractFacebookId = (url) => {
+  // 方法1: 从URL中直接提取ID (如果URL包含ID参数)
+  const idFromUrlMatch = url.match(/(?:\?|&)id=(\d+)/i);
+  if (idFromUrlMatch && idFromUrlMatch[1]) {
+    return idFromUrlMatch[1]
+  }
+  // 方法2: 使用第三方工具
+  return null
+}
+
 const onHomeUrlChange = () => {
-  console.log(form.value.homeUrl)
+  const url = form.value.homeUrl
+  if(url.includes('facebook.com')) {
+    form.value.uid = extractFacebookId(url)
+  }
 }
 
 const checkForm = () => {
