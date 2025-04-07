@@ -145,7 +145,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { showToast, showDialog } from 'vant'
+import { showToast, showDialog, closeToast } from 'vant'
 import { get, post, put } from '@/utils/request'
 import { useEnumStore } from '@/stores'
 import tag from '@/components/tag.vue'
@@ -195,20 +195,34 @@ const onPlatformConfirm = ({ selectedOptions }) => {
   form.value.channelId = selectedChannel.value.id
 }
 
-const extractFacebookId = (url) => {
+const extractFacebookId = async (url) => {
+  form.value.uid = ''
   // 方法1: 从URL中直接提取ID (如果URL包含ID参数)
   const idFromUrlMatch = url.match(/(?:\?|&)id=(\d+)/i);
   if (idFromUrlMatch && idFromUrlMatch[1]) {
     form.value.uid = idFromUrlMatch[1]
   } else {
-    // 方法2: 使用第三方工具
-    isShowFindIdBtn.value = true
+    // 方法2: 去老数据表里查找
+    showToast({
+      message: '正在获取 Facebook ID...',
+      duration: 0,
+      forbidClick: true,
+    })
+    const res = await get('account.findUidByHomeUrl', {
+      homeUrl: form.value.homeUrl
+    })
+    closeToast()
+    if(res.code === 0 && res.data && res.data.uid) {
+      form.value.uid = res.data.uid
+    } else {
+      // 方法3: 使用第三方工具
+      isShowFindIdBtn.value = true
+    }
   }
 }
 
 const findFacebookId = () => {
-  const url = form.value.homeUrl
-  
+  window.open('https://essential-tools.com/find-facebook-id', '_blank')
 }
 
 const onHomeUrlChange = () => {

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-02 17:15:21
+ * @LastEditTime: 2025-04-07 20:14:52
  * @Description: API 路径配置
  */
 const API_PATH = {
@@ -49,6 +49,7 @@ const API_PATH = {
     create: '/members/accounts',
     update: '/members/accounts/:id',
     delete: '/members/accounts/:id',
+    findUidByHomeUrl: '/members/accounts/find-uid-by-home-url',
   },
   groups: {
     groups: '/members/groups',
