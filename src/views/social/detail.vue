@@ -197,16 +197,16 @@ const extractFacebookId = (url) => {
   // 方法1: 从URL中直接提取ID (如果URL包含ID参数)
   const idFromUrlMatch = url.match(/(?:\?|&)id=(\d+)/i);
   if (idFromUrlMatch && idFromUrlMatch[1]) {
-    return idFromUrlMatch[1]
+    form.value.uid = idFromUrlMatch[1]
+  } else {
+    // 方法2: 使用第三方工具
   }
-  // 方法2: 使用第三方工具
-  return null
 }
 
 const onHomeUrlChange = () => {
   const url = form.value.homeUrl
   if(url.includes('facebook.com')) {
-    form.value.uid = extractFacebookId(url)
+    extractFacebookId(url)
   }
 }
 
