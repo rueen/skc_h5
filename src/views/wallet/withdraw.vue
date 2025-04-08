@@ -35,7 +35,7 @@
           <span :class="$style.label">提现账户</span>
           <div :class="$style.value">
             <template v-if="hasAccount">
-              <span :class="$style.text">{{ enumStore.getEnumText('WithdrawalAccountType', withdrawalAccount.accountType) }}</span>
+              <span :class="$style.text">{{ withdrawalAccount.paymentChannelName }}</span>
               <span :class="$style.accountDetail">{{ withdrawalAccount.account }}</span>
             </template>
             <template v-else>
