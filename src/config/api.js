@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-07 20:14:52
+ * @LastEditTime: 2025-04-08 09:26:43
  * @Description: API 路径配置
  */
 const API_PATH = {
@@ -73,6 +73,10 @@ const API_PATH = {
     delete: '/withdrawal/accounts/:id', // 删除提现账户 DELETE
     apply: '/withdrawal', // 申请提现 POST
     records: '/withdrawal', // 提现记录列表 GET
+  },
+  // 支付渠道
+  paymentChannels: {
+    list: '/payment-channels',
   },
   // 系统相关接口（公共API）
   system: {

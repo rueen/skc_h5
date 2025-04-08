@@ -94,24 +94,22 @@ const pageTitle = computed(() => {
   return titles[mode.value]
 })
 
-// 账户类型列表
-const accountTypesOptions = enumStore.getEnumOptions('WithdrawalAccountType')
-
 // 表单数据
 const form = ref({
-  accountType: '',
-  account: '',
-  name: ''
+  paymentChannelId: null, // 支付渠道ID
+  account: '', // 账号
+  name: '' // 姓名
 })
 
-// 选择器控制
+// 账户类型列表
+const accountTypesOptions = ref([])
 const showAccountTypePicker = ref(false)
 const selectedType = ref(null)
 
 // 选择账户类型
 const onAccountTypeConfirm = ({ selectedOptions }) => {
   selectedType.value = selectedOptions[0]
-  form.value.accountType = selectedType.value.value
+  form.value.paymentChannelId = selectedType.value.value
   showAccountTypePicker.value = false
 }
 
@@ -148,7 +146,7 @@ const onUpdate = async() => {
 
 // 提交表单
 const onSubmit = () => {
-  if (!form.value.accountType) {
+  if (!form.value.paymentChannelId) {
     showToast('请选择账户类型')
     return
   }
@@ -175,7 +173,20 @@ const getWithdrawalAccount = async () => {
   const res = await get('withdrawals.accounts')
   if(res.code === 0 && res.data.length > 0){
     form.value = res.data[0]
-    selectedType.value = accountTypesOptions.find(item => item.value === form.value.accountType)
+    selectedType.value = accountTypesOptions.find(item => item.value === form.value.paymentChannelId)
+  }
+}
+
+// 获取支付渠道
+const getPaymentChannels = async () => {
+  try {
+    const res = await get('paymentChannels.list')
+    accountTypesOptions.value = res.data.map(item => ({
+      text: item.name,
+      value: item.id
+    }))
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -183,6 +194,7 @@ onMounted(() => {
   if(['edit', 'preview'].indexOf(mode.value) > -1){
     getWithdrawalAccount()
   }
+  getPaymentChannels()
 })
 </script>
 
