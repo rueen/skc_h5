@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 19:11:59
+ * @LastEditTime: 2025-04-11 19:44:51
  * @Description: 登录页
  -->
  <template>
@@ -79,8 +79,11 @@
       </van-checkbox>
     </div>
 
-    <div :class="$style.langSwitch" @click="toggleLang">
-      {{ locale === 'zh-CN' ? 'English' : (locale === 'en-US' ? 'Tagalog' : '中文') }}
+    <div :class="$style.langSwitch" @click="showLanguagePicker = true">
+      <van-space>
+        <van-icon name="exchange" />
+        <span>{{ getCurrentLanguageName() }}</span>
+      </van-space>
     </div>
 
     <!-- 区号选择弹出层 -->
@@ -93,11 +96,22 @@
         title="选择区号"
       />
     </van-popup>
+
+    <!-- 语言选择弹出层 -->
+    <van-popup v-model:show="showLanguagePicker" position="bottom" :style="{ maxHeight: '50%' }">
+      <van-picker
+        :columns="languageColumns"
+        @confirm="onLanguageConfirm"
+        @cancel="showLanguagePicker = false"
+        show-toolbar
+        :title="$t('settings.selectLanguage')"
+      />
+    </van-popup>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, reactive, onMounted, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/stores'
@@ -126,6 +140,34 @@ const areaCodeColumns = [
   { text: 'Malaysia +60', value: '60' },
   { text: 'Thailand +66', value: '66' }
 ]
+
+// 语言选择相关
+const showLanguagePicker = ref(false)
+const languageColumns = [
+  { text: '简体中文', value: 'zh-CN' },
+  { text: 'English', value: 'en-US' },
+  { text: 'Tagalog', value: 'tl-PH' }
+]
+
+// 获取当前语言名称
+const getCurrentLanguageName = () => {
+  if (locale.value === 'zh-CN') return '简体中文'
+  if (locale.value === 'en-US') return 'English'
+  if (locale.value === 'tl-PH') return 'Tagalog'
+  return '简体中文'
+}
+
+// 语言选择确认
+const onLanguageConfirm = (values) => {
+  const selectedLang = values.selectedOptions[0].value
+  if (selectedLang !== locale.value) {
+    locale.value = selectedLang
+    localStorage.setItem('language', locale.value)
+    // 更新区号
+    formData.areaCode = getDefaultAreaCode()
+  }
+  showLanguagePicker.value = false
+}
 
 // 根据语言设置默认区号
 const getDefaultAreaCode = () => {
@@ -240,23 +282,6 @@ const onSubmit = async () => {
   }
 }
 
-// 切换语言
-const toggleLang = () => {
-  // 循环切换语言: zh-CN -> en-US -> tl-PH -> zh-CN
-  if (locale.value === 'zh-CN') {
-    locale.value = 'en-US'
-  } else if (locale.value === 'en-US') {
-    locale.value = 'tl-PH'
-  } else {
-    locale.value = 'zh-CN'
-  }
-  
-  localStorage.setItem('language', locale.value)
-  
-  // 更新区号
-  formData.areaCode = getDefaultAreaCode()
-}
-
 // 打开文章
 const handleOpenArticle = (id, location) => {
   router.push(`/article/${id}?location=${location}`)
@@ -355,5 +380,11 @@ const handleOpenArticle = (id, location) => {
   font-size: 14px;
   color: #666;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  
+  .van-icon {
+    margin-right: 4px;
+  }
 }
 </style> 
