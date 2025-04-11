@@ -3,9 +3,9 @@
     <!-- 用户信息 -->
     <div :class="$style.userInfo" @click="router.push('/profile/edit')">
       <div :class="$style.userHeader">
-        <avatar :avatar="userInfo.avatar" width="50px" height="50px" round />
+        <avatar :avatar="userInfo?.avatar" width="50px" height="50px" round />
         <div :class="$style.userMeta">
-          <div :class="$style.userName">{{ userInfo.nickname || $t('profile.index.notLogin') }}</div>
+          <div :class="$style.userName">{{ userInfo?.nickname || $t('profile.index.notLogin') }}</div>
           <div :class="$style.userId">{{ $t('profile.index.account') }}: {{ userInfo.account || '---' }}</div>
         </div>
       </div>
@@ -85,7 +85,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores'
 import avatar from '@/components/avatar.vue'
@@ -99,7 +99,7 @@ const balanceInfo = ref({
 })
 
 // 用户信息
-const userInfo = userStore.userInfo
+const userInfo = computed(() => userStore.userInfo || {})
 
 const getBalance = async () => {
   const res = await get('member.balance')
