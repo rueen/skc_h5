@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 20:12:01
+ * @LastEditTime: 2025-04-11 20:54:55
  * @Description: 
 -->
 <template>
@@ -267,7 +267,7 @@ const afterRead = async (file) => {
       duration: 0
     })
     
-    // 调用上传图片接口
+    // 调用上传图片接口，自动会进行压缩
     const result = await uploadImage(file.file)
     
     // 关闭上传中提示
