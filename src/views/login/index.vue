@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 19:50:18
+ * @LastEditTime: 2025-04-11 19:53:29
  * @Description: 登录页
  -->
  <template>
@@ -32,14 +32,22 @@
             </van-field>
             <van-field
               v-model="formData.password"
-              type="password"
+              :type="passwordVisible ? 'text' : 'password'"
               :label="$t('login.password')"
               :placeholder="$t('login.passwordPlaceholder')"
               :rules="[{ required: true, message: $t('login.passwordRequired') }]"
               :class="$style.passwordInput"
               clearable
               @clear="onInputClear('password')"
-            />
+            >
+              <template #right-icon>
+                <van-icon
+                  :name="passwordVisible ? 'eye-o' : 'closed-eye'"
+                  :class="$style.passwordToggle"
+                  @click="togglePasswordVisibility"
+                />
+              </template>
+            </van-field>
           </van-cell-group>
         </van-form>
       </van-tab>
@@ -57,13 +65,21 @@
             />
             <van-field
               v-model="formData.password"
-              type="password"
+              :type="passwordVisible ? 'text' : 'password'"
               :label="$t('login.password')"
               :placeholder="$t('login.passwordPlaceholder')"
               :rules="[{ required: true, message: $t('login.passwordRequired') }]"
               clearable
               @clear="onInputClear('password')"
-            />
+            >
+              <template #right-icon>
+                <van-icon
+                  :name="passwordVisible ? 'eye-o' : 'closed-eye'"
+                  :class="$style.passwordToggle"
+                  @click="togglePasswordVisibility"
+                />
+              </template>
+            </van-field>
           </van-cell-group>
         </van-form>
       </van-tab>
@@ -133,6 +149,14 @@ const { locale, t } = useI18n()
 
 // 当前登录方式
 const activeTab = ref(0)
+
+// 密码可见性
+const passwordVisible = ref(false)
+
+// 切换密码可见性
+const togglePasswordVisibility = () => {
+  passwordVisible.value = !passwordVisible.value
+}
 
 // 区号选择相关
 const showAreaCodePicker = ref(false)
@@ -345,6 +369,16 @@ const handleOpenArticle = (id, location) => {
 .areaCode {
   color: var(--van-primary-color);
   margin-right: 4px;
+}
+
+.passwordToggle {
+  cursor: pointer;
+  font-size: 18px;
+  color: #969799;
+  
+  &:hover {
+    color: var(--van-primary-color);
+  }
 }
 
 .submit {
