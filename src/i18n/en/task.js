@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 15:44:07
+ * @LastEditTime: 2025-04-11 20:13:56
  * @Description: 
  */
 export default {
@@ -12,6 +12,7 @@ export default {
   unlimitedQuota: 'Unlimited',
   startTime: 'Start Time',
   endTime: 'End Time',
+  enrolledTime: 'Enrollment Time',
   submittedTime: 'Submission Time',
   
   detail: {

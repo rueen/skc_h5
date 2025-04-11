@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 15:48:15
+ * @LastEditTime: 2025-04-11 20:12:01
  * @Description: 
 -->
 <template>
@@ -44,6 +44,8 @@
               v-model="form.memberNickname"
               :placeholder="$t('profile.info.nicknamePlaceholder')"
               :class="$style.input"
+              clearable
+              @clear="onInputClear('memberNickname')"
             />
           </template>
           <div v-else :class="$style.value">
@@ -93,6 +95,8 @@
               v-model="form.email"
               :placeholder="$t('profile.info.emailPlaceholder')"
               :class="$style.input"
+              clearable
+              @clear="onInputClear('email')"
             />
           </template>
           <div v-else :class="$style.value">
@@ -107,6 +111,8 @@
               v-model="form.phone"
               :placeholder="$t('profile.info.phonePlaceholder')"
               :class="$style.input"
+              clearable
+              @clear="onInputClear('phone')"
             />
           </template>
           <div v-else :class="$style.value">
@@ -121,6 +127,8 @@
               v-model="form.telegram"
               placeholder="请输入Telegram"
               :class="$style.input"
+              clearable
+              @clear="onInputClear('telegram')"
             />
           </template>
           <div v-else :class="$style.value">
@@ -236,6 +244,11 @@ const genderOptions = enumStore.getEnumOptions('GenderType')
 
 // 职业类型选项
 const occupationColumns = enumStore.getEnumOptions('OccupationType')
+
+// 清空输入框
+const onInputClear = (field) => {
+  form.value[field] = ''
+}
 
 // 处理头像上传
 const afterRead = async (file) => {

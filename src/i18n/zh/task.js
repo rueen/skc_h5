@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 15:44:07
+ * @LastEditTime: 2025-04-11 20:13:36
  * @Description: 
  */
 export default {
@@ -12,6 +12,7 @@ export default {
   unlimitedQuota: '不限',
   startTime: '开始时间',
   endTime: '结束时间',
+  enrolledTime: '报名时间',
   submittedTime: '提交时间',
   
   detail: {

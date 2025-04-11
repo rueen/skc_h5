@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 15:44:07
+ * @LastEditTime: 2025-04-11 20:13:48
  * @Description: 
  */
 export default {
@@ -12,6 +12,7 @@ export default {
   unlimitedQuota: 'Walang Limitasyon',
   startTime: 'Oras ng Pagsisimula',
   endTime: 'Oras ng Pagtatapos',
+  enrolledTime: 'Oras ng Enrolment',
   submittedTime: 'Oras ng Pagpasa',
   
   detail: {

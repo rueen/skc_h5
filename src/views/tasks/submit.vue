@@ -66,6 +66,8 @@
             :placeholder="`${item.title}`"
             :class="$style.input"
             :readonly="isView"
+            clearable
+            @clear="onInputClear(index)"
             v-if="item.type === 'input'"
           />
           <template v-if="item.type === 'image'">
@@ -158,6 +160,11 @@ const isEdit = computed(() => {
 const isView = computed(() => {
   return route.params.id !== 'new' && auditStatus.value !== 'rejected'
 })
+
+// 清空输入框
+const onInputClear = (index) => {
+  customFields.value[index].value = ''
+}
 
 // 获取状态图标
 const getStatusIcon = (status) => {

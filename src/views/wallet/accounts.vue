@@ -25,6 +25,8 @@
             :placeholder="t('wallet.accounts.accountPlaceholder')"
             :readonly="mode === 'preview'"
             :class="$style.input"
+            clearable
+            @clear="onInputClear('account')"
           />
         </div>
         <div :class="$style.formItem">
@@ -34,6 +36,8 @@
             :placeholder="t('wallet.accounts.namePlaceholder')"
             :readonly="mode === 'preview'"
             :class="$style.input"
+            clearable
+            @clear="onInputClear('name')"
           />
         </div>
       </div>
@@ -105,6 +109,11 @@ const form = ref({
 const accountTypesOptions = ref([])
 const showAccountTypePicker = ref(false)
 const selectedType = ref(null)
+
+// 清空输入框
+const onInputClear = (field) => {
+  form.value[field] = ''
+}
 
 // 选择账户类型
 const onAccountTypeConfirm = ({ selectedOptions }) => {
