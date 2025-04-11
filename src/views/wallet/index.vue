@@ -79,7 +79,9 @@ import Layout from '@/components/layout.vue'
 import { get } from '@/utils/request'
 import { useEnumStore } from '@/stores'
 import NavBar from '@/components/NavBar.vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const enumStore = useEnumStore()
 const router = useRouter()
 

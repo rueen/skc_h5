@@ -9,11 +9,13 @@
 
     <!-- 列表内容 -->
     <div :class="$style.content">
+      <van-empty image="search" v-if="list.length === 0" :description="$t('common.emptyText')" />
       <van-list
         v-model:loading="loading"
         v-model:finished="finished"
         :finished-text="$t('common.finishedText')"
         @load="onLoad"
+        v-else
       >
         <div 
           v-for="item in list" 

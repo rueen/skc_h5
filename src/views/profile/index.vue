@@ -16,7 +16,7 @@
     <div :class="$style.earnings">
       <div :class="$style.earningItem">
         <div :class="$style.label">{{ $t('profile.index.withdrawn') }}</div>
-        <div :class="$style.amount">${{ balanceInfo.withdrawalAmount }}</div>
+        <div :class="$style.amount">{{ balanceInfo.withdrawalAmount }}</div>
       </div>
       <div :class="$style.earningItem" @click="router.push('/wallet')">
         <div :class="$style.label">{{ $t('profile.index.withdrawable') }}</div>

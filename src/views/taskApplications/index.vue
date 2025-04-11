@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 15:40:59
+ * @LastEditTime: 2025-04-11 19:05:18
  * @Description: 任务页
  -->
 <template>
@@ -24,10 +24,12 @@
     <!-- 列表内容区域 -->
     <div :class="$style.content">
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+        <van-empty image="search" v-if="list.length === 0" :description="$t('common.emptyText')" />
         <van-list
           v-model:loading="loading"
           v-model:finished="finished"
           :finished-text="$t('common.finishedText')"
+          v-else
         >
           <div 
             v-for="item in list"

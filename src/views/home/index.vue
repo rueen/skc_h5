@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 15:10:45
+ * @LastEditTime: 2025-04-11 19:06:13
  * @Description: 首页
  -->
 
@@ -187,7 +187,6 @@ onMounted(async () => {
 <style lang="less" module>
 .homePage {
   min-height: 100vh;
-  background: #f7f8fa;
   display: flex;
   flex-direction: column;
 }

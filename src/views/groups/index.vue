@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-21 11:10:52
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 16:43:53
+ * @LastEditTime: 2025-04-11 19:00:54
  * @Description: 
 -->
 <template>
@@ -14,7 +14,7 @@
       fixed
     />
     <!-- 未加入任何群组 -->
-    <div :class="$style.noData" v-if="groups.length === 0">{{ $t('groups.index.noData') }}</div>
+    <van-empty v-if="groups.length === 0" :description="$t('groups.index.noData')" />
     <!-- 群组列表 群主 -->
     <template v-if="isGroupOwner">
       <div :class="$style.title">
@@ -170,12 +170,6 @@ onMounted(async () => {
 </script>
 
 <style lang="less" module>
-.noData{
-  font-size: 14px;
-  color: #999;
-  text-align: center;
-  padding: 12px;
-}
 .title{
   font-size: 14px;
   color: #323233;

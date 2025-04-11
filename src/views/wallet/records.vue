@@ -8,10 +8,12 @@
 
     <div :class="$style.content">
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+        <van-empty image="search" v-if="list.length === 0" :description="$t('common.emptyText')" />
         <van-list
           v-model:loading="loading"
           :finished="finished"
           :finished-text="$t('common.finishedText')"
+          v-else
         >
           <div :class="$style.recordList">
             <div 

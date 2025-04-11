@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 15:00:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 16:37:44
+ * @LastEditTime: 2025-04-11 19:02:40
  * @Description: 我的邀请人列表页
  -->
 <template>
@@ -32,10 +32,12 @@
     <!-- 邀请列表 -->
     <div :class="$style.content">
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+        <van-empty image="search" v-if="list.length === 0" :description="$t('common.emptyText')" />
         <van-list
           v-model:loading="loading"
           :finished="finished"
           :finished-text="$t('common.finishedText')"
+          v-else
         >
           <div :class="$style.inviteList">
             <div 
