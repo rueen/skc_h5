@@ -78,7 +78,8 @@ const showLanguagePicker = ref(false)
 
 const languages = [
   { text: '简体中文', value: 'zh-CN' },
-  { text: 'English', value: 'en-US' }
+  { text: 'English', value: 'en-US' },
+  { text: 'Tagalog', value: 'tl-PH' }
 ]
 
 const currentLanguage = computed(() => {
