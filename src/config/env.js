@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:25:10
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 19:18:15
+ * @LastEditTime: 2025-04-11 23:20:01
  * @Description: 环境配置文件
  */
 
@@ -16,7 +16,7 @@ const API_BASE = {
   // 开发环境 API 基础路径
   development: 'http://localhost:3001',
   // 生产环境 API 基础路径
-  production: 'https://api.example.com',
+  production: 'http://api.rueen.cn/api/h5',
 };
 
 // 公共 API 路径配置（用于图片上传、获取枚举常量等）
