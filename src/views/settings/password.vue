@@ -10,25 +10,55 @@
       <div :class="$style.formGroup">
         <van-field
           v-model="form.currentPassword"
-          type="password"
+          :type="passwordVisible['currentPassword'] ? 'text' : 'password'"
+          clearable
+          @clear="onInputClear('currentPassword')"
           :label="$t('settings.currentPassword')"
           :placeholder="$t('settings.currentPasswordPlaceholder')"
           :rules="[{ required: true, message: $t('settings.currentPasswordPlaceholder') }]"
-        />
+        >
+          <template #right-icon>
+            <van-icon
+              :name="passwordVisible['currentPassword'] ? 'eye-o' : 'closed-eye'"
+              :class="$style.passwordToggle"
+              @click="togglePasswordVisibility('currentPassword')"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.newPassword"
-          type="password"
+          :type="passwordVisible['newPassword'] ? 'text' : 'password'"
+          clearable
+          @clear="onInputClear('newPassword')"
           :label="$t('settings.newPassword')"
           :placeholder="$t('settings.newPasswordPlaceholder')"
           :rules="[{ required: true, message: $t('settings.newPasswordPlaceholder') }]"
-        />
+        >
+          <template #right-icon>
+            <van-icon
+              :name="passwordVisible['newPassword'] ? 'eye-o' : 'closed-eye'"
+              :class="$style.passwordToggle"
+              @click="togglePasswordVisibility('newPassword')"
+            />
+          </template>
+        </van-field>
         <van-field
           v-model="form.confirmPassword"
-          type="password"
+          :type="passwordVisible['confirmPassword'] ? 'text' : 'password'"
+          clearable
+          @clear="onInputClear('confirmPassword')"
           :label="$t('settings.confirmPassword')"
           :placeholder="$t('settings.confirmPasswordPlaceholder')"
           :rules="[{ required: true, message: $t('settings.confirmPasswordPlaceholder') }]"
-        />
+        >
+          <template #right-icon>
+            <van-icon
+              :name="passwordVisible['confirmPassword'] ? 'eye-o' : 'closed-eye'"
+              :class="$style.passwordToggle"
+              @click="togglePasswordVisibility('confirmPassword')"
+            />
+          </template>
+        </van-field>
       </div>
 
       <div :class="$style.tips">
@@ -64,6 +94,21 @@ const form = ref({
   newPassword: '',
   confirmPassword: ''
 })
+const passwordVisible = ref({
+  currentPassword: false,
+  newPassword: false,
+  confirmPassword: false
+})
+
+// 切换密码可见性
+const togglePasswordVisibility = (field) => {
+  passwordVisible.value[field] = !passwordVisible.value[field]
+}
+
+// 清空输入框
+const onInputClear = (field) => {
+  form.value[field] = ''
+}
 
 const onSubmit = async () => {
   if (!form.value.currentPassword) {
@@ -128,6 +173,16 @@ const onSubmit = async () => {
   color: #969799;
   margin: 16px 0 24px;
   padding: 0 4px;
+}
+
+.passwordToggle {
+  cursor: pointer;
+  font-size: 18px;
+  color: #969799;
+  
+  &:hover {
+    color: var(--van-primary-color);
+  }
 }
 
 .submitBtn {
