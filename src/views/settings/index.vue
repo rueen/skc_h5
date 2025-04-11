@@ -77,8 +77,8 @@ const userStore = useUserStore()
 const showLanguagePicker = ref(false)
 
 const languages = [
-  { text: '简体中文', value: 'zh' },
-  { text: 'English', value: 'en' }
+  { text: '简体中文', value: 'zh-CN' },
+  { text: 'English', value: 'en-US' }
 ]
 
 const currentLanguage = computed(() => {

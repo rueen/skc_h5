@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 14:57:58
+ * @LastEditTime: 2025-04-11 16:59:39
  * @Description: 登录页
  -->
  <template>
@@ -178,7 +178,7 @@ const onSubmit = async () => {
 
 // 切换语言
 const toggleLang = () => {
-  locale.value = locale.value === 'zh' ? 'en' : 'zh'
+  locale.value = locale.value === 'zh-CN' ? 'en-US' : 'zh-CN'
   localStorage.setItem('language', locale.value)
 }
 
