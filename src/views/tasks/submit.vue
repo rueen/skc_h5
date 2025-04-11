@@ -132,10 +132,12 @@ import { get, post } from '@/utils/request'
 import { useEnumStore } from '@/stores'
 import { uploadImage } from '@/utils/upload'
 import NavBar from '@/components/NavBar.vue'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const route = useRoute()
 const enumStore = useEnumStore()
+const { t } = useI18n()
 
 const taskId = ref(route.query.taskId)
 const taskInfo = ref({})
@@ -180,13 +182,13 @@ const afterRead = async (file, {name, index}) => {
   const _index = parseInt(name)
   // 检查文件对象
   if (!file || !file.file) {
-    showToast($t('task.submit.fileInvalid'))
+    showToast(t('task.submit.fileInvalid'))
     return
   }
   // 显示上传中提示
   showToast({
     type: 'loading',
-    message: $t('task.submit.uploading'),
+    message: t('task.submit.uploading'),
     forbidClick: true,
     duration: 0
   })
@@ -202,10 +204,10 @@ const afterRead = async (file, {name, index}) => {
     customFields.value[_index].value[index] = {
       url: result.url,
     }
-    showToast($t('task.submit.uploadSuccess'))
+    showToast(t('task.submit.uploadSuccess'))
   } else {
     console.error('头像上传返回数据异常:', result)
-    showToast($t('task.submit.uploadFailed'))
+    showToast(t('task.submit.uploadFailed'))
   }
 }
 
@@ -216,7 +218,7 @@ const checkForm = () => {
 const onSubmit = async () => {
   const checkResult = checkForm()
   if(!checkResult){
-    showToast($t('task.submit.pleaseFillInAllInformation'))
+    showToast(t('task.submit.pleaseFillInAllInformation'))
     return 
   }
 
