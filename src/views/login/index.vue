@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 19:53:29
+ * @LastEditTime: 2025-04-11 20:26:51
  * @Description: 登录页
  -->
  <template>
@@ -141,9 +141,11 @@ import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/stores'
 import { showToast } from 'vant'
 import { checkNotification } from '@/utils/notification'
+import { useEnumStore } from '@/stores/enum'
 
 const router = useRouter()
 const userStore = useUserStore()
+const enumStore = useEnumStore()
 
 const { locale, t } = useI18n()
 
@@ -298,6 +300,8 @@ const onSubmit = async () => {
     // 调用登录 API
     await userStore.login(loginData)
     await userStore.fetchUserInfo()
+    // 加载枚举数据
+    await enumStore.fetchEnum()
     
     // 检查是否有重定向URL
     const redirectUrl = sessionStorage.getItem('redirectUrl')

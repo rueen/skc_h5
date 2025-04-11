@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 14:44:01
+ * @LastEditTime: 2025-04-11 20:26:03
  * @Description: 
 -->
 <template>
@@ -59,9 +59,9 @@ onMounted(async () => {
   if (userStore.token) {
     await userStore.fetchUserInfo()
     await checkNotification(router)
+    // 加载枚举数据
+    await enumStore.fetchEnum()
   }
-  // 加载枚举数据
-  await enumStore.fetchEnum()
 })
 </script>
 

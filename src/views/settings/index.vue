@@ -69,11 +69,12 @@ import { showDialog, showToast } from 'vant'
 import { useUserStore } from '../../stores/user'
 import Layout from '@/components/layout.vue'
 import NavBar from '@/components/NavBar.vue'
+import { useEnumStore } from '@/stores/enum'
 
 const router = useRouter()
 const { t, locale } = useI18n()
 const userStore = useUserStore()
-
+const enumStore = useEnumStore()
 const showLanguagePicker = ref(false)
 
 const languages = [
@@ -94,6 +95,9 @@ const onConfirm = (value) => {
   locale.value = value.selectedValues[0];
   showLanguagePicker.value = false;
   localStorage.setItem('language', locale.value)
+  // 加载枚举数据
+  enumStore.resetEnum();
+  enumStore.fetchEnum()
 }
 
 const onLogout = () => {
