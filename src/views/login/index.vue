@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 19:44:51
+ * @LastEditTime: 2025-04-11 19:50:18
  * @Description: 登录页
  -->
  <template>
@@ -20,6 +20,8 @@
               :label="$t('login.phone')"
               :placeholder="$t('login.phonePlaceholder')"
               :rules="[{ required: true, message: $t('login.phoneRequired') }]"
+              clearable
+              @clear="onInputClear('memberAccount')"
             >
               <template #label>
                 <div :class="$style.areaCodeWrapper" @click="showAreaCodePicker = true">
@@ -35,6 +37,8 @@
               :placeholder="$t('login.passwordPlaceholder')"
               :rules="[{ required: true, message: $t('login.passwordRequired') }]"
               :class="$style.passwordInput"
+              clearable
+              @clear="onInputClear('password')"
             />
           </van-cell-group>
         </van-form>
@@ -48,6 +52,8 @@
               :label="$t('login.email')"
               :placeholder="$t('login.emailPlaceholder')"
               :rules="[{ required: true, message: $t('login.emailRequired') }]"
+              clearable
+              @clear="onInputClear('memberAccount')"
             />
             <van-field
               v-model="formData.password"
@@ -55,6 +61,8 @@
               :label="$t('login.password')"
               :placeholder="$t('login.passwordPlaceholder')"
               :rules="[{ required: true, message: $t('login.passwordRequired') }]"
+              clearable
+              @clear="onInputClear('password')"
             />
           </van-cell-group>
         </van-form>
@@ -206,6 +214,11 @@ const formData = reactive({
   areaCode: getDefaultAreaCode(),
   agreed: false
 })
+
+// 清空输入框
+const onInputClear = (field) => {
+  formData[field] = ''
+}
 
 // 区号选择确认
 const onAreaCodeConfirm = (values) => {
