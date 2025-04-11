@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 20:26:51
+ * @LastEditTime: 2025-04-11 20:41:31
  * @Description: 登录页
  -->
  <template>
@@ -301,6 +301,7 @@ const onSubmit = async () => {
     await userStore.login(loginData)
     await userStore.fetchUserInfo()
     // 加载枚举数据
+    enumStore.resetEnum();
     await enumStore.fetchEnum()
     
     // 检查是否有重定向URL
