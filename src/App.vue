@@ -2,16 +2,16 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-30 20:03:42
+ * @LastEditTime: 2025-04-11 14:44:01
  * @Description: 
 -->
 <template>
   <div class="app-container">
     <router-view />
     <van-tabbar v-if="showTabbar" v-model="active" route>
-      <van-tabbar-item to="/" icon="home-o">{{ t('tabbar.home') }}</van-tabbar-item>
-      <van-tabbar-item to="/taskApplications" icon="notes-o">{{ t('tabbar.taskApplications') }}</van-tabbar-item>
-      <van-tabbar-item to="/profile" icon="user-o">{{ t('tabbar.profile') }}</van-tabbar-item>
+      <van-tabbar-item to="/" icon="home-o">{{ $t('common.tabbar.home') }}</van-tabbar-item>
+      <van-tabbar-item to="/taskApplications" icon="notes-o">{{ $t('common.tabbar.task') }}</van-tabbar-item>
+      <van-tabbar-item to="/profile" icon="user-o">{{ $t('common.tabbar.profile') }}</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -19,14 +19,12 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { useI18n } from 'vue-i18n'
 import { useUserStore, useEnumStore } from '@/stores'
 import { checkNotification } from '@/utils/notification'
 import { useRouter } from 'vue-router'
 
 const route = useRoute()
 const router = useRouter()
-const { t } = useI18n()
 const active = ref(0)
 const userStore = useUserStore()
 const enumStore = useEnumStore()

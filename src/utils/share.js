@@ -2,7 +2,7 @@
  * @Author: rueen
  * @Date: 2025-03-21 14:30:00
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-21 14:30:00
+ * @LastEditTime: 2025-04-11 16:37:38
  * @Description: 分享和复制工具方法
  */
 
@@ -58,9 +58,9 @@ export const generateInviteLink = (path, inviteCode, params = {}) => {
  * @param {Object} params - 其他参数
  * @returns {Promise<boolean>} - 返回分享是否成功
  */
-export const shareInviteLink = async (path, inviteCode, params = {}) => {
+export const shareInviteLink = async (path, inviteCode, params = {}, successMessage) => {
   const inviteLink = generateInviteLink(path, inviteCode, params)
-  return copyToClipboard(inviteLink, '邀请链接已复制到剪贴板')
+  return copyToClipboard(inviteLink, successMessage)
 }
 
 export default {

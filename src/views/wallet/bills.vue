@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <nav-bar
-      title="结算账单"
+      :title="$t('wallet.bills.title')"
       left-arrow
       fixed
     />
@@ -11,7 +11,7 @@
         <van-list
           v-model:loading="loading"
           :finished="finished"
-          finished-text="没有更多了"
+          :finished-text="$t('common.finishedText')"
         >
           <div :class="$style.recordList">
             <div
@@ -42,7 +42,7 @@
                 </div>
               </div>
               <div :class="$style.reason" v-if="bill.settlementStatus === 'failed' || bill.withdrawalStatus === 'failed'">
-                失败原因：{{ bill.failureReason }}
+                {{ $t('wallet.bills.failureReason') }}：{{ bill.failureReason }}
               </div>
             </div>
           </div>

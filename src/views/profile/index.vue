@@ -5,8 +5,8 @@
       <div :class="$style.userHeader">
         <avatar :avatar="userInfo.avatar" width="50px" height="50px" round />
         <div :class="$style.userMeta">
-          <div :class="$style.userName">{{ userInfo.nickname || '未登录' }}</div>
-          <div :class="$style.userId">账号: {{ userInfo.account || '---' }}</div>
+          <div :class="$style.userName">{{ userInfo.nickname || $t('profile.index.notLogin') }}</div>
+          <div :class="$style.userId">{{ $t('profile.index.account') }}: {{ userInfo.account || '---' }}</div>
         </div>
       </div>
       <van-icon name="arrow" :class="$style.arrow" />
@@ -15,11 +15,11 @@
     <!-- 收益信息 -->
     <div :class="$style.earnings">
       <div :class="$style.earningItem">
-        <div :class="$style.label">已提现</div>
+        <div :class="$style.label">{{ $t('profile.index.withdrawn') }}</div>
         <div :class="$style.amount">${{ balanceInfo.withdrawalAmount }}</div>
       </div>
       <div :class="$style.earningItem" @click="router.push('/wallet')">
-        <div :class="$style.label">可提现</div>
+        <div :class="$style.label">{{ $t('profile.index.withdrawable') }}</div>
         <div :class="$style.amount">{{ balanceInfo.balance }}</div>
       </div>
     </div>
@@ -32,7 +32,7 @@
       >
         <div :class="$style.menuTitle">
           <van-icon name="balance-o" />
-          <span>我的钱包</span>
+          <span>{{ $t('profile.index.wallet') }}</span>
         </div>
         <van-icon name="arrow" />
       </div>
@@ -43,7 +43,7 @@
       >
         <div :class="$style.menuTitle">
           <van-icon name="user-circle-o" />
-          <span>我的账号</span>
+          <span>{{ $t('profile.index.myAccount') }}</span>
         </div>
         <van-icon name="arrow" />
       </div>
@@ -54,7 +54,7 @@
       >
         <div :class="$style.menuTitle">
           <van-icon name="friends-o" />
-          <span>我的邀请</span>
+          <span>{{ $t('profile.index.myInvites') }}</span>
         </div>
         <van-icon name="arrow" />
       </div>
@@ -65,7 +65,7 @@
       >
         <div :class="$style.menuTitle">
           <van-icon name="friends-o" />
-          <span>我的群组</span>
+          <span>{{ $t('profile.index.myGroups') }}</span>
         </div>
         <van-icon name="arrow" />
       </div>
@@ -76,7 +76,7 @@
       >
         <div :class="$style.menuTitle">
           <van-icon name="setting-o" />
-          <span>设置</span>
+          <span>{{ $t('profile.index.settings') }}</span>
         </div>
         <van-icon name="arrow" />
       </div>

@@ -2,9 +2,9 @@
   <Layout>
     <!-- 顶部导航 -->
     <nav-bar
-      :title="isNew ? '添加账号' : '账号详情'"
+      :title="isNew ? $t('social.edit.addTitle') : $t('social.edit.editTitle')"
       left-arrow
-      :right-text="isNew ? '' : isRejected ? '' : (isEditing ? '取消' : '编辑')"
+      :right-text="isNew ? '' : isRejected ? '' : (isEditing ? $t('social.edit.cancel') : $t('social.edit.edit'))"
       @click-left="onClickLeft"
       @click-right="onClickRight"
       fixed
@@ -14,18 +14,18 @@
     <div :class="$style.content">
       <div v-if="!isNew">
         <div :class="$style.status">
-          <span :class="$style.statusText">账号状态:</span>
+          <span :class="$style.statusText">{{ $t('social.edit.accountStatus') }}:</span>
           <tag :process="detail.accountAuditStatus">{{ enumStore.getEnumText('AccountAuditStatus', detail.accountAuditStatus) }}</tag>
         </div>
         <div :class="$style.status" v-if="isRejected">
-          <span :class="$style.statusText">拒绝原因:</span>
+          <span :class="$style.statusText">{{ $t('social.edit.rejectReason') }}:</span>
           <span :class="$style.statusText">{{ detail.rejectReason }}</span>
         </div>
       </div>
       <div :class="$style.formGroup">
         <!-- 表单项 -->
         <div :class="$style.formItem">
-          <span :class="$style.label">平台</span>
+          <span :class="$style.label">{{ $t('social.edit.platform') }}</span>
           <div 
             :class="$style.value" 
             @click="showPlatformPicker = true"
@@ -38,10 +38,10 @@
         </div>
         <template v-if="selectedChannel.id">
           <div :class="$style.formItem">
-            <span :class="$style.label">主页链接</span>
+            <span :class="$style.label">{{ $t('social.edit.homeUrl') }}</span>
             <van-field
               v-model="form.homeUrl"
-              placeholder="请输入主页链接"
+              :placeholder="$t('social.edit.homeUrlPlaceholder')"
               :class="$style.input"
               :border="false"
               :readonly="isView"
@@ -63,10 +63,10 @@
           </div>
           
           <div :class="$style.formItem">
-            <span :class="$style.label">账号名称</span>
+            <span :class="$style.label">{{ $t('social.edit.account') }}</span>
             <van-field
               v-model="form.account"
-              placeholder="请输入账号名称"
+              :placeholder="$t('social.edit.accountPlaceholder')"
               :class="$style.input"
               :border="false"
               :readonly="isView"
@@ -74,11 +74,11 @@
           </div>
 
           <div :class="$style.formItem" v-if="selectedChannel.customFields.includes('fansCount')">
-            <span :class="$style.label">粉丝数</span>
+            <span :class="$style.label">{{ $t('social.edit.fansCount') }}</span>
             <van-field
               v-model="form.fansCount"
               type="digit"
-              placeholder="请输入粉丝数"
+              :placeholder="$t('social.edit.fansCountPlaceholder')"
               :class="$style.input"
               :border="false"
               :readonly="isView"
@@ -86,11 +86,11 @@
           </div>
 
           <div :class="$style.formItem" v-if="selectedChannel.customFields.includes('friendsCount')">
-            <span :class="$style.label">好友数</span>
+            <span :class="$style.label">{{ $t('social.edit.friendsCount') }}</span>
             <van-field
               v-model="form.friendsCount"
               type="digit"
-              placeholder="请输入好友数"
+              :placeholder="$t('social.edit.friendsCountPlaceholder')"
               :class="$style.input"
               :border="false"
               :readonly="isView"
@@ -98,11 +98,11 @@
           </div>
 
           <div :class="$style.formItem" v-if="selectedChannel.customFields.includes('postsCount')">
-            <span :class="$style.label">发帖数</span>
+            <span :class="$style.label">{{ $t('social.edit.postsCount') }}</span>
             <van-field
               v-model="form.postsCount"
               type="digit"
-              placeholder="请输入发帖数"
+              :placeholder="$t('social.edit.postsCountPlaceholder')"
               :class="$style.input"
               :border="false"
               :readonly="isView"
@@ -112,7 +112,7 @@
       </div>
       <div :class="$style.tips" v-if="isEditing">
         <van-icon name="warning-o" :class="$style.warningIcon" />
-        <span :class="$style.warningText">修改账号信息需要重新审核</span>
+        <span :class="$style.warningText">{{ $t('social.edit.warningText') }}</span>
       </div>
       <!-- 添加账号时显示保存按钮 -->
       <van-button 
@@ -122,7 +122,7 @@
         :class="$style.submitBtn"
         @click="onSubmit"
       >
-        {{isRejected ? '重新提交' : '保存'}}
+        {{isRejected ? $t('social.edit.resubmit') : $t('social.edit.save')}}
       </van-button>
     </div>
 

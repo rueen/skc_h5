@@ -2,19 +2,19 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-30 16:51:23
+ * @LastEditTime: 2025-04-11 15:48:15
  * @Description: 
 -->
 <template>
   <Layout>
     <nav-bar
-      title="个人信息"
+      :title="$t('profile.info.title')"
       left-arrow
       fixed
     >
       <template #right>
         <span :class="$style.navBtn" @click="onToggleEdit">
-          {{ isEdit ? '取消' : '编辑' }}
+          {{ isEdit ? $t('profile.info.cancel') : $t('profile.info.edit') }}
         </span>
       </template>
     </nav-bar>
@@ -23,7 +23,7 @@
       <div :class="$style.formGroup">
         <!-- 头像 -->
         <div :class="$style.formItem">
-          <span :class="$style.label">头像</span>
+          <span :class="$style.label">{{ $t('profile.info.avatar') }}</span>
           <div :class="$style.value">
             <van-uploader
               :max-count="1"
@@ -38,11 +38,11 @@
 
         <!-- 昵称 -->
         <div :class="$style.formItem">
-          <span :class="$style.label">昵称</span>
+          <span :class="$style.label">{{ $t('profile.info.nickname') }}</span>
           <template v-if="isEdit">
             <van-field
               v-model="form.memberNickname"
-              placeholder="请输入昵称"
+              :placeholder="$t('profile.info.nicknamePlaceholder')"
               :class="$style.input"
             />
           </template>
@@ -53,7 +53,7 @@
 
         <!-- 性别 -->
         <div :class="$style.formItem">
-          <span :class="$style.label">性别</span>
+          <span :class="$style.label">{{ $t('profile.info.gender') }}</span>
           <template v-if="isEdit">
             <div :class="$style.value" @click="showGenderPicker = true">
               <span :class="[$style.text, $style.pickerValue]">
@@ -69,7 +69,7 @@
 
         <!-- 职业 -->
         <div :class="$style.formItem">
-          <span :class="$style.label">职业</span>
+          <span :class="$style.label">{{ $t('profile.info.occupation') }}</span>
           <template v-if="isEdit">
             <div :class="$style.value" @click="showOccupationPicker = true">
               <span :class="[$style.text, $style.pickerValue]">
@@ -80,32 +80,18 @@
           </template>
           <div v-else :class="$style.value">
             <span :class="$style.text">
-              {{ form.occupation ? enumStore.getEnumText('OccupationType', form.occupation) : '未设置' }}
+              {{ form.occupation ? enumStore.getEnumText('OccupationType', form.occupation) : $t('profile.info.notSet') }}
             </span>
           </div>
         </div>
 
-        <!-- 城市 -->
-        <!-- <div :class="$style.formItem">
-          <span :class="$style.label">城市</span>
-          <template v-if="isEdit">
-            <div :class="$style.value" @click="showCityPicker = true">
-              <span :class="[$style.text, $style.pickerValue]">{{ form.city || '请选择' }}</span>
-              <van-icon name="arrow" />
-            </div>
-          </template>
-          <div v-else :class="$style.value">
-            <span :class="$style.text">{{ form.city || '未设置' }}</span>
-          </div>
-        </div> -->
-
         <!-- 联系方式 -->
         <div :class="$style.formItem">
-          <span :class="$style.label">电子邮箱</span>
+          <span :class="$style.label">{{ $t('profile.info.email') }}</span>
           <template v-if="isEdit">
             <van-field
               v-model="form.email"
-              placeholder="请输入邮箱"
+              :placeholder="$t('profile.info.emailPlaceholder')"
               :class="$style.input"
             />
           </template>
@@ -115,11 +101,11 @@
         </div>
 
         <div :class="$style.formItem">
-          <span :class="$style.label">手机号码</span>
+          <span :class="$style.label">{{ $t('profile.info.phone') }}</span>
           <template v-if="isEdit">
             <van-field
               v-model="form.phone"
-              placeholder="请输入手机号"
+              :placeholder="$t('profile.info.phonePlaceholder')"
               :class="$style.input"
             />
           </template>
@@ -144,7 +130,7 @@
 
         <!-- 邀请链接 -->
         <div :class="$style.formItem">
-          <span :class="$style.label">邀请链接</span>
+          <span :class="$style.label">{{ $t('profile.info.inviteLink') }}</span>
           <div :class="$style.value" @click="handleCopy(inviteUrl)">
             <span :class="$style.text">{{ inviteUrl }}</span>
             <van-icon name="copy" :class="$style.copyIcon" />
@@ -157,7 +143,7 @@
         :class="$style.submitBtn"
         @click="onSubmit"
         v-if="isEdit"
-      >保存</van-button>
+      >{{ $t('profile.info.save') }}</van-button>
     </div>
 
     <!-- 性别选择器 -->

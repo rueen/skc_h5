@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <nav-bar
-      title="提现记录"
+      :title="$t('wallet.records.title')"
       left-arrow
       fixed
     />
@@ -11,7 +11,7 @@
         <van-list
           v-model:loading="loading"
           :finished="finished"
-          finished-text="没有更多了"
+          :finished-text="$t('common.finishedText')"
         >
           <div :class="$style.recordList">
             <div 
@@ -21,7 +21,7 @@
             >
               <div :class="$style.recordItemWrapper">
                 <div :class="$style.recordInfo">
-                  <div :class="$style.title">提现到{{ record.account }}</div>
+                  <div :class="$style.title">{{ $t('wallet.records.withdrawTo') }} {{ record.account }}</div>
                   <div :class="$style.time">{{ record.createTime }}</div>
                 </div>
                 <div :class="$style.rightWrapper">
@@ -30,7 +30,7 @@
                 </div>
               </div>
               <div :class="$style.reason" v-if="record.withdrawalStatus === 'failed'">
-                失败原因：{{ record.rejectReason }}
+                {{ $t('wallet.records.failureReason') }}：{{ record.rejectReason }}
               </div>
             </div>
           </div>

@@ -2,33 +2,33 @@
  * @Author: diaochan
  * @Date: 2025-03-21 11:10:52
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-02 17:25:07
+ * @LastEditTime: 2025-04-11 16:43:53
  * @Description: 
 -->
 <template>
   <Layout>
     <!-- 顶部导航 -->
     <nav-bar
-      title="我的群组"
+      :title="$t('groups.index.title')"
       left-arrow
       fixed
     />
     <!-- 未加入任何群组 -->
-    <div :class="$style.noData" v-if="groups.length === 0">您还没有加入任何群组</div>
+    <div :class="$style.noData" v-if="groups.length === 0">{{ $t('groups.index.noData') }}</div>
     <!-- 群组列表 群主 -->
     <template v-if="isGroupOwner">
       <div :class="$style.title">
         <van-space :size="20">
-          <span>群数量：{{ groupStats.groupCount }}</span>
-          <span>成员数：{{ groupStats.memberCount }}</span>
-          <span>任务数：{{ groupStats.taskCount }}</span>
-          <span>总收益：<span :class="$style.earnings">{{ groupStats.totalCommission }}</span></span>
+          <span>{{ $t('groups.index.groupCount') }}：{{ groupStats.groupCount }}</span>
+          <span>{{ $t('groups.index.memberCount') }}：{{ groupStats.memberCount }}</span>
+          <span>{{ $t('groups.index.taskCount') }}：{{ groupStats.taskCount }}</span>
+          <span>{{ $t('groups.index.totalCommission') }}：<span :class="$style.earnings">{{ groupStats.totalCommission }}</span></span>
         </van-space>
       </div>
       <div :class="$style.header">
-        <div :class="[$style.headerItem, $style.headerItemLeft]">群名称</div>
-        <div :class="[$style.headerItem, $style.headerItemCenter]">成员数</div>
-        <div :class="[$style.headerItem, $style.headerItemRight]">贡献</div>
+        <div :class="[$style.headerItem, $style.headerItemLeft]">{{ $t('groups.index.groupName') }}</div>
+        <div :class="[$style.headerItem, $style.headerItemCenter]">{{ $t('groups.index.memberCount') }}</div>
+        <div :class="[$style.headerItem, $style.headerItemRight]">{{ $t('groups.index.totalCommission') }}</div>
       </div>
       <div
         :class="$style.listItem"
@@ -49,15 +49,15 @@
       </div>
       <!-- 群主任务统计 -->
       <div :class="$style.header">
-        <div :class="[$style.headerItem, $style.headerItemLeft]">任务名称</div>
-        <div :class="[$style.headerItem, $style.headerItemCenter]">成员数</div>
-        <div :class="[$style.headerItem, $style.headerItemRight]">贡献</div>
+        <div :class="[$style.headerItem, $style.headerItemLeft]">{{ $t('groups.index.taskName') }}</div>
+        <div :class="[$style.headerItem, $style.headerItemCenter]">{{ $t('groups.index.memberCount') }}</div>
+        <div :class="[$style.headerItem, $style.headerItemRight]">{{ $t('groups.index.totalCommission') }}</div>
       </div>
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list
           v-model:loading="loading"
           v-model:finished="finished"
-          finished-text="没有更多了"
+          :finished-text="$t('common.finishedText')"
         >
           <div
             :class="$style.listItem"
@@ -82,11 +82,11 @@
     <template v-else>
       <div :class="$style.groupItem" v-for="group in groups" :key="group.id">
         <div :class="$style.formItem">
-          <div :class="$style.label">群组名称</div>
+          <div :class="$style.label">{{ $t('groups.index.groupName') }}</div>
           <div :class="$style.value">{{ group.groupName }}</div>
         </div>
         <div :class="$style.formItem">
-          <div :class="$style.label">群组链接</div>
+          <div :class="$style.label">{{ $t('groups.index.groupLink') }}</div>
           <div :class="$style.value">
             <span>{{ group.groupLink }}</span>
             <van-icon name="copy" />

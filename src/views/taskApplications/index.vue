@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-02 20:45:15
+ * @LastEditTime: 2025-04-11 15:40:59
  * @Description: 任务页
  -->
 <template>
@@ -15,9 +15,9 @@
         swipeable
         @click-tab="onTabChange"
       >
-        <van-tab :title="t('tasks.applied')" :name="'applied'" />
-        <van-tab :title="t('tasks.submitted')" :name="'submitted'" />
-        <van-tab :title="t('tasks.completed')" :name="'completed'" />
+        <van-tab :title="$t('task.applications.applied')" :name="'applied'" />
+        <van-tab :title="$t('task.applications.submitted')" :name="'submitted'" />
+        <van-tab :title="$t('task.applications.completed')" :name="'completed'" />
       </van-tabs>
     </div>
 
@@ -27,7 +27,7 @@
         <van-list
           v-model:loading="loading"
           v-model:finished="finished"
-          :finished-text="t('tasks.finishedText')"
+          :finished-text="$t('common.finishedText')"
         >
           <div 
             v-for="item in list"
@@ -45,7 +45,7 @@
                   />
                   <h3>{{ item.taskName }}</h3>
                 </div>
-                <span :class="$style.status" v-if="activeTab === 'applied'">已报名</span>
+                <span :class="$style.status" v-if="activeTab === 'applied'">{{ $t('task.enrolled') }}</span>
                 <span :class="$style.status" v-else>
                   <span v-if="item.taskPreAuditStatus === 'approved'">
                     {{ enumStore.getEnumText('TaskAuditStatus', item.taskAuditStatus) }}
@@ -71,11 +71,11 @@
                       </van-tag>
                     </div>
                     <div :class="$style.deadline" v-if="activeTab === 'applied'">
-                      <span :class="$style.label">报名时间：</span>
+                      <span :class="$style.label">{{ $t('task.enrolledTime') }}</span>
                       <span :class="$style.value">{{ item.enrollTime }}</span>
                     </div>
                     <div :class="$style.deadline" v-else>
-                      <span :class="$style.label">提交时间：</span>
+                      <span :class="$style.label">{{ $t('task.submittedTime') }}</span>
                       <span :class="$style.value">{{ item.submitTime }}</span>
                     </div>
                   </div>

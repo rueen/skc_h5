@@ -2,7 +2,7 @@
   <Layout :class="$style.socialPage">
     <!-- 顶部导航 -->
     <nav-bar
-      title="我的账号"
+      :title="$t('social.index.title')"
       left-arrow
       fixed
     />
@@ -12,7 +12,7 @@
       <van-list
         v-model:loading="loading"
         v-model:finished="finished"
-        finished-text="没有更多了"
+        :finished-text="$t('common.finishedText')"
         @load="onLoad"
       >
         <div 
@@ -56,15 +56,15 @@
         block
         @click="router.push('/social/detail/new')"
       >
-        添加账号
+        {{ $t('social.index.addAccount') }}
       </van-button>
     </div>
 
     <!-- 删除确认弹窗 -->
     <van-dialog
       v-model:show="showDeleteDialog"
-      title="确认删除"
-      :message="`确定要删除账号「${selectedCard?.account}」吗？`"
+      :title="$t('social.index.deleteConfirmTitle')"
+      :message="`${$t('social.index.deleteConfirmMessage')}「${selectedCard?.account}」`"
       show-cancel-button
       @confirm="onDeleteConfirm"
     />
@@ -116,7 +116,7 @@ const onDeleteConfirm = async () => {
     })
     if(res.code === 0) {
       list.value = list.value.filter(item => item.id !== selectedCard.value.id)
-      showToast('删除成功')
+      showToast($t('social.index.deleteSuccess'))
     } else {
       showToast(res.message)
     }

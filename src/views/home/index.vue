@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 14:37:32
+ * @LastEditTime: 2025-04-11 15:10:45
  * @Description: 首页
  -->
 
@@ -28,11 +28,11 @@
     <!-- 列表内容区域 -->
     <div :class="$style.content">
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-        <van-empty image="search" v-if="list.length === 0" :description="t('home.emptyText')" />
+        <van-empty image="search" v-if="list.length === 0" :description="$t('common.emptyText')" />
         <van-list
           v-model:loading="loading"
           v-model:finished="finished"
-          :finished-text="t('home.finishedText')"
+          :finished-text="$t('common.finishedText')"
           v-else
         >
           <div 
@@ -49,7 +49,7 @@
                   alt="platform"
                 />
                 <h3>{{ item.taskName }}</h3>
-                <span :class="$style.status" v-if="item.isEnrolled">已报名</span>
+                <span :class="$style.status" v-if="item.isEnrolled">{{ $t('task.enrolled') }}</span>
               </div>
               
               <div :class="$style.contentRow">
@@ -75,22 +75,22 @@
 
                 <div :class="$style.info">
                   <div :class="$style.infoItem">
-                    <span :class="$style.label">剩余名额：</span>
+                    <span :class="$style.label">{{ $t('task.remainingQuota') }}</span>
                     <span :class="$style.value">
-                      <span v-if="item.unlimitedQuota">不限</span>
+                      <span v-if="item.unlimitedQuota">{{ $t('task.unlimitedQuota') }}</span>
                       <span v-else>{{ item.remainingQuota }}</span>
                     </span>
                   </div>
                   <div :class="$style.infoItem">
-                    <span :class="$style.label">达人领域：</span>
+                    <span :class="$style.label">{{ $t('task.category') }}</span>
                     <span :class="$style.value">{{ item.category }}</span>
                   </div>
                   <div :class="$style.infoItem" v-if="new Date(item.startTime) > new Date()">
-                    <span :class="$style.label">开始时间：</span>
+                    <span :class="$style.label">{{ $t('task.startTime') }}</span>
                     <span :class="$style.value">{{ item.startTime }}</span>
                   </div>
                   <div :class="$style.infoItem" v-else>
-                    <span :class="$style.label">结束时间：</span>
+                    <span :class="$style.label">{{ $t('task.endTime') }}</span>
                     <span :class="$style.value">{{ item.endTime }}</span>
                   </div>
                 </div>
@@ -105,12 +105,10 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { get } from '@/utils/request'
 import { useEnumStore } from '@/stores'
 
-const { t } = useI18n()
 const router = useRouter()
 const enumStore = useEnumStore()
 

@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <nav-bar
-      title="我的钱包"
+      :title="$t('wallet.index.title')"
       left-arrow
       fixed
     />
@@ -10,7 +10,7 @@
       <!-- 账户余额 -->
       <div :class="$style.balance">
         <div :class="$style.amount">
-          <div :class="$style.label">可提现余额</div>
+          <div :class="$style.label">{{ $t('wallet.index.withdrawableBalance') }}</div>
           <div :class="$style.value">{{ balance }}</div>
         </div>
         <van-button 
@@ -19,7 +19,7 @@
           :class="$style.withdrawBtn"
           @click="onWithdraw"
         >
-          提现
+          {{ $t('wallet.index.withdraw') }}
         </van-button>
       </div>
 
@@ -31,7 +31,7 @@
         >
           <div :class="$style.menuTitle">
             <van-icon name="balance-list-o" />
-            <span>结算账单</span>
+            <span>{{ $t('wallet.index.settlementBill') }}</span>
           </div>
           <van-icon name="arrow" />
         </div>
@@ -42,7 +42,7 @@
         >
           <div :class="$style.menuTitle">
             <van-icon name="records" />
-            <span>提现记录</span>
+            <span>{{ $t('wallet.index.withdrawalRecords') }}</span>
           </div>
           <van-icon name="arrow" />
         </div>
@@ -53,7 +53,7 @@
         >
           <div :class="$style.menuTitle">
             <van-icon name="credit-pay" />
-            <span>提现账户</span>
+            <span>{{ $t('wallet.index.withdrawalAccount') }}</span>
           </div>
           <div :class="$style.menuValue">
             <template v-if="hasAccount">
@@ -61,7 +61,7 @@
               <span :class="$style.accountDetail">{{ withdrawalAccount.account }}</span>
             </template>
             <template v-else>
-              <span :class="$style.text">未设置</span>
+              <span :class="$style.text">{{ $t('wallet.index.notSet') }}</span>
             </template>
             <van-icon name="arrow" />
           </div>
@@ -91,7 +91,7 @@ const hasAccount = computed(() => !!withdrawalAccount.value)
 
 const onWithdraw = () => {
   if (!hasAccount.value) {
-    showToast('请先设置提现账户')
+    showToast(t('wallet.index.pleaseSetWithdrawalAccount'))
     return
   }
   router.push('/wallet/withdraw')

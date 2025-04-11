@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-02 09:45:39
+ * @LastEditTime: 2025-04-11 15:37:49
  * @Description: 任务详情页
  -->
 <template>
@@ -30,22 +30,22 @@
         </div>
         <div :class="$style.extraInfo">
           <div :class="$style.extraInfoItem">
-            <span :class="$style.label">剩余名额：</span>
+            <span :class="$style.label">{{ $t('task.remainingQuota') }}</span>
             <span :class="$style.value">
-              <span v-if="taskInfo.unlimitedQuota">不限</span>
+              <span v-if="taskInfo.unlimitedQuota">{{ $t('task.unlimitedQuota') }}</span>
               <span v-else>{{ taskInfo.remainingQuota }}</span>
             </span>
           </div>
           <div :class="$style.extraInfoItem">
-            <span :class="$style.label">达人领域：</span>
+            <span :class="$style.label">{{ $t('task.category') }}</span>
             <span :class="$style.value">{{ taskInfo.category }}</span>
           </div>
           <div :class="$style.extraInfoItem" v-if="!isStart">
-            <span :class="$style.label">开始时间：</span>
+            <span :class="$style.label">{{ $t('task.startTime') }}</span>
             <span :class="$style.value">{{ taskInfo.startTime }}</span>
           </div>
           <div :class="$style.extraInfoItem" v-else>
-            <span :class="$style.label">结束时间：</span>
+            <span :class="$style.label">{{ $t('task.endTime') }}</span>
             <span :class="$style.value">{{ taskInfo.endTime }}</span>
           </div>
         </div>
@@ -53,7 +53,7 @@
 
       <!-- 任务流程 -->
       <div :class="$style.section">
-        <h3 :class="$style.sectionTitle">任务流程</h3>
+        <h3 :class="$style.sectionTitle">{{ $t('task.detail.processTitle') }}</h3>
         <div :class="$style.processSteps">
           <div 
             v-for="(step, index) in processSteps" 
@@ -66,24 +66,24 @@
           </div>
         </div>
         <div :class="$style.processNote">
-          *新人第一次发布帖子需经过合作审核，审核结果会通过短信通知，请及时关注。已经通过审核的账号，可以直接发布帖子。
+          *{{ $t('task.detail.processNote') }}
         </div>
       </div>
 
       <!-- 任务要求 -->
       <div :class="$style.section">
-        <h3 :class="$style.sectionTitle">任务要求</h3>
+        <h3 :class="$style.sectionTitle">{{ $t('task.detail.requirementsTitle') }}</h3>
         <div :class="$style.requirements">
           <div :class="$style.reqItem">
-            <span :class="$style.label">发布形式</span>
+            <span :class="$style.label">{{ $t('task.detail.publishForm') }}</span>
             <span :class="$style.value">{{ enumStore.getEnumText('TaskType', taskInfo.taskType) }}</span>
           </div>
           <div :class="$style.reqItem">
-            <span :class="$style.label">粉丝要求</span>
+            <span :class="$style.label">{{ $t('task.detail.fansRequired') }}</span>
             <span :class="$style.value">{{ taskInfo.fansRequired }}</span>
           </div>
           <div :class="$style.reqItem">
-            <span :class="$style.label">作品要求</span>
+            <span :class="$style.label">{{ $t('task.detail.workRequirements') }}</span>
             <div :class="$style.workRequirements" v-html="taskInfo.contentRequirement" />
           </div>
         </div>
@@ -91,7 +91,7 @@
 
       <!-- 任务信息 -->
       <div :class="$style.section">
-        <h3 :class="$style.sectionTitle">任务信息</h3>
+        <h3 :class="$style.sectionTitle">{{ $t('task.detail.taskInfoTitle') }}</h3>
         <div :class="$style.taskInfo">
           {{ taskInfo.taskInfo }}
         </div>
@@ -103,7 +103,7 @@
       <div :class="$style.actions">
         <div :class="$style.actionItem" @click="onShare">
           <van-icon name="share" size="20" />
-          <span>邀请好友</span>
+          <span>{{ $t('task.detail.inviteFriend') }}</span>
         </div>
       </div>
       <van-button 
@@ -113,7 +113,7 @@
         v-if="!currentChannelAccount"
         @click="onAddAccount"
       >
-        添加账号
+        {{ $t('task.detail.addAccount') }}
       </van-button>
       <van-button 
         type="warning" 
@@ -121,7 +121,7 @@
         :class="$style.submitBtn"
         v-else-if="!isStart"
       >
-        任务未开始
+        {{ $t('task.detail.taskNotStart') }}
       </van-button>
       <van-button 
         type="warning" 
@@ -129,7 +129,7 @@
         :class="$style.submitBtn"
         v-else-if="currentChannelAccount.accountAuditStatus === 'pending'"
       >
-        账号审核中
+        {{ $t('task.detail.accountAuditPending') }}
       </van-button>
       <van-button 
         type="warning" 
@@ -137,7 +137,7 @@
         :class="$style.submitBtn"
         v-else-if="currentChannelAccount.accountAuditStatus === 'rejected'"
       >
-        账号审核不通过
+        {{ $t('task.detail.accountAuditRejected') }}
       </van-button>
       <van-button 
         type="warning" 
@@ -145,7 +145,7 @@
         :class="$style.submitBtn"
         v-else-if="taskInfo.taskStatus === 'ended'"
       >
-        任务已结束
+        {{ $t('task.detail.taskEnded') }}
       </van-button>
       <van-button 
         type="warning" 
@@ -153,7 +153,7 @@
         :class="$style.submitBtn"
         v-else-if="currentChannelAccount.fansCount - taskInfo.fansRequired < 0"
       >
-        粉丝不达标
+        {{ $t('task.detail.fansNotQualified') }}
       </van-button>
       <van-button 
         type="warning" 
@@ -161,7 +161,7 @@
         :class="$style.submitBtn"
         v-else-if="taskInfo.remainingQuota === 0"
       >
-        名额已满
+        {{ $t('task.detail.quotaFull') }}
       </van-button>
       <van-button 
         type="warning" 
@@ -169,7 +169,7 @@
         :class="$style.submitBtn"
         v-else-if="!taskInfo.eligibleToEnroll"
       >
-        不满足报名条件
+        {{ $t('task.detail.notEligibleToEnroll') }}
       </van-button>
       <van-button 
         type="primary" 
@@ -178,7 +178,7 @@
         @click="router.push(`/tasks/submit/${taskInfo.submittedId}?taskId=${taskInfo.id}`)"
         v-else-if="!!taskInfo.isSubmitted"
       >
-        查看提交详情
+        {{ $t('task.detail.viewSubmitDetails') }}
       </van-button>
       <van-button 
         type="primary" 
@@ -187,7 +187,7 @@
         @click="handleSubmitTask"
         v-else-if="!!taskInfo.isEnrolled"
       >
-        提交任务
+        {{ $t('task.detail.submitTask') }}
       </van-button>
       <van-button 
         type="primary" 
@@ -196,7 +196,7 @@
         @click="handleApply"
         v-else
       >
-        立即报名
+        {{ $t('task.detail.applyNow') }}
       </van-button>
     </div>
   </Layout>

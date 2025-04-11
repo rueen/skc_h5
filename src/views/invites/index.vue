@@ -2,14 +2,14 @@
  * @Author: diaochan
  * @Date: 2025-02-25 15:00:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-02 11:24:52
+ * @LastEditTime: 2025-04-11 16:37:44
  * @Description: 我的邀请人列表页
  -->
 <template>
   <Layout :class="$style.invitesPage">
     <!-- 顶部导航 -->
     <nav-bar
-      title="邀请好友"
+      :title="$t('invites.title')"
       left-arrow
       fixed
     />
@@ -17,17 +17,17 @@
     <!-- 邀请统计 -->
     <div :class="$style.statsCard">
       <div :class="$style.statsItem">
-        <div :class="$style.label">累计邀请</div>
+        <div :class="$style.label">{{ $t('invites.inviteCount') }}</div>
         <div :class="$style.value">{{ stats.inviteCount }}人</div>
       </div>
       <div :class="$style.statsItem">
-        <div :class="$style.label">邀请奖励</div>
+        <div :class="$style.label">{{ $t('invites.totalReward') }}</div>
         <div :class="$style.value">{{ stats.totalReward }}</div>
       </div>
     </div>
     <div :class="$style.tips">
       <van-icon name="info-o" />
-      好友完成任务后才会发放奖励
+      {{ $t('invites.tips') }}
     </div>
     <!-- 邀请列表 -->
     <div :class="$style.content">
@@ -35,7 +35,7 @@
         <van-list
           v-model:loading="loading"
           :finished="finished"
-          finished-text="没有更多了"
+          :finished-text="$t('common.finishedText')"
         >
           <div :class="$style.inviteList">
             <div 
@@ -69,7 +69,7 @@
         block
         @click="onInvite"
       >
-        去邀请好友
+        {{ $t('invites.buttonText') }}
       </van-button>
     </div>
   </Layout>
@@ -83,9 +83,11 @@ import Layout from '@/components/layout.vue'
 import { get } from '@/utils/request'
 import { useUserStore } from '@/stores'
 import NavBar from '@/components/NavBar.vue'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const userStore = useUserStore()
+const { t } = useI18n()
 
 // 统计数据
 const stats = ref({
@@ -136,7 +138,7 @@ const onInvite = () => {
   // 获取当前用户的邀请码
   const inviteCode = userStore.inviteCode
   // 使用分享工具方法生成并复制邀请链接
-  shareInviteLink(`/login`, inviteCode)
+  shareInviteLink(`/login`, inviteCode, {}, t('invites.shareSuccess'))
 }
 
 // 初始化

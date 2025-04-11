@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <nav-bar
-      title="设置"
+      :title="$t('settings.title')"
       left-arrow
       fixed
     />
@@ -14,7 +14,7 @@
           @click="showLanguagePicker = true"
         >
           <div :class="$style.menuTitle">
-            <span>{{ t('settings.language') }}</span>
+            <span>{{ $t('settings.language') }}</span>
           </div>
           <div :class="$style.menuValue">
             <span>{{ currentLanguage }}</span>
@@ -28,7 +28,7 @@
           @click="router.push('/settings/password')"
         >
           <div :class="$style.menuTitle">
-            <span>{{ t('settings.password') }}</span>
+            <span>{{ $t('settings.password') }}</span>
           </div>
           <van-icon name="arrow" />
         </div>
@@ -39,7 +39,7 @@
         :class="$style.logoutBtn"
         @click="onLogout"
       >
-        {{ t('settings.logout') }}
+        {{ $t('settings.logout') }}
       </van-button>
     </div>
 
@@ -54,7 +54,7 @@
         @confirm="onConfirm"
         @cancel="showLanguagePicker = false"
         :default-index="currentLangIndex"
-        :title="t('settings.selectLanguage')"
+        :title="$t('settings.selectLanguage')"
         show-toolbar
       />
     </van-popup>
@@ -101,11 +101,11 @@ const onLogout = () => {
     message: t('settings.logoutMessage'),
     showCancelButton: true,
     confirmButtonText: t('settings.logout'),
-    cancelButtonText: t('common.cancel')
+    cancelButtonText: t('settings.cancel')
   }).then(async () => {
     try {
       await userStore.logout()
-      showToast('退出登录成功')
+      showToast(t('settings.logoutSuccess'))
       router.push('/login')
     } catch (error) {
       showToast(error)

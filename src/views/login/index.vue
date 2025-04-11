@@ -2,24 +2,24 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-30 20:04:26
+ * @LastEditTime: 2025-04-11 14:57:58
  * @Description: 登录页
  -->
  <template>
   <div :class="$style.loginPage">
     <div :class="$style.logo">
-      <h1>{{ t('login.title') }}</h1>
+      <h1>{{ $t('login.title') }}</h1>
     </div>
 
     <van-tabs v-model:active="activeTab" :class="$style.tabs" @change="onTabChange">
-      <van-tab :title="t('login.phoneLogin')">
+      <van-tab :title="$t('login.phoneLogin')">
         <van-form @submit="onSubmit">
           <van-cell-group inset>
             <van-field
               v-model="formData.memberAccount"
-              :label="t('login.phone')"
-              :placeholder="t('login.phonePlaceholder')"
-              :rules="[{ required: true, message: t('login.phoneRequired') }]"
+              :label="$t('login.phone')"
+              :placeholder="$t('login.phonePlaceholder')"
+              :rules="[{ required: true, message: $t('login.phoneRequired') }]"
             >
               <template #label>
                 <span :class="$style.areaCode">+{{ formData.areaCode }}</span>
@@ -28,30 +28,30 @@
             <van-field
               v-model="formData.password"
               type="password"
-              :label="t('login.password')"
-              :placeholder="t('login.passwordPlaceholder')"
-              :rules="[{ required: true, message: t('login.passwordRequired') }]"
+              :label="$t('login.password')"
+              :placeholder="$t('login.passwordPlaceholder')"
+              :rules="[{ required: true, message: $t('login.passwordRequired') }]"
               :class="$style.passwordInput"
             />
           </van-cell-group>
         </van-form>
       </van-tab>
 
-      <van-tab :title="t('login.emailLogin')">
+      <van-tab :title="$t('login.emailLogin')">
         <van-form @submit="onSubmit">
           <van-cell-group inset>
             <van-field
               v-model="formData.memberAccount"
-              :label="t('login.email')"
-              :placeholder="t('login.emailPlaceholder')"
-              :rules="[{ required: true, message: t('login.emailRequired') }]"
+              :label="$t('login.email')"
+              :placeholder="$t('login.emailPlaceholder')"
+              :rules="[{ required: true, message: $t('login.emailRequired') }]"
             />
             <van-field
               v-model="formData.password"
               type="password"
-              :label="t('login.password')"
-              :placeholder="t('login.passwordPlaceholder')"
-              :rules="[{ required: true, message: t('login.passwordRequired') }]"
+              :label="$t('login.password')"
+              :placeholder="$t('login.passwordPlaceholder')"
+              :rules="[{ required: true, message: $t('login.passwordRequired') }]"
             />
           </van-cell-group>
         </van-form>
@@ -59,20 +59,20 @@
     </van-tabs>
 
     <div :class="$style.tips">
-      {{ t('settings.passwordTips') }}
+      * {{ $t('login.passwordTips') }}
     </div>
       
     <div :class="$style.submit">
-      <div :class="$style.tip">未注册的手机号/邮箱将自动创建账号</div>
+      <div :class="$style.tip">{{ $t('login.registerTips') }}</div>
       <van-button type="primary" block @click="onSubmit">
-        {{ t('login.login') }}
+        {{ $t('login.login') }}
       </van-button>
 
       <van-checkbox v-model="formData.agreed" :class="$style.agreement">
-        {{ t('login.agreement') }}
-        <a @click.stop="handleOpenArticle('0', 'userAgreement')">{{ t('login.userAgreement') }}</a>
-        {{ t('login.and') }}
-        <a @click.stop="handleOpenArticle('0', 'privacyPolicy')">{{ t('login.privacyPolicy') }}</a>
+        {{ $t('login.agreement') }}
+        <a @click.stop="handleOpenArticle('0', 'userAgreement')">{{ $t('login.userAgreement') }}</a>
+        {{ $t('login.and') }}
+        <a @click.stop="handleOpenArticle('0', 'privacyPolicy')">{{ $t('login.privacyPolicy') }}</a>
       </van-checkbox>
     </div>
 
@@ -93,7 +93,7 @@ import { checkNotification } from '@/utils/notification'
 const router = useRouter()
 const userStore = useUserStore()
 
-const { t, locale } = useI18n()
+const { locale } = useI18n()
 
 // 当前登录方式
 const activeTab = ref(0)

@@ -4,36 +4,34 @@
       :title="pageTitle"
       left-arrow
       fixed
-    >
-      <template #right v-if="mode === 'preview'">
-        <span @click="onEdit">编辑</span>
-      </template>
-    </nav-bar>
+      :right-text="mode === 'add' ? '' : (isEditing ? t('wallet.accounts.cancel') : t('wallet.accounts.edit'))"
+      @click-right="onClickRight"
+    />
 
     <div :class="$style.content">
       <!-- 账户信息表单 -->
       <div :class="$style.formGroup">
         <div :class="$style.formItem" @click="showAccountTypePicker = true && mode !== 'preview'">
-          <span :class="$style.label">账户类型</span>
+          <span :class="$style.label">{{ t('wallet.accounts.accountType') }}</span>
           <div :class="$style.value">
-            <span :class="$style.text">{{ selectedType ? selectedType.text : '请选择' }}</span>
+            <span :class="$style.text">{{ selectedType ? selectedType.text : t('wallet.accounts.pleaseSelect') }}</span>
             <van-icon name="arrow" v-if="mode !== 'preview'" />
           </div>
         </div>
         <div :class="$style.formItem">
-          <span :class="$style.label">账号</span>
+          <span :class="$style.label">{{ t('wallet.accounts.account') }}</span>
           <van-field
             v-model="form.account"
-            placeholder="请输入账号"
+            :placeholder="t('wallet.accounts.accountPlaceholder')"
             :readonly="mode === 'preview'"
             :class="$style.input"
           />
         </div>
         <div :class="$style.formItem">
-          <span :class="$style.label">姓名</span>
+          <span :class="$style.label">{{ t('wallet.accounts.name') }}</span>
           <van-field
             v-model="form.name"
-            placeholder="请输入姓名"
+            :placeholder="t('wallet.accounts.namePlaceholder')"
             :readonly="mode === 'preview'"
             :class="$style.input"
           />
@@ -48,7 +46,7 @@
         :class="$style.submitBtn"
         @click="onSubmit"
       >
-        {{ mode === 'add' ? '确认添加' : '保存修改' }}
+        {{ mode === 'add' ? t('wallet.accounts.confirmAdd') : t('wallet.accounts.saveChanges') }}
       </van-button>
     </div>
 
@@ -76,20 +74,22 @@ import Layout from '@/components/layout.vue'
 import { useEnumStore } from '@/stores'
 import { get, post, put } from '@/utils/request'
 import NavBar from '@/components/NavBar.vue'
+import { useI18n } from 'vue-i18n'
 
 const enumStore = useEnumStore()
 const router = useRouter()
 const route = useRoute()
-
+const { t } = useI18n()
 // 页面模式：add-添加 edit-编辑 preview-预览
 const mode = ref(route.query.mode || 'add')
+const isEditing = ref(false)
 
 // 页面标题
 const pageTitle = computed(() => {
   const titles = {
-    add: '添加账户',
-    edit: '编辑账户',
-    preview: '账户详情'
+    add: t('wallet.accounts.addTitle'),
+    edit: t('wallet.accounts.editTitle'),
+    preview: t('wallet.accounts.previewTitle')
   }
   return titles[mode.value]
 })
@@ -113,9 +113,14 @@ const onAccountTypeConfirm = ({ selectedOptions }) => {
   showAccountTypePicker.value = false
 }
 
-// 切换到编辑模式
-const onEdit = () => {
-  mode.value = 'edit'
+// 切换编辑状态
+const onClickRight = () => {
+  isEditing.value = !isEditing.value
+  if(isEditing.value){
+    mode.value = 'edit'
+  } else {
+    mode.value = 'preview'
+  }
 }
 
 // 创建账户
@@ -173,7 +178,7 @@ const getWithdrawalAccount = async () => {
   const res = await get('withdrawals.accounts')
   if(res.code === 0 && res.data.length > 0){
     form.value = res.data[0]
-    selectedType.value = accountTypesOptions.find(item => item.value === form.value.paymentChannelId)
+    selectedType.value = accountTypesOptions.value.find(item => item.value === form.value.paymentChannelId)
   }
 }
 
@@ -190,11 +195,11 @@ const getPaymentChannels = async () => {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
+  await getPaymentChannels()
   if(['edit', 'preview'].indexOf(mode.value) > -1){
-    getWithdrawalAccount()
+    await getWithdrawalAccount()
   }
-  getPaymentChannels()
 })
 </script>
 

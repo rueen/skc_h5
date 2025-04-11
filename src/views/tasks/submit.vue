@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <nav-bar
-      title="任务提交"
+      :title="$t('task.submit.title')"
       left-arrow
       fixed
     />
@@ -44,14 +44,14 @@
                 {{ taskInfo.fansRequired }}
               </van-tag>
             </div>
-            <div :class="$style.taskDeadline">结束时间：{{ taskInfo.endTime }}</div>
+            <div :class="$style.taskDeadline">{{ $t('task.endTime') }}：{{ taskInfo.endTime }}</div>
           </div>
         </div>
       </div>
 
       <!-- 温馨提示 -->
       <div :class="$style.tips">
-        <h3 :class="$style.tipsTitle">温馨提示</h3>
+        <h3 :class="$style.tipsTitle">{{ $t('task.submit.tipsTitle') }}</h3>
         <div :class="$style.tipsList">
           <div :class="$style.tipItem" v-html="taskInfo.notice"></div>
         </div>
@@ -63,7 +63,7 @@
           <div :class="$style.label">{{item.title}}</div>
           <van-field
             v-model="customFields[index].value"
-            :placeholder="`请输入${item.title}`"
+            :placeholder="`${item.title}`"
             :class="$style.input"
             :readonly="isView"
             v-if="item.type === 'input'"
@@ -100,7 +100,7 @@
         :loading="loading"
         v-if="!isView"
       >
-        {{ isEdit ? '重新提交' : '提交' }}
+        {{ isEdit ? $t('task.submit.reSubmit') : $t('task.submit.submit') }}
       </van-button>
     </div>
 
@@ -114,8 +114,8 @@
       <div :class="$style.successContent">
         <van-icon name="cross" :class="$style.closeBtn" @click="handleCloseDialog" />
         <van-icon name="checked" :class="$style.successIcon" />
-        <h3 :class="$style.successTitle">提交成功</h3>
-        <p :class="$style.successTip">请在心等待，留意审核结果</p>
+        <h3 :class="$style.successTitle">{{ $t('task.submit.success') }}</h3>
+        <p :class="$style.successTip">{{ $t('task.submit.successTip') }}</p>
       </div>
     </van-dialog>
   </Layout>
@@ -173,13 +173,13 @@ const afterRead = async (file, {name, index}) => {
   const _index = parseInt(name)
   // 检查文件对象
   if (!file || !file.file) {
-    showToast('文件无效')
+    showToast($t('task.submit.fileInvalid'))
     return
   }
   // 显示上传中提示
   showToast({
     type: 'loading',
-    message: '上传中...',
+    message: $t('task.submit.uploading'),
     forbidClick: true,
     duration: 0
   })
@@ -195,10 +195,10 @@ const afterRead = async (file, {name, index}) => {
     customFields.value[_index].value[index] = {
       url: result.url,
     }
-    showToast('上传成功')
+    showToast($t('task.submit.uploadSuccess'))
   } else {
     console.error('头像上传返回数据异常:', result)
-    showToast('上传失败，返回数据异常')
+    showToast($t('task.submit.uploadFailed'))
   }
 }
 
@@ -209,7 +209,7 @@ const checkForm = () => {
 const onSubmit = async () => {
   const checkResult = checkForm()
   if(!checkResult){
-    showToast('请填写完整信息')
+    showToast($t('task.submit.pleaseFillInAllInformation'))
     return 
   }
 

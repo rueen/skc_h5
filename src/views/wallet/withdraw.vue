@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <nav-bar
-      title="提现"
+      :title="$t('wallet.withdraw.title')"
       left-arrow
       fixed
     />
@@ -9,20 +9,20 @@
     <div :class="$style.content">
       <!-- 提现金额 -->
       <div :class="$style.amountSection">
-        <div :class="$style.label">提现金额</div>
+        <div :class="$style.label">{{ $t('wallet.withdraw.amount') }}</div>
         <div :class="$style.input">
           <span :class="$style.currency">$</span>
           <van-field
             v-model="form.amount"
             type="digit"
-            placeholder="请输入提现金额"
+            :placeholder="$t('wallet.withdraw.amountPlaceholder')"
             :class="$style.amountInput"
           />
         </div>
         <div :class="$style.balance">
-          <span>提现门槛：$ {{ withdrawThreshold }}</span>
-          <span>可提现余额：$ {{ balance }}</span>
-          <span :class="$style.all" @click="onWithdrawAll">全部提现</span>
+          <span>{{ $t('wallet.withdraw.withdrawThreshold') }}：$ {{ withdrawThreshold }}</span>
+          <span>{{ $t('wallet.withdraw.withdrawableBalance') }}：$ {{ balance }}</span>
+          <span :class="$style.all" @click="onWithdrawAll">{{ $t('wallet.withdraw.withdrawAll') }}</span>
         </div>
       </div>
 
@@ -32,14 +32,14 @@
           :class="$style.formItem"
           @click="onAccountClick"
         >
-          <span :class="$style.label">提现账户</span>
+          <span :class="$style.label">{{ $t('wallet.withdraw.withdrawAccount') }}</span>
           <div :class="$style.value">
             <template v-if="hasAccount">
               <span :class="$style.text">{{ withdrawalAccount.paymentChannelName }}</span>
               <span :class="$style.accountDetail">{{ withdrawalAccount.account }}</span>
             </template>
             <template v-else>
-              <span :class="$style.text">未设置</span>
+              <span :class="$style.text">{{ $t('wallet.withdraw.notSet') }}</span>
             </template>
             <van-icon name="arrow" />
           </div>
@@ -53,7 +53,7 @@
         :class="$style.withdrawBtn"
         @click="onSubmit"
       >
-        确认提现
+        {{ $t('wallet.withdraw.confirmWithdraw') }}
       </van-button>
     </div>
   </Layout>
@@ -67,9 +67,11 @@ import Layout from '@/components/layout.vue'
 import { get, post } from '@/utils/request'
 import { useEnumStore } from '@/stores'
 import NavBar from '@/components/NavBar.vue'
+import { useI18n } from 'vue-i18n'
 
 const enumStore = useEnumStore()
 const router = useRouter()
+const { t } = useI18n()
 
 // 提现门槛
 const withdrawThreshold = ref(0)
@@ -103,21 +105,21 @@ const onAccountClick = () => {
 
 const onSubmit = async () => {
   if (!hasAccount.value) {
-    showToast('请先设置提现账户')
+    showToast(t('wallet.withdraw.pleaseSetWithdrawalAccount'))
     return
   }
   if (!form.value.amount) {
-    showToast('请输入提现金额')
+    showToast(t('wallet.withdraw.pleaseEnterWithdrawalAmount'))
     return
   }
   // 余额不足
   if (balance.value - form.value.amount < 0) {
-    showToast('余额不足')
+    showToast(t('wallet.withdraw.insufficientBalance'))
     return
   }
   // 提现金额不能小于提现门槛 
   if (form.value.amount - withdrawThreshold.value < 0) {
-    showToast(`提现金额不能小于${withdrawThreshold.value}元`)
+    showToast(t('wallet.withdraw.withdrawalAmountLessThanThreshold'))
     return
   }
   const res = await post('withdrawals.apply', {
@@ -125,7 +127,7 @@ const onSubmit = async () => {
     amount: form.value.amount
   })
   if(res.code === 0){
-    showToast('提现申请已提交')
+    showToast(t('wallet.withdraw.withdrawalApplicationSubmitted'))
     router.back()
   } else {
     showToast(res.message)

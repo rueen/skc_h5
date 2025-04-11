@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <nav-bar
-      :title="t('settings.password')"
+      :title="$t('settings.password')"
       left-arrow
       fixed
     />
@@ -11,28 +11,28 @@
         <van-field
           v-model="form.currentPassword"
           type="password"
-          :label="t('settings.currentPassword')"
-          :placeholder="t('settings.currentPasswordPlaceholder')"
-          :rules="[{ required: true, message: t('settings.currentPasswordPlaceholder') }]"
+          :label="$t('settings.currentPassword')"
+          :placeholder="$t('settings.currentPasswordPlaceholder')"
+          :rules="[{ required: true, message: $t('settings.currentPasswordPlaceholder') }]"
         />
         <van-field
           v-model="form.newPassword"
           type="password"
-          :label="t('settings.newPassword')"
-          :placeholder="t('settings.newPasswordPlaceholder')"
-          :rules="[{ required: true, message: t('settings.newPasswordPlaceholder') }]"
+          :label="$t('settings.newPassword')"
+          :placeholder="$t('settings.newPasswordPlaceholder')"
+          :rules="[{ required: true, message: $t('settings.newPasswordPlaceholder') }]"
         />
         <van-field
           v-model="form.confirmPassword"
           type="password"
-          :label="t('settings.confirmPassword')"
-          :placeholder="t('settings.confirmPasswordPlaceholder')"
-          :rules="[{ required: true, message: t('settings.confirmPasswordPlaceholder') }]"
+          :label="$t('settings.confirmPassword')"
+          :placeholder="$t('settings.confirmPasswordPlaceholder')"
+          :rules="[{ required: true, message: $t('settings.confirmPasswordPlaceholder') }]"
         />
       </div>
 
       <div :class="$style.tips">
-        {{ t('settings.passwordTips') }}
+        {{ $t('settings.passwordTips') }}
       </div>
 
       <van-button 
@@ -41,7 +41,7 @@
         :class="$style.submitBtn"
         @click="onSubmit"
       >
-        {{ t('settings.password') }}
+        {{ $t('settings.password') }}
       </van-button>
     </div>
   </Layout>

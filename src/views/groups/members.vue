@@ -2,33 +2,33 @@
  * @Author: diaochan
  * @Date: 2025-03-26 11:00:41
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-02 16:24:53
+ * @LastEditTime: 2025-04-11 16:42:11
  * @Description: 
 -->
 <template>
   <Layout>
     <!-- 顶部导航 -->
     <nav-bar
-      title="群组成员"
+      :title="$t('groups.members.title')"
       left-arrow
       fixed
     />
 
     <!-- 列表内容区域 -->
     <div :class="$style.tips">
-      新会员首次任务不计算群主收益
+      {{ $t('groups.members.tips') }}
     </div>
     <div :class="$style.content">
       <div :class="$style.header">
-        <div :class="[$style.headerItem, $style.headerItemLeft]">成员信息</div>
-        <div :class="[$style.headerItem, $style.headerItemCenter]">完成任务</div>
-        <div :class="[$style.headerItem, $style.headerItemRight]">贡献</div>
+        <div :class="[$style.headerItem, $style.headerItemLeft]">{{ $t('groups.members.memberInfo') }}</div>
+        <div :class="[$style.headerItem, $style.headerItemCenter]">{{ $t('groups.members.taskCount') }}</div>
+        <div :class="[$style.headerItem, $style.headerItemRight]">{{ $t('groups.members.totalCommission') }}</div>
       </div>
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
         <van-list
           v-model:loading="loading"
           v-model:finished="finished"
-          finished-text="没有更多了"
+          :finished-text="$t('common.finishedText')"
         >
         <div 
             v-for="item in list" 
