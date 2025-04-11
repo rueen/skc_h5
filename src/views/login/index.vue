@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 16:59:39
+ * @LastEditTime: 2025-04-11 19:11:59
  * @Description: 登录页
  -->
  <template>
@@ -22,7 +22,10 @@
               :rules="[{ required: true, message: $t('login.phoneRequired') }]"
             >
               <template #label>
-                <span :class="$style.areaCode">+{{ formData.areaCode }}</span>
+                <div :class="$style.areaCodeWrapper" @click="showAreaCodePicker = true">
+                  <span :class="$style.areaCode">+{{ formData.areaCode }}</span>
+                  <van-icon name="arrow-down" />
+                </div>
               </template>
             </van-field>
             <van-field
@@ -77,13 +80,24 @@
     </div>
 
     <div :class="$style.langSwitch" @click="toggleLang">
-      {{ locale === 'zh' ? 'English' : '中文' }}
+      {{ locale === 'zh-CN' ? 'English' : (locale === 'en-US' ? 'Tagalog' : '中文') }}
     </div>
+
+    <!-- 区号选择弹出层 -->
+    <van-popup v-model:show="showAreaCodePicker" position="bottom" :style="{ maxHeight: '50%' }">
+      <van-picker
+        :columns="areaCodeColumns"
+        @confirm="onAreaCodeConfirm"
+        @cancel="showAreaCodePicker = false"
+        show-toolbar
+        title="选择区号"
+      />
+    </van-popup>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/stores'
@@ -93,10 +107,49 @@ import { checkNotification } from '@/utils/notification'
 const router = useRouter()
 const userStore = useUserStore()
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 
 // 当前登录方式
 const activeTab = ref(0)
+
+// 区号选择相关
+const showAreaCodePicker = ref(false)
+const areaCodeColumns = [
+  { text: '中国 +86', value: '86' },
+  { text: 'USA +1', value: '1' },
+  { text: 'Philippines +63', value: '63' },
+  { text: 'UK +44', value: '44' },
+  { text: 'Australia +61', value: '61' },
+  { text: 'Japan +81', value: '81' },
+  { text: 'South Korea +82', value: '82' },
+  { text: 'Singapore +65', value: '65' },
+  { text: 'Malaysia +60', value: '60' },
+  { text: 'Thailand +66', value: '66' }
+]
+
+// 根据语言设置默认区号
+const getDefaultAreaCode = () => {
+  const currentLocale = locale.value
+  
+  // 根据语言设置默认区号
+  if (currentLocale === 'zh-CN') return '86'  // 中国
+  if (currentLocale === 'en-US') return '1'   // 美国
+  if (currentLocale === 'tl-PH') return '63'  // 菲律宾
+  
+  // 也可以根据浏览器语言判断
+  const browserLang = navigator.language || navigator.userLanguage
+  if (browserLang.startsWith('zh')) return '86'
+  if (browserLang.startsWith('en')) {
+    if (browserLang === 'en-US' || browserLang === 'en-CA') return '1'
+    if (browserLang === 'en-GB') return '44'
+    if (browserLang === 'en-AU') return '61'
+    return '1' // 默认英语区域使用美国区号
+  }
+  if (browserLang.startsWith('tl') || browserLang.startsWith('fil')) return '63'
+  
+  // 默认区号
+  return '86'
+}
 
 // 监听登录方式变化
 const onTabChange = (index) => {
@@ -108,8 +161,19 @@ const onTabChange = (index) => {
 const formData = reactive({
   memberAccount: '',
   password: '',
-  areaCode: '86',
+  areaCode: getDefaultAreaCode(),
   agreed: false
+})
+
+// 区号选择确认
+const onAreaCodeConfirm = (values) => {
+  formData.areaCode = values.selectedOptions[0].value
+  showAreaCodePicker.value = false
+}
+
+// 组件挂载时设置区号
+onMounted(() => {
+  formData.areaCode = getDefaultAreaCode()
 })
 
 // 提交登录
@@ -178,8 +242,19 @@ const onSubmit = async () => {
 
 // 切换语言
 const toggleLang = () => {
-  locale.value = locale.value === 'zh-CN' ? 'en-US' : 'zh-CN'
+  // 循环切换语言: zh-CN -> en-US -> tl-PH -> zh-CN
+  if (locale.value === 'zh-CN') {
+    locale.value = 'en-US'
+  } else if (locale.value === 'en-US') {
+    locale.value = 'tl-PH'
+  } else {
+    locale.value = 'zh-CN'
+  }
+  
   localStorage.setItem('language', locale.value)
+  
+  // 更新区号
+  formData.areaCode = getDefaultAreaCode()
 }
 
 // 打开文章
@@ -223,9 +298,15 @@ const handleOpenArticle = (id, location) => {
   }
 }
 
+.areaCodeWrapper {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
 .areaCode {
   color: var(--van-primary-color);
-  margin-right: 8px;
+  margin-right: 4px;
 }
 
 .submit {
