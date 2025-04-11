@@ -46,6 +46,8 @@
               :border="false"
               :readonly="isView"
               @change="onHomeUrlChange"
+              clearable
+              @clear="onInputClear('homeUrl')"
             />
           </div>
 
@@ -58,6 +60,8 @@
               :border="false"
               :disabled="!form.homeUrl"
               :readonly="isView"
+              clearable
+              @clear="onInputClear('uid')"
             />
             <van-button type="primary" size="mini" @click="findFacebookId" v-if="isShowFindIdBtn">Find Facebook ID</van-button>
           </div>
@@ -70,6 +74,8 @@
               :class="$style.input"
               :border="false"
               :readonly="isView"
+              clearable
+              @clear="onInputClear('account')"
             />
           </div>
 
@@ -82,6 +88,8 @@
               :class="$style.input"
               :border="false"
               :readonly="isView"
+              clearable
+              @clear="onInputClear('fansCount')"
             />
           </div>
 
@@ -94,6 +102,8 @@
               :class="$style.input"
               :border="false"
               :readonly="isView"
+              clearable
+              @clear="onInputClear('friendsCount')"
             />
           </div>
 
@@ -106,6 +116,8 @@
               :class="$style.input"
               :border="false"
               :readonly="isView"
+              clearable
+              @clear="onInputClear('postsCount')"
             />
           </div>
         </template>
@@ -188,6 +200,15 @@ const selectedChannel = ref({
 })
 // 渠道列表
 const channelColumns = ref([])
+
+// 清空输入框
+const onInputClear = (field) => {
+  form.value[field] = '';
+  if(field === 'homeUrl') {
+    form.value.uid = ''
+  }
+}
+
 // 选择渠道
 const onPlatformConfirm = ({ selectedOptions }) => {
   selectedChannel.value = selectedOptions[0]
