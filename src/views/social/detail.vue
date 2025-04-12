@@ -247,7 +247,8 @@ const findFacebookId = () => {
 }
 
 const onHomeUrlChange = () => {
-  const url = form.value.homeUrl
+  isShowFindIdBtn.value = false;
+  const url = form.value.homeUrl;
   if(url.includes('facebook.com')) {
     extractFacebookId(url)
   }

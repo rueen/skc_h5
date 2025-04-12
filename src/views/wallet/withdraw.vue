@@ -11,7 +11,6 @@
       <div :class="$style.amountSection">
         <div :class="$style.label">{{ $t('wallet.withdraw.amount') }}</div>
         <div :class="$style.input">
-          <span :class="$style.currency">$</span>
           <van-field
             v-model="form.amount"
             type="digit"
@@ -20,8 +19,8 @@
           />
         </div>
         <div :class="$style.balance">
-          <span>{{ $t('wallet.withdraw.withdrawThreshold') }}：$ {{ withdrawThreshold }}</span>
-          <span>{{ $t('wallet.withdraw.withdrawableBalance') }}：$ {{ balance }}</span>
+          <span>{{ $t('wallet.withdraw.withdrawThreshold') }}：{{ withdrawThreshold }}</span>
+          <span>{{ $t('wallet.withdraw.withdrawableBalance') }}：{{ balance }}</span>
           <span :class="$style.all" @click="onWithdrawAll">{{ $t('wallet.withdraw.withdrawAll') }}</span>
         </div>
       </div>
