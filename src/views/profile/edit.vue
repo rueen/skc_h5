@@ -209,7 +209,6 @@ import { uploadImage } from '@/utils/upload'
 import Layout from '@/components/layout.vue'
 import NavBar from '@/components/NavBar.vue'
 
-const router = useRouter()
 const enumStore = useEnumStore()
 const userStore = useUserStore()
 
@@ -224,7 +223,7 @@ const inviteUrl = computed(() => {
 const form = ref({
   id: userInfo.id,
   avatar: userInfo.avatar,
-  memberNickname: userInfo.memberNickname,
+  memberNickname: userInfo.nickname,
   gender: userInfo.gender,
   occupation: userInfo.occupation,
   email: userInfo.email,
