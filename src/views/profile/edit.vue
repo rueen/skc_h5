@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 20:54:55
+ * @LastEditTime: 2025-04-12 14:55:46
  * @Description: 
 -->
 <template>
@@ -198,7 +198,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { showToast, closeToast } from 'vant'
 import { areaList } from '@vant/area-data'
@@ -215,23 +215,27 @@ const userStore = useUserStore()
 // 编辑状态
 const isEdit = ref(false)
 
-const userInfo = userStore.userInfo
+const userInfo = computed(() => userStore.userInfo || {})
 const inviteUrl = computed(() => {
-  return `${window.location.origin}?inviteCode=${userInfo.inviteCode}`
+  return `${window.location.origin}?inviteCode=${userInfo.value.inviteCode}`
 })
 // 表单数据
-const form = ref({
-  id: userInfo.id,
-  avatar: userInfo.avatar,
-  memberNickname: userInfo.nickname,
-  gender: userInfo.gender,
-  occupation: userInfo.occupation,
-  email: userInfo.email,
-  phone: userInfo.phone,
-  telegram: userInfo.telegram
+const form = ref({})
+watch(userInfo, (newVal) => {
+  form.value = {
+    id: newVal.id,
+    avatar: newVal.avatar,
+    memberNickname: newVal.nickname,
+    gender: newVal.gender,
+    occupation: newVal.occupation,
+    email: newVal.email,
+    phone: newVal.phone,
+    telegram: newVal.telegram
+  }
 })
+
 const avatarFile = ref([{
-  url: userInfo.avatar
+  url: userInfo.value.avatar
 }])
 
 // 选择器相关
