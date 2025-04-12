@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:10:49
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-30 09:40:29
+ * @LastEditTime: 2025-04-12 15:19:41
  * @Description: 
  */
 import { defineStore } from 'pinia'
@@ -45,6 +45,12 @@ export const useUserStore = defineStore('user', {
         console.error('登录失败:', error)
         throw error
       }
+    },
+    async getUserInfo() {
+      if (!this.userInfo) {
+        await this.fetchUserInfo()
+      }
+      return this.userInfo
     },
     // 获取用户信息
     async fetchUserInfo() {

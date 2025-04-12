@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-12 14:55:46
+ * @LastEditTime: 2025-04-12 15:20:43
  * @Description: 
 -->
 <template>
@@ -199,7 +199,6 @@
 
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue'
-import { useRouter } from 'vue-router'
 import { showToast, closeToast } from 'vant'
 import { areaList } from '@vant/area-data'
 import { useUserStore, useEnumStore } from '@/stores'
@@ -215,24 +214,12 @@ const userStore = useUserStore()
 // 编辑状态
 const isEdit = ref(false)
 
-const userInfo = computed(() => userStore.userInfo || {})
+const userInfo = ref({})
 const inviteUrl = computed(() => {
   return `${window.location.origin}?inviteCode=${userInfo.value.inviteCode}`
 })
 // 表单数据
 const form = ref({})
-watch(userInfo, (newVal) => {
-  form.value = {
-    id: newVal.id,
-    avatar: newVal.avatar,
-    memberNickname: newVal.nickname,
-    gender: newVal.gender,
-    occupation: newVal.occupation,
-    email: newVal.email,
-    phone: newVal.phone,
-    telegram: newVal.telegram
-  }
-})
 
 const avatarFile = ref([{
   url: userInfo.value.avatar
@@ -351,6 +338,18 @@ const onSubmit = async () => {
 }
 
 onMounted(async () => {
+  const userInfo = await userStore.getUserInfo()
+  userInfo.value = userInfo;
+  form.value = {
+    id: userInfo.id,
+    avatar: userInfo.avatar,
+    memberNickname: userInfo.nickname,
+    gender: userInfo.gender,
+    occupation: userInfo.occupation,
+    email: userInfo.email,
+    phone: userInfo.phone,
+    telegram: userInfo.telegram
+  }
 })
 </script>
 
