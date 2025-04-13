@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-12 15:20:43
+ * @LastEditTime: 2025-04-12 15:45:30
  * @Description: 
 -->
 <template>
@@ -221,9 +221,7 @@ const inviteUrl = computed(() => {
 // 表单数据
 const form = ref({})
 
-const avatarFile = ref([{
-  url: userInfo.value.avatar
-}])
+const avatarFile = ref([])
 
 // 选择器相关
 const showGenderPicker = ref(false)
@@ -350,6 +348,9 @@ onMounted(async () => {
     phone: userInfo.phone,
     telegram: userInfo.telegram
   }
+  avatarFile.value = [{
+    url: userInfo.avatar
+  }]
 })
 </script>
 

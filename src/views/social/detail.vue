@@ -229,14 +229,19 @@ const extractFacebookId = async (url) => {
       duration: 0,
       forbidClick: true,
     })
-    const res = await get('account.findUidByHomeUrl', {
-      homeUrl: form.value.homeUrl
-    })
-    closeToast()
-    if(res.code === 0 && res.data && res.data.uid) {
-      form.value.uid = res.data.uid
-    } else {
-      // 方法3: 使用第三方工具
+    try {
+      const res = await post('account.findUidByHomeUrl', {
+        homeUrl: form.value.homeUrl
+      })
+      closeToast()
+      if(res.code === 0 && res.data && res.data.uid) {
+        form.value.uid = res.data.uid
+      } else {
+        // 方法3: 使用第三方工具
+        isShowFindIdBtn.value = true
+      }
+    } catch (error) {
+      console.log(error)
       isShowFindIdBtn.value = true
     }
   }

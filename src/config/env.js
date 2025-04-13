@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:25:10
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-12 14:32:04
+ * @LastEditTime: 2025-04-13 16:37:56
  * @Description: 环境配置文件
  */
 
@@ -14,7 +14,8 @@ const isDev = process.env.NODE_ENV === 'development';
 // API 基础路径配置
 const API_BASE = {
   // 开发环境 API 基础路径
-  development: '',//'http://localhost:3001',
+  development: '',
+  // development: 'http://localhost:3001',
   // 生产环境 API 基础路径
   production: 'http://api.rueen.cn',
 };
