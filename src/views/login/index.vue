@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 18:30:17
+ * @LastEditTime: 2025-04-14 20:09:58
  * @Description: 登录页
  -->
  <template>
@@ -226,7 +226,7 @@ const getDefaultAreaCode = () => {
   if (browserLang.startsWith('tl') || browserLang.startsWith('fil')) return '63'
   
   // 默认区号
-  return '86'
+  return '63'
 }
 
 // 监听登录方式变化
