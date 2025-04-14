@@ -67,7 +67,7 @@
           </div>
           
           <div :class="$style.formItem">
-            <span :class="$style.label">{{ $t('social.edit.account') }}</span>
+            <span :class="$style.label">{{ selectedChannel.name }} Name</span>
             <van-field
               v-model="form.account"
               :placeholder="$t('social.edit.accountPlaceholder')"
