@@ -281,17 +281,41 @@ const checkForm = () => {
     showToast(t('social.edit.accountRequired'))
     return
   }
-  if(selectedChannel.value.customFields.includes('fansCount') && !form.value.fansCount) {
-    showToast(t('social.edit.fansCountRequired'))
-    return
+
+  // 验证粉丝数必须是非负整数
+  if(selectedChannel.value.customFields.includes('fansCount')) {
+    if(!form.value.fansCount) {
+      showToast(t('social.edit.fansCountRequired'))
+      return
+    }
+    if(!/^\d+$/.test(form.value.fansCount) || Number(form.value.fansCount) < 0) {
+      showToast(t('social.edit.fansCountInvalid'))
+      return
+    }
   }
-  if(selectedChannel.value.customFields.includes('friendsCount') && !form.value.friendsCount) {
-    showToast(t('social.edit.friendsCountRequired'))
-    return
+
+  // 验证好友数必须是非负整数
+  if(selectedChannel.value.customFields.includes('friendsCount')) {
+    if(!form.value.friendsCount) {
+      showToast(t('social.edit.friendsCountRequired'))
+      return
+    }
+    if(!/^\d+$/.test(form.value.friendsCount) || Number(form.value.friendsCount) < 0) {
+      showToast(t('social.edit.friendsCountInvalid'))
+      return
+    }
   }
-  if(selectedChannel.value.customFields.includes('postsCount') && !form.value.postsCount) {
-    showToast(t('social.edit.postsCountRequired'))
-    return
+
+  // 验证帖子数必须是非负整数
+  if(selectedChannel.value.customFields.includes('postsCount')) {
+    if(!form.value.postsCount) {
+      showToast(t('social.edit.postsCountRequired'))
+      return
+    }
+    if(!/^\d+$/.test(form.value.postsCount) || Number(form.value.postsCount) < 0) {
+      showToast(t('social.edit.postsCountInvalid'))
+      return
+    }
   }
   return true
 }

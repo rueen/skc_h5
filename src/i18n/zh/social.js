@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 15:59:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 19:24:06
+ * @LastEditTime: 2025-04-14 20:59:29
  * @Description: 
  */
 export default {
@@ -41,8 +41,11 @@ export default {
     homeUrlRequired: '请输入主页链接',
     accountRequired: '请输入账号名称',
     fansCountRequired: '请输入粉丝数',
+    fansCountInvalid: '粉丝数必须是非负整数',
     friendsCountRequired: '请输入好友数',
+    friendsCountInvalid: '好友数必须是非负整数',
     postsCountRequired: '请输入发帖数',
+    postsCountInvalid: '发帖数必须是非负整数',
     saveSuccess: '保存成功',
     confirmLeaveTitle: '确认离开',
     confirmLeaveMessage: '当前内容未保存，确定要离开吗？',

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 15:59:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:55:21
+ * @LastEditTime: 2025-04-14 20:59:10
  * @Description: 
  */
 export default {
@@ -41,8 +41,11 @@ export default {
     homeUrlRequired: 'Please fill up Profile Link',
     accountRequired: 'Please fill up account name',
     fansCountRequired: 'Please fill up followers count',
+    fansCountInvalid: 'Followers count must be a positive integer',
     friendsCountRequired: 'Please fill up friends count',
+    friendsCountInvalid: 'Friends count must be a positive integer',
     postsCountRequired: 'Please fill up posts count',
+    postsCountInvalid: 'Posts count must be a positive integer',
     saveSuccess: 'Save successfully',
     confirmLeaveTitle: 'Confirm Leave',
     confirmLeaveMessage: 'The current content is not saved. Are you sure you want to leave?',

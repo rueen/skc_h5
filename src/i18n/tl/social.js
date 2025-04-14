@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 15:59:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 19:23:56
+ * @LastEditTime: 2025-04-14 20:59:20
  * @Description: 
  */
 export default {
@@ -41,8 +41,11 @@ export default {
     homeUrlRequired: 'Mangyaring ilagay ang URL ng homepage',
     accountRequired: 'Mangyaring ilagay ang pangalan ng account',
     fansCountRequired: 'Mangyaring ilagay ang bilang ng followers',
+    fansCountInvalid: 'Bilang ng followers ay dapat na isang positibong integer',
     friendsCountRequired: 'Mangyaring ilagay ang bilang ng mga kaibigan',
+    friendsCountInvalid: 'Bilang ng mga kaibigan ay dapat na isang positibong integer',
     postsCountRequired: 'Mangyaring ilagay ang bilang ng mga post',
+    postsCountInvalid: 'Bilang ng mga post ay dapat na isang positibong integer',
     saveSuccess: 'Matagumpay na I-save',
     confirmLeaveTitle: 'Kumpirmahin ang Pag-away',
     confirmLeaveMessage: 'Ang kasalukuyang nilalaman ay hindi na-save. Sigurado ka bang gusto mong umaway?',
