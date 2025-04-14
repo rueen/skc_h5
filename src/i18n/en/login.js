@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:53:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 18:37:51
+ * @LastEditTime: 2025-04-14 20:14:19
  * @Description: 
  */
 export default {
@@ -29,5 +29,7 @@ export default {
   errorMessage: 'Login failed',
   agreementRequired: 'Login requires agreement to the User Agreement',
   passwordTips: 'Password should be 8-20 characters with letters and numbers',
-  loginRequired: 'Please login first'
+  loginRequired: 'Please login first',
+  
+  selectAreaCode: 'Select Area Code'
 } 

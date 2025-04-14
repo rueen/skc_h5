@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:53:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 18:37:58
+ * @LastEditTime: 2025-04-14 20:14:35
  * @Description: 
  */
 export default {
@@ -29,5 +29,7 @@ export default {
   errorMessage: 'Mag-login na nawala',
   agreementRequired: 'Mag-login na kailangan ang Kasunduan ng User',
   passwordTips: 'Ang password ay dapat 8-20 character at naglalaman ng mga titik at numero',
-  loginRequired: 'Mag-login muna'
+  loginRequired: 'Mag-login muna',
+
+  selectAreaCode: 'Pumili ng Area Code'
 } 

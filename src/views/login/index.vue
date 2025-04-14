@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:09:58
+ * @LastEditTime: 2025-04-14 20:14:25
  * @Description: 登录页
  -->
  <template>
@@ -117,7 +117,9 @@
         @confirm="onAreaCodeConfirm"
         @cancel="showAreaCodePicker = false"
         show-toolbar
-        title="选择区号"
+        :title="$t('login.selectAreaCode')"
+        :confirm-button-text="$t('common.confirm')"
+        :cancel-button-text="$t('common.cancel')"
       />
     </van-popup>
 

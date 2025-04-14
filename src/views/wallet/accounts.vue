@@ -65,6 +65,8 @@
         @confirm="onAccountTypeConfirm"
         @cancel="showAccountTypePicker = false"
         show-toolbar
+        :confirm-button-text="$t('common.confirm')"
+        :cancel-button-text="$t('common.cancel')"
       />
     </van-popup>
   </Layout>

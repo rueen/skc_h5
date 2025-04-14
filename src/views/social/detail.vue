@@ -149,6 +149,8 @@
         @confirm="onPlatformConfirm"
         @cancel="showPlatformPicker = false"
         show-toolbar
+        :confirm-button-text="$t('common.confirm')"
+        :cancel-button-text="$t('common.cancel')"
       />
     </van-popup>
   </Layout>

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 19:09:21
+ * @LastEditTime: 2025-04-14 20:15:52
  * @Description: 
 -->
 <template>
@@ -165,6 +165,8 @@
         @confirm="onGenderConfirm"
         @cancel="showGenderPicker = false"
         show-toolbar
+        :confirm-button-text="$t('common.confirm')"
+        :cancel-button-text="$t('common.cancel')"
       />
     </van-popup>
 
@@ -192,6 +194,8 @@
         @confirm="onOccupationConfirm"
         @cancel="showOccupationPicker = false"
         show-toolbar
+        :confirm-button-text="$t('common.confirm')"
+        :cancel-button-text="$t('common.cancel')"
       />
     </van-popup>
   </Layout>

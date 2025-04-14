@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:53:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 18:38:04
+ * @LastEditTime: 2025-04-14 20:14:43
  * @Description: 
  */
 export default {
@@ -29,5 +29,7 @@ export default {
   errorMessage: '登录失败',
   agreementRequired: '请同意用户协议',
   passwordTips: '密码长度为8-20位，必须包含字母和数字',
-  loginRequired: '请先登录'
+  loginRequired: '请先登录',
+
+  selectAreaCode: '选择区号'
 }
