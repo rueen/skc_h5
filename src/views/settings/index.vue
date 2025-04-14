@@ -55,6 +55,8 @@
         @cancel="showLanguagePicker = false"
         :default-index="currentLangIndex"
         :title="$t('settings.selectLanguage')"
+        :confirm-button-text="$t('settings.confirm')"
+        :cancel-button-text="$t('settings.cancel')"
         show-toolbar
       />
     </van-popup>

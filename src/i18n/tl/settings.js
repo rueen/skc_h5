@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:45:04
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 16:49:07
+ * @LastEditTime: 2025-04-14 18:07:26
  * @Description: 
  */
 export default {
@@ -10,6 +10,7 @@ export default {
   language: 'Mga Setting ng Wika',
   selectLanguage: 'Pumili ng Wika',
   cancel: 'Kanselahin',
+  confirm: 'Kumpirmahin',
   logout: 'Mag-logout',
   logoutConfirm: 'Kumpirmahin ang Pag-logout',
   logoutMessage: 'Sigurado ka bang gusto mong mag-logout?',
