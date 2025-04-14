@@ -2,118 +2,14 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:30:15
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-16 15:55:23
+ * @LastEditTime: 2025-04-14 18:10:54
  * @Description: 模拟数据工具
  */
 
 import config from '@/config/env';
 
 // 模拟数据映射
-const mockData = {
-  'task.list': ({
-    channelId,
-    page,
-    pageSize,
-  }) => {
-    return {
-      code: 0,
-      message: '获取任务列表成功',
-      data: {
-        total: 2,
-        list: [
-          {
-            id: 3,
-            taskName: "任务2",
-            taskStatus: "not_started",
-            channelId: 5,
-            channelName: "Instagram",
-            channelIcon: "http://localhost:3002/uploads/1742035638017-828581327.png",
-            reward: "100.00",
-            category: "旅行",
-            taskType: "image_text",
-            fansRequired: "3000万+",
-            startTime: "2025-03-16 07:34:52",
-            endTime: "2025-03-16 15:36:20",
-            createTime: "2025-03-16 15:36:20",
-          },
-          {
-            id: 4,
-            taskName: "任务1",
-            taskStatus: "not_started",
-            channelId: 6,
-            channelName: "facebook",
-            channelIcon: "http://localhost:3002/uploads/1742035626488-171861483.png",
-            reward: "100.00",
-            category: "宝妈",
-            taskType: "image_text",
-            fansRequired: "3000万+",
-            startTime: "2025-03-16 07:34:52",
-            endTime: "2025-03-16 15:36:20",
-            createTime: "2025-03-16 15:36:20",
-          },
-        ],
-        page: 1,
-        pageSize: 10,
-      },
-    };
-  },
-  'channel.list': (params) => {
-    return {
-      code: 0,
-      message: '获取渠道列表成功',
-      data: {
-        total: 100,
-        list: [
-          {
-            createTime: '2025-03-13 16:28:04',
-            icon: 'http://localhost:3002/uploads/1742035626488-171861483.png',
-            id: 6,
-            name: 'facebook',
-            updateTime: '2025-03-15 18:47:07',
-          },
-          {
-            createTime: '2025-03-13 16:27:55',
-            icon: 'http://localhost:3002/uploads/1742035638017-828581327.png',
-            id: 5,
-            name: 'Instagram',
-            updateTime: '2025-03-15 18:47:19',
-          }
-        ],
-        page: 1,
-        pageSize: 10,
-      },
-    };
-  },
-  'user.info': (params) => {
-    return {
-      code: 0,
-      message: '获取用户信息成功',
-      data: {
-        avatar: '',
-        id: 9,
-        loginType: 'phone',
-        memberAccount: '13211111111',
-        nickname: '用户317448'
-      },
-    };
-  },
-  'auth.login': (params) => {
-    return {
-      code: 0,
-      message: '登录成功',
-      data: {
-        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OSwiYWNjb3VudCI6InBob25lXzEzMjExMTExMTExIiwiaWF0IjoxNzQyMDQ1ODQ1LCJleHAiOjE3NDIxMzIyNDV9.XGaUIjfvB8k1zMcVhRxgt3KNQVF7MqPLhNGLt-NzyeQ",
-        userInfo: {
-          avatar: '',
-          id: 9,
-          loginType: 'phone',
-          memberAccount: '13211111111',
-          nickname: '用户317448'
-        }
-      },
-    };
-  },
-};
+const mockData = {};
 
 /**
  * 模拟 API 请求
