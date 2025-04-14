@@ -64,11 +64,9 @@ import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
 import Layout from '@/components/layout.vue'
 import { get, post } from '@/utils/request'
-import { useEnumStore } from '@/stores'
 import NavBar from '@/components/NavBar.vue'
 import { useI18n } from 'vue-i18n'
 
-const enumStore = useEnumStore()
 const router = useRouter()
 const { t } = useI18n()
 

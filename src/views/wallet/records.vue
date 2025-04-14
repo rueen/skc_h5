@@ -44,13 +44,11 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import Layout from '@/components/layout.vue'
 import { get } from '@/utils/request'
 import { useEnumStore } from '@/stores'
 import NavBar from '@/components/NavBar.vue'
 
-const router = useRouter()
 const enumStore = useEnumStore()
 
 // 列表数据
