@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:35:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 19:58:42
+ * @LastEditTime: 2025-04-14 20:19:22
  * @Description: API 请求工具
  */
 
@@ -42,7 +42,7 @@ const setupInterceptors = (service) => {
       }
 
       // 添加语言参数
-      const lang = localStorage.getItem('language') || 'zh-CN'
+      const lang = localStorage.getItem('language') || 'en-US'
       
       // 根据请求方法添加语言参数
       if (config.method.toLowerCase() === 'get') {

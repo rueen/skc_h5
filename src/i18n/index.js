@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-21 18:36:18
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 18:55:58
+ * @LastEditTime: 2025-04-14 20:19:10
  * @Description: 
  */
 import { createI18n } from 'vue-i18n'
@@ -11,7 +11,7 @@ import en from './en'
 import tl from './tl'
 
 // 获取本地存储的语言设置，默认中文
-const defaultLocale = localStorage.getItem('language') || 'zh-CN'
+const defaultLocale = localStorage.getItem('language') || 'en-US'
 
 const i18n = createI18n({
   legacy: false,

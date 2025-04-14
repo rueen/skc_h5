@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:14:25
+ * @LastEditTime: 2025-04-14 20:18:34
  * @Description: 登录页
  -->
  <template>
@@ -167,7 +167,7 @@ const togglePasswordVisibility = () => {
 // 区号选择相关
 const showAreaCodePicker = ref(false)
 const areaCodeColumns = [
-  { text: '中国 +86', value: '86' },
+  { text: 'CN +86', value: '86' },
   { text: 'USA +1', value: '1' },
   { text: 'Philippines +63', value: '63' },
   { text: 'UK +44', value: '44' },
