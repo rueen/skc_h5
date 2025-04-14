@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 19:09:12
+ * @LastEditTime: 2025-04-14 20:39:58
  * @Description: 
  */
 export default {
@@ -17,8 +17,9 @@ export default {
 
   cancel: '取消',
   confirm: '确认',
-
   copySuccess: '复制成功',
+  select: '选择',
+  inputPlaceholder: '请输入',
 
   upload: {
     invalidFile: '文件无效',

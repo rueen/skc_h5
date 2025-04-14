@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:36:55
+ * @LastEditTime: 2025-04-14 20:40:57
  * @Description: 
 -->
 <template>
@@ -125,7 +125,7 @@
           <template v-if="isEdit">
             <van-field
               v-model="form.telegram"
-              placeholder="请输入Telegram"
+              :placeholder="`${t('common.inputPlaceholder')} Telegram`"
               :class="$style.input"
               clearable
               @clear="onInputClear('telegram')"

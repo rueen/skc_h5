@@ -55,7 +55,7 @@
             <span :class="$style.label">{{ selectedChannel.name }}ID</span>
             <van-field
               v-model="form.uid"
-              :placeholder="`请输入${selectedChannel.name}ID`"
+              :placeholder="`${t('common.inputPlaceholder')} ${selectedChannel.name}ID`"
               :class="$style.input"
               :border="false"
               :disabled="!form.homeUrl"

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:30:10
+ * @LastEditTime: 2025-04-14 20:40:32
  * @Description: 
  */
 export default {
@@ -19,6 +19,7 @@ export default {
   confirm: 'Confirm',
   copySuccess: 'Copy successful',
   select: 'Select',
+  inputPlaceholder: 'Please enter',
 
   upload: {
     invalidFile: 'Invalid file',
