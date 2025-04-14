@@ -110,13 +110,9 @@ const onLogout = () => {
     confirmButtonText: t('settings.logout'),
     cancelButtonText: t('settings.cancel')
   }).then(async () => {
-    const res = await userStore.logout()
-    if(res.code === 0) {
-      showToast(t('settings.logoutSuccess'))
-      router.push('/login')
-    } else {
-      showToast(res.message)
-    }
+    await userStore.logout()
+    showToast(t('settings.logoutSuccess'))
+    router.push('/login')
   })
 }
 </script>
