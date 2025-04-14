@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 15:37:49
+ * @LastEditTime: 2025-04-14 19:38:11
  * @Description: 任务详情页
  -->
 <template>
@@ -211,6 +211,9 @@ import { useEnumStore, useUserStore } from '@/stores'
 import { shareInviteLink } from '@/utils/share'
 import Layout from '@/components/layout.vue'
 import NavBar from '@/components/NavBar.vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const router = useRouter()
 const route = useRoute()
@@ -225,12 +228,12 @@ const isStart = computed(() => {
 })
 
 // 任务流程步骤
-const processSteps = ['报名', '审核', '发帖', '完成']
+const processSteps = [t('task.detail.processStep1'), t('task.detail.processStep2'), t('task.detail.processStep3'), t('task.detail.processStep4')]
 
 // 分享/邀请功能
 const onShare = () => {
   if (!userStore.userInfo) {
-    showToast('请先登录')
+    showToast(t('login.loginRequired'))
     return
   }
   
@@ -238,7 +241,7 @@ const onShare = () => {
   const inviteCode = userStore.inviteCode
   
   // 使用分享工具方法生成并复制邀请链接
-  shareInviteLink(`/tasks/detail/${route.params.id}`, inviteCode)
+  shareInviteLink(`/tasks/detail/${route.params.id}`, inviteCode, {}, t('tasks.detail.shareSuccess'), t('tasks.detail.shareFailed'))
 }
 
 // 添加账号
@@ -252,18 +255,16 @@ const handleSubmitTask = async () => {
 
 // 提交报名
 const handleApply = async () => {
-  try {
-    const res = await post('task.enroll', {}, {
-      urlParams: {
-        taskId: route.params.id
-      }
-    })
-    if(res.code === 0) {
-      showToast('报名成功')
-      getDetail()
+  const res = await post('task.enroll', {}, {
+    urlParams: {
+      taskId: route.params.id
     }
-  } catch (error) {
-    console.log(error)
+  })
+  if(res.code === 0) {
+    showToast(t('task.message.enrollSuccess'))
+    getDetail()
+  } else {
+    showToast(res.message)
   }
 }
 

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 20:13:56
+ * @LastEditTime: 2025-04-14 19:02:50
  * @Description: 
  */
 export default {
@@ -34,7 +34,13 @@ export default {
     notEligibleToEnroll: 'Not Eligible to Enroll',
     viewSubmitDetails: 'View Submission Details',
     submitTask: 'Submit Task',
-    applyNow: 'Apply Now'
+    applyNow: 'Apply Now',
+    processStep1: 'Enroll',
+    processStep2: 'Audit',
+    processStep3: 'Publish',
+    processStep4: 'Complete',
+    shareSuccess: 'Invitation link copied to clipboard',
+    shareFailed: 'Failed to copy invitation link',
   },
 
   applications: {
@@ -55,5 +61,10 @@ export default {
     uploadFailed: 'Upload Failed, Abnormal Response',
     uploadSuccess: 'Upload Successful',
     pleaseFillInAllInformation: 'Please Fill In All Information'
+  },
+
+  message: {
+    enrollSuccess: 'Enrollment Successful',
+    enrollFailed: 'Enrollment Failed'
   }
 } 

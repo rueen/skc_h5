@@ -136,7 +136,7 @@ const onClickRight = () => {
 const onCreate = async() => {
   const res = await post('withdrawals.create', form.value)
   if(res.code === 0){
-    showToast('创建成功')
+    showToast(t('wallet.accounts.createSuccess'))
     router.back()
   } else {
     showToast(res.message)
@@ -151,7 +151,7 @@ const onUpdate = async() => {
     }
   })
   if(res.code === 0){
-    showToast('更新成功')
+    showToast(t('wallet.accounts.updateSuccess'))
     router.back()
   } else {
     showToast(res.message)
@@ -161,17 +161,17 @@ const onUpdate = async() => {
 // 提交表单
 const onSubmit = () => {
   if (!form.value.paymentChannelId) {
-    showToast('请选择账户类型')
+    showToast(t('wallet.accounts.pleaseSelectAccountType'))
     return
   }
 
   if (!form.value.account) {
-    showToast('请输入账号')
+    showToast(t('wallet.accounts.pleaseEnterAccount'))
     return
   }
 
   if (!form.value.name) {
-    showToast('请输入姓名')
+    showToast(t('wallet.accounts.pleaseEnterName'))
     return
   }
 

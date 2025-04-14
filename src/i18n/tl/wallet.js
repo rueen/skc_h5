@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 16:28:03
+ * @LastEditTime: 2025-04-14 18:52:03
  * @Description: 
  */
 export default {
@@ -46,6 +46,13 @@ export default {
     confirmAdd: 'Kumpirmahin ang Pagdagdag',
     saveChanges: 'I-save ang mga Pagbabago',
     pleaseSelect: 'Mangyaring Pumili',
+    createSuccess: 'Magdagdag na matagumpay',
+    createFailed: 'Magdagdag na nawala',
+    updateSuccess: 'Pagbabago na matagumpay',
+    updateFailed: 'Pagbabago na nawala',
+    pleaseSelectAccountType: 'Mangyaring pumili ng uri ng account',
+    pleaseEnterAccount: 'Mangyaring ilagay ang account',
+    pleaseEnterName: 'Mangyaring ilagay ang pangalan',
   },
 
   withdraw: {

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 16:28:03
+ * @LastEditTime: 2025-04-14 18:52:11
  * @Description: 
  */
 export default {
@@ -46,6 +46,13 @@ export default {
     confirmAdd: '确认添加',
     saveChanges: '保存修改',
     pleaseSelect: '请选择',
+    createSuccess: '创建成功',
+    createFailed: '创建失败',
+    updateSuccess: '更新成功',
+    updateFailed: '更新失败',
+    pleaseSelectAccountType: '请选择账户类型',
+    pleaseEnterAccount: '请输入账号',
+    pleaseEnterName: '请输入姓名',
   },
 
   withdraw: {

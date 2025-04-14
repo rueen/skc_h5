@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 20:13:48
+ * @LastEditTime: 2025-04-14 19:03:39
  * @Description: 
  */
 export default {
@@ -34,7 +34,13 @@ export default {
     notEligibleToEnroll: 'Hindi Kwalipikado para Mag-enrol',
     viewSubmitDetails: 'Tingnan ang Mga Detalye ng Pagpapasa',
     submitTask: 'Ipasa ang Gawain',
-    applyNow: 'Mag-apply Ngayon'
+    applyNow: 'Mag-apply Ngayon',
+    processStep1: 'Enrol',
+    processStep2: 'Audit',
+    processStep3: 'Publish',
+    processStep4: 'Complete',
+    shareSuccess: 'Nakopya na ang link ng imbitasyon sa clipboard',
+    shareFailed: 'Hindi mabigay ang link ng imbitasyon sa clipboard',
   },
 
   applications: {
@@ -55,5 +61,10 @@ export default {
     uploadFailed: 'Nabigo ang Pag-upload, Hindi Normal na Tugon',
     uploadSuccess: 'Matagumpay na Na-upload',
     pleaseFillInAllInformation: 'Mangyaring Punan ang Lahat ng Impormasyon'
+  },
+
+  message: {
+    enrollSuccess: 'Matagumpay na Naka-enrol',
+    enrollFailed: 'Nabigo na Naka-enrol'
   }
 } 

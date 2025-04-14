@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:45:04
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 18:07:35
+ * @LastEditTime: 2025-04-14 18:22:26
  * @Description: 
  */
 export default {
@@ -10,7 +10,6 @@ export default {
   language: '语言设置',
   selectLanguage: '选择语言',
   cancel: '取消',
-  confirm: '确认',
   logout: '退出登录',
   logoutConfirm: '确认退出',
   logoutMessage: '确定要退出登录吗？',

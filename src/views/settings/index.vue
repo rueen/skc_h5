@@ -55,8 +55,8 @@
         @cancel="showLanguagePicker = false"
         :default-index="currentLangIndex"
         :title="$t('settings.selectLanguage')"
-        :confirm-button-text="$t('settings.confirm')"
-        :cancel-button-text="$t('settings.cancel')"
+        :confirm-button-text="$t('common.confirm')"
+        :cancel-button-text="$t('common.cancel')"
         show-toolbar
       />
     </van-popup>
@@ -110,12 +110,12 @@ const onLogout = () => {
     confirmButtonText: t('settings.logout'),
     cancelButtonText: t('settings.cancel')
   }).then(async () => {
-    try {
-      await userStore.logout()
+    const res = await userStore.logout()
+    if(res.code === 0) {
       showToast(t('settings.logoutSuccess'))
       router.push('/login')
-    } catch (error) {
-      showToast(error)
+    } else {
+      showToast(res.message)
     }
   })
 }

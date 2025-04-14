@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 20:13:36
+ * @LastEditTime: 2025-04-14 19:03:47
  * @Description: 
  */
 export default {
@@ -34,7 +34,13 @@ export default {
     notEligibleToEnroll: '不满足报名条件',
     viewSubmitDetails: '查看提交详情',
     submitTask: '提交任务',
-    applyNow: '立即报名'
+    applyNow: '立即报名',
+    processStep1: '报名',
+    processStep2: '审核',
+    processStep3: '发帖',
+    processStep4: '完成',
+    shareSuccess: '邀请链接已复制到剪贴板',
+    shareFailed: '复制邀请链接失败',
   },
 
   applications: {
@@ -55,5 +61,10 @@ export default {
     uploadFailed: '上传失败，返回数据异常',
     uploadSuccess: '上传成功',
     pleaseFillInAllInformation: '请填写完整信息'
+  },
+
+  message: {
+    enrollSuccess: '报名成功',
+    enrollFailed: '报名失败'
   }
 }

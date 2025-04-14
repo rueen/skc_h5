@@ -163,6 +163,9 @@ import { useEnumStore } from '@/stores'
 import tag from '@/components/tag.vue'
 import Layout from '@/components/layout.vue'
 import NavBar from '@/components/NavBar.vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const enumStore = useEnumStore()
 const route = useRoute()
@@ -225,7 +228,7 @@ const extractFacebookId = async (url) => {
   } else {
     // 方法2: 去老数据表里查找
     showToast({
-      message: '正在获取 Facebook ID...',
+      message: t('social.edit.gettingFacebookId'),
       duration: 0,
       forbidClick: true,
     })
@@ -261,31 +264,31 @@ const onHomeUrlChange = () => {
 
 const checkForm = () => {
   if (form.value.channelId == null) {
-    showToast('请选择平台')
+    showToast(t('social.edit.platformRequired'))
     return
   }
   if(!form.value.homeUrl) {
-    showToast('请输入主页链接')
+    showToast(t('social.edit.homeUrlRequired'))
     return
   }
   if(!form.value.uid) {
-    showToast(`请输入${selectedChannel.value.name}ID`)
+    showToast(`${t('social.edit.input')} ${selectedChannel.value.name}ID`)
     return
   }
   if(!form.value.account) {
-    showToast('请输入账号名称')
+    showToast(t('social.edit.accountRequired'))
     return
   }
   if(selectedChannel.value.customFields.includes('fansCount') && !form.value.fansCount) {
-    showToast('请输入粉丝数')
+    showToast(t('social.edit.fansCountRequired'))
     return
   }
   if(selectedChannel.value.customFields.includes('friendsCount') && !form.value.friendsCount) {
-    showToast('请输入好友数')
+    showToast(t('social.edit.friendsCountRequired'))
     return
   }
   if(selectedChannel.value.customFields.includes('postsCount') && !form.value.postsCount) {
-    showToast('请输入发帖数')
+    showToast(t('social.edit.postsCountRequired'))
     return
   }
   return true
@@ -295,8 +298,8 @@ const addAccount = async () => {
   try {
     const res = await post('account.create', form.value)
     if(res.code === 0) {
-      showToast('保存成功')
-    router.back()
+      showToast(t('social.edit.saveSuccess'))
+      router.back()
     } else {
       showToast(res.message)
     }
@@ -313,7 +316,7 @@ const updateAccount = async () => {
       }
     })
     if(res.code === 0) {
-      showToast('保存成功')
+      showToast(t('social.edit.saveSuccess'))
       router.back()
     } else {
       showToast(res.message)
@@ -344,9 +347,11 @@ const onClickLeft = () => {
   if (isNew.value || isEditing.value) {
     // 显示确认弹窗
     showDialog({
-      title: '确认离开',
-      message: '当前内容未保存，确定要离开吗？',
-      showCancelButton: true
+      title: t('social.edit.confirmLeaveTitle'),
+      message: t('social.edit.confirmLeaveMessage'),
+      showCancelButton: true,
+      cancelButtonText: t('common.cancel'),
+      confirmButtonText: t('common.confirm'),
     }).then((action) => {
       if (action === 'confirm') {
         router.back()
@@ -372,30 +377,26 @@ const loadChannelList = async () => {
 }
 
 const loadAccountDetail = async () => {
-  try {
-    const res = await get('account.detail', {}, {
-      urlParams: {
-        id: route.params.id
-      }
-    })
-    if(res.code === 0) {
-      const data = res.data || {}
-      detail.value = data
-      form.value = {
-        channelId: data.channelId,
-        homeUrl: data.homeUrl,
-        uid: data.uid,
-        account: data.account,
-        fansCount: data.fansCount,
-        friendsCount: data.friendsCount,
-        postsCount: data.postsCount
-      }
-      selectedChannel.value = channelColumns.value.find(item => item.id === data.channelId)
-    } else {
-      showToast(res.message)
+  const res = await get('account.detail', {}, {
+    urlParams: {
+      id: route.params.id
     }
-  } catch (error) {
-    console.log(error)
+  })
+  if(res.code === 0) {
+    const data = res.data || {}
+    detail.value = data
+    form.value = {
+      channelId: data.channelId,
+      homeUrl: data.homeUrl,
+      uid: data.uid,
+      account: data.account,
+      fansCount: data.fansCount,
+      friendsCount: data.friendsCount,
+      postsCount: data.postsCount
+    }
+    selectedChannel.value = channelColumns.value.find(item => item.id === data.channelId)
+  } else {
+    showToast(res.message)
   }
 }
 onMounted(async () => {

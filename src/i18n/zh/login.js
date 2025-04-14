@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:53:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 15:07:21
+ * @LastEditTime: 2025-04-14 18:38:04
  * @Description: 
  */
 export default {
@@ -24,5 +24,10 @@ export default {
   agreement: '我已阅读并同意',
   userAgreement: '《用户协议》',
   and: '和',
-  privacyPolicy: '《隐私政策》'
+  privacyPolicy: '《隐私政策》',
+  successMessage: '登录成功',
+  errorMessage: '登录失败',
+  agreementRequired: '请同意用户协议',
+  passwordTips: '密码长度为8-20位，必须包含字母和数字',
+  loginRequired: '请先登录'
 }

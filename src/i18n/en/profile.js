@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:52:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 15:49:01
+ * @LastEditTime: 2025-04-14 18:42:35
  * @Description: 
  */
 export default {
@@ -36,5 +36,10 @@ export default {
     inviteLink: 'Invitation Link',
     inviteLinkPlaceholder: 'Please enter invitation link',
     save: 'Save',
+  },
+
+  message: {
+    saveSuccess: 'Save successful',
+    saveFailed: 'Save failed'
   }
 } 

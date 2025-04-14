@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 16:28:03
+ * @LastEditTime: 2025-04-14 18:52:53
  * @Description: 
  */
 export default {
@@ -46,6 +46,13 @@ export default {
     confirmAdd: 'Confirm Addition',
     saveChanges: 'Save Changes',
     pleaseSelect: 'Please Select',
+    createSuccess: 'Create successful',
+    createFailed: 'Create failed',
+    updateSuccess: 'Update successful',
+    updateFailed: 'Update failed',
+    pleaseSelectAccountType: 'Please select account type',
+    pleaseEnterAccount: 'Please enter account',
+    pleaseEnterName: 'Please enter name',
   },
 
   withdraw: {

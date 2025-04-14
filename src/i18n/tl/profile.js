@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:52:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 15:49:01
+ * @LastEditTime: 2025-04-14 18:43:15
  * @Description: 
  */
 export default {
@@ -36,5 +36,10 @@ export default {
     inviteLink: 'Link ng Imbitasyon',
     inviteLinkPlaceholder: 'Mangyaring ilagay ang link ng imbitasyon',
     save: 'I-save',
+  },
+
+  message: {
+    saveSuccess: 'Mag-save na matagumpay',
+    saveFailed: 'Mag-save na nawala'
   }
 } 

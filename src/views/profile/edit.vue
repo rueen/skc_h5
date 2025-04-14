@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-12 15:45:30
+ * @LastEditTime: 2025-04-14 19:09:21
  * @Description: 
 -->
 <template>
@@ -207,6 +207,9 @@ import avatar from '@/components/avatar.vue'
 import { uploadImage } from '@/utils/upload'
 import Layout from '@/components/layout.vue'
 import NavBar from '@/components/NavBar.vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const enumStore = useEnumStore()
 const userStore = useUserStore()
@@ -242,7 +245,7 @@ const onInputClear = (field) => {
 const afterRead = async (file) => {
   // 检查文件对象
   if (!file || !file.file) {
-    showToast('文件无效')
+    showToast(t('common.upload.invalidFile'))
     return
   }
   
@@ -250,13 +253,17 @@ const afterRead = async (file) => {
     // 显示上传中提示
     showToast({
       type: 'loading',
-      message: '上传中...',
+      message: t('common.upload.uploading'),
       forbidClick: true,
       duration: 0
     })
     
     // 调用上传图片接口，自动会进行压缩
-    const result = await uploadImage(file.file)
+    const result = await uploadImage(file.file, {}, {
+      imageRequired: t('common.upload.imageRequired'),
+      imageSize: t('common.upload.imageSize'),
+      uploadFailed: t('common.upload.uploadFailed')
+    })
     
     // 关闭上传中提示
     closeToast()
@@ -264,16 +271,16 @@ const afterRead = async (file) => {
     // 更新头像地址
     if (result && result.url) {
       form.value.avatar = result.url
-      showToast('上传成功')
+      showToast(t('common.upload.uploadSuccess'))
     } else {
       console.error('头像上传返回数据异常:', result)
-      showToast('上传失败，返回数据异常')
+      showToast(t('common.upload.uploadFailed'))
     }
   } catch (error) {
     // 关闭上传中提示
     closeToast()
     console.error('头像上传失败:', error)
-    showToast('上传失败，请重试')
+    showToast(t('common.upload.uploadFailed'))
   }
 }
 
@@ -299,12 +306,8 @@ const onOccupationConfirm = ({ selectedOptions }) => {
 // 复制邀请链接
 const handleCopy = (text) => {
   navigator.clipboard.writeText(text).then(() => {
-    showToast('复制成功')
+    showToast(t('common.copySuccess'))
   })
-}
-
-const handleJoinGroup = (groupLink) => {
-  window.open(groupLink, '_blank')
 }
 
 const onSubmit = async () => {
@@ -320,7 +323,7 @@ const onSubmit = async () => {
       
       const res = await put('member.update', submitData)
       if (res.code === 0) {
-        showToast('保存成功')
+        showToast(t('profile.message.saveSuccess'))
         // 更新用户信息
         userStore.setUserInfo({
           ...userStore.userInfo,
@@ -330,7 +333,7 @@ const onSubmit = async () => {
       }
     } catch (error) {
       console.error('保存个人信息失败:', error)
-      showToast('保存失败')
+      showToast(t('profile.message.saveFailed'))
     }
   }
 }

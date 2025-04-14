@@ -194,7 +194,11 @@ const afterRead = async (file, {name, index}) => {
   })
   
   // 调用上传图片接口
-  const result = await uploadImage(file.file)
+  const result = await uploadImage(file.file, {}, {
+    imageRequired: t('common.upload.imageRequired'),
+    imageSize: t('common.upload.imageSize'),
+    uploadFailed: t('common.upload.uploadFailed')
+  })
   
   // 关闭上传中提示
   closeToast()
@@ -206,7 +210,6 @@ const afterRead = async (file, {name, index}) => {
     }
     showToast(t('task.submit.uploadSuccess'))
   } else {
-    console.error('头像上传返回数据异常:', result)
     showToast(t('task.submit.uploadFailed'))
   }
 }

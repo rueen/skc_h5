@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:52:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 15:49:01
+ * @LastEditTime: 2025-04-14 18:43:22
  * @Description: 
  */
 export default {
@@ -36,5 +36,10 @@ export default {
     inviteLink: '邀请链接',
     inviteLinkPlaceholder: '请输入邀请链接',
     save: '保存',
+  },
+
+  message: {
+    saveSuccess: '保存成功',
+    saveFailed: '保存失败'
   }
 }

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 15:59:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 16:04:43
+ * @LastEditTime: 2025-04-14 19:23:56
  * @Description: 
  */
 export default {
@@ -35,5 +35,16 @@ export default {
     warningText: 'Ang pag-edit ng impormasyon ng account ay nangangailangan ng muling beripikasyon',
     resubmit: 'Muling Isumite',
     save: 'I-save',
+    gettingFacebookId: 'Nabigong mabigyan ng Facebook ID...',
+    input: 'Mangyaring ilagay',
+    platformRequired: 'Mangyaring pumili ng platform',
+    homeUrlRequired: 'Mangyaring ilagay ang URL ng homepage',
+    accountRequired: 'Mangyaring ilagay ang pangalan ng account',
+    fansCountRequired: 'Mangyaring ilagay ang bilang ng followers',
+    friendsCountRequired: 'Mangyaring ilagay ang bilang ng mga kaibigan',
+    postsCountRequired: 'Mangyaring ilagay ang bilang ng mga post',
+    saveSuccess: 'Matagumpay na I-save',
+    confirmLeaveTitle: 'Kumpirmahin ang Pag-away',
+    confirmLeaveMessage: 'Ang kasalukuyang nilalaman ay hindi na-save. Sigurado ka bang gusto mong umaway?',
   }
 } 

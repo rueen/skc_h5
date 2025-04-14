@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:35:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-24 15:34:40
+ * @LastEditTime: 2025-04-14 18:55:17
  * @Description: API 请求工具
  */
 
@@ -70,8 +70,7 @@ const setupInterceptors = (service) => {
     response => {
       const res = response.data
       if (res.code !== 0) {
-        showToast(res.message || '请求失败')
-        console.error('接口返回错误:', res.message)
+        showToast(res.message || 'error')
         return Promise.reject(new Error(res.message || '未知错误'))
       }
       return res

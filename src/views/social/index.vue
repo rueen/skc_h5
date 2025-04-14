@@ -67,6 +67,8 @@
       v-model:show="showDeleteDialog"
       :title="$t('social.index.deleteConfirmTitle')"
       :message="`${$t('social.index.deleteConfirmMessage')}「${selectedCard?.account}」`"
+      :confirm-button-text="$t('common.confirm')"
+      :cancel-button-text="$t('common.cancel')"
       show-cancel-button
       @confirm="onDeleteConfirm"
     />
@@ -82,6 +84,9 @@ import { useEnumStore } from '@/stores'
 import tag from '@/components/tag.vue'
 import Layout from '@/components/layout.vue'
 import NavBar from '@/components/NavBar.vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const enumStore = useEnumStore()
 const router = useRouter()
@@ -116,27 +121,20 @@ const onDeleteConfirm = async () => {
         id: selectedCard.value.id
       }
     })
-    if(res.code === 0) {
-      list.value = list.value.filter(item => item.id !== selectedCard.value.id)
-      showToast($t('social.index.deleteSuccess'))
-    } else {
-      showToast(res.message)
-    }
+    list.value = list.value.filter(item => item.id !== selectedCard.value.id)
+    showToast(t('social.index.deleteSuccess'))
   } catch (error) {
+    showToast(t('social.index.deleteFailed'))
     console.log(error)
   }
 }
 
 const loadList = async () => {
-  try {
-    const res = await get('account.list')
-    if(res.code === 0) {
-      list.value = res.data || []
-    } else {
-      showToast(res.message)
-    }
-  } catch (error) {
-    console.log(error)
+  const res = await get('account.list')
+  if(res.code === 0) {
+    list.value = res.data || []
+  } else {
+    showToast(res.message)
   }
 }
 onMounted(async () => {

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 20:41:31
+ * @LastEditTime: 2025-04-14 18:30:17
  * @Description: 登录页
  -->
  <template>
@@ -129,13 +129,15 @@
         @cancel="showLanguagePicker = false"
         show-toolbar
         :title="$t('settings.selectLanguage')"
+        :confirm-button-text="$t('common.confirm')"
+        :cancel-button-text="$t('common.cancel')"
       />
     </van-popup>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, computed } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/stores'
@@ -268,6 +270,11 @@ const onSubmit = async () => {
     return
   }
 
+  if(formData.password.length < 8 || formData.password.length > 20 || !/^(?=.*[a-zA-Z])(?=.*\d).{8,20}$/.test(formData.password)) {
+    showToast(t('login.passwordTips'))
+    return
+  }
+
   // 根据当前选中的标签页确定登录类型
   const loginType = activeTab.value === 0 ? 'phone' : 'email'
   
@@ -298,7 +305,7 @@ const onSubmit = async () => {
     }
 
     // 调用登录 API
-    await userStore.login(loginData)
+    await userStore.login(loginData, t('login.successMessage'))
     await userStore.fetchUserInfo()
     // 加载枚举数据
     enumStore.resetEnum();

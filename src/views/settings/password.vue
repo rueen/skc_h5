@@ -136,22 +136,18 @@ const onSubmit = async () => {
     return
   }
 
-  try {
-    const res = await post('auth.changePassword', {
-      currentPassword: form.value.currentPassword,
-      newPassword: form.value.newPassword,
-      confirmPassword: form.value.confirmPassword
-    })
-    if(res.code === 0) {
-      showToast(t('settings.passwordSuccess'))
-      setTimeout(() => {
-        router.push('/login')
-      }, 1000)
-    } else {
-      showToast(res.message)
-    }
-  } catch (error) {
-    console.log(error)
+  const res = await post('auth.changePassword', {
+    currentPassword: form.value.currentPassword,
+    newPassword: form.value.newPassword,
+    confirmPassword: form.value.confirmPassword
+  })
+  if(res.code === 0) {
+    showToast(t('settings.passwordSuccess'))
+    setTimeout(() => {
+      router.push('/login')
+    }, 1000)
+  } else {
+    showToast(res.message)
   }
 }
 </script>

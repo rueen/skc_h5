@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:53:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 15:07:21
+ * @LastEditTime: 2025-04-14 18:37:51
  * @Description: 
  */
 export default {
@@ -24,5 +24,10 @@ export default {
   agreement: 'I have read and agree to the',
   userAgreement: 'User Agreement',
   and: 'and',
-  privacyPolicy: 'Privacy Policy'
+  privacyPolicy: 'Privacy Policy',
+  successMessage: 'Login successful',
+  errorMessage: 'Login failed',
+  agreementRequired: 'Login requires agreement to the User Agreement',
+  passwordTips: 'Password should be 8-20 characters with letters and numbers',
+  loginRequired: 'Please login first'
 } 
