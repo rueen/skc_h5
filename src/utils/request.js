@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:35:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 18:55:17
+ * @LastEditTime: 2025-04-14 19:58:42
  * @Description: API 请求工具
  */
 
@@ -39,6 +39,21 @@ const setupInterceptors = (service) => {
       // 如果有 token，则添加到请求头中
       if (token) {
         config.headers['Authorization'] = `Bearer ${token}`
+      }
+
+      // 添加语言参数
+      const lang = localStorage.getItem('language') || 'zh-CN'
+      
+      // 根据请求方法添加语言参数
+      if (config.method.toLowerCase() === 'get') {
+        config.params = { ...config.params, lang }
+      } else {
+        // 如果是 FormData，需要特殊处理
+        if (config.data instanceof FormData) {
+          config.data.append('lang', lang)
+        } else {
+          config.data = { ...config.data, lang }
+        }
       }
       
       // 如果是FormData类型的请求，确保不修改Content-Type
