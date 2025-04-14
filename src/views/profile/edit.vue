@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:15:52
+ * @LastEditTime: 2025-04-14 20:36:55
  * @Description: 
 -->
 <template>
@@ -75,7 +75,7 @@
           <template v-if="isEdit">
             <div :class="$style.value" @click="showOccupationPicker = true">
               <span :class="[$style.text, $style.pickerValue]">
-                {{ form.occupation ? enumStore.getEnumText('OccupationType', form.occupation) : '请选择' }}
+                {{ form.occupation ? enumStore.getEnumText('OccupationType', form.occupation) : $t('common.select') }}
               </span>
               <van-icon name="arrow" />
             </div>
@@ -355,9 +355,11 @@ onMounted(async () => {
     phone: userInfo.phone,
     telegram: userInfo.telegram
   }
-  avatarFile.value = [{
-    url: userInfo.avatar
-  }]
+  if(userInfo.avatar){
+    avatarFile.value = [{
+      url: userInfo.avatar
+    }]
+  }
 })
 </script>
 

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 19:38:11
+ * @LastEditTime: 2025-04-14 20:27:23
  * @Description: 任务详情页
  -->
 <template>
@@ -241,7 +241,7 @@ const onShare = () => {
   const inviteCode = userStore.inviteCode
   
   // 使用分享工具方法生成并复制邀请链接
-  shareInviteLink(`/tasks/detail/${route.params.id}`, inviteCode, {}, t('tasks.detail.shareSuccess'), t('tasks.detail.shareFailed'))
+  shareInviteLink(`/tasks/detail/${route.params.id}`, inviteCode, {}, t('task.detail.shareSuccess'), t('task.detail.shareFailed'))
 }
 
 // 添加账号

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:18:34
+ * @LastEditTime: 2025-04-14 20:20:23
  * @Description: 登录页
  -->
  <template>
@@ -242,7 +242,7 @@ const formData = reactive({
   memberAccount: '',
   password: '',
   areaCode: getDefaultAreaCode(),
-  agreed: false
+  agreed: true
 })
 
 // 清空输入框

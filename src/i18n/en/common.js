@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 19:11:28
+ * @LastEditTime: 2025-04-14 20:30:10
  * @Description: 
  */
 export default {
@@ -18,6 +18,7 @@ export default {
   cancel: 'Cancel',
   confirm: 'Confirm',
   copySuccess: 'Copy successful',
+  select: 'Select',
 
   upload: {
     invalidFile: 'Invalid file',
