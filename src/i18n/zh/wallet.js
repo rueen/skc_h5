@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 18:52:11
+ * @LastEditTime: 2025-04-14 20:47:51
  * @Description: 
  */
 export default {
@@ -52,6 +52,7 @@ export default {
     updateFailed: '更新失败',
     pleaseSelectAccountType: '请选择账户类型',
     pleaseEnterAccount: '请输入账号',
+    invalidAccount: '账号格式错误',
     pleaseEnterName: '请输入姓名',
   },
 

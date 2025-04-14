@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 18:52:03
+ * @LastEditTime: 2025-04-14 20:47:37
  * @Description: 
  */
 export default {
@@ -52,6 +52,7 @@ export default {
     updateFailed: 'Pagbabago na nawala',
     pleaseSelectAccountType: 'Mangyaring pumili ng uri ng account',
     pleaseEnterAccount: 'Mangyaring ilagay ang account',
+    invalidAccount: 'Diwalidong account',
     pleaseEnterName: 'Mangyaring ilagay ang pangalan',
   },
 

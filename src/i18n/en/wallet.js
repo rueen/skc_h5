@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:43:38
+ * @LastEditTime: 2025-04-14 20:47:29
  * @Description: 
  */
 export default {
@@ -52,6 +52,7 @@ export default {
     updateFailed: 'Update failed',
     pleaseSelectAccountType: 'Please select account type',
     pleaseEnterAccount: 'Please enter account',
+    invalidAccount: 'Invalid account',
     pleaseEnterName: 'Please enter name',
   },
 

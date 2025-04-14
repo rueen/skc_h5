@@ -172,6 +172,11 @@ const onSubmit = () => {
     return
   }
 
+  if(!/^0\d{10}$/.test(form.value.account)){
+    showToast(t('wallet.accounts.invalidAccount'))
+    return
+  }
+
   if (!form.value.name) {
     showToast(t('wallet.accounts.pleaseEnterName'))
     return
