@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 15:59:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 19:22:33
+ * @LastEditTime: 2025-04-14 20:53:45
  * @Description: 
  */
 export default {
@@ -23,27 +23,27 @@ export default {
     accountStatus: 'Account Status',
     rejectReason: 'Rejection Reason',
     platform: 'Platform',
-    homeUrl: 'Homepage URL',
-    homeUrlPlaceholder: 'Please enter homepage URL',
+    homeUrl: 'Profile Link',
+    homeUrlPlaceholder: 'Please fill up Profile Link',
     account: 'Account Name',
-    accountPlaceholder: 'Please enter account name',
+    accountPlaceholder: 'Please fill up account name',
     fansCount: 'Followers Count',
-    fansCountPlaceholder: 'Please enter followers count',
+    fansCountPlaceholder: 'Please fill up followers count',
     friendsCount: 'Friends Count',
-    friendsCountPlaceholder: 'Please enter friends count',
+    friendsCountPlaceholder: 'Please fill up friends count',
     postsCount: 'Posts Count',
-    postsCountPlaceholder: 'Please enter posts count',
+    postsCountPlaceholder: 'Please fill up posts count',
     warningText: 'Modifying account information requires re-verification',
     resubmit: 'Resubmit',
     save: 'Save',
     gettingFacebookId: 'Getting Facebook ID...',
-    input: 'Please enter',
+    input: 'Please fill up',
     platformRequired: 'Please select a platform',
-    homeUrlRequired: 'Please enter homepage URL',
-    accountRequired: 'Please enter account name',
-    fansCountRequired: 'Please enter followers count',
-    friendsCountRequired: 'Please enter friends count',
-    postsCountRequired: 'Please enter posts count',
+    homeUrlRequired: 'Please fill up Profile Link',
+    accountRequired: 'Please fill up account name',
+    fansCountRequired: 'Please fill up followers count',
+    friendsCountRequired: 'Please fill up friends count',
+    postsCountRequired: 'Please fill up posts count',
     saveSuccess: 'Save successfully',
     confirmLeaveTitle: 'Confirm Leave',
     confirmLeaveMessage: 'The current content is not saved. Are you sure you want to leave?',

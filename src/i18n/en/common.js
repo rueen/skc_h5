@@ -19,7 +19,7 @@ export default {
   confirm: 'Confirm',
   copySuccess: 'Copy successful',
   select: 'Select',
-  inputPlaceholder: 'Please enter',
+  inputPlaceholder: 'Please fill up',
 
   upload: {
     invalidFile: 'Invalid file',
