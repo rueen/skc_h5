@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 18:52:53
+ * @LastEditTime: 2025-04-14 20:43:38
  * @Description: 
  */
 export default {
@@ -13,7 +13,7 @@ export default {
     withdraw: 'Withdraw',
     settlementBill: 'Settlement Bills',
     withdrawalRecords: 'Withdrawal Records',
-    withdrawalAccount: 'Withdrawal Account',
+    withdrawalAccount: 'Withdrawal E-Wallet',
     notSet: 'Not Set',
 
     pleaseSetWithdrawalAccount: 'Please set a withdrawal account first',
@@ -31,13 +31,13 @@ export default {
   },
 
   accounts: {
-    addTitle: 'Add Withdrawal Account',
-    editTitle: 'Edit Withdrawal Account',
+    addTitle: 'Add Withdrawal E-Wallet',
+    editTitle: 'Edit Withdrawal E-Wallet',
     edit: 'Edit',
     cancel: 'Cancel',
     confirmAdd: 'Confirm Addition',
     saveChanges: 'Save Changes',
-    previewTitle: 'Withdrawal Account Details',
+    previewTitle: 'Withdrawal E-Wallet Details',
     accountType: 'Account Type',
     account: 'Account',
     accountPlaceholder: 'Please enter account',
@@ -63,7 +63,7 @@ export default {
     withdrawableBalance: 'Withdrawable Balance',
     withdrawAll: 'Withdraw All',
     confirmWithdraw: 'Confirm Withdrawal',
-    withdrawAccount: 'Withdrawal Account',
+    withdrawAccount: 'Withdrawal E-Wallet',
     notSet: 'Not Set',
 
     pleaseSetWithdrawalAccount: 'Please set a withdrawal account first',
