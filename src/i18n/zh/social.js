@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 15:59:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:59:29
+ * @LastEditTime: 2025-04-14 21:01:03
  * @Description: 
  */
 export default {
@@ -24,7 +24,6 @@ export default {
     platform: '平台',
     homeUrl: '主页链接',
     homeUrlPlaceholder: '请输入主页链接',
-    account: '账号名称',
     accountPlaceholder: '请输入账号名称',
     fansCount: '粉丝数',
     fansCountPlaceholder: '请输入粉丝数',

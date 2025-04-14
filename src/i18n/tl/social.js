@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 15:59:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:59:20
+ * @LastEditTime: 2025-04-14 21:01:14
  * @Description: 
  */
 export default {
@@ -24,7 +24,6 @@ export default {
     platform: 'Platform',
     homeUrl: 'URL ng Homepage',
     homeUrlPlaceholder: 'Mangyaring ilagay ang URL ng homepage',
-    account: 'Pangalan ng Account',
     accountPlaceholder: 'Mangyaring ilagay ang pangalan ng account',
     fansCount: 'Bilang ng Followers',
     fansCountPlaceholder: 'Mangyaring ilagay ang bilang ng followers',
