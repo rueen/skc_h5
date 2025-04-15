@@ -264,7 +264,18 @@ const getTaskDetail = async () => {
       notice: res.data.notice.replace(/\n/g, '<br>')
     }
     if(!isNew.value) {
-      customFields.value = submittedInfo.value.submitContent.customFields;
+      let submittedCustomFields = [];
+      if(submittedInfo.value.submitContent && submittedInfo.value.submitContent.customFields) {
+        submittedCustomFields = submittedInfo.value.submitContent.customFields;
+      }
+      const taskDetailCustomFields = res.data.customFields || [];
+      customFields.value = taskDetailCustomFields.map(item => {
+        const submittedCustomField = submittedCustomFields.find(customField => customField.title === item.title && customField.type === item.type);
+        return {
+          ...item,
+          value: submittedCustomField ? submittedCustomField.value : (item.type === 'image' ? [] : '')
+        }
+      })
     } else {
       customFields.value = res.data.customFields.map(item => ({
         ...item,
