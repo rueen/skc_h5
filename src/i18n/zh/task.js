@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 19:03:47
+ * @LastEditTime: 2025-04-16 11:03:34
  * @Description: 
  */
 export default {
@@ -39,8 +39,6 @@ export default {
     processStep2: '审核',
     processStep3: '发帖',
     processStep4: '完成',
-    shareSuccess: '邀请链接已复制到剪贴板',
-    shareFailed: '复制邀请链接失败',
   },
 
   applications: {

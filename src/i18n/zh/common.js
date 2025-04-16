@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:39:58
+ * @LastEditTime: 2025-04-16 11:14:25
  * @Description: 
  */
 export default {
@@ -29,5 +29,20 @@ export default {
     imageRequired: '请上传图片文件',
     imageSize: '图片大小不能超过',
     uploadFailed: '上传失败',
+  },
+
+  copy: (type) => {
+    switch (type) {
+      case 'share':
+        return {
+          success: '邀请链接已复制到剪贴板',
+          failed: '复制邀请链接失败',
+        }
+      default:
+        return {
+          success: '复制成功',
+          failed: '复制失败',
+        }
+    }
   }
 }

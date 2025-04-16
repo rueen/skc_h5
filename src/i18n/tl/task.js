@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 19:03:39
+ * @LastEditTime: 2025-04-16 11:03:25
  * @Description: 
  */
 export default {
@@ -39,8 +39,6 @@ export default {
     processStep2: 'Audit',
     processStep3: 'Publish',
     processStep4: 'Complete',
-    shareSuccess: 'Nakopya na ang link ng imbitasyon sa clipboard',
-    shareFailed: 'Hindi mabigay ang link ng imbitasyon sa clipboard',
   },
 
   applications: {

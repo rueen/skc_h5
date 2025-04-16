@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:40:37
+ * @LastEditTime: 2025-04-16 11:16:14
  * @Description: 
  */
 export default {
@@ -29,5 +29,20 @@ export default {
     imageRequired: 'Maglagay ng imahe',
     imageSize: 'Di mas malaki kaysa',
     uploadFailed: 'Kumopyahin na nawala',
+  },
+
+  copy: (type) => {
+    switch (type) {
+      case 'share':
+        return {
+          shareSuccess: 'Invitation link copied to clipboard',
+          shareFailed: 'Failed to copy invitation link',
+        }
+      default:
+        return {
+          success: 'Copy successful',
+          failed: 'Copy failed',
+        }
+    }
   }
 } 

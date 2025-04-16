@@ -2,30 +2,10 @@
  * @Author: rueen
  * @Date: 2025-03-21 14:30:00
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 19:00:51
+ * @LastEditTime: 2025-04-16 11:16:36
  * @Description: 分享和复制工具方法
  */
-
-import { showToast } from 'vant'
-
-/**
- * 复制文本到剪贴板
- * @param {String} text - 要复制的文本
- * @param {String} successMessage - 复制成功时的提示消息
- * @returns {Promise<boolean>} - 返回复制是否成功
- */
-export const copyToClipboard = async (text, successMessage, failMessage) => {
-  try {
-    await navigator.clipboard.writeText(text)
-    showToast(successMessage)
-    return true
-  } catch (err) {
-    console.error('复制失败:', err)
-    showToast(failMessage)
-    return false
-  }
-}
-
+import { copyToClipboard } from './copyToClipboard'
 /**
  * 生成带有邀请码的链接
  * @param {String} path - 页面路径
@@ -60,11 +40,9 @@ export const generateInviteLink = (path, inviteCode, params = {}) => {
  */
 export const shareInviteLink = async (path, inviteCode, params = {}, successMessage, failMessage) => {
   const inviteLink = generateInviteLink(path, inviteCode, params)
-  return copyToClipboard(inviteLink, successMessage, failMessage)
+  return copyToClipboard(inviteLink, 'share')
 }
 
 export default {
-  copyToClipboard,
-  generateInviteLink,
   shareInviteLink
 } 
