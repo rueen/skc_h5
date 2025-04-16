@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-21 11:10:52
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 19:00:54
+ * @LastEditTime: 2025-04-16 15:41:53
  * @Description: 
 -->
 <template>
@@ -88,8 +88,8 @@
         <div :class="$style.formItem">
           <div :class="$style.label">{{ $t('groups.index.groupLink') }}</div>
           <div :class="$style.value">
-            <span>{{ group.groupLink }}</span>
-            <van-icon name="copy" />
+            <div :class="$style.groupLink">{{ group.groupLink }}</div>
+            <van-button type="primary" size="mini" @click="handleCopy(group.groupLink)">复制</van-button>
           </div>
         </div>
       </div>
@@ -103,6 +103,7 @@ import { useRouter } from 'vue-router'
 import { get } from '@/utils/request'
 import Layout from '@/components/layout.vue'
 import NavBar from '@/components/NavBar.vue'
+import { copyToClipboard } from '@/utils/copyToClipboard'
 
 const router = useRouter()
 
@@ -158,6 +159,10 @@ const onRefresh = () => {
   finished.value = false
   loading.value = true
   loadCommissionTasks()
+}
+
+const handleCopy = (text) => {
+  copyToClipboard(text)
 }
 
 onMounted(async () => {
@@ -253,7 +258,17 @@ onMounted(async () => {
     .value {
       font-size: 14px;
       color: #323233;
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
     }
+  }
+  .groupLink{
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 10px;
   }
 }
 .text {

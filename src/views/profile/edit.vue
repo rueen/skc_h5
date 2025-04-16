@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 15:30:07
+ * @LastEditTime: 2025-04-16 15:39:31
  * @Description: 
 -->
 <template>
@@ -139,9 +139,9 @@
         <!-- 邀请链接 -->
         <div :class="$style.formItem">
           <span :class="$style.label">{{ $t('profile.info.inviteLink') }}</span>
-          <div :class="$style.value" @click="handleCopy(inviteUrl)">
-            <span :class="$style.text">{{ inviteUrl }}</span>
-            <van-icon name="copy" :class="$style.copyIcon" />
+          <div :class="$style.value">
+            <div :class="$style.inviteUrl">{{ inviteUrl }}</div>
+            <van-button type="primary" size="mini" @click="handleCopy(inviteUrl)">复制</van-button>
           </div>
         </div>
       </div>
@@ -212,6 +212,7 @@ import { uploadImage } from '@/utils/upload'
 import Layout from '@/components/layout.vue'
 import NavBar from '@/components/NavBar.vue'
 import { useI18n } from 'vue-i18n'
+import { copyToClipboard } from '@/utils/copyToClipboard'
 
 const { t } = useI18n()
 
@@ -305,9 +306,7 @@ const onOccupationConfirm = ({ selectedOptions }) => {
 
 // 复制邀请链接
 const handleCopy = (text) => {
-  navigator.clipboard.writeText(text).then(() => {
-    showToast(t('common.copySuccess'))
-  })
+  copyToClipboard(text)
 }
 
 const onSubmit = async () => {
@@ -412,6 +411,15 @@ onMounted(async () => {
       font-size: 16px;
     }
   }
+  .inviteUrl{
+    font-size: 14px;
+    color: #323233;
+    text-align: right;
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 }
 
 .input {
@@ -453,10 +461,6 @@ onMounted(async () => {
 }
 .formItem{
   justify-content: space-between;
-}
-.copyIcon {
-  font-size: 16px;
-  color: #969799;
 }
 
 .avatarUpload{
