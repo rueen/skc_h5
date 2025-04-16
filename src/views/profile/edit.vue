@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:40:57
+ * @LastEditTime: 2025-04-16 15:30:07
  * @Description: 
 -->
 <template>
@@ -220,11 +220,7 @@ const userStore = useUserStore()
 
 // 编辑状态
 const isEdit = ref(false)
-
-const userInfo = ref({})
-const inviteUrl = computed(() => {
-  return `${window.location.origin}?inviteCode=${userInfo.value.inviteCode}`
-})
+const inviteUrl = ref('')
 // 表单数据
 const form = ref({})
 
@@ -344,7 +340,6 @@ const onSubmit = async () => {
 
 onMounted(async () => {
   const userInfo = await userStore.getUserInfo()
-  userInfo.value = userInfo;
   form.value = {
     id: userInfo.id,
     avatar: userInfo.avatar,
@@ -359,6 +354,9 @@ onMounted(async () => {
     avatarFile.value = [{
       url: userInfo.avatar
     }]
+  }
+  if(userInfo.inviteCode){
+    inviteUrl.value = `${window.location.origin}?inviteCode=${userInfo.inviteCode}`
   }
 })
 </script>
