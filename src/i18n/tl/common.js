@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 11:16:14
+ * @LastEditTime: 2025-04-16 11:25:17
  * @Description: 
  */
 export default {
@@ -35,13 +35,13 @@ export default {
     switch (type) {
       case 'share':
         return {
-          shareSuccess: 'Invitation link copied to clipboard',
-          shareFailed: 'Failed to copy invitation link',
+          success: 'Nakopya na ang link ng imbitasyon sa clipboard',
+          failed: 'Hindi mabigay ang link ng imbitasyon sa clipboard',
         }
       default:
         return {
-          success: 'Copy successful',
-          failed: 'Copy failed',
+          success: 'Kopyahin na matagumpay',
+          failed: 'Kopyahin na nawala',
         }
     }
   }

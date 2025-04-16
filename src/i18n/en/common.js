@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 11:13:23
+ * @LastEditTime: 2025-04-16 11:25:27
  * @Description: 
  */
 export default {
@@ -35,8 +35,8 @@ export default {
     switch (type) {
       case 'share':
         return {
-          shareSuccess: 'Invitation link copied to clipboard',
-          shareFailed: 'Failed to copy invitation link',
+          success: 'Invitation link copied to clipboard',
+          failed: 'Failed to copy invitation link',
         }
       default:
         return {
