@@ -19,9 +19,11 @@
           />
         </div>
         <div :class="$style.balance">
-          <span>{{ $t('wallet.withdraw.withdrawThreshold') }}：{{ withdrawThreshold }}</span>
-          <span>{{ $t('wallet.withdraw.withdrawableBalance') }}：{{ balance }}</span>
-          <span :class="$style.all" @click="onWithdrawAll">{{ $t('wallet.withdraw.withdrawAll') }}</span>
+          <div>{{ $t('wallet.withdraw.withdrawThreshold') }}：{{ withdrawThreshold }}</div>
+          <div>
+            <span>{{ $t('wallet.withdraw.withdrawableBalance') }}：{{ balance }}</span>
+            <span :class="$style.all" @click="onWithdrawAll">{{ $t('wallet.withdraw.withdrawAll') }}</span>
+          </div>
         </div>
       </div>
 
