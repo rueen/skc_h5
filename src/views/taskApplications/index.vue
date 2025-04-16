@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 19:05:18
+ * @LastEditTime: 2025-04-16 20:56:53
  * @Description: 任务页
  -->
 <template>
@@ -189,7 +189,7 @@ const onTabChange = ({name}) => {
 
 // 格式化价格
 const formatPrice = (price) => {
-  return `¥${price}`
+  return `${price}`
 }
 
 // 点击任务项

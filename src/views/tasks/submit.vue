@@ -34,7 +34,7 @@
             />
             <div :class="$style.taskName">{{ taskInfo.taskName }}</div>
           </div>
-          <div :class="$style.taskPrice">${{ taskInfo.reward }}</div>
+          <div :class="$style.taskPrice">{{ taskInfo.reward }}</div>
           <div :class="$style.taskBottom">
             <div :class="$style.tags">
               <van-tag type="primary" :class="$style.taskType">
