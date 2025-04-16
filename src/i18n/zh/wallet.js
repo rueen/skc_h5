@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-15 10:32:17
+ * @LastEditTime: 2025-04-16 15:55:13
  * @Description: 
  */
 export default {
@@ -53,6 +53,7 @@ export default {
     pleaseSelectAccountType: '请选择账户类型',
     pleaseEnterAccount: '请输入账号',
     invalidAccount: '账号格式错误',
+    invalidAccountMessage: '0开头，9开始的10位数，例如：09888888888',
     pleaseEnterName: '请输入姓名',
   },
 

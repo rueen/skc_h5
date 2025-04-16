@@ -75,7 +75,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { showToast } from 'vant'
+import { showToast, showDialog } from 'vant'
 import Layout from '@/components/layout.vue'
 import { useEnumStore } from '@/stores'
 import { get, post, put } from '@/utils/request'
@@ -173,7 +173,12 @@ const onSubmit = () => {
   }
 
   if(!/^0\d{10}$/.test(form.value.account)){
-    showToast(t('wallet.accounts.invalidAccount'))
+    showDialog({
+      title: t('wallet.accounts.invalidAccount'),
+      message: t('wallet.accounts.invalidAccountMessage'),
+      showCancelButton: false,
+      confirmButtonText: t('common.confirm'),
+    })
     return
   }
 

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-15 10:32:24
+ * @LastEditTime: 2025-04-16 15:55:33
  * @Description: 
  */
 export default {
@@ -53,6 +53,7 @@ export default {
     pleaseSelectAccountType: 'Mangyaring pumili ng uri ng account',
     pleaseEnterAccount: 'Mangyaring ilagay ang account',
     invalidAccount: 'Diwalidong account',
+    invalidAccountMessage: 'Mag-start na 0, sumunod na 9, at 10 digit, halimbawa: 09888888888',
     pleaseEnterName: 'Mangyaring ilagay ang pangalan',
   },
 
