@@ -24,6 +24,7 @@
               <div :class="$style.recordItemWrapper">
                 <div :class="$style.recordInfo">
                   <div :class="$style.title">{{ enumStore.getEnumText('BillType', bill.billType) }}</div>
+                  <div :class="$style.billNo" @click="handleCopy(bill.billNo)">{{ bill.billNo }}</div>
                   <div :class="$style.time">{{ bill.createTime }}</div>
                 </div>
                 <div :class="$style.rightWrapper">
@@ -60,6 +61,7 @@ import Layout from '@/components/layout.vue'
 import { get } from '@/utils/request'
 import { useEnumStore } from '@/stores'
 import NavBar from '@/components/NavBar.vue'
+import { copyToClipboard } from '@/utils/copyToClipboard'
 
 const enumStore = useEnumStore()
 
@@ -92,6 +94,10 @@ const onLoad = async () => {
 const onRefresh = () => {
   // 刷新数据
   refreshing.value = false
+}
+
+const handleCopy = (text) => {
+  copyToClipboard(text)
 }
 
 // 初始化
@@ -135,9 +141,15 @@ onMounted(async () => {
       margin-bottom: 4px;
     }
 
+    .billNo{
+      font-size: 12px;
+      color: #323233;
+    }
+
     .time {
       font-size: 12px;
       color: #969799;
+      margin-top: 5px;
     }
     .rightWrapper {
       text-align: right;
