@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 15:24:32
+ * @LastEditTime: 2025-04-16 16:25:33
  * @Description: 登录页
  -->
  <template>
@@ -163,16 +163,17 @@ const togglePasswordVisibility = () => {
 // 区号选择相关
 const showAreaCodePicker = ref(false)
 const areaCodeColumns = [
+  { text: 'US +1', value: '1' },
   { text: 'CN +86', value: '86' },
-  { text: 'USA +1', value: '1' },
-  { text: 'Philippines +63', value: '63' },
-  { text: 'UK +44', value: '44' },
-  { text: 'Australia +61', value: '61' },
-  { text: 'Japan +81', value: '81' },
-  { text: 'South Korea +82', value: '82' },
-  { text: 'Singapore +65', value: '65' },
-  { text: 'Malaysia +60', value: '60' },
-  { text: 'Thailand +66', value: '66' }
+  { text: 'GB +44', value: '44' },
+  { text: 'AU +61', value: '61' },
+  { text: 'JP +81', value: '81' },
+  { text: 'SG +65', value: '65' },
+  { text: 'KR +82', value: '82' },
+  { text: 'MY +60', value: '60' },
+  { text: 'TH +66', value: '66' },
+  { text: 'PH +63', value: '63' },
+  { text: 'IN +91', value: '91' },
 ]
 
 // 语言选择相关
