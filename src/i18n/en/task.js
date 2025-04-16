@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 11:03:04
+ * @LastEditTime: 2025-04-16 16:29:39
  * @Description: 
  */
 export default {
@@ -53,7 +53,7 @@ export default {
     submit: 'Submit',
     reSubmit: 'Resubmit',
     success: 'Submission Successful',
-    successTip: 'Please wait patiently for review results',
+    successTip: 'Review results will be updated within 24 hours',
     fileInvalid: 'Invalid File',
     uploading: 'Uploading...',
     uploadFailed: 'Upload Failed, Abnormal Response',

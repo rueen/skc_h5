@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 11:03:34
+ * @LastEditTime: 2025-04-16 16:29:03
  * @Description: 
  */
 export default {
@@ -53,7 +53,7 @@ export default {
     submit: '提交',
     reSubmit: '重新提交',
     success: '提交成功',
-    successTip: '请在心等待，留意审核结果',
+    successTip: '审核结果将在24小时内更新',
     fileInvalid: '文件无效',
     uploading: '上传中...',
     uploadFailed: '上传失败，返回数据异常',

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 11:03:25
+ * @LastEditTime: 2025-04-16 16:32:11
  * @Description: 
  */
 export default {
@@ -53,7 +53,7 @@ export default {
     submit: 'Ipasa',
     reSubmit: 'Muling Ipasa',
     success: 'Matagumpay na Naipasa',
-    successTip: 'Mangyaring maghintay nang matiyaga para sa mga resulta ng pagsusuri',
+    successTip: 'Ang mga resulta ng pagsusuri ay aayusin sa loob ng 24 oras',
     fileInvalid: 'Hindi Valid na File',
     uploading: 'Nag-a-upload...',
     uploadFailed: 'Nabigo ang Pag-upload, Hindi Normal na Tugon',
