@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 16:29:03
+ * @LastEditTime: 2025-04-16 16:42:18
  * @Description: 
  */
 export default {
@@ -16,6 +16,7 @@ export default {
   submittedTime: '提交时间',
   
   detail: {
+    title: '任务详情',
     processTitle: '任务流程',
     processNote: '新人第一次发布帖子需经过合作审核，审核结果会通过短信通知，请及时关注。已经通过审核的账号，可以直接发布帖子。',
     requirementsTitle: '任务要求',

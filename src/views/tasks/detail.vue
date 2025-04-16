@@ -2,13 +2,13 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 11:17:03
+ * @LastEditTime: 2025-04-16 16:41:52
  * @Description: 任务详情页
  -->
 <template>
   <Layout>
     <nav-bar
-      title="任务详情"
+      :title="$t('task.detail.title')"
       left-arrow
       fixed
     />

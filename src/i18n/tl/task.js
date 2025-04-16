@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 16:32:11
+ * @LastEditTime: 2025-04-16 16:42:11
  * @Description: 
  */
 export default {
@@ -16,6 +16,7 @@ export default {
   submittedTime: 'Oras ng Pagpasa',
   
   detail: {
+    title: 'Mga Detalye ng Gawain',
     processTitle: 'Proseso ng Gawain',
     processNote: 'Ang unang pagpapasa ng post ay nangangailangan ng pagsusuri, ang mga resulta ay ipapaalam sa pamamagitan ng SMS. Ang mga account na nakapasa na sa pagsusuri ay maaaring direktang mag-publish ng mga post.',
     requirementsTitle: 'Mga Kinakailangan sa Gawain',

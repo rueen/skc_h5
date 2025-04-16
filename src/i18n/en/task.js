@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 16:29:39
+ * @LastEditTime: 2025-04-16 16:42:04
  * @Description: 
  */
 export default {
@@ -16,6 +16,7 @@ export default {
   submittedTime: 'Submission Time',
   
   detail: {
+    title: 'Task Details',
     processTitle: 'Task Process',
     processNote: 'First-time post submissions require review, results will be notified via SMS. Accounts that have passed review can publish posts directly.',
     requirementsTitle: 'Task Requirements',
