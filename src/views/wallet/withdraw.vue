@@ -116,7 +116,7 @@ const onSubmit = async () => {
   }
   // 提现金额不能小于提现门槛 
   if (form.value.amount - withdrawThreshold.value < 0) {
-    showToast(t('wallet.withdraw.withdrawalAmountLessThanThreshold'))
+    showToast(`${t('wallet.withdraw.withdrawalAmountLessThanThreshold')} ${withdrawThreshold.value}`)
     return
   }
   const res = await post('withdrawals.apply', {

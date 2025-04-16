@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:47:37
+ * @LastEditTime: 2025-04-15 10:32:24
  * @Description: 
  */
 export default {
@@ -70,7 +70,7 @@ export default {
     pleaseSetWithdrawalAccount: 'Mangyaring magtakda ng account para sa pag-withdraw muna',
     pleaseEnterWithdrawalAmount: 'Mangyaring ilagay ang halaga ng pag-withdraw',
     insufficientBalance: 'Hindi Sapat ang Balanse',
-    withdrawalAmountLessThanThreshold: 'Ang halaga ng pag-withdraw ay hindi maaaring mas mababa sa {{threshold}}',
+    withdrawalAmountLessThanThreshold: 'Ang halaga ng pag-withdraw ay hindi maaaring mas mababa sa',
     withdrawalApplicationSubmitted: 'Naisumite na ang aplikasyon para sa pag-withdraw',
   }
 } 

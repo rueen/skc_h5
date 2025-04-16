@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:47:51
+ * @LastEditTime: 2025-04-15 10:32:17
  * @Description: 
  */
 export default {
@@ -70,7 +70,7 @@ export default {
     pleaseSetWithdrawalAccount: '请先设置提现账户',
     pleaseEnterWithdrawalAmount: '请输入提现金额',
     insufficientBalance: '余额不足',
-    withdrawalAmountLessThanThreshold: '提现金额不能小于{{threshold}}元',
+    withdrawalAmountLessThanThreshold: '提现金额不能小于',
     withdrawalApplicationSubmitted: '提现申请已提交',
   }
 }

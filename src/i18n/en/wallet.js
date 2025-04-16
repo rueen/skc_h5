@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:47:29
+ * @LastEditTime: 2025-04-15 10:32:32
  * @Description: 
  */
 export default {
@@ -70,7 +70,7 @@ export default {
     pleaseSetWithdrawalAccount: 'Please set a withdrawal account first',
     pleaseEnterWithdrawalAmount: 'Please fill up withdrawal amount',
     insufficientBalance: 'Insufficient Balance',
-    withdrawalAmountLessThanThreshold: 'Withdrawal amount cannot be less than {{threshold}}',
+    withdrawalAmountLessThanThreshold: 'Withdrawal amount cannot be less than',
     withdrawalApplicationSubmitted: 'Withdrawal application submitted',
   }
 } 
