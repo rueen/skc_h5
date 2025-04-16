@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 15:00:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 11:17:16
+ * @LastEditTime: 2025-04-16 16:42:56
  * @Description: 我的邀请人列表页
  -->
 <template>
@@ -18,7 +18,7 @@
     <div :class="$style.statsCard">
       <div :class="$style.statsItem">
         <div :class="$style.label">{{ $t('invites.inviteCount') }}</div>
-        <div :class="$style.value">{{ stats.inviteCount }}人</div>
+        <div :class="$style.value">{{ stats.inviteCount }}</div>
       </div>
       <div :class="$style.statsItem">
         <div :class="$style.label">{{ $t('invites.totalReward') }}</div>
