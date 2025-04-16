@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:53:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:14:43
+ * @LastEditTime: 2025-04-16 15:23:26
  * @Description: 
  */
 export default {
@@ -11,6 +11,9 @@ export default {
   phoneLogin: '手机号登录',
   phonePlaceholder: '请输入手机号',
   phoneRequired: '请输入手机号',
+  invalidCnPhone: '请输入正确的中国手机号',
+  invalidPhPhone: '请输入正确的菲律宾手机号',
+  invalidEmail: '请输入正确的邮箱',
   emailLogin: '邮箱登录',
   password: '密码',
   passwordPlaceholder: '请输入密码',

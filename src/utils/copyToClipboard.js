@@ -31,7 +31,6 @@ const fallbackCopyToClipboard = (text, type) => {
 }
 
 export const copyToClipboard = async (text, type = 'default') => {
-  console.log(copy(type))
   if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(text)
       .then(() => {

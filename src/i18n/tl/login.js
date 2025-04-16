@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:53:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:14:35
+ * @LastEditTime: 2025-04-16 15:23:23
  * @Description: 
  */
 export default {
@@ -11,6 +11,9 @@ export default {
   phoneLogin: 'Login sa Telepono',
   phonePlaceholder: 'Mangyaring ilagay ang numero ng telepono',
   phoneRequired: 'Kailangan ang numero ng telepono',
+  invalidCnPhone: 'Hindi wastong numero ng telepono',
+  invalidPhPhone: 'Hindi wastong numero ng telepono',
+  invalidEmail: 'Hindi wastong email',
   emailLogin: 'Login sa Email',
   password: 'Password',
   passwordPlaceholder: 'Mangyaring ilagay ang password',

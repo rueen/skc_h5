@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:20:23
+ * @LastEditTime: 2025-04-16 15:24:32
  * @Description: 登录页
  -->
  <template>
@@ -19,7 +19,6 @@
               v-model="formData.memberAccount"
               :label="$t('login.phone')"
               :placeholder="$t('login.phonePlaceholder')"
-              :rules="[{ required: true, message: $t('login.phoneRequired') }]"
               clearable
               @clear="onInputClear('memberAccount')"
             >
@@ -35,7 +34,6 @@
               :type="passwordVisible ? 'text' : 'password'"
               :label="$t('login.password')"
               :placeholder="$t('login.passwordPlaceholder')"
-              :rules="[{ required: true, message: $t('login.passwordRequired') }]"
               :class="$style.passwordInput"
               clearable
               @clear="onInputClear('password')"
@@ -59,7 +57,6 @@
               v-model="formData.memberAccount"
               :label="$t('login.email')"
               :placeholder="$t('login.emailPlaceholder')"
-              :rules="[{ required: true, message: $t('login.emailRequired') }]"
               clearable
               @clear="onInputClear('memberAccount')"
             />
@@ -68,7 +65,6 @@
               :type="passwordVisible ? 'text' : 'password'"
               :label="$t('login.password')"
               :placeholder="$t('login.passwordPlaceholder')"
-              :rules="[{ required: true, message: $t('login.passwordRequired') }]"
               clearable
               @clear="onInputClear('password')"
             >
@@ -263,6 +259,42 @@ onMounted(() => {
 
 // 提交登录
 const onSubmit = async () => {
+  // 根据当前选中的标签页确定登录类型
+  const loginType = activeTab.value === 0 ? 'phone' : 'email'
+  
+  // 验证必填字段
+  if (!formData.memberAccount) {
+    showToast(loginType === 'phone' ? t('login.phoneRequired') : t('login.emailRequired'))
+    return
+  }
+  
+  // 验证账号格式
+  if (loginType === 'phone') {
+    // 验证手机号格式
+    if (formData.areaCode === '86') {
+      // 中国手机号格式：1开头的11位数字
+      const cnPhoneRegex = /^1[3-9]\d{9}$/;
+      if (!cnPhoneRegex.test(formData.memberAccount)) {
+        showToast(t('login.invalidCnPhone'))
+        return
+      }
+    } else if (formData.areaCode === '63') {
+      // 菲律宾手机号格式：+63开头的12位数字或09开头的11位数字或9开头的10位数字
+      const phPhoneRegex = /^(\+?63[0-9]{10}|09[0-9]{9}|9[0-9]{9})$/;
+      if (!phPhoneRegex.test(formData.memberAccount)) {
+        showToast(t('login.invalidPhPhone'))
+        return
+      }
+    }
+  } else {
+    // 验证邮箱格式
+    const emailRegex = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+    if (!emailRegex.test(formData.memberAccount)) {
+      showToast(t('login.invalidEmail'))
+      return
+    }
+  }
+
   if (!formData.agreed) {
     showToast(t('login.agreementRequired'))
     return
@@ -274,15 +306,6 @@ const onSubmit = async () => {
 
   if(formData.password.length < 8 || formData.password.length > 20 || !/^(?=.*[a-zA-Z])(?=.*\d).{8,20}$/.test(formData.password)) {
     showToast(t('login.passwordTips'))
-    return
-  }
-
-  // 根据当前选中的标签页确定登录类型
-  const loginType = activeTab.value === 0 ? 'phone' : 'email'
-  
-  // 验证必填字段
-  if (!formData.memberAccount) {
-    showToast(loginType === 'phone' ? t('login.phoneRequired') : t('login.emailRequired'))
     return
   }
 

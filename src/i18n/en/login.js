@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:53:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:14:19
+ * @LastEditTime: 2025-04-16 15:23:18
  * @Description: 
  */
 export default {
@@ -11,6 +11,9 @@ export default {
   phoneLogin: 'Phone Login',
   phonePlaceholder: 'Please fill up phone number',
   phoneRequired: 'Phone number is required',
+  invalidCnPhone: 'Invalid Chinese phone number',
+  invalidPhPhone: 'Invalid Philippine phone number',
+  invalidEmail: 'Invalid email',
   emailLogin: 'Email Login',
   password: 'Password',
   passwordPlaceholder: 'Please fill up password',
