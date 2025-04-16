@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 11:25:27
+ * @LastEditTime: 2025-04-16 16:40:32
  * @Description: 
  */
 export default {
@@ -20,6 +20,7 @@ export default {
   copySuccess: 'Copy successful',
   select: 'Select',
   inputPlaceholder: 'Please fill up',
+  pleaseSelect: 'Please select',
 
   upload: {
     invalidFile: 'Invalid file',

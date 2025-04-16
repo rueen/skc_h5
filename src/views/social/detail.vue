@@ -31,7 +31,7 @@
             @click="showPlatformPicker = true"
           >
             <span :class="[$style.text, !selectedChannel.id && $style.placeholder]">
-              {{ selectedChannel.id ? selectedChannel.name : '请选择平台' }}
+              {{ selectedChannel.id ? selectedChannel.name : $t('common.pleaseSelect') }}
             </span>
             <van-icon name="arrow" v-if="!isView" />
           </div>

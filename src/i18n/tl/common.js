@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 11:25:17
+ * @LastEditTime: 2025-04-16 16:40:43
  * @Description: 
  */
 export default {
@@ -20,6 +20,7 @@ export default {
   copySuccess: 'Kopyahin na matagumpay',
   select: 'Pumili',
   inputPlaceholder: 'Maglagay ng',
+  pleaseSelect: 'Pumili',
 
   upload: {
     invalidFile: 'Diwalidong file',

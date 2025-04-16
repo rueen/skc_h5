@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 11:14:25
+ * @LastEditTime: 2025-04-16 16:40:49
  * @Description: 
  */
 export default {
@@ -20,6 +20,7 @@ export default {
   copySuccess: '复制成功',
   select: '选择',
   inputPlaceholder: '请输入',
+  pleaseSelect: '请选择',
 
   upload: {
     invalidFile: '文件无效',
