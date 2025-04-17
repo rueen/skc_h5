@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 16:41:52
+ * @LastEditTime: 2025-04-17 09:13:24
  * @Description: 任务详情页
  -->
 <template>
@@ -26,7 +26,7 @@
           {{ taskInfo.taskName }}
         </div>
         <div :class="$style.priceRow">
-          <div :class="$style.price">$ {{ taskInfo.reward }}</div>
+          <div :class="$style.price">{{ taskInfo.reward }}</div>
         </div>
         <div :class="$style.extraInfo">
           <div :class="$style.extraInfoItem">

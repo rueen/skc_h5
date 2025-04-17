@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 19:06:13
+ * @LastEditTime: 2025-04-17 09:13:12
  * @Description: 首页
  -->
 
@@ -164,7 +164,7 @@ const onChannelChange = ({name}) => {
 
 // 格式化价格
 const formatPrice = (price) => {
-  return `¥${price}`
+  return `${price}`
 }
 
 const loadChannelList = async () => {
