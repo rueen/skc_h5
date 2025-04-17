@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 16:25:33
+ * @LastEditTime: 2025-04-17 09:16:30
  * @Description: 登录页
  -->
  <template>
@@ -280,8 +280,8 @@ const onSubmit = async () => {
         return
       }
     } else if (formData.areaCode === '63') {
-      // 菲律宾手机号格式：+63开头的12位数字或09开头的11位数字或9开头的10位数字
-      const phPhoneRegex = /^(\+?63[0-9]{10}|09[0-9]{9}|9[0-9]{9})$/;
+      // 菲律宾手机号格式：+63开头的12位数字或9开头的10位数字
+      const phPhoneRegex = /^(\+?63[0-9]{10}|9[0-9]{9})$/;
       if (!phPhoneRegex.test(formData.memberAccount)) {
         showToast(t('login.invalidPhPhone'))
         return
