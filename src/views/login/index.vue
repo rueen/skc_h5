@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-18 10:55:28
+ * @LastEditTime: 2025-04-18 19:47:00
  * @Description: 登录页
  -->
  <template>
@@ -164,8 +164,8 @@ const togglePasswordVisibility = () => {
 // 区号选择相关
 const showAreaCodePicker = ref(false)
 const areaCodeColumns = [
+  { text: 'PH +63', value: '63' },
   { text: 'US +1', value: '1' },
-  { text: 'CN +86', value: '86' },
   { text: 'GB +44', value: '44' },
   { text: 'AU +61', value: '61' },
   { text: 'JP +81', value: '81' },
@@ -173,7 +173,6 @@ const areaCodeColumns = [
   { text: 'KR +82', value: '82' },
   { text: 'MY +60', value: '60' },
   { text: 'TH +66', value: '66' },
-  { text: 'PH +63', value: '63' },
   { text: 'IN +91', value: '91' },
 ]
 
@@ -199,34 +198,8 @@ const onLanguageConfirm = (values) => {
   if (selectedLang !== locale.value) {
     locale.value = selectedLang
     localStorage.setItem('language', locale.value)
-    // 更新区号
-    formData.areaCode = getDefaultAreaCode()
   }
   showLanguagePicker.value = false
-}
-
-// 根据语言设置默认区号
-const getDefaultAreaCode = () => {
-  const currentLocale = locale.value
-  
-  // 根据语言设置默认区号
-  if (currentLocale === 'zh-CN') return '86'  // 中国
-  if (currentLocale === 'en-US') return '1'   // 美国
-  if (currentLocale === 'tl-PH') return '63'  // 菲律宾
-  
-  // 也可以根据浏览器语言判断
-  const browserLang = navigator.language || navigator.userLanguage
-  if (browserLang.startsWith('zh')) return '86'
-  if (browserLang.startsWith('en')) {
-    if (browserLang === 'en-US' || browserLang === 'en-CA') return '1'
-    if (browserLang === 'en-GB') return '44'
-    if (browserLang === 'en-AU') return '61'
-    return '1' // 默认英语区域使用美国区号
-  }
-  if (browserLang.startsWith('tl') || browserLang.startsWith('fil')) return '63'
-  
-  // 默认区号
-  return '63'
 }
 
 // 监听登录方式变化
@@ -239,7 +212,7 @@ const onTabChange = (index) => {
 const formData = reactive({
   memberAccount: '',
   password: '',
-  areaCode: getDefaultAreaCode(),
+  areaCode: '63',
   agreed: true
 })
 
@@ -253,11 +226,6 @@ const onAreaCodeConfirm = (values) => {
   formData.areaCode = values.selectedOptions[0].value
   showAreaCodePicker.value = false
 }
-
-// 组件挂载时设置区号
-onMounted(() => {
-  formData.areaCode = getDefaultAreaCode()
-})
 
 // 提交登录
 const onSubmit = async () => {
@@ -273,18 +241,74 @@ const onSubmit = async () => {
   // 验证账号格式
   if (loginType === 'phone') {
     // 验证手机号格式
-    if (formData.areaCode === '86') {
-      // 中国手机号格式：1开头的11位数字
-      const cnPhoneRegex = /^1[3-9]\d{9}$/;
-      if (!cnPhoneRegex.test(formData.memberAccount)) {
-        showToast(t('login.invalidCnPhone'))
-        return
-      }
-    } else if (formData.areaCode === '63') {
-      // 菲律宾手机号格式：+63开头的12位数字或9开头的10位数字
-      const phPhoneRegex = /^(\+?63[0-9]{10}|9[0-9]{9})$/;
+    if (formData.areaCode === '63') {
+      // 菲律宾手机号格式：9开头的10位数字
+      const phPhoneRegex = /^9[0-9]{9}$/;
       if (!phPhoneRegex.test(formData.memberAccount)) {
         showToast(t('login.invalidPhPhone'))
+        return
+      }
+    } else if (formData.areaCode === '1') {
+      // 美国手机号格式：10位数字
+      const usPhoneRegex = /^\d{10}$/;
+      if (!usPhoneRegex.test(formData.memberAccount)) {
+        showToast(t('login.invalidUsPhone'))
+        return
+      }
+    } else if (formData.areaCode === '44') {
+      // 英国手机号格式：通常以7或07开头的10-11位数字
+      const gbPhoneRegex = /^(7|07)\d{9}$/;
+      if (!gbPhoneRegex.test(formData.memberAccount)) {
+        showToast(t('login.invalidGbPhone'))
+        return
+      }
+    } else if (formData.areaCode === '61') {
+      // 澳大利亚手机号格式：以04开头后跟8位数字或以4开头后跟8位数字
+      const auPhoneRegex = /^(04\d{8}|4\d{8})$/;
+      if (!auPhoneRegex.test(formData.memberAccount)) {
+        showToast(t('login.invalidAuPhone'))
+        return
+      }
+    } else if (formData.areaCode === '81') {
+      // 日本手机号格式：以0开头后跟10-11位数字
+      const jpPhoneRegex = /^0\d{9,10}$/;
+      if (!jpPhoneRegex.test(formData.memberAccount)) {
+        showToast(t('login.invalidJpPhone'))
+        return
+      }
+    } else if (formData.areaCode === '65') {
+      // 新加坡手机号格式：以8或9开头后跟7位数字，总共8位数字
+      const sgPhoneRegex = /^[89]\d{7}$/;
+      if (!sgPhoneRegex.test(formData.memberAccount)) {
+        showToast(t('login.invalidSgPhone'))
+        return
+      }
+    } else if (formData.areaCode === '82') {
+      // 韩国手机号格式：以01开头后跟8-9位数字
+      const krPhoneRegex = /^01\d{8,9}$/;
+      if (!krPhoneRegex.test(formData.memberAccount)) {
+        showToast(t('login.invalidKrPhone'))
+        return
+      }
+    } else if (formData.areaCode === '60') {
+      // 马来西亚手机号格式：以01开头后跟8-9位数字
+      const myPhoneRegex = /^01\d{8,9}$/;
+      if (!myPhoneRegex.test(formData.memberAccount)) {
+        showToast(t('login.invalidMyPhone'))
+        return
+      }
+    } else if (formData.areaCode === '66') {
+      // 泰国手机号格式：以0开头后跟9位数字或以6或8或9开头后跟8位数字
+      const thPhoneRegex = /^(0\d{9}|[689]\d{8})$/;
+      if (!thPhoneRegex.test(formData.memberAccount)) {
+        showToast(t('login.invalidThPhone'))
+        return
+      }
+    } else if (formData.areaCode === '91') {
+      // 印度手机号格式：以6-9开头后跟9位数字，总共10位数字
+      const inPhoneRegex = /^[6-9]\d{9}$/;
+      if (!inPhoneRegex.test(formData.memberAccount)) {
+        showToast(t('login.invalidInPhone'))
         return
       }
     }
@@ -362,6 +386,10 @@ const onSubmit = async () => {
 const handleOpenArticle = (id, location) => {
   router.push(`/article/${id}?location=${location}`)
 }
+
+onMounted(() => {
+
+})
 </script>
 
 <style lang="less" module>

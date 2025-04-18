@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:53:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-18 10:56:43
+ * @LastEditTime: 2025-04-18 19:42:00
  * @Description: 
  */
 export default {
@@ -12,8 +12,16 @@ export default {
   phoneLogin: 'Phone Login',
   phonePlaceholder: 'Please fill up phone number',
   phoneRequired: 'Phone number is required',
-  invalidCnPhone: 'Invalid Chinese phone number',
   invalidPhPhone: 'Invalid Philippine phone number',
+  invalidUsPhone: 'Invalid US phone number',
+  invalidGbPhone: 'Invalid UK phone number',
+  invalidAuPhone: 'Invalid Australian phone number',
+  invalidJpPhone: 'Invalid Japanese phone number',
+  invalidSgPhone: 'Invalid Singapore phone number',
+  invalidKrPhone: 'Invalid Korean phone number',
+  invalidMyPhone: 'Invalid Malaysian phone number',
+  invalidThPhone: 'Invalid Thai phone number',
+  invalidInPhone: 'Invalid Indian phone number',
   invalidEmail: 'Invalid email',
   emailLogin: 'Email Login',
   password: 'Password',

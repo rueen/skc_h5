@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:53:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-18 10:56:50
+ * @LastEditTime: 2025-04-18 19:46:40
  * @Description: 
  */
 export default {
@@ -12,8 +12,16 @@ export default {
   phoneLogin: 'Login sa Telepono',
   phonePlaceholder: 'Mangyaring ilagay ang numero ng telepono',
   phoneRequired: 'Kailangan ang numero ng telepono',
-  invalidCnPhone: 'Hindi wastong numero ng telepono',
-  invalidPhPhone: 'Hindi wastong numero ng telepono',
+  invalidPhPhone: 'Di-wastong numero ng telepono sa Pilipinas',
+  invalidUsPhone: 'Di-wastong numero ng telepono sa US',
+  invalidGbPhone: 'Di-wastong numero ng telepono sa UK',
+  invalidAuPhone: 'Di-wastong numero ng telepono sa Australia',
+  invalidJpPhone: 'Di-wastong numero ng telepono sa Japan',
+  invalidSgPhone: 'Di-wastong numero ng telepono sa Singapore',
+  invalidKrPhone: 'Di-wastong numero ng telepono sa Korea',
+  invalidMyPhone: 'Di-wastong numero ng telepono sa Malaysia',
+  invalidThPhone: 'Di-wastong numero ng telepono sa Thailand',
+  invalidInPhone: 'Di-wastong numero ng telepono sa India',
   invalidEmail: 'Hindi wastong email',
   emailLogin: 'Login sa Email',
   password: 'Password',
