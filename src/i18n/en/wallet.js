@@ -2,14 +2,14 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 15:55:22
+ * @LastEditTime: 2025-04-18 11:18:28
  * @Description: 
  */
 export default {
 
   index: {
     title: 'My Wallet',
-    withdrawableBalance: 'Withdrawable Balance',
+    withdrawableBalance: 'Balance',
     withdraw: 'Withdraw',
     settlementBill: 'Settlement Bills',
     withdrawalRecords: 'Withdrawal Records',

@@ -2,16 +2,16 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 16:42:18
+ * @LastEditTime: 2025-04-18 11:27:10
  * @Description: 
  */
 export default {
   enrolled: '已报名',
-  remainingQuota: '剩余名额',
+  remainingQuota: '名额',
   category: '达人领域',
   unlimitedQuota: '不限',
   startTime: '开始时间',
-  endTime: '结束时间',
+  endTime: '截止时间',
   enrolledTime: '报名时间',
   submittedTime: '提交时间',
   
@@ -20,9 +20,9 @@ export default {
     processTitle: '任务流程',
     processNote: '新人第一次发布帖子需经过合作审核，审核结果会通过短信通知，请及时关注。已经通过审核的账号，可以直接发布帖子。',
     requirementsTitle: '任务要求',
-    publishForm: '发布形式',
-    fansRequired: '粉丝要求',
-    workRequirements: '工作要求',
+    publishForm: '任务类型',
+    fansRequired: '最低粉丝数',
+    workRequirements: '要求',
     taskInfoTitle: '任务信息',
     inviteFriend: '邀请好友',
     addAccount: '添加账号',

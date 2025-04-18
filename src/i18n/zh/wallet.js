@@ -2,14 +2,14 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 15:55:13
+ * @LastEditTime: 2025-04-18 11:17:57
  * @Description: 
  */
 export default {
 
   index: {
     title: '我的钱包',
-    withdrawableBalance: '可提现余额',
+    withdrawableBalance: '余额',
     withdraw: '提现',
     settlementBill: '结算账单',
     withdrawalRecords: '提现记录',

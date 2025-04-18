@@ -2,11 +2,12 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:53:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 15:23:26
+ * @LastEditTime: 2025-04-18 10:56:37
  * @Description: 
  */
 export default {
-  title: 'SKC 种草',
+  title: 'SKC PROMOTE',
+  titleDesc: 'Quick, Easy & Legit Earnings',
   phone: '手机号',
   phoneLogin: '手机号登录',
   phonePlaceholder: '请输入手机号',
@@ -31,7 +32,6 @@ export default {
   successMessage: '登录成功',
   errorMessage: '登录失败',
   agreementRequired: '请同意用户协议',
-  passwordTips: '密码长度为8-20位，必须包含字母和数字',
   loginRequired: '请先登录',
 
   selectAreaCode: '选择区号'

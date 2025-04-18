@@ -9,7 +9,7 @@ export default {
 
   index: {
     title: 'Aking Wallet',
-    withdrawableBalance: 'Balanseng Pwedeng i-withdraw',
+    withdrawableBalance: 'Balance',
     withdraw: 'Mag-withdraw',
     settlementBill: 'Mga Bill ng Settlement',
     withdrawalRecords: 'Mga Record ng Pag-withdraw',

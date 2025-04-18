@@ -2,13 +2,14 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-17 09:16:30
+ * @LastEditTime: 2025-04-18 10:55:28
  * @Description: 登录页
  -->
  <template>
   <div :class="$style.loginPage">
     <div :class="$style.logo">
       <h1>{{ $t('login.title') }}</h1>
+      <p>{{ $t('login.titleDesc') }}</p>
     </div>
 
     <van-tabs v-model:active="activeTab" :class="$style.tabs" @change="onTabChange">

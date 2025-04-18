@@ -2,30 +2,30 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 16:42:04
+ * @LastEditTime: 2025-04-18 11:27:21
  * @Description: 
  */
 export default {
   enrolled: 'Enrolled',
-  remainingQuota: 'Remaining Quota',
-  category: 'Influencer Category',
+  remainingQuota: 'Quota',
+  category: 'Category',
   unlimitedQuota: 'Unlimited',
   startTime: 'Start Time',
-  endTime: 'End Time',
+  endTime: 'Deadline',
   enrolledTime: 'Enrollment Time',
   submittedTime: 'Submission Time',
   
   detail: {
     title: 'Task Details',
-    processTitle: 'Task Process',
+    processTitle: 'How to Participate',
     processNote: 'First-time post submissions require review, results will be notified via SMS. Accounts that have passed review can publish posts directly.',
     requirementsTitle: 'Task Requirements',
-    publishForm: 'Publication Format',
-    fansRequired: 'Follower Requirements',
-    workRequirements: 'Work Requirements',
-    taskInfoTitle: 'Task Information',
+    publishForm: 'Task Type',
+    fansRequired: 'Minimum Followers',
+    workRequirements: 'Requirements',
+    taskInfoTitle: 'Task',
     inviteFriend: 'Invite Friends',
-    addAccount: 'Add Account',
+    addAccount: 'Submit Registration',
     taskNotStart: 'Task Not Started',
     accountAuditPending: 'Account Under Review',
     accountAuditRejected: 'Account Review Failed',
@@ -35,11 +35,11 @@ export default {
     notEligibleToEnroll: 'Not Eligible to Enroll',
     viewSubmitDetails: 'View Submission Details',
     submitTask: 'Submit Task',
-    applyNow: 'Apply Now',
-    processStep1: 'Enroll',
-    processStep2: 'Audit',
-    processStep3: 'Publish',
-    processStep4: 'Complete',
+    applyNow: 'JOIN',
+    processStep1: 'Registration',
+    processStep2: 'Approved',
+    processStep3: 'Post',
+    processStep4: 'Approved',
   },
 
   applications: {
@@ -54,7 +54,7 @@ export default {
     submit: 'Submit',
     reSubmit: 'Resubmit',
     success: 'Submission Successful',
-    successTip: 'Review results will be updated within 24 hours',
+    successTip: 'The review result will be updated within 24 hours',
     fileInvalid: 'Invalid File',
     uploading: 'Uploading...',
     uploadFailed: 'Upload Failed, Abnormal Response',

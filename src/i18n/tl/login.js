@@ -2,11 +2,12 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:53:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 15:23:23
+ * @LastEditTime: 2025-04-18 10:56:50
  * @Description: 
  */
 export default {
-  title: 'SKC Recommend',
+  title: 'SKC PROMOTE',
+  titleDesc: 'Mabilis, Madali at Legal na Kita',
   phone: 'Telepono',
   phoneLogin: 'Login sa Telepono',
   phonePlaceholder: 'Mangyaring ilagay ang numero ng telepono',
@@ -21,8 +22,8 @@ export default {
   email: 'Email',
   emailPlaceholder: 'Mangyaring ilagay ang email',
   emailRequired: 'Kailangan ang email',
-  passwordTips: 'Ang password ay dapat 8-20 character at naglalaman ng mga titik at numero',
-  registerTips: 'Ang hindi nakarehistrong telepono/email ay awtomatikong gagawa ng account',
+  passwordTips: 'Ang password ay dapat may 8–20 na karakter at dapat naglalaman ng mga letra at numero',
+  registerTips: 'Kapag hindi pa rehistrado ang numero o email, awtomatikong gagawa ng bagong account',
   login: 'Mag-login',
   agreement: 'Nabasa ko at sumasang-ayon ako sa',
   userAgreement: 'Kasunduan ng User',
@@ -31,7 +32,6 @@ export default {
   successMessage: 'Mag-login na matagumpay',
   errorMessage: 'Mag-login na nawala',
   agreementRequired: 'Mag-login na kailangan ang Kasunduan ng User',
-  passwordTips: 'Ang password ay dapat 8-20 character at naglalaman ng mga titik at numero',
   loginRequired: 'Mag-login muna',
 
   selectAreaCode: 'Pumili ng Area Code'

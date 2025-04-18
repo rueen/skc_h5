@@ -2,11 +2,12 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:53:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 15:23:18
+ * @LastEditTime: 2025-04-18 10:56:43
  * @Description: 
  */
 export default {
-  title: 'SKC Recommend',
+  title: 'SKC PROMOTE',
+  titleDesc: 'Quick, Easy & Legit Earnings',
   phone: 'Phone',
   phoneLogin: 'Phone Login',
   phonePlaceholder: 'Please fill up phone number',
@@ -31,7 +32,6 @@ export default {
   successMessage: 'Login successful',
   errorMessage: 'Login failed',
   agreementRequired: 'Login requires agreement to the User Agreement',
-  passwordTips: 'Password should be 8-20 characters with letters and numbers',
   loginRequired: 'Please login first',
   
   selectAreaCode: 'Select Area Code'
