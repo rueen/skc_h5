@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-18 11:27:21
+ * @LastEditTime: 2025-04-18 11:35:01
  * @Description: 
  */
 export default {
@@ -18,7 +18,7 @@ export default {
   detail: {
     title: 'Task Details',
     processTitle: 'How to Participate',
-    processNote: 'First-time post submissions require review, results will be notified via SMS. Accounts that have passed review can publish posts directly.',
+    processNote: 'New members must pass account approval before joining tasks. The result will be updated in Profile > My Account. Please check it regularly',
     requirementsTitle: 'Task Requirements',
     publishForm: 'Task Type',
     fansRequired: 'Minimum Followers',

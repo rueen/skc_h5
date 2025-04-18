@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-17 09:13:24
+ * @LastEditTime: 2025-04-18 11:35:38
  * @Description: 任务详情页
  -->
 <template>
@@ -66,7 +66,7 @@
           </div>
         </div>
         <div :class="$style.processNote">
-          *{{ $t('task.detail.processNote') }}
+          * {{ $t('task.detail.processNote') }}
         </div>
       </div>
 

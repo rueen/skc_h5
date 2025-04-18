@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-18 11:27:34
+ * @LastEditTime: 2025-04-18 11:35:19
  * @Description: 
  */
 export default {
@@ -18,7 +18,7 @@ export default {
   detail: {
     title: 'Mga Detalye ng Gawain',
     processTitle: 'Paano Makilahok',
-    processNote: 'Ang unang pagpapasa ng post ay nangangailangan ng pagsusuri, ang mga resulta ay ipapaalam sa pamamagitan ng SMS. Ang mga account na nakapasa na sa pagsusuri ay maaaring direktang mag-publish ng mga post.',
+    processNote: 'Kailangang maaprubahan muna ang account ng bagong miyembro bago makasali sa mga gawain. Ang resulta ay ia-update sa Home > Aking Account. Pakisubaybayan ito palagi.',
     requirementsTitle: 'Mga Kinakailangan sa Gawain',
     publishForm: 'Uri ng Gawain',
     fansRequired: 'Minimum na Tagasubaybay',

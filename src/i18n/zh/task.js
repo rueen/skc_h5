@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-18 11:27:10
+ * @LastEditTime: 2025-04-18 11:34:41
  * @Description: 
  */
 export default {
@@ -18,7 +18,7 @@ export default {
   detail: {
     title: '任务详情',
     processTitle: '任务流程',
-    processNote: '新人第一次发布帖子需经过合作审核，审核结果会通过短信通知，请及时关注。已经通过审核的账号，可以直接发布帖子。',
+    processNote: '新成员需要通过账号审核后才能参加任务，审核结果会在主页-我的账号中更新，请及时关注',
     requirementsTitle: '任务要求',
     publishForm: '任务类型',
     fansRequired: '最低粉丝数',
