@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-19 08:09:35
+ * @LastEditTime: 2025-04-19 11:17:50
  * @Description: 
  */
 export default {
@@ -14,6 +14,10 @@ export default {
 
   emptyText: 'No Data',
   finishedText: 'No More',
+  loadingText: 'Loading...',
+  errorText: 'Load failed',
+  pullingText: 'Pull to refresh...',
+  loosingText: 'Release to refresh...',
 
   cancel: 'Cancel',
   confirm: 'Confirm',

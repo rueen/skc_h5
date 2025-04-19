@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-19 08:09:42
+ * @LastEditTime: 2025-04-19 11:17:58
  * @Description: 
  */
 export default {
@@ -14,6 +14,10 @@ export default {
 
   emptyText: 'Walang Data',
   finishedText: 'Wala nang Karagdagan',
+  loadingText: 'Nagloading...',
+  errorText: 'Nagload na nawala',
+  pullingText: 'Pull to refresh...',
+  loosingText: 'Release to refresh...',
 
   cancel: 'Kanselahin',
   confirm: 'Kumpirmahin',

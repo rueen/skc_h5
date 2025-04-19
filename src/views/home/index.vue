@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-17 09:13:12
+ * @LastEditTime: 2025-04-19 11:16:20
  * @Description: 首页
  -->
 
@@ -27,12 +27,19 @@
 
     <!-- 列表内容区域 -->
     <div :class="$style.content">
-      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+      <van-pull-refresh
+        v-model="refreshing"
+        :pulling-text="$t('common.pullingText')"
+        :loosing-text="$t('common.loosingText')"
+        @refresh="onRefresh"
+      >
         <van-empty image="search" v-if="list.length === 0" :description="$t('common.emptyText')" />
         <van-list
           v-model:loading="loading"
           v-model:finished="finished"
           :finished-text="$t('common.finishedText')"
+          :loading-text="$t('common.loadingText')"
+          :error-text="$t('common.errorText')"
           v-else
         >
           <div 

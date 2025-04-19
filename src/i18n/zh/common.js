@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-19 08:07:11
+ * @LastEditTime: 2025-04-19 11:17:35
  * @Description: 
  */
 export default {
@@ -14,6 +14,10 @@ export default {
 
   emptyText: '暂无数据',
   finishedText: '没有更多了',
+  loadingText: '加载中...',
+  errorText: '加载失败',
+  pullingText: '下拉即可刷新...',
+  loosingText: '释放即可刷新...',
 
   cancel: '取消',
   confirm: '确认',

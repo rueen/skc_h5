@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-19 07:47:19
+ * @LastEditTime: 2025-04-19 08:41:17
  * @Description: 
  */
 export default {
@@ -21,7 +21,7 @@ export default {
   
   bills: {
     title: '结算账单',
-    daifuFailureReason: '失敗',
+    daifuFailureReason: '请更换电子钱包账户',
   },
 
   records: {
