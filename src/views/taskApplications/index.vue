@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 20:56:53
+ * @LastEditTime: 2025-04-19 11:22:17
  * @Description: 任务页
  -->
 <template>
@@ -23,7 +23,12 @@
 
     <!-- 列表内容区域 -->
     <div :class="$style.content">
-      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+      <van-pull-refresh
+        v-model="refreshing"
+        :pulling-text="$t('common.pullingText')"
+        :loosing-text="$t('common.loosingText')"
+        @refresh="onRefresh"
+      >
         <van-empty image="search" v-if="list.length === 0" :description="$t('common.emptyText')" />
         <van-list
           v-model:loading="loading"

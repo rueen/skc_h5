@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-26 11:00:41
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 16:42:11
+ * @LastEditTime: 2025-04-19 11:21:50
  * @Description: 
 -->
 <template>
@@ -24,7 +24,12 @@
         <div :class="[$style.headerItem, $style.headerItemCenter]">{{ $t('groups.members.taskCount') }}</div>
         <div :class="[$style.headerItem, $style.headerItemRight]">{{ $t('groups.members.totalCommission') }}</div>
       </div>
-      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+      <van-pull-refresh
+        v-model="refreshing"
+        :pulling-text="$t('common.pullingText')"
+        :loosing-text="$t('common.loosingText')"
+        @refresh="onRefresh"
+      >
         <van-list
           v-model:loading="loading"
           v-model:finished="finished"

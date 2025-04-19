@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 15:00:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 16:42:56
+ * @LastEditTime: 2025-04-19 11:22:05
  * @Description: 我的邀请人列表页
  -->
 <template>
@@ -31,7 +31,12 @@
     </div>
     <!-- 邀请列表 -->
     <div :class="$style.content">
-      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+      <van-pull-refresh
+        v-model="refreshing"
+        :pulling-text="$t('common.pullingText')"
+        :loosing-text="$t('common.loosingText')"
+        @refresh="onRefresh"
+      >
         <van-empty image="search" v-if="list.length === 0" :description="$t('common.emptyText')" />
         <van-list
           v-model:loading="loading"
