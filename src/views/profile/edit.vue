@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 15:39:31
+ * @LastEditTime: 2025-04-19 08:16:27
  * @Description: 
 -->
 <template>
@@ -141,7 +141,7 @@
           <span :class="$style.label">{{ $t('profile.info.inviteLink') }}</span>
           <div :class="$style.value">
             <div :class="$style.inviteUrl">{{ inviteUrl }}</div>
-            <van-button type="primary" size="mini" @click="handleCopy(inviteUrl)">复制</van-button>
+            <van-button type="primary" size="mini" @click="handleCopy(inviteUrl)">copy</van-button>
           </div>
         </div>
       </div>

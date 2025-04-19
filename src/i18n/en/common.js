@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 16:40:32
+ * @LastEditTime: 2025-04-19 08:09:35
  * @Description: 
  */
 export default {
@@ -30,6 +30,15 @@ export default {
     imageRequired: 'Please upload an image file',
     imageSize: 'Image size cannot exceed',
     uploadFailed: 'Upload failed',
+  },
+
+  notification: {
+    joinGroupTitle: 'Join Group Notification',
+    joinGroupMessage: 'Welcome to join',
+    joinGroupButtonText: 'Join Now',
+    accountAuditRejectTitle: 'Account Audit Reject Notification',
+    accountAuditRejectMessage: 'Your account audit has been rejected, please resubmit the audit',
+    accountAuditRejectButtonText: 'View Now',
   },
 
   copy: (type) => {

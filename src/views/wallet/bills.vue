@@ -44,8 +44,12 @@
                   </template>
                 </div>
               </div>
-              <div :class="$style.reason" v-if="bill.settlementStatus === 'failed' || bill.withdrawalStatus === 'failed'">
-                {{ $t('wallet.bills.failureReason') }}：{{ bill.failureReason }}
+              <div :class="$style.reason" v-if="bill.withdrawalStatus === 'failed'">
+                <span v-if="bill.failureReason == '失敗'">{{ $t('wallet.bills.daifuFailureReason') }}</span>
+                <span v-else>{{ bill.failureReason }}</span>
+              </div>
+              <div :class="$style.reason" v-else-if="bill.settlementStatus === 'failed'">
+                {{ bill.failureReason }}
               </div>
             </div>
           </div>

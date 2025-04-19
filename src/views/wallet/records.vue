@@ -32,7 +32,7 @@
                 </div>
               </div>
               <div :class="$style.reason" v-if="record.withdrawalStatus === 'failed'">
-                {{ $t('wallet.records.failureReason') }}：{{ record.rejectReason }}
+                {{ record.rejectReason }}
               </div>
             </div>
           </div>

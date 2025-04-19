@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-18 11:17:57
+ * @LastEditTime: 2025-04-19 07:47:19
  * @Description: 
  */
 export default {
@@ -21,12 +21,11 @@ export default {
   
   bills: {
     title: '结算账单',
-    failureReason: '失败原因',
+    daifuFailureReason: '失敗',
   },
 
   records: {
     title: '提现记录',
-    failureReason: '失败原因',
     withdrawTo: '提现到',
   },
 

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 15:55:33
+ * @LastEditTime: 2025-04-19 07:47:30
  * @Description: 
  */
 export default {
@@ -21,12 +21,11 @@ export default {
   
   bills: {
     title: 'Mga Bill ng Settlement',
-    failureReason: 'Dahilan ng Pagkabigo',
+    daifuFailureReason: 'Mangyaring i-update ang iyong E-Wallet Account',
   },
 
   records: {
     title: 'Mga Record ng Pag-withdraw',
-    failureReason: 'Dahilan ng Pagkabigo',
     withdrawTo: 'I-withdraw sa',
   },
 

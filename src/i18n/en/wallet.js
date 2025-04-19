@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-18 11:18:28
+ * @LastEditTime: 2025-04-19 07:47:25
  * @Description: 
  */
 export default {
@@ -21,12 +21,11 @@ export default {
   
   bills: {
     title: 'Settlement Bills',
-    failureReason: 'Failure Reason',
+    daifuFailureReason: 'Please update E-Wallet Account',
   },
 
   records: {
     title: 'Withdrawal Records',
-    failureReason: 'Failure Reason',
     withdrawTo: 'Withdraw To',
   },
 

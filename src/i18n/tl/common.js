@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 16:40:43
+ * @LastEditTime: 2025-04-19 08:09:42
  * @Description: 
  */
 export default {
@@ -30,6 +30,15 @@ export default {
     imageRequired: 'Maglagay ng imahe',
     imageSize: 'Di mas malaki kaysa',
     uploadFailed: 'Kumopyahin na nawala',
+  },
+
+  notification: {
+    joinGroupTitle: 'Pag-join sa Grupo',
+    joinGroupMessage: 'Maligayang pag-join',
+    joinGroupButtonText: 'Mag-join Ngayon',
+    accountAuditRejectTitle: 'Pagkabigo sa Pag-audit ng Account',
+    accountAuditRejectMessage: 'Hindi nawala ang iyong pag-audit ng account, mangyaring i-resubmit ang audit',
+    accountAuditRejectButtonText: 'Mag-view Ngayon',
   },
 
   copy: (type) => {

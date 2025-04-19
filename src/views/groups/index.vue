@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-21 11:10:52
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 15:41:53
+ * @LastEditTime: 2025-04-19 08:16:19
  * @Description: 
 -->
 <template>
@@ -89,7 +89,7 @@
           <div :class="$style.label">{{ $t('groups.index.groupLink') }}</div>
           <div :class="$style.value">
             <div :class="$style.groupLink">{{ group.groupLink }}</div>
-            <van-button type="primary" size="mini" @click="handleCopy(group.groupLink)">复制</van-button>
+            <van-button type="primary" size="mini" @click="handleCopy(group.groupLink)">copy</van-button>
           </div>
         </div>
       </div>

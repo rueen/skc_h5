@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-16 16:40:49
+ * @LastEditTime: 2025-04-19 08:07:11
  * @Description: 
  */
 export default {
@@ -30,6 +30,15 @@ export default {
     imageRequired: '请上传图片文件',
     imageSize: '图片大小不能超过',
     uploadFailed: '上传失败',
+  },
+
+  notification: {
+    joinGroupTitle: '入群通知',
+    joinGroupMessage: '欢迎加入',
+    joinGroupButtonText: '立即加入',
+    accountAuditRejectTitle: '账号审核拒绝通知',
+    accountAuditRejectMessage: '您的账号审核未通过，请重新提交审核',
+    accountAuditRejectButtonText: '立即查看',
   },
 
   copy: (type) => {
