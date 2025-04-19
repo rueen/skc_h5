@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:52:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 18:43:15
+ * @LastEditTime: 2025-04-19 20:41:48
  * @Description: 
  */
 export default {
@@ -24,7 +24,7 @@ export default {
     edit: 'I-edit',
     save: 'I-save',
     avatar: 'Avatar',
-    nickname: 'Nickname',
+    nickname: 'Username',
     nicknamePlaceholder: 'Mangyaring ilagay ang nickname',
     gender: 'Kasarian',
     occupation: 'Trabaho',

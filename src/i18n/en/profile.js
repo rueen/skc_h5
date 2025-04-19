@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:52:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 18:42:35
+ * @LastEditTime: 2025-04-19 20:41:41
  * @Description: 
  */
 export default {
@@ -24,7 +24,7 @@ export default {
     edit: 'Edit',
     save: 'Save',
     avatar: 'Avatar',
-    nickname: 'Nickname',
+    nickname: 'Username',
     nicknamePlaceholder: 'Please fill up nickname',
     gender: 'Gender',
     occupation: 'Occupation',
