@@ -12,6 +12,7 @@
     "@vant/area-data": "^2.0.0",
     "axios": "^1.8.3",
     "compressorjs": "^1.2.1",
+    "crypto-js": "^4.2.0",
     "less": "^4.2.2",
     "pinia": "^3.0.1",
     "vant": "^4.9.17",

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-19 11:22:17
+ * @LastEditTime: 2025-04-19 19:52:11
  * @Description: 任务页
  -->
 <template>
@@ -125,6 +125,7 @@ const getEnrolledList = async () => {
   }
   try {
     const res = await get('task.enrolled', {
+      excludeSubmitted: true,
       page: page.value,
       pageSize: pageSize.value,
     })

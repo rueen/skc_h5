@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:25:10
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 17:59:04
+ * @LastEditTime: 2025-04-19 19:05:04
  * @Description: 环境配置文件
  */
 
@@ -65,4 +65,5 @@ export default {
   api: API_PATH,
   // 模拟数据配置
   mock: MOCK_CONFIG,
+  apiSignSecret: '81fe9c1f0a2d564bf827eb5ca3f3ed7b46592b7dc40b9a47fd3cb8fbf5308e9a',
 }; 

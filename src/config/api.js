@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-18 21:59:36
+ * @LastEditTime: 2025-04-19 19:52:17
  * @Description: API 路径配置
  */
 const API_PATH = {
@@ -19,7 +19,7 @@ const API_PATH = {
     // 取消报名
     cancelEnroll: '/task-enroll/:taskId', // DELETE
     // 任务报名列表
-    enrolled: '/task-enroll/record?excludeSubmitted=true', // excludeSubmitted=true 排除已提交任务
+    enrolled: '/task-enroll/record',
     // 提交任务 POST
     submit: '/task-submit',
     // 获取已提交任务列表
