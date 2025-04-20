@@ -2,13 +2,12 @@
  * @Author: diaochan
  * @Date: 2025-03-17 20:04:30
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-17 21:07:09
+ * @LastEditTime: 2025-04-20 21:38:31
  * @Description: 
 -->
 <template>
   <div :class="$style.avatar" :style="{ width: width, height: height, borderRadius: round ? '50%' : '0' }">
-    <van-image :src="avatar" :width="width" :height="height" :round="round" v-if="avatar" />
-    <van-icon name="contact-o" :class="$style.avatarIcon" :style="{ fontSize: fontSize }" v-else />
+    <van-image :src="avatar" :width="width" :height="height" :round="round" />
   </div>
 </template>
 
