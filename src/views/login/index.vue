@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-18 19:47:00
+ * @LastEditTime: 2025-04-24 22:57:39
  * @Description: 登录页
  -->
  <template>
@@ -374,7 +374,7 @@ const onSubmit = async () => {
       router.push('/')
     }
     // 登录成功后清除邀请码
-    sessionStorage.removeItem('inviteCode')
+    // sessionStorage.removeItem('inviteCode')
     // 检查是否有未读通知
     checkNotification(router)
   } catch (error) {
