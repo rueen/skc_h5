@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-19 08:16:27
+ * @LastEditTime: 2025-04-24 08:37:00
  * @Description: 
 -->
 <template>
@@ -139,7 +139,7 @@
         <!-- 邀请链接 -->
         <div :class="$style.formItem">
           <span :class="$style.label">{{ $t('profile.info.inviteLink') }}</span>
-          <div :class="$style.value">
+          <div :class="[$style.value, $style.inviteUrlValue]">
             <div :class="$style.inviteUrl">{{ inviteUrl }}</div>
             <van-button type="primary" size="mini" @click="handleCopy(inviteUrl)">copy</van-button>
           </div>
@@ -386,6 +386,7 @@ onMounted(async () => {
     width: 80px;
     font-size: 14px;
     color: #323233;
+    white-space: nowrap;
   }
 
   .value {
@@ -410,6 +411,9 @@ onMounted(async () => {
       color: #969799;
       font-size: 16px;
     }
+  }
+  .inviteUrlValue{
+    width: 80%;
   }
   .inviteUrl{
     font-size: 14px;
