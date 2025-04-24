@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 23:14:43
+ * @LastEditTime: 2025-04-24 13:43:03
  * @Description: 
  */
 import { defineConfig } from 'vite'
@@ -23,7 +23,7 @@ export default defineConfig({
     proxy: {
       // 特别注意：如果后端API已经包含/api前缀，则不要重写路径
       '/api': {
-        target: 'http://api.rueen.cn',
+        target: 'http://api.skcpop.com',
         changeOrigin: true,
         // rewrite: (path) => path.replace(/^\/api/, '') // 移除重写规则，保留/api前缀
       }

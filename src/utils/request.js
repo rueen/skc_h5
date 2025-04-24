@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:35:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-19 19:55:29
+ * @LastEditTime: 2025-04-24 13:28:12
  * @Description: API 请求工具
  */
 
@@ -151,6 +151,12 @@ function generateSign(params, secret) {
   return MD5(signStr).toString();
 }
 
+// 生成签名时使用校正后的时间戳
+function getAdjustedTimestamp() {
+  const serverTimeDiff = localStorage.getItem('serverTimeDiff');
+  return Math.floor(Date.now() / 1000) + Number(serverTimeDiff);
+}
+
 /**
  * 发送请求
  * @param {String} apiName - API 名称，格式为 "模块.接口"，例如 "task.list"
@@ -170,7 +176,7 @@ export const request = async (apiName, params = {}, options = {}) => {
     return mockRequest(apiName, filteredParams)
   }
 
-  filteredParams.timestamp = Math.floor(Date.now() / 1000);
+  filteredParams.timestamp = getAdjustedTimestamp();
   // 随机字符串参数nonce的主要目的是确保每次请求的唯一性，防止重放攻击
   filteredParams.nonce = Math.random().toString(36).substring(2, 15);
   // 生成签名 (密钥需要从后端开发人员处获取)

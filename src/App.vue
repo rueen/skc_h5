@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 20:26:03
+ * @LastEditTime: 2025-04-24 13:37:00
  * @Description: 
 -->
 <template>
@@ -17,11 +17,12 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUserStore, useEnumStore } from '@/stores'
 import { checkNotification } from '@/utils/notification'
 import { useRouter } from 'vue-router'
+import { get } from '@/utils/request'
 
 const route = useRoute()
 const router = useRouter()
@@ -53,6 +54,28 @@ const showTabbar = computed(() => {
     'GroupsMembers'
   ].includes(route.name)
 })
+
+// 获取服务器时间差
+let serverTimeDiff = 0;
+let timeSync = null; // 存储定时器ID
+
+async function initTimeSync() {
+  try {
+    const res = await get('system.time')
+
+    if (res.code === 0) {
+      const serverTime = res.data.timestamp;
+      const localTime = Math.floor(Date.now() / 1000);
+      
+      // 计算本地时间与服务器时间的差值
+      serverTimeDiff = serverTime - localTime;
+      localStorage.setItem('serverTimeDiff', serverTimeDiff)
+    }
+  } catch (error) {
+    console.error('时间同步失败:', error);
+  }
+}
+
 // 在应用启动时获取用户信息
 onMounted(async () => {
   // 如果有 token，则获取用户信息
@@ -61,6 +84,18 @@ onMounted(async () => {
     await checkNotification(router)
     // 加载枚举数据
     await enumStore.fetchEnum()
+  }
+  // 在应用初始化时同步时间
+  initTimeSync();
+  // 可以定期重新同步，以处理时间偏移
+  timeSync = setInterval(initTimeSync, 3600000); // 每小时同步一次
+})
+
+// 在组件卸载时清除定时器
+onUnmounted(() => {
+  if (timeSync) {
+    clearInterval(timeSync);
+    timeSync = null;
   }
 })
 </script>
