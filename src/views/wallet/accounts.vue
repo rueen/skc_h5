@@ -136,7 +136,12 @@ const onClickRight = () => {
 
 // 创建账户
 const onCreate = async() => {
-  const res = await post('withdrawals.create', form.value)
+  const params = {
+    paymentChannelId: form.value.paymentChannelId, // 支付渠道ID
+    account: form.value.account.trim(), // 账号
+    name: form.value.name.trim() // 姓名
+  }
+  const res = await post('withdrawals.create', params)
   if(res.code === 0){
     showToast(t('wallet.accounts.createSuccess'))
     router.back()
@@ -146,8 +151,13 @@ const onCreate = async() => {
 }
 
 // 更新账户
-const onUpdate = async() => {  
-  const res = await put('withdrawals.update', form.value, {
+const onUpdate = async() => {
+  const params = {
+    paymentChannelId: form.value.paymentChannelId, // 支付渠道ID
+    account: form.value.account.trim(), // 账号
+    name: form.value.name.trim() // 姓名
+  }
+  const res = await put('withdrawals.update', params, {
     urlParams: {
       id: form.value.id
     }
