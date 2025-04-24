@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 15:00:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-19 11:22:05
+ * @LastEditTime: 2025-04-24 15:20:04
  * @Description: 我的邀请人列表页
  -->
 <template>
@@ -145,7 +145,7 @@ const onInvite = () => {
   // 获取当前用户的邀请码
   const inviteCode = userStore.inviteCode
   // 使用分享工具方法生成并复制邀请链接
-  shareInviteLink(`/login`, inviteCode)
+  shareInviteLink(``, inviteCode)
 }
 
 // 初始化
