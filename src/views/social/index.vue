@@ -45,6 +45,7 @@
             name="delete-o" 
             :class="$style.deleteBtn"
             @click.stop="onDeleteClick(item)"
+            v-if="item.accountAuditStatus !== 'approved'"
           />
           <van-icon name="arrow" :class="$style.arrow" />
         </div>

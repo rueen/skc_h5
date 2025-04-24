@@ -44,7 +44,7 @@
               :placeholder="$t('social.edit.homeUrlPlaceholder')"
               :class="$style.input"
               :border="false"
-              :readonly="isView"
+              :readonly="isView || isApproved"
               @change="onHomeUrlChange"
               clearable
               @clear="onInputClear('homeUrl')"
@@ -59,7 +59,7 @@
               :class="$style.input"
               :border="false"
               :disabled="!form.homeUrl"
-              :readonly="isView"
+              :readonly="isView || isApproved"
               clearable
               @clear="onInputClear('uid')"
             />
@@ -180,6 +180,7 @@ const isEditing = ref(false)
 const isView = computed(() => route.params.id !== 'new' && !isEditing.value && !isRejected.value)
 // 是否是拒绝状态
 const isRejected = computed(() => detail.value.accountAuditStatus === 'rejected')
+const isApproved = computed(() => detail.value.accountAuditStatus === 'approved')
 const isShowFindIdBtn = ref(false)
 
 // 账号详情
