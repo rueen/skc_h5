@@ -6,7 +6,7 @@
       fixed
     />
 
-    <div :class="$style.content">
+    <div :class="$style.refreshBox">
       <van-pull-refresh
         v-model="refreshing"
         :pulling-text="$t('common.pullingText')"
@@ -16,8 +16,13 @@
         <van-empty image="search" v-if="list.length === 0" :description="$t('common.emptyText')" />
         <van-list
           v-model:loading="loading"
-          :finished="finished"
+          :loading-text="$t('common.loadingText')"
+          v-model:finished="finished"
           :finished-text="$t('common.finishedText')"
+          v-model:error="error"
+          :error-text="$t('common.listRrrorText')"
+          :immediate-check="false"
+          @load="onLoad"
           v-else
         >
           <div :class="$style.recordList">
@@ -64,39 +69,51 @@ const list = ref([])
 const loading = ref(false)
 const finished = ref(false)
 const refreshing = ref(false)
+const error = ref(false);
 
 // 下拉刷新
 const onRefresh = () => {
+  page.value = 1
+  list.value = []
   finished.value = false
   loading.value = true
-  getWithdrawalRecords()
+  onLoad()
 }
 
 // 获取提现记录
-const getWithdrawalRecords = async () => {
-  const res = await get('withdrawals.records', {
-    page: page.value,
-    pageSize: pageSize.value,
-  })
-  if(res.code === 0){
-    list.value = res.data.list
-    loading.value = false
-    finished.value = res.data.total <= list.value.length
-    refreshing.value = false
+const onLoad = async () => {
+  try {
+    const res = await get('withdrawals.records', {
+      page: page.value,
+      pageSize: pageSize.value,
+    })
+    const newItems = res.data.list || [];
+    for (let i = 0; i < newItems.length; i++) {
+      list.value.push(newItems[i]);
+    }
+    loading.value = false;
+    refreshing.value = false;
+    page.value++;
     if (list.value.length >= res.data.total) {
       finished.value = true
     }
+  } catch (error) {
+    error.value = true;
+    loading.value = false;
   }
 }
 
 onMounted(async () => {
-  getWithdrawalRecords()
+  onLoad()
 })
 </script>
 
 <style lang="less" module>
-.content {
+.refreshBox {
   padding: 12px;
+  box-sizing: border-box;
+  height: 99vh;
+  overflow-y: scroll;
 }
 
 .recordList {

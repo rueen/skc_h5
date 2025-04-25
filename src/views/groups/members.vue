@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-26 11:00:41
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-25 18:46:55
+ * @LastEditTime: 2025-04-25 19:49:49
  * @Description: 
 -->
 <template>
@@ -32,12 +32,13 @@
       </div>
       <van-list
         v-model:loading="loading"
+        :loading-text="$t('common.loadingText')"
         v-model:finished="finished"
         :finished-text="$t('common.finishedText')"
         v-model:error="error"
         :error-text="$t('common.listRrrorText')"
         :immediate-check="false"
-        @load="loadMembers"
+        @load="onLoad"
       >
       <div 
           v-for="item in list" 
@@ -89,10 +90,10 @@ const onRefresh = () => {
   list.value = []
   finished.value = false
   loading.value = true
-  loadMembers()
+  onLoad()
 }
 
-const loadMembers = async () => {
+const onLoad = async () => {
   try {
     const res = await get('groups.members', {
       page: page.value,
@@ -119,13 +120,13 @@ const loadMembers = async () => {
 }
 
 onMounted(async () => {
-  loadMembers()
+  onLoad()
 })
 </script>
 
 <style lang="less" module>
 .refreshBox{
-  height: 99.9vh;
+  height: 99vh;
   overflow-y: scroll;
 }
 .tips {

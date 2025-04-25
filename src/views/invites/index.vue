@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 15:00:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-24 15:20:04
+ * @LastEditTime: 2025-04-25 19:49:56
  * @Description: 我的邀请人列表页
  -->
 <template>
@@ -13,35 +13,39 @@
       left-arrow
       fixed
     />
-
-    <!-- 邀请统计 -->
-    <div :class="$style.statsCard">
-      <div :class="$style.statsItem">
-        <div :class="$style.label">{{ $t('invites.inviteCount') }}</div>
-        <div :class="$style.value">{{ stats.inviteCount }}</div>
-      </div>
-      <div :class="$style.statsItem">
-        <div :class="$style.label">{{ $t('invites.totalReward') }}</div>
-        <div :class="$style.value">{{ stats.totalReward }}</div>
-      </div>
-    </div>
-    <div :class="$style.tips">
-      <van-icon name="info-o" />
-      {{ $t('invites.tips') }}
-    </div>
     <!-- 邀请列表 -->
-    <div :class="$style.content">
+    <div :class="$style.refreshBox">
       <van-pull-refresh
         v-model="refreshing"
         :pulling-text="$t('common.pullingText')"
         :loosing-text="$t('common.loosingText')"
         @refresh="onRefresh"
       >
+        <!-- 邀请统计 -->
+        <div :class="$style.statsCard">
+          <div :class="$style.statsItem">
+            <div :class="$style.label">{{ $t('invites.inviteCount') }}</div>
+            <div :class="$style.value">{{ stats.inviteCount }}</div>
+          </div>
+          <div :class="$style.statsItem">
+            <div :class="$style.label">{{ $t('invites.totalReward') }}</div>
+            <div :class="$style.value">{{ stats.totalReward }}</div>
+          </div>
+        </div>
+        <div :class="$style.tips">
+          <van-icon name="info-o" />
+          {{ $t('invites.tips') }}
+        </div>
         <van-empty image="search" v-if="list.length === 0" :description="$t('common.emptyText')" />
         <van-list
           v-model:loading="loading"
-          :finished="finished"
+          :loading-text="$t('common.loadingText')"
+          v-model:finished="finished"
           :finished-text="$t('common.finishedText')"
+          v-model:error="error"
+          :error-text="$t('common.listRrrorText')"
+          :immediate-check="false"
+          @load="onLoad"
           v-else
         >
           <div :class="$style.inviteList">
@@ -84,7 +88,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import { shareInviteLink } from '@/utils/share'
 import Layout from '@/components/layout.vue'
 import { get } from '@/utils/request'
@@ -92,7 +95,6 @@ import { useUserStore } from '@/stores'
 import NavBar from '@/components/NavBar.vue'
 import { useI18n } from 'vue-i18n'
 
-const router = useRouter()
 const userStore = useUserStore()
 const { t } = useI18n()
 
@@ -109,13 +111,16 @@ const list = ref([])
 const loading = ref(false)
 const finished = ref(false)
 const refreshing = ref(false)
+const error = ref(false);
 
 // 下拉刷新
 const onRefresh = () => {
+  page.value = 1
+  list.value = []
   finished.value = false
   loading.value = true
+  onLoad()
   loadStats()
-  loadList()
 }
 
 const loadStats = async () => {
@@ -123,21 +128,25 @@ const loadStats = async () => {
   stats.value = res.data
 }
 
-const loadList = async () => {
-  if (refreshing.value) {
-    list.value = []
-    refreshing.value = false
-  }
-  const res = await get('invite.list', {
-    page: page.value,
-    pageSize: pageSize.value,
-  })
-  list.value = res.data.list
-  loading.value = false
-  finished.value = res.data.total <= list.value.length
-  refreshing.value = false
-  if (list.value.length >= res.data.total) {
-    finished.value = true
+const onLoad = async () => {
+  try {
+    const res = await get('invite.list', {
+      page: page.value,
+      pageSize: pageSize.value,
+    })
+    const newItems = res.data.list || [];
+    for (let i = 0; i < newItems.length; i++) {
+      list.value.push(newItems[i]);
+    }
+    loading.value = false;
+    refreshing.value = false;
+    page.value++;
+    if (list.value.length >= res.data.total) {
+      finished.value = true
+    }
+  } catch (error) {
+    error.value = true;
+    loading.value = false;
   }
 }
 
@@ -151,7 +160,7 @@ const onInvite = () => {
 // 初始化
 onMounted(async () => {
   loadStats()
-  loadList()
+  onLoad()
 })
 </script>
 
@@ -159,9 +168,15 @@ onMounted(async () => {
 .invitesPage {
   padding-bottom: 80px;
 }
+.refreshBox {
+  padding: 12px;
+  box-sizing: border-box;
+  height: 99vh;
+  overflow-y: scroll;
+}
 
 .statsCard {
-  margin: 12px;
+  margin-bottom: 10px;
   background: #fff;
   border-radius: 8px;
   padding: 16px;
@@ -188,15 +203,10 @@ onMounted(async () => {
 .tips {
   font-size: 12px;
   color: #E82134;
-  margin: 0 12px 0;
   text-align: center;
   background: #FFF3EE;
   border-radius: 8px 8px 0 0;
   padding: 10px;
-}
-
-.content {
-  padding: 0 12px;
 }
 
 .inviteList {

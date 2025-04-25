@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-19 11:16:20
+ * @LastEditTime: 2025-04-25 19:49:52
  * @Description: 首页
  -->
 
@@ -26,7 +26,7 @@
     </div>
 
     <!-- 列表内容区域 -->
-    <div :class="$style.content">
+    <div :class="$style.refreshBox">
       <van-pull-refresh
         v-model="refreshing"
         :pulling-text="$t('common.pullingText')"
@@ -36,10 +36,13 @@
         <van-empty image="search" v-if="list.length === 0" :description="$t('common.emptyText')" />
         <van-list
           v-model:loading="loading"
+          :loading-text="$t('common.loadingText')"
           v-model:finished="finished"
           :finished-text="$t('common.finishedText')"
-          :loading-text="$t('common.loadingText')"
-          :error-text="$t('common.errorText')"
+          v-model:error="error"
+          :error-text="$t('common.listRrrorText')"
+          :immediate-check="false"
+          @load="onLoad"
           v-else
         >
           <div 
@@ -118,10 +121,8 @@ import { useEnumStore } from '@/stores'
 
 const router = useRouter()
 const enumStore = useEnumStore()
-
 // 当前选中的平台
 const activeChannelId = ref(0)
-
 // 平台列表
 const channelList = ref([])
 
@@ -132,37 +133,45 @@ const list = ref([])
 const loading = ref(false)
 const finished = ref(false)
 const refreshing = ref(false)
-
-// 加载数据
-const onLoad = async () => {
-  if (refreshing.value) {
-    list.value = []
-    refreshing.value = false
-  }
-  const res = await get('task.list', {
-    page: page.value,
-    pageSize: pageSize.value,
-    channelId: activeChannelId.value,
-  })
-  list.value = res.data.list
-  loading.value = false
-  finished.value = res.data.total <= list.value.length
-  refreshing.value = false
-  if (list.value.length >= res.data.total) {
-    finished.value = true
-  }
-}
+const error = ref(false);
 
 // 下拉刷新
-const onRefresh = () => {
+const onRefresh = async () => {
+  page.value = 1
+  list.value = []
   finished.value = false
   loading.value = true
   onLoad()
 }
 
+// 加载数据
+const onLoad = async () => {
+  try {
+    const res = await get('task.list', {
+      page: page.value,
+      pageSize: pageSize.value,
+      channelId: activeChannelId.value,
+    })
+    const newItems = res.data.list || [];
+    for (let i = 0; i < newItems.length; i++) {
+      list.value.push(newItems[i]);
+    }
+    loading.value = false;
+    refreshing.value = false;
+    page.value++;
+    if (list.value.length >= res.data.total) {
+      finished.value = true
+    }
+  } catch (error) {
+    error.value = true;
+    loading.value = false;
+  }
+}
+
 // 切换平台
 const onChannelChange = ({name}) => {
   activeChannelId.value = name
+  page.value = 1
   list.value = []
   finished.value = false
   loading.value = true
@@ -227,10 +236,12 @@ onMounted(async () => {
   }
 }
 
-.content {
-  flex: 1;
-  margin-top: 44px; // 与 van-tabs 的默认高度保持一致
-  overflow-y: auto;
+.refreshBox {
+  padding-top: 44px; // 与 van-tabs 的默认高度保持一致
+  padding-bottom: var(--van-tabbar-height);
+  box-sizing: border-box;
+  height: 99vh;
+  overflow-y: scroll;
 }
 
 .listItem {

@@ -2,11 +2,11 @@
  * @Author: diaochan
  * @Date: 2025-03-21 11:10:52
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-19 11:21:32
+ * @LastEditTime: 2025-04-25 19:49:45
  * @Description: 
 -->
 <template>
-  <Layout>
+  <Layout :class="$style.groupsPage">
     <!-- 顶部导航 -->
     <nav-bar
       :title="$t('groups.index.title')"
@@ -17,56 +17,61 @@
     <van-empty v-if="groups.length === 0" :description="$t('groups.index.noData')" />
     <!-- 群组列表 群主 -->
     <template v-if="isGroupOwner">
-      <div :class="$style.title">
-        <van-space :size="20">
-          <span>{{ $t('groups.index.groupCount') }}：{{ groupStats.groupCount }}</span>
-          <span>{{ $t('groups.index.memberCount') }}：{{ groupStats.memberCount }}</span>
-          <span>{{ $t('groups.index.taskCount') }}：{{ groupStats.taskCount }}</span>
-          <span>{{ $t('groups.index.totalCommission') }}：<span :class="$style.earnings">{{ groupStats.totalCommission }}</span></span>
-        </van-space>
-      </div>
-      <div :class="$style.header">
-        <div :class="[$style.headerItem, $style.headerItemLeft]">{{ $t('groups.index.groupName') }}</div>
-        <div :class="[$style.headerItem, $style.headerItemCenter]">{{ $t('groups.index.memberCount') }}</div>
-        <div :class="[$style.headerItem, $style.headerItemRight]">{{ $t('groups.index.totalCommission') }}</div>
-      </div>
-      <div
-        :class="$style.listItem"
-        @click="router.push(`/groups/members/${group.id}`)"
-        v-for="group in groups"
-        :key="group.id"
-      >
-        <div :class="$style.listItemLeft">
-          <span :class="$style.text">{{ group.groupName }}</span>
-        </div>
-        <div :class="$style.listItemCenter">
-          <span :class="$style.text">{{ group.memberCount }}</span>
-        </div>
-        <div :class="$style.listItemRight">
-          <div :class="[$style.text, $style.earnings]">{{ group.totalEarnings }}</div>
-        </div>
-        <van-icon name="arrow" />
-      </div>
-      <!-- 群主任务统计 -->
-      <div :class="$style.header">
-        <div :class="[$style.headerItem, $style.headerItemLeft]">{{ $t('groups.index.taskName') }}</div>
-        <div :class="[$style.headerItem, $style.headerItemCenter]">{{ $t('groups.index.memberCount') }}</div>
-        <div :class="[$style.headerItem, $style.headerItemRight]">{{ $t('groups.index.totalCommission') }}</div>
-      </div>
       <van-pull-refresh
         v-model="refreshing"
         :pulling-text="$t('common.pullingText')"
         :loosing-text="$t('common.loosingText')"
         @refresh="onRefresh"
       >
+        <div :class="$style.title">
+          <van-space :size="20">
+            <span>{{ $t('groups.index.groupCount') }}：{{ groupStats.groupCount }}</span>
+            <span>{{ $t('groups.index.memberCount') }}：{{ groupStats.memberCount }}</span>
+            <span>{{ $t('groups.index.taskCount') }}：{{ groupStats.taskCount }}</span>
+            <span>{{ $t('groups.index.totalCommission') }}：<span :class="$style.earnings">{{ groupStats.totalCommission }}</span></span>
+          </van-space>
+        </div>
+        <div :class="$style.header">
+          <div :class="[$style.headerItem, $style.headerItemLeft]">{{ $t('groups.index.groupName') }}</div>
+          <div :class="[$style.headerItem, $style.headerItemCenter]">{{ $t('groups.index.memberCount') }}</div>
+          <div :class="[$style.headerItem, $style.headerItemRight]">{{ $t('groups.index.totalCommission') }}</div>
+        </div>
+        <div
+          :class="$style.listItem"
+          @click="router.push(`/groups/members/${group.id}`)"
+          v-for="group in groups"
+          :key="group.id"
+        >
+          <div :class="$style.listItemLeft">
+            <span :class="$style.text">{{ group.groupName }}</span>
+          </div>
+          <div :class="$style.listItemCenter">
+            <span :class="$style.text">{{ group.memberCount }}</span>
+          </div>
+          <div :class="$style.listItemRight">
+            <div :class="[$style.text, $style.earnings]">{{ group.totalEarnings }}</div>
+          </div>
+          <van-icon name="arrow" />
+        </div>
+        <!-- 群主任务统计 -->
+        <div :class="$style.header">
+          <div :class="[$style.headerItem, $style.headerItemLeft]">{{ $t('groups.index.taskName') }}</div>
+          <div :class="[$style.headerItem, $style.headerItemCenter]">{{ $t('groups.index.memberCount') }}</div>
+          <div :class="[$style.headerItem, $style.headerItemRight]">{{ $t('groups.index.totalCommission') }}</div>
+        </div>
         <van-list
           v-model:loading="loading"
+          :loading-text="$t('common.loadingText')"
           v-model:finished="finished"
           :finished-text="$t('common.finishedText')"
+          v-model:error="error"
+          :error-text="$t('common.listRrrorText')"
+          :immediate-check="false"
+          @load="onLoad"
         >
           <div
             :class="$style.listItem"
-            v-for="item in commissionTasks"
+            v-for="item in list"
             :key="item.taskId"
           >
             <div :class="$style.listItemLeft">
@@ -137,33 +142,48 @@ const loadGroupStats = async () => {
   }
 }
 
+// 列表数据
 const page = ref(1)
 const pageSize = ref(10)
-const commissionTasks = ref([])
+const list = ref([])
 const loading = ref(false)
 const finished = ref(false)
 const refreshing = ref(false)
-const loadCommissionTasks = async () => {
-  const res = await get('groups.commissionTasks', {
-    page: page.value,
-    pageSize: pageSize.value,
-  })
-  if (res.code === 0) {
-    commissionTasks.value = res.data.list
-    loading.value = false
-    finished.value = res.data.total <= commissionTasks.value.length
-    refreshing.value = false
-    if (commissionTasks.value.length >= res.data.total) {
-      finished.value = true
-    }
+const error = ref(false);
+
+// 下拉刷新
+const onRefresh = async () => {
+  page.value = 1
+  list.value = []
+  finished.value = false
+  loading.value = true
+  await loadGroups()
+  if (isGroupOwner.value) {
+    loadGroupStats()
+    onLoad()
   }
 }
 
-// 下拉刷新
-const onRefresh = () => {
-  finished.value = false
-  loading.value = true
-  loadCommissionTasks()
+const onLoad = async () => {
+  try {
+    const res = await get('groups.commissionTasks', {
+      page: page.value,
+      pageSize: pageSize.value,
+    })
+    const newItems = res.data.list || [];
+    for (let i = 0; i < newItems.length; i++) {
+      list.value.push(newItems[i]);
+    }
+    loading.value = false;
+    refreshing.value = false;
+    page.value++;
+    if (list.value.length >= res.data.total) {
+      finished.value = true
+    }
+  } catch (error) {
+    error.value = true;
+    loading.value = false;
+  }
 }
 
 const handleCopy = (text) => {
@@ -174,12 +194,17 @@ onMounted(async () => {
   await loadGroups()
   if (isGroupOwner.value) {
     loadGroupStats()
-    loadCommissionTasks()
+    onLoad()
   }
 })
 </script>
 
 <style lang="less" module>
+.groupsPage {
+  height: 99vh;
+  box-sizing: border-box;
+  overflow-y: scroll;
+}
 .title{
   font-size: 14px;
   color: #323233;
