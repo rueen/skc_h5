@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-18 11:35:38
+ * @LastEditTime: 2025-04-25 21:38:10
  * @Description: 任务详情页
  -->
 <template>
@@ -151,7 +151,7 @@
         type="warning" 
         block 
         :class="$style.submitBtn"
-        v-else-if="currentChannelAccount.fansCount - taskInfo.fansRequired < 0"
+        v-else-if="(currentChannelAccount.fansCount - taskInfo.fansRequired < 0) && (currentChannelAccount.friendsCount - taskInfo.fansRequired < 0)"
       >
         {{ $t('task.detail.fansNotQualified') }}
       </van-button>
