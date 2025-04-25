@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-19 11:17:58
+ * @LastEditTime: 2025-04-25 18:13:24
  * @Description: 
  */
 export default {
@@ -18,6 +18,7 @@ export default {
   errorText: 'Nagload na nawala',
   pullingText: 'Pull to refresh...',
   loosingText: 'Release to refresh...',
+  listRrrorText: 'Hindi mabigay ang link ng imbitasyon sa clipboard',
 
   cancel: 'Kanselahin',
   confirm: 'Kumpirmahin',

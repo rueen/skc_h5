@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-19 11:17:50
+ * @LastEditTime: 2025-04-25 18:13:19
  * @Description: 
  */
 export default {
@@ -18,6 +18,7 @@ export default {
   errorText: 'Load failed',
   pullingText: 'Pull to refresh...',
   loosingText: 'Release to refresh...',
+  listRrrorText: 'Request failed, click to reload',
 
   cancel: 'Cancel',
   confirm: 'Confirm',

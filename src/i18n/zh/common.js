@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-19 11:17:35
+ * @LastEditTime: 2025-04-25 17:31:44
  * @Description: 
  */
 export default {
@@ -18,6 +18,7 @@ export default {
   errorText: '加载失败',
   pullingText: '下拉即可刷新...',
   loosingText: '释放即可刷新...',
+  listRrrorText: '请求失败，点击重新加载',
 
   cancel: '取消',
   confirm: '确认',
