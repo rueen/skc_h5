@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-25 19:49:52
+ * @LastEditTime: 2025-04-29 18:04:46
  * @Description: 首页
  -->
 
@@ -159,7 +159,7 @@ const onLoad = async () => {
     loading.value = false;
     refreshing.value = false;
     page.value++;
-    if (list.value.length >= res.data.total) {
+    if (list.value.length >= res.data.total || newItems.length <= 0) {
       finished.value = true
     }
   } catch (error) {
