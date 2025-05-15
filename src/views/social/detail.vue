@@ -28,12 +28,12 @@
           <span :class="$style.label">{{ $t('social.edit.platform') }}</span>
           <div 
             :class="$style.value" 
-            @click="showPlatformPicker = true"
+            @click="handlePlatformClick"
           >
             <span :class="[$style.text, !selectedChannel.id && $style.placeholder]">
               {{ selectedChannel.id ? selectedChannel.name : $t('common.pleaseSelect') }}
             </span>
-            <van-icon name="arrow" v-if="!isView" />
+            <van-icon name="arrow" v-if="!isView && !isApproved" />
           </div>
         </div>
         <template v-if="selectedChannel.id">
@@ -87,7 +87,7 @@
               :placeholder="$t('social.edit.fansCountPlaceholder')"
               :class="$style.input"
               :border="false"
-              :readonly="isView"
+              :readonly="isView || isApproved"
               clearable
               @clear="onInputClear('fansCount')"
             />
@@ -101,7 +101,7 @@
               :placeholder="$t('social.edit.friendsCountPlaceholder')"
               :class="$style.input"
               :border="false"
-              :readonly="isView"
+              :readonly="isView || isApproved"
               clearable
               @clear="onInputClear('friendsCount')"
             />
@@ -115,17 +115,17 @@
               :placeholder="$t('social.edit.postsCountPlaceholder')"
               :class="$style.input"
               :border="false"
-              :readonly="isView"
+              :readonly="isView || isApproved"
               clearable
               @clear="onInputClear('postsCount')"
             />
           </div>
         </template>
       </div>
-      <div :class="$style.tips" v-if="isEditing">
+      <!-- <div :class="$style.tips" v-if="isEditing">
         <van-icon name="warning-o" :class="$style.warningIcon" />
         <span :class="$style.warningText">{{ $t('social.edit.warningText') }}</span>
-      </div>
+      </div> -->
       <!-- 添加账号时显示保存按钮 -->
       <van-button 
         v-if="isNew || isEditing || isRejected"
@@ -207,6 +207,13 @@ const selectedChannel = ref({
 // 渠道列表
 const channelColumns = ref([])
 
+// 处理平台点击
+const handlePlatformClick = () => {
+  if(isApproved.value || isView.value) {
+    return
+  }
+  showPlatformPicker.value = true
+}
 // 清空输入框
 const onInputClear = (field) => {
   form.value[field] = '';
