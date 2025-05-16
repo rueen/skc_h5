@@ -330,7 +330,15 @@ const checkForm = () => {
 
 const addAccount = async () => {
   try {
-    const res = await post('account.create', form.value)
+    let params = {}
+    Object.keys(form.value).forEach(key => {
+      if(['account', 'homeUrl', 'uid'].includes(key)) {
+        params[key] = form.value[key].trim()
+      } else {
+        params[key] = form.value[key]
+      }
+    })
+    const res = await post('account.create', params)
     if(res.code === 0) {
       showToast(t('social.edit.saveSuccess'))
       router.back()
@@ -343,8 +351,16 @@ const addAccount = async () => {
 }
 
 const updateAccount = async () => {
-  try { 
-    const res = await put('account.update', form.value, {
+  try {
+    let params = {}
+    Object.keys(form.value).forEach(key => {
+      if(['account', 'homeUrl', 'uid'].includes(key)) {
+        params[key] = form.value[key].trim()
+      } else {
+        params[key] = form.value[key]
+      }
+    })
+    const res = await put('account.update', params, {
       urlParams: {
         id: route.params.id
       }
