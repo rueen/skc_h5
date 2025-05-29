@@ -261,7 +261,8 @@ const extractFacebookId = async (url) => {
 }
 
 const findFacebookId = () => {
-  window.open('https://essential-tools.com/find-facebook-id', '_blank')
+  // window.open('https://essential-tools.com/find-facebook-id', '_blank')
+  window.open('https://commentpicker.com/find-facebook-id.php', '_blank')
 }
 
 const onHomeUrlChange = () => {
