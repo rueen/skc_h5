@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-24 13:22:13
+ * @LastEditTime: 2025-06-21 17:28:05
  * @Description: API 路径配置
  */
 const API_PATH = {
@@ -95,6 +95,9 @@ const API_PATH = {
     byId: '/articles/:id',
     byLocation: '/articles/location/:location',
   },
+  scrape: {
+    facebook: '/facebook/scrape'
+  }
 }
 
 export default API_PATH
