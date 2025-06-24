@@ -218,7 +218,9 @@ const handlePlatformClick = () => {
 const onInputClear = (field) => {
   form.value[field] = '';
   if(field === 'homeUrl') {
-    form.value.uid = ''
+    form.value.uid = '';
+    form.value.account = '';
+    form.value.fansCount = '';
   }
 }
 
@@ -244,7 +246,7 @@ const extractFacebookId = async (url) => {
       url: form.value.homeUrl
     })
     closeToast()
-    if(res.code === 0 && res.data && res.data.uid && res.data.uid !== '0') {
+    if(res.code === 0 && res.data && res.data.uid && res.data.uid.length > 2) {
       form.value.uid = res.data.uid;
       form.value.account = res.data.nickname;
       form.value.fansCount = res.data.followers;
