@@ -230,7 +230,9 @@ const onPlatformConfirm = ({ selectedOptions }) => {
 }
 
 const extractFacebookId = async (url) => {
-  form.value.uid = ''
+  form.value.uid = '';
+  form.value.account = '';
+  form.value.fansCount = '';
   showToast({
     message: t('social.edit.gettingFacebookId'),
     duration: 0,
@@ -242,9 +244,10 @@ const extractFacebookId = async (url) => {
       url: form.value.homeUrl
     })
     closeToast()
-    if(res.code === 0 && res.data && res.data.uid) {
+    if(res.code === 0 && res.data && res.data.uid && res.data.uid !== '0') {
       form.value.uid = res.data.uid;
       form.value.account = res.data.nickname;
+      form.value.fansCount = res.data.followers;
     } else {
       // 方法3: 使用第三方工具
       isShowFindIdBtn.value = true
