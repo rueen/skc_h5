@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:35:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-06-21 17:31:43
+ * @LastEditTime: 2025-06-25 16:39:31
  * @Description: API 请求工具
  */
 
@@ -16,13 +16,13 @@ import MD5 from 'crypto-js/md5'
 // 公共API服务（用于图片上传、获取枚举常量等）
 const publicService = axios.create({
   baseURL: config.publicApiUrl,
-  timeout: 10000
+  timeout: 20000
 })
 
 // 业务API服务（用于业务接口）
 const businessService = axios.create({
   baseURL: config.businessApiUrl,
-  timeout: 10000
+  timeout: 20000
 })
 
 // 配置请求拦截器
