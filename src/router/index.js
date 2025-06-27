@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:10:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-30 17:32:38
+ * @LastEditTime: 2025-06-27 18:14:28
  * @Description: 
  */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -196,6 +196,15 @@ const router = createRouter({
         title: '导航栏示例',
         requiresAuth: false,
         hideTabbar: true
+      }
+    },
+    {
+      path: '/scrape/facebook',
+      name: 'ScrapeFacebook',
+      component: () => import('../views/scrape/facebook.vue'),
+      meta: {
+        title: 'find facebook id',
+        requiresAuth: false,
       }
     }
   ]

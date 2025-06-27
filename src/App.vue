@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-24 13:37:00
+ * @LastEditTime: 2025-06-27 18:19:24
  * @Description: 
 -->
 <template>
@@ -51,7 +51,8 @@ const showTabbar = computed(() => {
     'SettingsPassword',
     'Article',
     'Groups',
-    'GroupsMembers'
+    'GroupsMembers',
+    'ScrapeFacebook'
   ].includes(route.name)
 })
 

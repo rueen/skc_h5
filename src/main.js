@@ -38,7 +38,10 @@ import {
   Popup,
   Uploader,
   Space,
-  Empty
+  Empty,
+  Radio,
+  RadioGroup,
+  NoticeBar
 } from 'vant'
 
 const app = createApp(App)
@@ -71,5 +74,8 @@ app.use(Popup)
 app.use(Uploader)
 app.use(Space)
 app.use(Empty)
+app.use(Radio)
+app.use(RadioGroup)
+app.use(NoticeBar)
 
 app.mount('#app')
