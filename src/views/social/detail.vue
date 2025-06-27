@@ -246,16 +246,10 @@ const extractFacebookId = async (url) => {
       url: form.value.homeUrl
     })
     closeToast()
-    if(res.data && res.data.success) {
-      const _data = res.data.data;
-      if(_data.uid.length > 2) {
-        form.value.uid = _data.uid;
-        form.value.account = _data.nickname;
-        form.value.fansCount = _data.followers;
-      } else {
-        // 方法3: 使用第三方工具
-        isShowFindIdBtn.value = true
-      }
+    if(res.code === 0 && res.data && res.data.uid != null) {
+      form.value.uid = res.data.uid;
+      form.value.account = res.data.nickname;
+      form.value.fansCount = res.data.followersCount;
     } else {
       // 方法3: 使用第三方工具
       isShowFindIdBtn.value = true
