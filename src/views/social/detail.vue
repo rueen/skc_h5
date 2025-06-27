@@ -218,9 +218,7 @@ const handlePlatformClick = () => {
 const onInputClear = (field) => {
   form.value[field] = '';
   if(field === 'homeUrl') {
-    form.value.uid = '';
-    form.value.account = '';
-    form.value.fansCount = '';
+    form.value.uid = ''
   }
 }
 
@@ -232,31 +230,33 @@ const onPlatformConfirm = ({ selectedOptions }) => {
 }
 
 const extractFacebookId = async (url) => {
-  form.value.uid = '';
-  form.value.account = '';
-  form.value.fansCount = '';
-  showToast({
-    message: t('social.edit.gettingFacebookId'),
-    duration: 0,
-    forbidClick: true,
-  })
-  try {
-    const res = await post('scrape.facebook', {
-      type: 'profile',
-      url: form.value.homeUrl
+  form.value.uid = ''
+  // 方法1: 从URL中直接提取ID (如果URL包含ID参数)
+  const idFromUrlMatch = url.match(/(?:\?|&)id=(\d+)/i);
+  if (idFromUrlMatch && idFromUrlMatch[1]) {
+    form.value.uid = idFromUrlMatch[1]
+  } else {
+    // 方法2: 去老数据表里查找
+    showToast({
+      message: t('social.edit.gettingFacebookId'),
+      duration: 0,
+      forbidClick: true,
     })
-    closeToast()
-    if(res.code === 0 && res.data && res.data.uid != null) {
-      form.value.uid = res.data.uid;
-      form.value.account = res.data.nickname;
-      form.value.fansCount = res.data.followersCount;
-    } else {
-      // 方法3: 使用第三方工具
+    try {
+      const res = await post('account.findUidByHomeUrl', {
+        homeUrl: form.value.homeUrl
+      })
+      closeToast()
+      if(res.code === 0 && res.data && res.data.uid) {
+        form.value.uid = res.data.uid
+      } else {
+        // 方法3: 使用第三方工具
+        isShowFindIdBtn.value = true
+      }
+    } catch (error) {
+      console.log(error)
       isShowFindIdBtn.value = true
     }
-  } catch (error) {
-    console.log(error)
-    isShowFindIdBtn.value = true
   }
 }
 
