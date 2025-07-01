@@ -68,7 +68,7 @@
             :readonly="isView"
             clearable
             @clear="onInputClear(index)"
-            v-if="item.type === 'input'"
+            v-if="['input', 'post', 'group'].includes(item.type)"
           />
           <template v-if="item.type === 'image'">
             <van-image
@@ -218,12 +218,29 @@ const checkForm = () => {
   return customFields.value.every(item => item.value)
 }
 
+const handleScrape = async () => {
+  const scrapeList = customFields.value.filter(item => item.type === 'post' || item.type === 'group');
+  scrapeList.forEach(async (item) => {
+    try {
+      await post('scrape.facebook', {
+        type: item.type,
+        url: item.value
+      })
+    } catch (error) {
+      
+    }
+  })
+}
+
 const onSubmit = async () => {
   const checkResult = checkForm()
   if(!checkResult){
     showToast(t('task.submit.pleaseFillInAllInformation'))
     return 
   }
+
+  // 调用爬取接口
+  handleScrape();
 
   try {
     loading.value = true
