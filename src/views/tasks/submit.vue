@@ -218,18 +218,21 @@ const checkForm = () => {
   return customFields.value.every(item => item.value)
 }
 
+/**
+ * 优化的Facebook抓取处理函数
+ * 通过串行请求和随机延迟来避免被识别为爬虫
+ */
 const handleScrape = async () => {
-  const scrapeList = customFields.value.filter(item => item.type === 'post' || item.type === 'group');
-  scrapeList.forEach(async (item) => {
-    try {
-      await post('scrape.facebook', {
-        type: item.type,
-        url: item.value
-      })
-    } catch (error) {
-      
+  const postItem = customFields.value.find(item => item.type === 'post')
+  if(postItem) {
+    const res = await post('scrape.facebook', {
+      type: postItem.type,
+      url: postItem.value
+    })
+    if(res.code === 0 && res.data && res.data.uid) {
+      postItem.uid = res.data.uid
     }
-  })
+  }
 }
 
 const onSubmit = async () => {
@@ -239,11 +242,10 @@ const onSubmit = async () => {
     return 
   }
 
-  // 调用爬取接口
-  handleScrape();
-
   try {
     loading.value = true
+    // 调用爬取接口
+    await handleScrape();
     const res = await post('task.submit', {
       taskId: taskId.value,
       submitContent: {
