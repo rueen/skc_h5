@@ -229,7 +229,7 @@ const handleScrape = async () => {
       type: postItem.type,
       url: postItem.value
     })
-    if(res.code === 0 && res.data && res.data.uid) {
+    if(res.code === 0 && res.data && res.data.uid && res.data.uid.length > 2) {
       postItem.uid = res.data.uid
     }
   }
