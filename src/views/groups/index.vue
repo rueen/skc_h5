@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-21 11:10:52
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-08 10:53:26
+ * @LastEditTime: 2025-04-25 19:49:45
  * @Description: 
 -->
 <template>
@@ -99,7 +99,7 @@
           <div :class="$style.label">{{ $t('groups.index.groupLink') }}</div>
           <div :class="$style.value">
             <div :class="$style.groupLink">{{ group.groupLink }}</div>
-            <van-button type="primary" size="mini" @click="handleOpen(group.groupLink)">open</van-button>
+            <van-button type="primary" size="mini" @click="handleCopy(group.groupLink)">copy</van-button>
           </div>
         </div>
       </div>
@@ -186,8 +186,8 @@ const onLoad = async () => {
   }
 }
 
-const handleOpen = (url) => {
-  window.open(url, '_blank')
+const handleCopy = (text) => {
+  copyToClipboard(text)
 }
 
 onMounted(async () => {
