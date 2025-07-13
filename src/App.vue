@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-06-27 18:19:24
+ * @LastEditTime: 2025-07-13 10:05:53
  * @Description: 
 -->
 <template>
@@ -52,7 +52,8 @@ const showTabbar = computed(() => {
     'Article',
     'Groups',
     'GroupsMembers',
-    'ScrapeFacebook'
+    'ScrapeFacebook',
+    'TaskGroupsDetail'
   ].includes(route.name)
 })
 

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-18 11:34:41
+ * @LastEditTime: 2025-07-13 10:45:56
  * @Description: 
  */
 export default {
@@ -24,7 +24,6 @@ export default {
     fansRequired: '最低粉丝数',
     workRequirements: '要求',
     taskInfoTitle: '任务信息',
-    inviteFriend: '邀请好友',
     addAccount: '添加账号',
     taskNotStart: '任务未开始',
     accountAuditPending: '账号审核中',
@@ -65,5 +64,10 @@ export default {
   message: {
     enrollSuccess: '报名成功',
     enrollFailed: '报名失败'
+  },
+
+  groupDetail: {
+    title: '任务组详情',
+    apply: '一键报名所有任务'
   }
 }

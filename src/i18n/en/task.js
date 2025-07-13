@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-18 11:35:01
+ * @LastEditTime: 2025-07-13 10:41:33
  * @Description: 
  */
 export default {
@@ -24,7 +24,6 @@ export default {
     fansRequired: 'Minimum Followers',
     workRequirements: 'Requirements',
     taskInfoTitle: 'Task',
-    inviteFriend: 'Invite Friends',
     addAccount: 'Submit Registration',
     taskNotStart: 'Task Not Started',
     accountAuditPending: 'Account Under Review',
@@ -65,5 +64,9 @@ export default {
   message: {
     enrollSuccess: 'Enrollment Successful',
     enrollFailed: 'Enrollment Failed'
+  },
+
+  groupDetail: {
+    title: 'Task Group Details'
   }
 } 

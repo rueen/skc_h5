@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-25 18:13:24
+ * @LastEditTime: 2025-07-13 10:42:40
  * @Description: 
  */
 export default {
@@ -26,6 +26,7 @@ export default {
   select: 'Pumili',
   inputPlaceholder: 'Maglagay ng',
   pleaseSelect: 'Pumili',
+  inviteFriend: 'Mag-imbita ng mga Kaibigan',
 
   upload: {
     invalidFile: 'Diwalidong file',

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:10:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-06-27 18:14:28
+ * @LastEditTime: 2025-07-13 10:04:53
  * @Description: 
  */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -51,6 +51,12 @@ const router = createRouter({
       path: '/tasks/detail/:id',
       name: 'TaskDetail',
       component: () => import('../views/tasks/detail.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/taskGroups/detail/:id',
+      name: 'TaskGroupsDetail',
+      component: () => import('../views/taskGroups/detail.vue'),
       meta: { requiresAuth: true }
     },
     {

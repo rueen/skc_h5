@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-25 21:38:10
+ * @LastEditTime: 2025-07-13 10:41:55
  * @Description: 任务详情页
  -->
 <template>
@@ -23,7 +23,7 @@
             :class="$style.platformIcon"
             alt="platform"
           />
-          {{ taskInfo.taskName }}
+          <div class="taskName">{{ taskInfo.taskName }}</div>
         </div>
         <div :class="$style.priceRow">
           <div :class="$style.price">{{ taskInfo.reward }}</div>
@@ -103,7 +103,7 @@
       <div :class="$style.actions">
         <div :class="$style.actionItem" @click="onShare">
           <van-icon name="share" size="20" />
-          <span>{{ $t('task.detail.inviteFriend') }}</span>
+          <span>{{ $t('common.inviteFriend') }}</span>
         </div>
       </div>
       <van-button 
@@ -316,19 +316,6 @@ onMounted(async () => {
   padding: 16px;
   margin-bottom: 12px;
 
-  .priceRow {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-
-  .price {
-    font-size: 28px;
-    color: #ff4d4f;
-    font-weight: bold;
-  }
-
   .platform {
     display: flex;
     align-items: center;
@@ -341,6 +328,22 @@ onMounted(async () => {
       height: 16px;
       margin-right: 6px;
     }
+  }
+  .taskName{
+    font-size: 16px;
+  }
+
+  .priceRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .price {
+    font-size: 28px;
+    color: #ff4d4f;
+    font-weight: bold;
   }
 
   .extraInfo {

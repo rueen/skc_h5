@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-25 18:13:19
+ * @LastEditTime: 2025-07-13 10:42:30
  * @Description: 
  */
 export default {
@@ -26,6 +26,7 @@ export default {
   select: 'Select',
   inputPlaceholder: 'Please fill up',
   pleaseSelect: 'Please select',
+  inviteFriend: 'Invite Friend',
 
   upload: {
     invalidFile: 'Invalid file',

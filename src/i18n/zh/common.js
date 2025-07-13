@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-25 17:31:44
+ * @LastEditTime: 2025-07-13 10:42:21
  * @Description: 
  */
 export default {
@@ -26,6 +26,7 @@ export default {
   select: '选择',
   inputPlaceholder: '请输入',
   pleaseSelect: '请选择',
+  inviteFriend: '邀请好友',
 
   upload: {
     invalidFile: '文件无效',

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-18 11:35:19
+ * @LastEditTime: 2025-07-13 10:41:38
  * @Description: 
  */
 export default {
@@ -24,7 +24,6 @@ export default {
     fansRequired: 'Minimum na Tagasubaybay',
     workRequirements: 'Mga Kailangan',
     taskInfoTitle: 'Task',
-    inviteFriend: 'Mag-imbita ng mga Kaibigan',
     addAccount: 'I-submit ang Pagpaparehistr',
     taskNotStart: 'Hindi Pa Nagsisimula ang Gawain',
     accountAuditPending: 'Nasa Pagsusuri ang Account',
@@ -65,5 +64,9 @@ export default {
   message: {
     enrollSuccess: 'Matagumpay na Naka-enrol',
     enrollFailed: 'Nabigo na Naka-enrol'
+  },
+
+  groupDetail: {
+    title: 'Mga Detalye ng Gawain'
   }
 } 
