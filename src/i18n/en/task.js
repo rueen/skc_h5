@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 11:02:39
+ * @LastEditTime: 2025-07-13 21:26:19
  * @Description: 
  */
 export default {
@@ -67,6 +67,7 @@ export default {
   },
 
   groupDetail: {
-    title: 'Task Group Details'
+    title: 'Task Group Details',
+    tips: 'Kailangang mag-enrol sa lahat ng mga gawain sa koleksyon para makakuha ng reward'
   }
 } 

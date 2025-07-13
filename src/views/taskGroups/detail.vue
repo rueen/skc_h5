@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-07-13 10:03:05
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 18:14:30
+ * @LastEditTime: 2025-07-13 21:24:34
  * @Description: 
 -->
 <template>
@@ -20,7 +20,7 @@
         <div :class="$style.taskGroupName">{{ taskGroupInfo.taskGroupName }}</div>
         <div :class="$style.taskGroupReward">{{ taskGroupInfo.taskGroupReward }}</div>
       </div>
-
+      <div :class="$style.tips">{{ $t('task.groupDetail.tips') }}</div>
       <!-- 关联任务列表 -->
       <div class="list">
         <div 
@@ -179,7 +179,6 @@ onMounted(async () => {
 .basicInfo{
   background: #fff;
   padding: 16px;
-  margin-bottom: 12px;
 
   .taskGroupName{
     font-size: 16px;
@@ -191,6 +190,14 @@ onMounted(async () => {
     color: #ff4d4f;
     font-weight: bold;
   }
+}
+.tips{
+  font-size: 12px;
+  text-align: center;
+  background-color: #fff2e8;
+  color: #d4380d;
+  margin-bottom: 12px;
+  padding: 8px 16px;
 }
 
 .listItem {

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 15:21:56
+ * @LastEditTime: 2025-07-13 21:28:34
  * @Description: 首页
  -->
 
@@ -45,63 +45,78 @@
           @load="onLoad"
           v-else
         >
-          <div 
-            v-for="item in list"
-            :key="item.id"
-            :class="$style.listItem"
-            @click="router.push(`/tasks/detail/${item.id}`)"
-          >
-            <div :class="$style.mainContent">
-              <div :class="$style.header">
-                <img 
-                  :src="item.channelIcon" 
-                  :class="$style.platformIcon"
-                  alt="platform"
-                />
-                <h3>{{ item.taskName }}</h3>
-                <span :class="$style.status" v-if="item.isEnrolled">{{ $t('task.enrolled') }}</span>
-              </div>
-              
-              <div :class="$style.contentRow">
-                <div :class="$style.leftContent">
-                  <div :class="$style.price">
-                    {{ formatPrice(item.reward) }}
-                  </div>
-                  <div :class="$style.tags">
-                    <van-tag
-                      type="primary" 
-                      :class="$style.taskType"
-                    >
-                      {{ enumStore.getEnumText('TaskType', item.taskType) }}
-                    </van-tag>
-                    <van-tag
-                      type="warning"
-                      :class="$style.followers"
-                    >
-                      {{ item.fansRequired }}
-                    </van-tag>
-                  </div>
+          <div v-for="item in list" :key="item.id">
+            <div
+              v-if="item.taskGroup && item.taskGroup.relatedTasks && item.taskGroup.relatedTasks.indexOf(item.id) === 0"
+              :class="[$style.listItem, $style.taskGroupItem]"
+              @click="router.push(`/taskGroups/detail/${item.taskGroup.id}`)"
+            >
+              <div :class="$style.mainContent">
+                <div :class="$style.header">
+                  <h3>{{ item.taskGroup.taskGroupName }}</h3>
                 </div>
+                <div :class="$style.price">
+                  {{ formatPrice(item.taskGroup.allReward.toFixed(2)) }}
+                </div>
+              </div>
+            </div>
+            <div
+              v-else
+              :class="$style.listItem"
+              @click="router.push(`/tasks/detail/${item.id}`)"
+            >
+              <div :class="$style.mainContent">
+                <div :class="$style.header">
+                  <img 
+                    :src="item.channelIcon" 
+                    :class="$style.platformIcon"
+                    alt="platform"
+                  />
+                  <h3>{{ item.taskName }}</h3>
+                  <span :class="$style.status" v-if="item.isEnrolled">{{ $t('task.enrolled') }}</span>
+                </div>
+                
+                <div :class="$style.contentRow">
+                  <div :class="$style.leftContent">
+                    <div :class="$style.price">
+                      {{ formatPrice(item.reward) }}
+                    </div>
+                    <div :class="$style.tags">
+                      <van-tag
+                        type="primary" 
+                        :class="$style.taskType"
+                      >
+                        {{ enumStore.getEnumText('TaskType', item.taskType) }}
+                      </van-tag>
+                      <van-tag
+                        type="warning"
+                        :class="$style.followers"
+                      >
+                        {{ item.fansRequired }}
+                      </van-tag>
+                    </div>
+                  </div>
 
-                <div :class="$style.info">
-                  <div :class="$style.infoItem">
-                    <span :class="$style.label">{{ $t('task.remainingQuota') }}</span>
-                    <span :class="$style.value">
-                      <span v-if="item.unlimitedQuota">{{ $t('task.unlimitedQuota') }}</span>
-                      <span v-else>{{ item.remainingQuota }}</span>
-                    </span>
-                  </div>
-                  <div :class="$style.infoItem">
-                    <span :class="$style.label">{{ $t('task.category') }}</span>
-                    <span :class="$style.value">{{ item.category }}</span>
-                  </div>
-                  <div :class="$style.infoItem" v-if="new Date(item.startTime) > new Date()">
-                    <span :class="$style.label">{{ $t('task.startTime') }}</span>
-                    <span :class="$style.value">{{ item.startTime }}</span>
-                  </div>
-                  <div :class="$style.infoItem" v-else>
-                    <span :class="$style.label">{{ $t('task.endTime') }}</span>
-                    <span :class="$style.value">{{ item.endTime }}</span>
+                  <div :class="$style.info">
+                    <div :class="$style.infoItem">
+                      <span :class="$style.label">{{ $t('task.remainingQuota') }}</span>
+                      <span :class="$style.value">
+                        <span v-if="item.unlimitedQuota">{{ $t('task.unlimitedQuota') }}</span>
+                        <span v-else>{{ item.remainingQuota }}</span>
+                      </span>
+                    </div>
+                    <div :class="$style.infoItem">
+                      <span :class="$style.label">{{ $t('task.category') }}</span>
+                      <span :class="$style.value">{{ item.category }}</span>
+                    </div>
+                    <div :class="$style.infoItem" v-if="new Date(item.startTime) > new Date()">
+                      <span :class="$style.label">{{ $t('task.startTime') }}</span>
+                      <span :class="$style.value">{{ item.startTime }}</span>
+                    </div>
+                    <div :class="$style.infoItem" v-else>
+                      <span :class="$style.label">{{ $t('task.endTime') }}</span>
+                      <span :class="$style.value">{{ item.endTime }}</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -254,6 +269,18 @@ onMounted(async () => {
   align-items: flex-start;
   gap: 12px;
 
+  &.taskGroupItem{
+    background-color: #fffbe6;
+    border: 1px solid #ffe58f;
+    .mainContent{
+      height: 55px;
+      .header{
+        h3 {
+          color: #d48806;
+        }
+      }
+    }
+  }
   .mainContent {
     flex: 1;
     min-width: 0;

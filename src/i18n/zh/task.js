@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 11:01:15
+ * @LastEditTime: 2025-07-13 21:26:02
  * @Description: 
  */
 export default {
@@ -68,6 +68,6 @@ export default {
 
   groupDetail: {
     title: '任务组详情',
-    apply: '一键报名所有任务'
+    tips: '按顺序依次完成以下任务即可获得任务组奖励'
   }
 }

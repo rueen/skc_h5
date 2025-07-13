@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 11:03:21
+ * @LastEditTime: 2025-07-13 21:26:08
  * @Description: 
  */
 export default {
@@ -67,6 +67,7 @@ export default {
   },
 
   groupDetail: {
-    title: 'Mga Detalye ng Gawain'
+    title: 'Mga Detalye ng Gawain',
+    tips: 'Kailangang mag-enrol sa lahat ng mga gawain sa koleksyon para makakuha ng reward'
   }
 } 
