@@ -219,12 +219,37 @@ const checkForm = () => {
 }
 
 /**
+ * 检查是否为 Facebook 链接
+ * @param {string} url - 要检查的URL
+ * @returns {boolean} 是否是 Facebook 链接
+ */
+const isFacebookLink = (url) => {
+  if (!url || typeof url !== 'string') return false
+  
+  try {
+    const urlObj = new URL(url)
+    const facebookDomains = [
+      'facebook.com',
+      'www.facebook.com',
+      'web.facebook.com',
+      'm.facebook.com'
+    ]
+    
+    return facebookDomains.some(domain => 
+      urlObj.hostname === domain || urlObj.hostname.endsWith('.' + domain)
+    )
+  } catch (e) {
+    return false
+  }
+}
+
+/**
  * 优化的Facebook抓取处理函数
  * 通过串行请求和随机延迟来避免被识别为爬虫
  */
 const handleScrape = async () => {
   const postItem = customFields.value.find(item => item.type === 'post')
-  if(postItem) {
+  if(postItem && postItem.value && isFacebookLink(postItem.value)) {
     const res = await post('scrape.facebook', {
       type: postItem.type,
       url: postItem.value
