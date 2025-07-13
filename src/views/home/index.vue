@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-29 18:04:46
+ * @LastEditTime: 2025-07-13 15:21:56
  * @Description: 首页
  -->
 
@@ -253,132 +253,132 @@ onMounted(async () => {
   justify-content: space-between;
   align-items: flex-start;
   gap: 12px;
-}
 
-.mainContent {
-  flex: 1;
-  min-width: 0;
-  width: 0;
-  display: flex;
-  flex-direction: column;
-  height: 90px;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-  width: 100%;
-
-  .platformIcon {
-    width: 16px;
-    height: 16px;
-    margin-right: 6px;
-    flex-shrink: 0;
-  }
-
-  h3 {
-    margin: 0;
-    font-size: 15px;
-    color: #323233;
-    font-weight: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  .mainContent {
     flex: 1;
-  }
-}
+    min-width: 0;
+    width: 0;
+    display: flex;
+    flex-direction: column;
+    height: 90px;
 
-.contentRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex: 1;
-  padding-top: 2px;
-}
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      width: 100%;
 
-.status {
-  font-size: 13px;
-  color: #1989fa;
-  margin-left: 12px;
-  flex-shrink: 0;
-}
+      .platformIcon {
+        width: 16px;
+        height: 16px;
+        margin-right: 6px;
+        flex-shrink: 0;
+      }
 
-.leftContent {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-}
-
-.price {
-  font-size: 18px;
-  color: #ff4d4f;
-  font-weight: bold;
-  line-height: 1.2;
-}
-
-.tags {
-  display: flex;
-  gap: 4px;
-
-  :global {
-    .van-tag {
-      padding: 0 4px;
-      font-size: 11px;
-      height: 18px;
-      line-height: 16px;
-      border-radius: 2px;
-    }
-  }
-
-  .taskType {
-    :global {
-      .van-tag {
-        color: #1989fa;
-        border-color: #1989fa;
-        background: rgba(25, 137, 250, 0.1);
+      h3 {
+        margin: 0;
+        font-size: 15px;
+        color: #323233;
+        font-weight: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        flex: 1;
       }
     }
-  }
 
-  .followers {
-    :global {
-      .van-tag {
-        color: #ff976a;
-        border-color: #ff976a;
-        background: rgba(255, 151, 106, 0.1);
+    .status {
+      font-size: 13px;
+      color: #1989fa;
+      margin-left: 12px;
+      flex-shrink: 0;
+    }
+
+    .contentRow {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex: 1;
+      padding-top: 2px;
+    }
+
+    .leftContent {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .price {
+      font-size: 18px;
+      color: #ff4d4f;
+      font-weight: bold;
+      line-height: 1.2;
+    }
+
+    .tags {
+      display: flex;
+      gap: 4px;
+
+      :global {
+        .van-tag {
+          padding: 0 4px;
+          font-size: 11px;
+          height: 18px;
+          line-height: 16px;
+          border-radius: 2px;
+        }
+      }
+
+      .taskType {
+        :global {
+          .van-tag {
+            color: #1989fa;
+            border-color: #1989fa;
+            background: rgba(25, 137, 250, 0.1);
+          }
+        }
+      }
+
+      .followers {
+        :global {
+          .van-tag {
+            color: #ff976a;
+            border-color: #ff976a;
+            background: rgba(255, 151, 106, 0.1);
+          }
+        }
       }
     }
-  }
-}
 
-.info {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  flex: 1;
-  margin-left: 12px;
-  padding: 0;
-}
+    .info {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      flex: 1;
+      margin-left: 12px;
+      padding: 0;
+    }
 
-.infoItem {
-  font-size: 12px;
-  line-height: 1.3;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  white-space: nowrap;
+    .infoItem {
+      font-size: 12px;
+      line-height: 1.3;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      white-space: nowrap;
 
-  .label {
-    color: #969799;
-    margin-right: 3px;
-    min-width: 60px;
-  }
+      .label {
+        color: #969799;
+        margin-right: 3px;
+        min-width: 60px;
+      }
 
-  .value {
-    color: #323233;
+      .value {
+        color: #323233;
+      }
+    }
   }
 }
 </style> 

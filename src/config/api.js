@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 10:25:53
+ * @LastEditTime: 2025-07-13 15:05:46
  * @Description: API 路径配置
  */
 const API_PATH = {
@@ -13,6 +13,7 @@ const API_PATH = {
   },
   task: {
     list: '/tasks',
+    listAll: '/tasks/all',
     detail: '/tasks/:id',
     // 任务报名
     enroll: '/task-enroll/:taskId',
