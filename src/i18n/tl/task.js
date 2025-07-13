@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 10:41:38
+ * @LastEditTime: 2025-07-13 11:03:21
  * @Description: 
  */
 export default {
@@ -14,6 +14,14 @@ export default {
   endTime: 'Huling Araw',
   enrolledTime: 'Oras ng Enrolment',
   submittedTime: 'Oras ng Pagpasa',
+  addAccount: 'I-submit ang Pagpaparehistr',
+  taskNotStart: 'Hindi Pa Nagsisimula ang Gawain',
+  accountAuditPending: 'Nasa Pagsusuri ang Account',
+  accountAuditRejected: 'Hindi Pumasa sa Pagsusuri ang Account',
+  taskEnded: 'Natapos na ang Gawain',
+  fansNotQualified: 'Hindi Sapat ang Followers',
+  quotaFull: 'Puno na ang Quota',
+  notEligibleToEnroll: 'Hindi Kwalipikado para Mag-enrol',
   
   detail: {
     title: 'Mga Detalye ng Gawain',
@@ -24,14 +32,6 @@ export default {
     fansRequired: 'Minimum na Tagasubaybay',
     workRequirements: 'Mga Kailangan',
     taskInfoTitle: 'Task',
-    addAccount: 'I-submit ang Pagpaparehistr',
-    taskNotStart: 'Hindi Pa Nagsisimula ang Gawain',
-    accountAuditPending: 'Nasa Pagsusuri ang Account',
-    accountAuditRejected: 'Hindi Pumasa sa Pagsusuri ang Account',
-    taskEnded: 'Natapos na ang Gawain',
-    fansNotQualified: 'Hindi Sapat ang Followers',
-    quotaFull: 'Puno na ang Quota',
-    notEligibleToEnroll: 'Hindi Kwalipikado para Mag-enrol',
     viewSubmitDetails: 'Tingnan ang Mga Detalye ng Pagpapasa',
     submitTask: 'Ipasa ang Gawain',
     applyNow: 'JOIN',

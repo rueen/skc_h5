@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 10:41:33
+ * @LastEditTime: 2025-07-13 11:02:39
  * @Description: 
  */
 export default {
@@ -14,6 +14,14 @@ export default {
   endTime: 'Deadline',
   enrolledTime: 'Enrollment Time',
   submittedTime: 'Submission Time',
+  addAccount: 'Submit Registration',
+  taskNotStart: 'Task Not Started',
+  accountAuditPending: 'Account Under Review',
+  accountAuditRejected: 'Account Review Failed',
+  taskEnded: 'Task Ended',
+  fansNotQualified: 'Insufficient Followers',
+  quotaFull: 'Quota Full',
+  notEligibleToEnroll: 'Not Eligible to Enroll',
   
   detail: {
     title: 'Task Details',
@@ -24,14 +32,6 @@ export default {
     fansRequired: 'Minimum Followers',
     workRequirements: 'Requirements',
     taskInfoTitle: 'Task',
-    addAccount: 'Submit Registration',
-    taskNotStart: 'Task Not Started',
-    accountAuditPending: 'Account Under Review',
-    accountAuditRejected: 'Account Review Failed',
-    taskEnded: 'Task Ended',
-    fansNotQualified: 'Insufficient Followers',
-    quotaFull: 'Quota Full',
-    notEligibleToEnroll: 'Not Eligible to Enroll',
     viewSubmitDetails: 'View Submission Details',
     submitTask: 'Submit Task',
     applyNow: 'JOIN',

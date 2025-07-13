@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 10:41:55
+ * @LastEditTime: 2025-07-13 11:00:57
  * @Description: 任务详情页
  -->
 <template>
@@ -113,7 +113,7 @@
         v-if="!currentChannelAccount"
         @click="onAddAccount"
       >
-        {{ $t('task.detail.addAccount') }}
+        {{ $t('task.addAccount') }}
       </van-button>
       <van-button 
         type="warning" 
@@ -121,7 +121,7 @@
         :class="$style.submitBtn"
         v-else-if="!isStart"
       >
-        {{ $t('task.detail.taskNotStart') }}
+        {{ $t('task.taskNotStart') }}
       </van-button>
       <van-button 
         type="warning" 
@@ -129,7 +129,7 @@
         :class="$style.submitBtn"
         v-else-if="currentChannelAccount.accountAuditStatus === 'pending'"
       >
-        {{ $t('task.detail.accountAuditPending') }}
+        {{ $t('task.accountAuditPending') }}
       </van-button>
       <van-button 
         type="warning" 
@@ -137,7 +137,7 @@
         :class="$style.submitBtn"
         v-else-if="currentChannelAccount.accountAuditStatus === 'rejected'"
       >
-        {{ $t('task.detail.accountAuditRejected') }}
+        {{ $t('task.accountAuditRejected') }}
       </van-button>
       <van-button 
         type="warning" 
@@ -145,7 +145,7 @@
         :class="$style.submitBtn"
         v-else-if="taskInfo.taskStatus === 'ended'"
       >
-        {{ $t('task.detail.taskEnded') }}
+        {{ $t('task.taskEnded') }}
       </van-button>
       <van-button 
         type="warning" 
@@ -153,7 +153,7 @@
         :class="$style.submitBtn"
         v-else-if="(currentChannelAccount.fansCount - taskInfo.fansRequired < 0) && (currentChannelAccount.friendsCount - taskInfo.fansRequired < 0)"
       >
-        {{ $t('task.detail.fansNotQualified') }}
+        {{ $t('task.fansNotQualified') }}
       </van-button>
       <van-button 
         type="warning" 
@@ -161,7 +161,7 @@
         :class="$style.submitBtn"
         v-else-if="taskInfo.remainingQuota === 0"
       >
-        {{ $t('task.detail.quotaFull') }}
+        {{ $t('task.quotaFull') }}
       </van-button>
       <van-button 
         type="warning" 
@@ -169,7 +169,7 @@
         :class="$style.submitBtn"
         v-else-if="!taskInfo.eligibleToEnroll"
       >
-        {{ $t('task.detail.notEligibleToEnroll') }}
+        {{ $t('task.notEligibleToEnroll') }}
       </van-button>
       <van-button 
         type="primary" 

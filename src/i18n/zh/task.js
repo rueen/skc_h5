@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 10:45:56
+ * @LastEditTime: 2025-07-13 11:01:15
  * @Description: 
  */
 export default {
@@ -14,6 +14,14 @@ export default {
   endTime: '截止时间',
   enrolledTime: '报名时间',
   submittedTime: '提交时间',
+  addAccount: '添加账号',
+  taskNotStart: '任务未开始',
+  accountAuditPending: '账号审核中',
+  accountAuditRejected: '账号审核不通过',
+  taskEnded: '任务已结束',
+  fansNotQualified: '粉丝不达标',
+  quotaFull: '名额已满',
+  notEligibleToEnroll: '不满足报名条件',
   
   detail: {
     title: '任务详情',
@@ -24,14 +32,6 @@ export default {
     fansRequired: '最低粉丝数',
     workRequirements: '要求',
     taskInfoTitle: '任务信息',
-    addAccount: '添加账号',
-    taskNotStart: '任务未开始',
-    accountAuditPending: '账号审核中',
-    accountAuditRejected: '账号审核不通过',
-    taskEnded: '任务已结束',
-    fansNotQualified: '粉丝不达标',
-    quotaFull: '名额已满',
-    notEligibleToEnroll: '不满足报名条件',
     viewSubmitDetails: '查看提交详情',
     submitTask: '提交任务',
     applyNow: '立即报名',
