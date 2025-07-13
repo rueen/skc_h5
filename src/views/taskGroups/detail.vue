@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-07-13 10:03:05
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 16:36:31
+ * @LastEditTime: 2025-07-13 18:14:30
  * @Description: 
 -->
 <template>
@@ -27,7 +27,7 @@
           v-for="item in relatedTasks"
           :key="item.id"
           :class="$style.listItem"
-          @click="router.push(`/tasks/detail/${item.id}`)"
+          @click="handleTaskItemClick(item)"
         >
           <div :class="$style.mainContent">
             <div :class="$style.header">
@@ -37,7 +37,17 @@
                 alt="platform"
               />
               <h3>{{ item.taskName }}</h3>
-              <span :class="$style.status" v-if="item.isEnrolled">{{ $t('task.enrolled') }}</span>
+              <span :class="$style.status" v-if="item.isSubmited">
+                <span :class="$style.status">
+                  <span v-if="item.taskPreAuditStatus === 'approved'">
+                    {{ enumStore.getEnumText('TaskAuditStatus', item.taskAuditStatus) }}
+                  </span>
+                  <span v-else>
+                    {{ enumStore.getEnumText('TaskPreAuditStatus', item.taskPreAuditStatus) }}
+                  </span>
+                </span>
+              </span>
+              <span :class="$style.status" v-else-if="item.isEnrolled">{{ $t('task.enrolled') }}</span>
             </div>
             
             <div :class="$style.contentRow">
@@ -98,7 +108,6 @@ import Layout from '@/components/layout.vue'
 import NavBar from '@/components/NavBar.vue'
 import { get, post } from '@/utils/request'
 import { useI18n } from 'vue-i18n'
-import { shareInviteLink } from '@/utils/share'
 import { useUserStore } from '@/stores'
 import { showToast } from 'vant'
 import { useEnumStore } from '@/stores'
@@ -127,17 +136,32 @@ const getDetail = async () => {
 }
 
 const getRelatedTasks = async () => {
-  const res = await get('task.listAll', {
-    taskIds: relatedTasksIds.value
+  const res = await get('taskGroup.relatedTasks', {}, {
+    urlParams: {
+      id: route.params.id
+    }
   })
   if(res.code === 0){
-    relatedTasks.value = res.data.list || [];
+    relatedTasks.value = res.data || [];
   }
 }
 
 // 格式化价格
 const formatPrice = (price) => {
   return `${price}`
+}
+
+const handleTaskItemClick = (item) => {
+  if(item.isSubmited) {
+    // 已提交 | 已完成
+    router.push(`/tasks/submit/${item.enrollId}?taskId=${item.taskId}`)
+  } else if(item.isEnrolled) {
+    // 已报名
+    router.push(`/tasks/submit/new?taskId=${item.taskId}`)
+  } else {
+    // 未报名
+    router.push(`/tasks/detail/${item.taskId}`)
+  }
 }
 
 onMounted(async () => {
