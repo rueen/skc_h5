@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 21:26:02
+ * @LastEditTime: 2025-07-14 10:53:33
  * @Description: 
  */
 export default {
@@ -68,6 +68,7 @@ export default {
 
   groupDetail: {
     title: '任务组详情',
-    tips: '按顺序依次完成以下任务即可获得任务组奖励'
+    tips: '按顺序依次完成以下任务即可获得任务组奖励',
+    tipsSuccess: '恭喜你已完成任务组，奖励已发放'
   }
 }

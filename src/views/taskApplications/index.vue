@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-27 11:45:10
+ * @LastEditTime: 2025-07-14 11:19:31
  * @Description: 任务页
  -->
 <template>
@@ -29,7 +29,7 @@
         :loosing-text="$t('common.loosingText')"
         @refresh="onRefresh"
       >
-        <van-empty image="search" v-if="list.length === 0" :description="$t('common.emptyText')" />
+        <van-empty image="search" v-if="list.length === 0 && taskGroups.length === 0" :description="$t('common.emptyText')" />
         <van-list
           v-model:loading="loading"
           :loading-text="$t('common.loadingText')"
@@ -41,7 +41,18 @@
           @load="onLoad"
           v-else
         >
-          <div 
+          <div
+            v-for="item in taskGroups"
+            :key="item.id"
+            :class="$style.taskGroupItem"
+            @click="router.push(`/taskGroups/detail/${item.taskGroupId}`)"
+          >
+            <div :class="$style.taskGroupName">{{ item.taskGroupName }}</div>
+            <div :class="$style.price">
+              {{ formatPrice(item.allReward.toFixed(2)) }}
+            </div>
+          </div>
+          <div
             v-for="item in list"
             :key="item.id"
             :class="$style.listItem"
@@ -119,6 +130,7 @@ const activeTab = ref(route.query.activeTab || 'applied') // applied | submitted
 const page = ref(1)
 const pageSize = ref(10)
 const list = ref([])
+const taskGroups = ref([])
 const loading = ref(false)
 const finished = ref(false)
 const refreshing = ref(false)
@@ -128,6 +140,7 @@ const error = ref(false);
 const onRefresh = async () => {
   page.value = 1
   list.value = []
+  taskGroups.value = []
   finished.value = false
   loading.value = true
   onLoad()
@@ -140,6 +153,7 @@ const getEnrolledList = async () => {
       page: page.value,
       pageSize: pageSize.value,
     })
+    taskGroups.value = res.data.taskGroups || [];
     const newItems = res.data.list || [];
     for (let i = 0; i < newItems.length; i++) {
       list.value.push(newItems[i]);
@@ -162,6 +176,7 @@ const getSubmittedList = async (taskAuditStatus) => {
       pageSize: pageSize.value,
       taskAuditStatus
     })
+    taskGroups.value = res.data.taskGroups || [];
     const newItems = res.data.list || [];
     for (let i = 0; i < newItems.length; i++) {
       list.value.push(newItems[i]);
@@ -266,6 +281,25 @@ onMounted(async () => {
   box-sizing: border-box;
   height: 99vh;
   overflow-y: scroll;
+}
+
+.taskGroupItem{
+  margin: 8px 12px;
+  padding: 12px;
+  background-color: #fffbe6;
+  border: 1px solid #ffe58f;
+  border-radius: 8px;
+  
+  .taskGroupName {
+    color: #d48806;
+    margin-bottom: 12px;
+  }
+  .price {
+    font-size: 18px;
+    color: #ff4d4f;
+    font-weight: bold;
+    line-height: 1.2;
+  }
 }
 
 .listItem {

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 21:26:08
+ * @LastEditTime: 2025-07-14 10:53:45
  * @Description: 
  */
 export default {
@@ -68,6 +68,7 @@ export default {
 
   groupDetail: {
     title: 'Mga Detalye ng Gawain',
-    tips: 'Kailangang mag-enrol sa lahat ng mga gawain sa koleksyon para makakuha ng reward'
+    tips: 'Kailangang mag-enrol sa lahat ng mga gawain sa koleksyon para makakuha ng reward',
+    tipsSuccess: 'Matagumpay na Nakumpleto ang Gawain, Natanggap na ang Reward'
   }
 } 

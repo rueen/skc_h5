@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 21:28:34
+ * @LastEditTime: 2025-07-14 11:19:50
  * @Description: 首页
  -->
 
@@ -48,16 +48,12 @@
           <div v-for="item in list" :key="item.id">
             <div
               v-if="item.taskGroup && item.taskGroup.relatedTasks && item.taskGroup.relatedTasks.indexOf(item.id) === 0"
-              :class="[$style.listItem, $style.taskGroupItem]"
+              :class="$style.taskGroupItem"
               @click="router.push(`/taskGroups/detail/${item.taskGroup.id}`)"
             >
-              <div :class="$style.mainContent">
-                <div :class="$style.header">
-                  <h3>{{ item.taskGroup.taskGroupName }}</h3>
-                </div>
-                <div :class="$style.price">
-                  {{ formatPrice(item.taskGroup.allReward.toFixed(2)) }}
-                </div>
+              <div :class="$style.taskGroupName">{{ item.taskGroup.taskGroupName }}</div>
+              <div :class="$style.price">
+                {{ formatPrice(item.taskGroup.allReward.toFixed(2)) }}
               </div>
             </div>
             <div
@@ -259,6 +255,24 @@ onMounted(async () => {
   overflow-y: scroll;
 }
 
+.taskGroupItem{
+  margin: 8px 12px;
+  padding: 12px;
+  background-color: #fffbe6;
+  border: 1px solid #ffe58f;
+  border-radius: 8px;
+  
+  .taskGroupName {
+    color: #d48806;
+    margin-bottom: 12px;
+  }
+  .price {
+    font-size: 18px;
+    color: #ff4d4f;
+    font-weight: bold;
+    line-height: 1.2;
+  }
+}
 .listItem {
   margin: 8px 12px;
   padding: 12px;
@@ -269,18 +283,6 @@ onMounted(async () => {
   align-items: flex-start;
   gap: 12px;
 
-  &.taskGroupItem{
-    background-color: #fffbe6;
-    border: 1px solid #ffe58f;
-    .mainContent{
-      height: 55px;
-      .header{
-        h3 {
-          color: #d48806;
-        }
-      }
-    }
-  }
   .mainContent {
     flex: 1;
     min-width: 0;

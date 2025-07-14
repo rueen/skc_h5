@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-07-13 10:03:05
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 21:24:34
+ * @LastEditTime: 2025-07-14 11:14:48
  * @Description: 
 -->
 <template>
@@ -20,7 +20,14 @@
         <div :class="$style.taskGroupName">{{ taskGroupInfo.taskGroupName }}</div>
         <div :class="$style.taskGroupReward">{{ taskGroupInfo.taskGroupReward }}</div>
       </div>
-      <div :class="$style.tips">{{ $t('task.groupDetail.tips') }}</div>
+      <div :class="[$style.tips, $style.tipsSuccess]" v-if="taskGroupInfo.completionStatus === 'completed'">
+        <van-icon name="checked" />
+        {{ $t('task.groupDetail.tipsSuccess') }}
+      </div>
+      <div :class="$style.tips" v-else>
+        <van-icon name="info" />
+        {{ $t('task.groupDetail.tips') }}
+      </div>
       <!-- 关联任务列表 -->
       <div class="list">
         <div 
@@ -198,6 +205,11 @@ onMounted(async () => {
   color: #d4380d;
   margin-bottom: 12px;
   padding: 8px 16px;
+
+  &.tipsSuccess{
+    background: #f6ffed;
+    color: #389e0d;
+  }
 }
 
 .listItem {
