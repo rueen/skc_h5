@@ -293,7 +293,12 @@ const onSubmit = async () => {
 
 const handleCloseDialog = () => {
   showSuccessDialog.value = false
-  router.push(`/taskApplications?activeTab=submitted`)
+  let activeTab = 'submitted';
+  if(taskInfo.value.taskGroup && taskInfo.value.taskGroup.id != null) {
+    // 任务组任务
+    activeTab = 'applied';
+  }
+  router.push(`/taskApplications?activeTab=${activeTab}`)
 }
 
 const getTaskDetail = async () => {
