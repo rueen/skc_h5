@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-18 16:42:42
+ * @LastEditTime: 2025-07-18 16:46:45
  * @Description: 首页
  -->
 
@@ -70,7 +70,7 @@
                 <div :class="$style.taskGroupTaskItem" v-for="task in item.taskGroup.relatedTasksList" :key="task.id">
                   <div :class="$style.taskName">
                     <img 
-                      :src="item.channelIcon" 
+                      :src="task.channelIcon" 
                       :class="$style.platformIcon"
                       alt="platform"
                     />
@@ -80,7 +80,7 @@
                     <div :class="$style.price">{{ formatPrice(task.reward) }}</div>
                     <div :class="$style.deadline">
                       <span :class="$style.label">{{ $t('task.endTime') }}</span>
-                      <span :class="$style.value">{{ item.endTime }}</span>
+                      <span :class="$style.value">{{ task.endTime }}</span>
                     </div>
                   </div>
                 </div>
