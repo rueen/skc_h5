@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-18 16:28:13
+ * @LastEditTime: 2025-07-18 16:42:42
  * @Description: 首页
  -->
 
@@ -87,7 +87,7 @@
                 <div :class="[$style.taskGroupTaskItem, $style.taskGroupRewardItem]">
                   <div :class="$style.taskName">
                     <van-icon name="balance-o" :class="$style.taskGroupRewardIcon" />
-                    <span>任务组奖金</span>
+                    <span>{{ $t('task.taskGroupReward') }}</span>
                   </div>
                   <div :class="$style.taskInfo">
                     <div :class="$style.price">{{ formatPrice(item.taskGroup.taskGroupReward.toFixed(2)) }}</div>

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-14 10:53:50
+ * @LastEditTime: 2025-07-18 16:43:28
  * @Description: 
  */
 export default {
@@ -22,6 +22,7 @@ export default {
   fansNotQualified: 'Insufficient Followers',
   quotaFull: 'Quota Full',
   notEligibleToEnroll: 'Not Eligible to Enroll',
+  taskGroupReward: 'Task Group Reward',
   
   detail: {
     title: 'Task Details',

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-14 10:53:33
+ * @LastEditTime: 2025-07-18 16:43:02
  * @Description: 
  */
 export default {
@@ -22,6 +22,7 @@ export default {
   fansNotQualified: '粉丝不达标',
   quotaFull: '名额已满',
   notEligibleToEnroll: '不满足报名条件',
+  taskGroupReward: '任务组奖金',
   
   detail: {
     title: '任务详情',

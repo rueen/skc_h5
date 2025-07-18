@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-14 10:53:45
+ * @LastEditTime: 2025-07-18 16:43:16
  * @Description: 
  */
 export default {
@@ -22,6 +22,7 @@ export default {
   fansNotQualified: 'Hindi Sapat ang Followers',
   quotaFull: 'Puno na ang Quota',
   notEligibleToEnroll: 'Hindi Kwalipikado para Mag-enrol',
+  taskGroupReward: 'Task Group Reward',
   
   detail: {
     title: 'Mga Detalye ng Gawain',
