@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-18 16:43:28
+ * @LastEditTime: 2025-07-18 16:51:31
  * @Description: 
  */
 export default {
@@ -69,7 +69,7 @@ export default {
 
   groupDetail: {
     title: 'Task Group Details',
-    tips: 'Kailangang mag-enrol sa lahat ng mga gawain sa koleksyon para makakuha ng reward',
+    tips: 'Complete the tasks in order to get the task group reward',
     tipsSuccess: 'Congratulations on completing the task group, the reward has been issued'
   }
 } 
