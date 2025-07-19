@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-20 21:33:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-03-30 16:47:05
+ * @LastEditTime: 2025-07-19 19:34:57
  * @Description: 
 -->
 <template>
@@ -13,7 +13,7 @@
       fixed
       @click-left="onClickLeft"
     />
-    <div v-html="content" class="article-content"></div>
+    <div v-html="content" class="content"></div>
   </Layout>
 </template>
 
@@ -33,6 +33,19 @@ const onClickLeft = () => {
   router.back()
 }
 
+// 转换函数
+const convertToHtml = (content) => {
+  if (!content || typeof content !== 'string') return ''
+  
+  return content
+    .replace(/\n\n+/g, '</p><p>')
+    .replace(/\n/g, '<br>')
+    .replace(/^(.+)$/, '<p>$1</p>')
+    .replace(/<p><br><\/p>/g, '<p>&nbsp;</p>')
+    .replace(/<p><\/p>/g, '')
+    .replace(/ /g, '&nbsp;')
+}
+
 const getArticleDetail = async () => {
   if(route.query.location != null){
     const res = await get('article.byLocation', {}, {
@@ -40,16 +53,17 @@ const getArticleDetail = async () => {
         location: route.query.location
       }
     })
-    title.value = res.data.title
-    content.value = res.data.content
+    title.value = res.data.title;
+    content.value = convertToHtml(res.data.content);
   } else if(route.params.id != null) {
     const res = await get('article.byId', {}, {
       urlParams: {
         id: route.params.id
       }
     })
-    title.value = res.data.title
-    content.value = res.data.content
+    title.value = res.data.title;
+    content.value = convertToHtml(res.data.content);
+    console.log(content.value)
   }
 }
 
@@ -59,9 +73,16 @@ onMounted(() => {
 </script>
 
 <style lang="less" scoped>
-.article-content{
-  padding: 16px;
+.content {
+  padding: 0 16px;
   min-height: 100vh;
   background-color: #fff;
+  /* 基础样式 */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333;
+  text-align: left;
+  overflow: hidden;
 }
 </style>
