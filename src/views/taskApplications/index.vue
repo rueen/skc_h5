@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-14 11:19:31
+ * @LastEditTime: 2025-07-18 17:25:30
  * @Description: 任务页
  -->
 <template>
@@ -47,9 +47,48 @@
             :class="$style.taskGroupItem"
             @click="router.push(`/taskGroups/detail/${item.taskGroupId}`)"
           >
-            <div :class="$style.taskGroupName">{{ item.taskGroupName }}</div>
-            <div :class="$style.price">
-              {{ formatPrice(item.allReward.toFixed(2)) }}
+            <div :class="$style.taskGroupHeader">
+              <div :class="$style.taskGroupName">
+                <van-icon name="orders-o" :class="$style.taskGroupHeaderIcon" />
+                <span>{{ item.taskGroupName }}</span>
+              </div>
+              <div :class="$style.deadlineBox">
+                <div :class="$style.price">
+                  {{ formatPrice(item.allReward.toFixed(2)) }}
+                </div>
+                <div :class="$style.deadline" v-if="item.relatedTasksList && item.relatedTasksList.length">
+                  <span :class="$style.label">{{ $t('task.endTime') }}</span>
+                  <span :class="$style.value">{{ item.relatedTasksList[0].endTime }}</span>
+                </div>
+              </div>
+            </div>
+            <div :class="$style.taskGroupTaskList">
+              <div :class="$style.taskGroupTaskItem" v-for="task in item.relatedTasksList" :key="task.id">
+                <div :class="$style.taskName">
+                  <img 
+                    :src="task.channelIcon" 
+                    :class="$style.platformIcon"
+                    alt="platform"
+                  />
+                  <span>{{ task.taskName }}</span>
+                </div>
+                <div :class="$style.deadlineBox">
+                  <div :class="$style.price">{{ formatPrice(task.reward) }}</div>
+                  <div :class="$style.deadline">
+                    <span :class="$style.label">{{ $t('task.endTime') }}</span>
+                    <span :class="$style.value">{{ task.endTime }}</span>
+                  </div>
+                </div>
+              </div>
+              <div :class="[$style.taskGroupTaskItem, $style.taskGroupRewardItem]">
+                <div :class="$style.taskName">
+                  <van-icon name="balance-o" :class="$style.taskGroupRewardIcon" />
+                  <span>{{ $t('task.taskGroupReward') }}</span>
+                </div>
+                <div :class="$style.taskInfo">
+                  <div :class="$style.price">{{ formatPrice(item.taskGroupReward) }}</div>
+                </div>
+              </div>
             </div>
           </div>
           <div
@@ -285,20 +324,80 @@ onMounted(async () => {
 
 .taskGroupItem{
   margin: 8px 12px;
-  padding: 12px;
-  background-color: #fffbe6;
-  border: 1px solid #ffe58f;
+  background-color: #fff;
   border-radius: 8px;
   
-  .taskGroupName {
-    color: #d48806;
-    margin-bottom: 12px;
+  .taskGroupHeader {
+    border-bottom: 1px solid #eee;
+    padding: 12px;
+
+    .taskGroupHeaderIcon{
+      margin-right: 3px;
+      color: #5290FB;
+    }
+    .taskGroupName {
+      margin-bottom: 8px;
+    }
+    .price {
+      font-size: 18px;
+      color: #ff4d4f;
+      font-weight: bold;
+      line-height: 1.2;
+    }
   }
-  .price {
-    font-size: 18px;
-    color: #ff4d4f;
-    font-weight: bold;
-    line-height: 1.2;
+  .deadlineBox{
+    display: flex;
+    justify-content: space-between;
+  }
+  .deadline {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    white-space: nowrap;
+
+    .label {
+      color: #969799;
+      margin-right: 3px;
+    }
+
+    .value {
+      color: #323233;
+    }
+  }
+  .taskGroupTaskList {
+    padding: 0 12px;
+    .taskGroupTaskItem {
+      border-bottom: 1px solid #f5f6f7;
+      padding: 12px 0;
+
+      &.taskGroupRewardItem {
+        border-bottom: none;
+
+        .taskGroupRewardIcon{
+          margin-right: 2px;
+          color: #FF7600;
+        }
+      }
+      .taskName{
+        font-size: 14px;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+      }
+      .platformIcon{
+        width: 14px;
+        height: 14px;
+        margin-right: 4px;
+        flex-shrink: 0;
+      }
+      .price {
+        font-size: 14px;
+        color: #ff4d4f;
+        font-weight: bold;
+        line-height: 1.2;
+      }
+    }
   }
 }
 
