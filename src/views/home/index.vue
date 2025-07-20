@@ -2,12 +2,42 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-20 18:33:19
+ * @LastEditTime: 2025-07-20 18:42:35
  * @Description: 首页
  -->
 
 <template>
   <div :class="$style.homePage">
+    <!-- Banner轮播图 -->
+    <div :class="$style.bannerContainer">
+      <van-swipe :autoplay="3000" lazy-render>
+        <van-swipe-item
+          v-for="item in bannerList"
+          :key="item.id"
+          @click="handleOpenAd(item)"
+        >
+          <img :src="item.content.adImage" :class="$style.bannerImage" />
+        </van-swipe-item>
+      </van-swipe>
+    </div>
+
+    <!-- 平台选择标签 - 吸顶效果 -->
+    <div :class="$style.tabsWrapper">
+      <van-tabs
+        v-model:active="activeChannelId"
+        :class="$style.platformTabs"
+        swipeable
+        @click-tab="onChannelChange"
+      >
+        <van-tab 
+          v-for="channel in channelList" 
+          :key="channel.id"
+          :title="channel.name"
+          :name="channel.id"
+        />
+      </van-tabs>
+    </div>
+
     <!-- 列表内容区域 -->
     <div :class="$style.refreshBox">
       <van-pull-refresh
@@ -16,32 +46,6 @@
         :loosing-text="$t('common.loosingText')"
         @refresh="onRefresh"
       >
-        <van-swipe :autoplay="3000" lazy-render>
-          <van-swipe-item
-            v-for="item in bannerList"
-            :key="item.id"
-            @click="handleOpenAd(item)"
-          >
-            <img :src="item.content.adImage" :class="$style.bannerImage" />
-          </van-swipe-item>
-        </van-swipe>
-
-        <!-- 平台选择标签 -->
-        <div :class="$style.tabsWrapper">
-          <van-tabs
-            v-model:active="activeChannelId"
-            :class="$style.platformTabs"
-            swipeable
-            @click-tab="onChannelChange"
-          >
-            <van-tab 
-              v-for="channel in channelList" 
-              :key="channel.id"
-              :title="channel.name"
-              :name="channel.id"
-            />
-          </van-tabs>
-        </div>
         <van-empty image="search" v-if="list.length === 0" :description="$t('common.emptyText')" />
         <van-list
           v-model:loading="loading"
@@ -284,6 +288,11 @@ onMounted(async () => {
   flex-direction: column;
 }
 
+.bannerContainer {
+  width: 100%;
+  background: #fff;
+}
+
 .bannerImage {
   width: 100%;
 }
@@ -298,6 +307,7 @@ onMounted(async () => {
   background: #fff;
   max-width: 750px;
   margin: 0 auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .platformTabs {
@@ -319,11 +329,10 @@ onMounted(async () => {
 }
 
 .refreshBox {
-  // padding-top: 44px; // 与 van-tabs 的默认高度保持一致
+  flex: 1;
   padding-bottom: var(--van-tabbar-height);
   box-sizing: border-box;
-  height: 99.9vh;
-  overflow-y: scroll;
+  background: #f5f6f7;
 }
 
 .taskGroupItem{
