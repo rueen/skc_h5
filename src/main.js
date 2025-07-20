@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-11 14:35:13
+ * @LastEditTime: 2025-07-20 18:13:06
  * @Description: 
  */
 import { createApp } from 'vue'
@@ -41,7 +41,9 @@ import {
   Empty,
   Radio,
   RadioGroup,
-  NoticeBar
+  NoticeBar,
+  Swipe,
+  SwipeItem
 } from 'vant'
 
 const app = createApp(App)
@@ -77,5 +79,7 @@ app.use(Empty)
 app.use(Radio)
 app.use(RadioGroup)
 app.use(NoticeBar)
+app.use(Swipe)
+app.use(SwipeItem)
 
 app.mount('#app')

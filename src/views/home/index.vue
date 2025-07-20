@@ -2,29 +2,12 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-18 16:46:45
+ * @LastEditTime: 2025-07-20 18:33:19
  * @Description: 首页
  -->
 
 <template>
   <div :class="$style.homePage">
-    <!-- 平台选择标签 -->
-    <div :class="$style.tabsWrapper">
-      <van-tabs
-        v-model:active="activeChannelId"
-        :class="$style.platformTabs"
-        swipeable
-        @click-tab="onChannelChange"
-      >
-        <van-tab 
-          v-for="channel in channelList" 
-          :key="channel.id"
-          :title="channel.name"
-          :name="channel.id"
-        />
-      </van-tabs>
-    </div>
-
     <!-- 列表内容区域 -->
     <div :class="$style.refreshBox">
       <van-pull-refresh
@@ -33,6 +16,32 @@
         :loosing-text="$t('common.loosingText')"
         @refresh="onRefresh"
       >
+        <van-swipe :autoplay="3000" lazy-render>
+          <van-swipe-item
+            v-for="item in bannerList"
+            :key="item.id"
+            @click="handleOpenAd(item)"
+          >
+            <img :src="item.content.adImage" :class="$style.bannerImage" />
+          </van-swipe-item>
+        </van-swipe>
+
+        <!-- 平台选择标签 -->
+        <div :class="$style.tabsWrapper">
+          <van-tabs
+            v-model:active="activeChannelId"
+            :class="$style.platformTabs"
+            swipeable
+            @click-tab="onChannelChange"
+          >
+            <van-tab 
+              v-for="channel in channelList" 
+              :key="channel.id"
+              :title="channel.name"
+              :name="channel.id"
+            />
+          </van-tabs>
+        </div>
         <van-empty image="search" v-if="list.length === 0" :description="$t('common.emptyText')" />
         <van-list
           v-model:loading="loading"
@@ -168,6 +177,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { get } from '@/utils/request'
 import { useEnumStore } from '@/stores'
+import openAd from '@/utils/openAd'
 
 const router = useRouter()
 const enumStore = useEnumStore()
@@ -243,8 +253,25 @@ const loadChannelList = async () => {
   }
 }
 
+const bannerList = ref([]);
+const getHomeBanner = async () => {
+  try {
+    const res = await get('ad.list', {
+      location: 'home_banner'
+    })
+    bannerList.value = res.data || [];
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+const handleOpenAd = (item) => {
+  openAd(router, item)
+}
+
 // 初始化
 onMounted(async () => {
+  await getHomeBanner()
   await loadChannelList()
   onLoad()
 })
@@ -257,8 +284,13 @@ onMounted(async () => {
   flex-direction: column;
 }
 
+.bannerImage {
+  width: 100%;
+}
+
 .tabsWrapper {
-  position: fixed;
+  position: sticky;
+  width: 100%;
   top: 0;
   left: 0;
   right: 0;
@@ -287,10 +319,10 @@ onMounted(async () => {
 }
 
 .refreshBox {
-  padding-top: 44px; // 与 van-tabs 的默认高度保持一致
+  // padding-top: 44px; // 与 van-tabs 的默认高度保持一致
   padding-bottom: var(--van-tabbar-height);
   box-sizing: border-box;
-  height: 99vh;
+  height: 99.9vh;
   overflow-y: scroll;
 }
 
