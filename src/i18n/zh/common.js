@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 10:42:21
+ * @LastEditTime: 2025-07-21 17:50:59
  * @Description: 
  */
 export default {
@@ -45,6 +45,10 @@ export default {
     accountAuditRejectTitle: '账号审核拒绝通知',
     accountAuditRejectMessage: '您的账号审核未通过，请重新提交审核',
     accountAuditRejectButtonText: '立即查看',
+  },
+
+  messages: {
+    buttonText: '已读',
   },
 
   copy: (type) => {

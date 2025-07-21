@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-24 22:57:39
+ * @LastEditTime: 2025-07-21 18:08:33
  * @Description: 登录页
  -->
  <template>
@@ -142,6 +142,7 @@ import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/stores'
 import { showToast } from 'vant'
 import { checkNotification } from '@/utils/notification'
+import { checkMessages } from '@/utils/messages'
 import { useEnumStore } from '@/stores/enum'
 
 const router = useRouter()
@@ -376,7 +377,8 @@ const onSubmit = async () => {
     // 登录成功后清除邀请码
     // sessionStorage.removeItem('inviteCode')
     // 检查是否有未读通知
-    checkNotification(router)
+    await checkNotification(router)
+    await checkMessages()
   } catch (error) {
     console.log(error)
   }

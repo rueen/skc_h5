@@ -2,10 +2,15 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-20 18:09:13
+ * @LastEditTime: 2025-07-21 18:00:33
  * @Description: API 路径配置
  */
 const API_PATH = {
+  // 站内信
+  messages: {
+    list: '/messages',
+    read: '/messages/read', // POST
+  },
   notification: {
     list: '/notifications',
     read: '/notifications/:id/read', // put

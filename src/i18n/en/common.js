@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 10:42:30
+ * @LastEditTime: 2025-07-21 17:51:23
  * @Description: 
  */
 export default {
@@ -45,6 +45,10 @@ export default {
     accountAuditRejectTitle: 'Account Audit Reject Notification',
     accountAuditRejectMessage: 'Your account audit has been rejected, please resubmit the audit',
     accountAuditRejectButtonText: 'View Now',
+  },
+
+  messages: {
+    buttonText: 'Read',
   },
 
   copy: (type) => {

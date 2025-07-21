@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 10:05:53
+ * @LastEditTime: 2025-07-21 17:49:15
  * @Description: 
 -->
 <template>
@@ -21,6 +21,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUserStore, useEnumStore } from '@/stores'
 import { checkNotification } from '@/utils/notification'
+import { checkMessages } from '@/utils/messages'
 import { useRouter } from 'vue-router'
 import { get } from '@/utils/request'
 
@@ -84,6 +85,7 @@ onMounted(async () => {
   if (userStore.token) {
     await userStore.fetchUserInfo()
     await checkNotification(router)
+    await checkMessages()
     // 加载枚举数据
     await enumStore.fetchEnum()
   }

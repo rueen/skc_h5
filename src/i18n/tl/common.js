@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 10:42:40
+ * @LastEditTime: 2025-07-21 17:51:14
  * @Description: 
  */
 export default {
@@ -45,6 +45,10 @@ export default {
     accountAuditRejectTitle: 'Pagkabigo sa Pag-audit ng Account',
     accountAuditRejectMessage: 'Hindi nawala ang iyong pag-audit ng account, mangyaring i-resubmit ang audit',
     accountAuditRejectButtonText: 'Mag-view Ngayon',
+  },
+
+  messages: {
+    buttonText: 'Tandaan',
   },
 
   copy: (type) => {
