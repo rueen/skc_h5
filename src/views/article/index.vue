@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-20 21:33:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-19 19:34:57
+ * @LastEditTime: 2025-07-21 18:21:59
  * @Description: 
 -->
 <template>
@@ -23,6 +23,7 @@ import { useRoute, useRouter } from 'vue-router'
 import Layout from '@/components/layout.vue'
 import { get } from '@/utils/request'
 import NavBar from '@/components/NavBar.vue'
+import { convertToHtml } from '@/utils/util'
 
 const route = useRoute()
 const router = useRouter()
@@ -31,19 +32,6 @@ const content = ref('')
 
 const onClickLeft = () => {
   router.back()
-}
-
-// 转换函数
-const convertToHtml = (content) => {
-  if (!content || typeof content !== 'string') return ''
-  
-  return content
-    .replace(/\n\n+/g, '</p><p>')
-    .replace(/\n/g, '<br>')
-    .replace(/^(.+)$/, '<p>$1</p>')
-    .replace(/<p><br><\/p>/g, '<p>&nbsp;</p>')
-    .replace(/<p><\/p>/g, '')
-    .replace(/ /g, '&nbsp;')
 }
 
 const getArticleDetail = async () => {

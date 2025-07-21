@@ -2,13 +2,13 @@
  * @Author: diaochan
  * @Date: 2025-07-21 17:36:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-21 17:59:52
+ * @LastEditTime: 2025-07-21 18:26:13
  * @Description: 
  */
-import { h } from 'vue'
 import { get, post } from '@/utils/request'
 import { createPopup } from '@/utils/popup'
 import { getI18n } from '@/i18n/get'
+import { convertToHtml } from '@/utils/util'
 
 const { common: { messages } } = getI18n()
 
@@ -28,8 +28,10 @@ export const checkMessages = async () => {
       if(message) {
         const popup = createPopup({
           title: message.title,
-          message: message.content,
+          message: `<div style="text-align: left;">${convertToHtml(message.content)}</div>`,
           buttonText: messages.buttonText,
+          isHtml: true,
+          countdownTime: 5,
           onConfirm: async () => {
             popup.destroy()
             await readMessages(message.id)

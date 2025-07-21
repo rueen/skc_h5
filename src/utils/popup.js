@@ -12,6 +12,13 @@ import Popup from '@/components/Popup.vue'
 /**
  * 创建弹窗实例
  * @param {Object} options - 配置项
+ * @param {string} options.title - 弹窗标题
+ * @param {string} options.message - 弹窗消息内容
+ * @param {string} options.buttonText - 按钮文本
+ * @param {boolean} options.maskClosable - 是否允许点击遮罩关闭
+ * @param {boolean} options.isHtml - 是否将消息内容渲染为HTML
+ * @param {number} options.countdownTime - 倒计时时间（秒），0表示不倒计时
+ * @param {function} options.onConfirm - 确认回调函数
  * @returns {Object} - 弹窗控制对象
  */
 export const createPopup = (options = {}) => {
@@ -41,6 +48,8 @@ export const createPopup = (options = {}) => {
         message: options.message || '',
         buttonText: options.buttonText || '我知道了',
         maskClosable: options.maskClosable !== false,
+        isHtml: options.isHtml || false,
+        countdownTime: options.countdownTime || 0,
         onConfirm: handleConfirm
       })
     }
@@ -81,6 +90,8 @@ export const createPopup = (options = {}) => {
  * @param {String} message - 消息内容
  * @param {String} title - 标题
  * @param {Object} options - 其他配置
+ * @param {boolean} options.isHtml - 是否将消息内容渲染为HTML
+ * @param {number} options.countdownTime - 倒计时时间（秒）
  * @returns {Object} - 弹窗控制对象
  */
 export const showPopup = (message, title = '', options = {}) => {
@@ -96,6 +107,8 @@ export const showPopup = (message, title = '', options = {}) => {
  * @param {String} message - 消息内容
  * @param {String} title - 标题
  * @param {Object} options - 其他配置
+ * @param {boolean} options.isHtml - 是否将消息内容渲染为HTML
+ * @param {number} options.countdownTime - 倒计时时间（秒）
  * @returns {Promise} - Promise对象
  */
 export const showPopupPromise = (message, title = '', options = {}) => {
