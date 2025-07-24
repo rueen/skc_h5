@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-20 21:33:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-24 20:43:13
+ * @LastEditTime: 2025-07-24 21:05:47
  * @Description: 
 -->
 <template>
@@ -13,7 +13,7 @@
       fixed
       @click-left="onClickLeft"
     />
-    <div v-html="content" class="contentHtml"></div>
+    <div v-html="content" class="ql-editor quill-content"></div>
   </Layout>
 </template>
 
@@ -60,24 +60,19 @@ onMounted(() => {
 </script>
 
 <style lang="less">
-.contentHtml{
-  img{
-    width: 100%;
-    height: auto;
-  }
-}
-</style>
-<style lang="less" scoped>
-.contentHtml {
+@import '../../style/quill.snow.css';
+.quill-content {
   padding: 0 16px;
   min-height: 100vh;
   background-color: #fff;
-  /* 基础样式 */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-size: 14px;
   line-height: 1.5;
   color: #333;
-  text-align: left;
   overflow: hidden;
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 }
 </style>
