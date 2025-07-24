@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-20 21:33:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-21 18:21:59
+ * @LastEditTime: 2025-07-24 20:43:13
  * @Description: 
 -->
 <template>
@@ -13,7 +13,7 @@
       fixed
       @click-left="onClickLeft"
     />
-    <div v-html="content" class="content"></div>
+    <div v-html="content" class="contentHtml"></div>
   </Layout>
 </template>
 
@@ -23,7 +23,6 @@ import { useRoute, useRouter } from 'vue-router'
 import Layout from '@/components/layout.vue'
 import { get } from '@/utils/request'
 import NavBar from '@/components/NavBar.vue'
-import { convertToHtml } from '@/utils/util'
 
 const route = useRoute()
 const router = useRouter()
@@ -42,7 +41,7 @@ const getArticleDetail = async () => {
       }
     })
     title.value = res.data.title;
-    content.value = convertToHtml(res.data.content);
+    content.value = res.data.content;
   } else if(route.params.id != null) {
     const res = await get('article.byId', {}, {
       urlParams: {
@@ -50,7 +49,7 @@ const getArticleDetail = async () => {
       }
     })
     title.value = res.data.title;
-    content.value = convertToHtml(res.data.content);
+    content.value = res.data.content;
     console.log(content.value)
   }
 }
@@ -60,8 +59,16 @@ onMounted(() => {
 })
 </script>
 
+<style lang="less">
+.contentHtml{
+  img{
+    width: 100%;
+    height: auto;
+  }
+}
+</style>
 <style lang="less" scoped>
-.content {
+.contentHtml {
   padding: 0 16px;
   min-height: 100vh;
   background-color: #fff;
