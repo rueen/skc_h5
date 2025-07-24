@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-16 12:35:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 19:09:52
+ * @LastEditTime: 2025-07-24 20:18:38
  * @Description: 上传工具函数
  */
 
@@ -91,14 +91,6 @@ export const uploadImage = async (file, options = {}, messageJson = {}) => {
       formData.append(key, options.params[key])
     })
   }
-  
-  // 调试日志
-  console.log('上传图片FormData:', {
-    fileName: processedFile.name,
-    fileType: processedFile.type,
-    fileSize: processedFile.size,
-    formDataEntries: [...formData.entries()].map(entry => ({ key: entry[0], value: entry[1] instanceof File ? `File: ${entry[1].name}` : entry[1] }))
-  })
   
   try {
     // 使用公共 API 上传图片

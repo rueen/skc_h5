@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-24 08:37:00
+ * @LastEditTime: 2025-07-24 20:20:29
  * @Description: 
 -->
 <template>
@@ -260,7 +260,11 @@ const afterRead = async (file) => {
     })
     
     // 调用上传图片接口，自动会进行压缩
-    const result = await uploadImage(file.file, {}, {
+    const result = await uploadImage(file.file, {
+      params: {
+        directory: 'avatar'
+      }
+    }, {
       imageRequired: t('common.upload.imageRequired'),
       imageSize: t('common.upload.imageSize'),
       uploadFailed: t('common.upload.uploadFailed')
