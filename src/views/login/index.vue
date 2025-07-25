@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-21 18:08:33
+ * @LastEditTime: 2025-07-25 18:02:19
  * @Description: 登录页
  -->
  <template>
@@ -350,7 +350,7 @@ const onSubmit = async () => {
     }
 
     // 检查会话存储中是否有邀请码
-    const inviteCode = sessionStorage.getItem('inviteCode')
+    const inviteCode = localStorage.getItem('inviteCode')
     if (inviteCode) {
       // 将邀请码添加到登录数据中，后端可以处理用户注册时的邀请关系
       loginData.inviteCode = inviteCode
@@ -374,8 +374,6 @@ const onSubmit = async () => {
       // 没有重定向URL，跳转到首页
       router.push('/')
     }
-    // 登录成功后清除邀请码
-    // sessionStorage.removeItem('inviteCode')
     // 检查是否有未读通知
     await checkNotification(router)
     await checkMessages()

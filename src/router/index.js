@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:10:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 10:04:53
+ * @LastEditTime: 2025-07-25 18:02:12
  * @Description: 
  */
 import { createRouter, createWebHistory } from 'vue-router'
@@ -222,7 +222,7 @@ router.beforeEach((to, from, next) => {
   
   // 如果URL中包含邀请码参数，则保存到会话存储
   if (to.query.inviteCode) {
-    sessionStorage.setItem('inviteCode', to.query.inviteCode)
+    localStorage.setItem('inviteCode', to.query.inviteCode)
   }
   
   if (to.meta.requiresAuth && !userStore.token) {
