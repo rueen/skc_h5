@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:35:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-06-25 16:39:31
+ * @LastEditTime: 2025-07-28 09:57:29
  * @Description: API 请求工具
  */
 
@@ -97,8 +97,7 @@ const setupInterceptors = (service) => {
           window.location.href = '/login'
         }
       }
-      showToast(error.response?.data?.message || '请求失败')
-      console.error('响应错误:', error)
+      showToast(error.response?.data?.message || 'Request failed, retry later')
       return Promise.reject(error)
     }
   )
