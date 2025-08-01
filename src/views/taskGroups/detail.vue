@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-07-13 10:03:05
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-14 11:14:48
+ * @LastEditTime: 2025-08-01 17:21:12
  * @Description: 
 -->
 <template>
@@ -161,7 +161,7 @@ const formatPrice = (price) => {
 const handleTaskItemClick = (item) => {
   if(item.isSubmited) {
     // 已提交 | 已完成
-    router.push(`/tasks/submit/${item.enrollId}?taskId=${item.taskId}`)
+    router.push(`/tasks/submit/${item.submittedId}?taskId=${item.taskId}`)
   } else if(item.isEnrolled) {
     // 已报名
     router.push(`/tasks/submit/new?taskId=${item.taskId}`)
