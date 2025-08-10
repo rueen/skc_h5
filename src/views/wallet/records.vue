@@ -33,7 +33,7 @@
             >
               <div :class="$style.recordItemWrapper">
                 <div :class="$style.recordInfo">
-                  <div :class="$style.title">{{ $t('wallet.records.withdrawTo') }} {{ record.account }}</div>
+                  <div :class="$style.title">{{ $t('wallet.records.withdrawTo') }} {{ record.withdrawalAccount }}</div>
                   <div :class="$style.time">{{ record.createTime }}</div>
                 </div>
                 <div :class="$style.rightWrapper">
