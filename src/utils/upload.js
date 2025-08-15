@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-16 12:35:20
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-24 20:18:38
+ * @LastEditTime: 2025-08-14 10:24:59
  * @Description: 上传工具函数
  */
 
@@ -64,8 +64,8 @@ export const uploadImage = async (file, options = {}, messageJson = {}) => {
     return Promise.reject(new Error('文件类型错误，请上传图片文件'))
   }
   
-  // 检查文件大小（默认限制为 5MB）
-  const maxSize = options.maxSize || 5 * 1024 * 1024
+  // 检查文件大小（默认限制为 10MB）
+  const maxSize = options.maxSize || 10 * 1024 * 1024
   if (file.size > maxSize) {
     showToast(messageJson.imageSize + maxSize / 1024 / 1024 + 'MB')
     return Promise.reject(new Error(`文件过大，请上传小于 ${maxSize / 1024 / 1024}MB 的图片`))
