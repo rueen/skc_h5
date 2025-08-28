@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-25 18:02:19
+ * @LastEditTime: 2025-08-28 14:39:43
  * @Description: 登录页
  -->
  <template>
@@ -103,7 +103,7 @@
     <div :class="$style.langSwitch" @click="showLanguagePicker = true">
       <van-space>
         <van-icon name="exchange" />
-        <span>{{ getCurrentLanguageName() }}</span>
+        <span>{{ currentLanguage }}</span>
       </van-space>
     </div>
 
@@ -123,20 +123,20 @@
     <!-- 语言选择弹出层 -->
     <van-popup v-model:show="showLanguagePicker" position="bottom" :style="{ maxHeight: '50%' }">
       <van-picker
-        :columns="languageColumns"
+        :columns="languages"
         @confirm="onLanguageConfirm"
         @cancel="showLanguagePicker = false"
-        show-toolbar
         :title="$t('settings.selectLanguage')"
         :confirm-button-text="$t('common.confirm')"
         :cancel-button-text="$t('common.cancel')"
+        show-toolbar
       />
     </van-popup>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, computed, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/stores'
@@ -179,19 +179,16 @@ const areaCodeColumns = [
 
 // 语言选择相关
 const showLanguagePicker = ref(false)
-const languageColumns = [
-  { text: '简体中文', value: 'zh-CN' },
+const languages = [
   { text: 'English', value: 'en-US' },
+  { text: '简体中文', value: 'zh-CN' },
   { text: 'Tagalog', value: 'tl-PH' }
 ]
 
 // 获取当前语言名称
-const getCurrentLanguageName = () => {
-  if (locale.value === 'zh-CN') return '简体中文'
-  if (locale.value === 'en-US') return 'English'
-  if (locale.value === 'tl-PH') return 'Tagalog'
-  return '简体中文'
-}
+const currentLanguage = computed(() => {
+  return languages.find(lang => lang.value === locale.value)?.text
+})
 
 // 语言选择确认
 const onLanguageConfirm = (values) => {
