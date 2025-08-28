@@ -8,10 +8,11 @@
 import zh from './zh'
 import en from './en'
 import tl from './tl'
+import ja from './ja'
 
 export const getI18n = () => {
   const locale = localStorage.getItem('language') || 'en-US';
-  return locale === 'zh-CN' ? zh : locale === 'tl-PH' ? tl : en
+  return locale === 'zh-CN' ? zh : locale === 'tl-PH' ? tl : locale === 'ja-JP' ? ja : en
 }
 
 export default {
