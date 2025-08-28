@@ -81,9 +81,9 @@ async function initTimeSync() {
   }
 }
 
-onBeforeMount(() => {
-  // 获取默认地区
-  defaultRegionStore.fetchDefaultRegion()
+onBeforeMount(async () => {
+  // 优先获取默认地区并设置语言，确保在界面渲染前完成
+  await defaultRegionStore.fetchDefaultRegion()
 })
 
 // 在应用启动时获取用户信息
