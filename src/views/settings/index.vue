@@ -50,10 +50,9 @@
       round
     >
       <van-picker
-        :columns="languages"
+        :columns="languageColumns"
         @confirm="onConfirm"
         @cancel="showLanguagePicker = false"
-        :default-index="currentLangIndex"
         :title="$t('settings.selectLanguage')"
         :confirm-button-text="$t('common.confirm')"
         :cancel-button-text="$t('common.cancel')"
@@ -72,6 +71,7 @@ import { useUserStore } from '../../stores/user'
 import Layout from '@/components/layout.vue'
 import NavBar from '@/components/NavBar.vue'
 import { useEnumStore } from '@/stores/enum'
+import { languageColumns } from '@/utils/defaultRegion'
 
 const router = useRouter()
 const { t, locale } = useI18n()
@@ -79,18 +79,8 @@ const userStore = useUserStore()
 const enumStore = useEnumStore()
 const showLanguagePicker = ref(false)
 
-const languages = [
-  { text: 'English', value: 'en-US' },
-  { text: '简体中文', value: 'zh-CN' },
-  { text: 'Tagalog', value: 'tl-PH' }
-]
-
 const currentLanguage = computed(() => {
-  return languages.find(lang => lang.value === locale.value)?.text
-})
-
-const currentLangIndex = computed(() => {
-  return languages.findIndex(lang => lang.value === locale.value)
+  return languageColumns.find(lang => lang.value === locale.value)?.text
 })
 
 const onConfirm = (value) => {

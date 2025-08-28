@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-08-28 14:39:43
+ * @LastEditTime: 2025-08-28 15:17:09
  * @Description: 登录页
  -->
  <template>
@@ -123,7 +123,7 @@
     <!-- 语言选择弹出层 -->
     <van-popup v-model:show="showLanguagePicker" position="bottom" :style="{ maxHeight: '50%' }">
       <van-picker
-        :columns="languages"
+        :columns="languageColumns"
         @confirm="onLanguageConfirm"
         @cancel="showLanguagePicker = false"
         :title="$t('settings.selectLanguage')"
@@ -144,6 +144,7 @@ import { showToast } from 'vant'
 import { checkNotification } from '@/utils/notification'
 import { checkMessages } from '@/utils/messages'
 import { useEnumStore } from '@/stores/enum'
+import { languageColumns, areaCodeColumns } from '@/utils/defaultRegion'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -164,30 +165,13 @@ const togglePasswordVisibility = () => {
 
 // 区号选择相关
 const showAreaCodePicker = ref(false)
-const areaCodeColumns = [
-  { text: 'PH +63', value: '63' },
-  { text: 'US +1', value: '1' },
-  { text: 'GB +44', value: '44' },
-  { text: 'AU +61', value: '61' },
-  { text: 'JP +81', value: '81' },
-  { text: 'SG +65', value: '65' },
-  { text: 'KR +82', value: '82' },
-  { text: 'MY +60', value: '60' },
-  { text: 'TH +66', value: '66' },
-  { text: 'IN +91', value: '91' },
-]
 
 // 语言选择相关
 const showLanguagePicker = ref(false)
-const languages = [
-  { text: 'English', value: 'en-US' },
-  { text: '简体中文', value: 'zh-CN' },
-  { text: 'Tagalog', value: 'tl-PH' }
-]
 
 // 获取当前语言名称
 const currentLanguage = computed(() => {
-  return languages.find(lang => lang.value === locale.value)?.text
+  return languageColumns.find(lang => lang.value === locale.value)?.text
 })
 
 // 语言选择确认
