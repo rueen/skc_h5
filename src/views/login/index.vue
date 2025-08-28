@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-08-28 16:23:51
+ * @LastEditTime: 2025-08-28 17:45:51
  * @Description: 登录页
  -->
  <template>
@@ -145,6 +145,7 @@ import { checkNotification } from '@/utils/notification'
 import { checkMessages } from '@/utils/messages'
 import { useEnumStore } from '@/stores/enum'
 import { useDefaultRegionStore } from '@/stores/defaultRegion'
+import { setLocale } from '@/i18n'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -181,8 +182,7 @@ const currentLanguage = computed(() => {
 const onLanguageConfirm = (values) => {
   const selectedLang = values.selectedOptions[0].value
   if (selectedLang !== locale.value) {
-    locale.value = selectedLang
-    localStorage.setItem('language', locale.value)
+    setLocale(selectedLang)
   }
   showLanguagePicker.value = false
 }

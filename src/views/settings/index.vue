@@ -72,6 +72,7 @@ import Layout from '@/components/layout.vue'
 import NavBar from '@/components/NavBar.vue'
 import { useEnumStore } from '@/stores/enum'
 import { useDefaultRegionStore } from '@/stores/defaultRegion'
+import { setLocale } from '@/i18n'
 
 const router = useRouter()
 const { t, locale } = useI18n()
@@ -86,9 +87,8 @@ const currentLanguage = computed(() => {
 })
 
 const onConfirm = (value) => {
-  locale.value = value.selectedValues[0];
+  setLocale(value.selectedValues[0]);
   showLanguagePicker.value = false;
-  localStorage.setItem('language', locale.value)
   // 加载枚举数据
   enumStore.resetEnum();
   enumStore.fetchEnum()

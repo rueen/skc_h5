@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-21 18:36:18
  * @LastEditors: rueen
- * @LastEditTime: 2025-08-28 16:00:30
+ * @LastEditTime: 2025-08-28 17:44:16
  * @Description: 
  */
 import { createI18n } from 'vue-i18n'
@@ -28,7 +28,7 @@ const i18n = createI18n({
 
 // 导出设置语言的方法
 export const setLocale = (locale) => {
-  i18n.global.locale.value = locale
+  i18n.global.locale.value = locale || 'en-US';
   localStorage.setItem('language', locale)
 }
 
