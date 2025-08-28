@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-21 17:49:15
+ * @LastEditTime: 2025-08-28 16:32:46
  * @Description: 
 -->
 <template>
@@ -17,19 +17,21 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onBeforeMount, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useUserStore, useEnumStore } from '@/stores'
 import { checkNotification } from '@/utils/notification'
 import { checkMessages } from '@/utils/messages'
 import { useRouter } from 'vue-router'
 import { get } from '@/utils/request'
+import { useDefaultRegionStore } from '@/stores/defaultRegion'
 
 const route = useRoute()
 const router = useRouter()
 const active = ref(0)
 const userStore = useUserStore()
 const enumStore = useEnumStore()
+const defaultRegionStore = useDefaultRegionStore()
 
 // 计算是否显示底部导航栏
 const showTabbar = computed(() => {
@@ -78,6 +80,11 @@ async function initTimeSync() {
     console.error('时间同步失败:', error);
   }
 }
+
+onBeforeMount(() => {
+  // 获取默认地区
+  defaultRegionStore.fetchDefaultRegion()
+})
 
 // 在应用启动时获取用户信息
 onMounted(async () => {

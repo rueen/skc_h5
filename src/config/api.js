@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-09 16:07:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-21 18:00:33
+ * @LastEditTime: 2025-08-28 16:12:02
  * @Description: API 路径配置
  */
 const API_PATH = {
@@ -90,6 +90,7 @@ const API_PATH = {
     enum: '/enums/:enumType',
     enumAll: '/enums',
     time: '/time/server',
+    defaultRegion: '/default-region',
   },
   // 系统配置
   systemConfig: {

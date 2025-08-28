@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:15:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-08-28 15:17:09
+ * @LastEditTime: 2025-08-28 16:23:51
  * @Description: 登录页
  -->
  <template>
@@ -144,11 +144,12 @@ import { showToast } from 'vant'
 import { checkNotification } from '@/utils/notification'
 import { checkMessages } from '@/utils/messages'
 import { useEnumStore } from '@/stores/enum'
-import { languageColumns, areaCodeColumns } from '@/utils/defaultRegion'
+import { useDefaultRegionStore } from '@/stores/defaultRegion'
 
 const router = useRouter()
 const userStore = useUserStore()
 const enumStore = useEnumStore()
+const defaultRegionStore = useDefaultRegionStore()
 
 const { locale, t } = useI18n()
 
@@ -169,6 +170,8 @@ const showAreaCodePicker = ref(false)
 // 语言选择相关
 const showLanguagePicker = ref(false)
 
+const languageColumns = defaultRegionStore.languageColumns;
+const areaCodeColumns = defaultRegionStore.areaCodeColumns
 // 获取当前语言名称
 const currentLanguage = computed(() => {
   return languageColumns.find(lang => lang.value === locale.value)?.text

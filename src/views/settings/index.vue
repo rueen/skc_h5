@@ -71,14 +71,16 @@ import { useUserStore } from '../../stores/user'
 import Layout from '@/components/layout.vue'
 import NavBar from '@/components/NavBar.vue'
 import { useEnumStore } from '@/stores/enum'
-import { languageColumns } from '@/utils/defaultRegion'
+import { useDefaultRegionStore } from '@/stores/defaultRegion'
 
 const router = useRouter()
 const { t, locale } = useI18n()
 const userStore = useUserStore()
 const enumStore = useEnumStore()
 const showLanguagePicker = ref(false)
+const defaultRegionStore = useDefaultRegionStore()
 
+const languageColumns = defaultRegionStore.languageColumns;
 const currentLanguage = computed(() => {
   return languageColumns.find(lang => lang.value === locale.value)?.text
 })
