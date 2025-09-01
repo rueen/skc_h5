@@ -33,7 +33,10 @@
             >
               <div :class="$style.recordItemWrapper">
                 <div :class="$style.recordInfo">
-                  <div :class="$style.title">{{ enumStore.getEnumText('BillType', bill.billType) }}</div>
+                  <div :class="$style.title">
+                    <span>{{ enumStore.getEnumText('BillType', bill.billType) }}</span>
+                    <span v-if="bill.taskName"> - {{ bill.taskName }}</span>
+                  </div>
                   <div :class="$style.billNo" @click="handleCopy(bill.billNo)">{{ bill.billNo }}</div>
                   <div :class="$style.time">{{ bill.createTime }}</div>
                 </div>
