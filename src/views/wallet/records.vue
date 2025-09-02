@@ -43,6 +43,7 @@
               </div>
               <div :class="$style.reason" v-if="record.withdrawalStatus === 'failed'">
                 <span v-if="['失敗', '第三方支付失败: 失敗'].indexOf(record.rejectReason) > -1">{{ $t('wallet.bills.daifuFailureReason') }}</span>
+                <span v-else-if="['Insufficient balance of merchant','Not added to the api whitelist','API调用异常: 支付API无响应: timeout of 30000ms exceeded','API调用异常: 支付API调用失败: 502 "<html>\r\n<head><title>502 Bad Gateway</title></head>\r\n<body>\r\n<center><h1>502 Bad Gateway</h1></center>\r\n<hr><center>cloudflare</center>\r\n</body>\r\n</html>\r\n"'].indexOf(record.rejectReason) > -1">error occurred. Please try again later.</span>
                 <span v-else>{{ record.rejectReason }}</span>
               </div>
             </div>
