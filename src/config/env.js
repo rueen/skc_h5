@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:25:10
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-20 18:44:54
+ * @LastEditTime: 2025-09-14 13:49:22
  * @Description: 环境配置文件
  */
 
@@ -11,13 +11,25 @@ import API_PATH from './api'
 // 判断当前环境
 const isDev = process.env.NODE_ENV === 'development';
 
+const region = 'Malaysia';
+const conf = {
+  Malaysia: {
+    baseUrl: 'http://api.skcpop.com',
+    apiSignSecret: '81fe9c1f0a2d564bf827eb5ca3f3ed7b46592b7dc40b9a47fd3cb8fbf5308e9a',
+  },
+  Japan: {
+    baseUrl: 'https://api.jpskc.com',
+    apiSignSecret: '4eUFufSZIlBEFSUynMcHVQGT2TpcNHjWb+C+ebZhPEQ=',
+  }
+}
+
 // API 基础路径配置
 const API_BASE = {
   // 开发环境 API 基础路径
-  // development: '',
-  development: 'http://localhost:3001',
+  development: '',
+  // development: 'http://localhost:3001',
   // 生产环境 API 基础路径
-  production: 'http://api.skcpop.com',
+  production: conf[region].baseUrl,
 };
 
 // 公共 API 路径配置（用于图片上传、获取枚举常量等）
@@ -65,5 +77,5 @@ export default {
   api: API_PATH,
   // 模拟数据配置
   mock: MOCK_CONFIG,
-  apiSignSecret: '81fe9c1f0a2d564bf827eb5ca3f3ed7b46592b7dc40b9a47fd3cb8fbf5308e9a',
+  apiSignSecret: conf[region].apiSignSecret,
 }; 
