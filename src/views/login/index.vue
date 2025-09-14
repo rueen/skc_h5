@@ -136,7 +136,7 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive, onMounted } from 'vue'
+import { ref, computed, reactive, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useUserStore } from '@/stores'
@@ -171,12 +171,21 @@ const showAreaCodePicker = ref(false)
 // 语言选择相关
 const showLanguagePicker = ref(false)
 
-const languageColumns = defaultRegionStore.languageColumns;
-const areaCodeColumns = defaultRegionStore.areaCodeColumns
+// 使用computed获取响应式的languageColumns和areaCodeColumns
+const languageColumns = computed(() => defaultRegionStore.languageColumns);
+const areaCodeColumns = computed(() => defaultRegionStore.areaCodeColumns);
+
 // 获取当前语言名称
 const currentLanguage = computed(() => {
-  return languageColumns.find(lang => lang.value === locale.value)?.text
+  return languageColumns.value.find(lang => lang.value === locale.value)?.text
 })
+
+// 监听areaCodeColumns变化，自动设置默认区号
+watch(areaCodeColumns, (newColumns) => {
+  if (newColumns.length > 0 && !formData.areaCode) {
+    formData.areaCode = newColumns[0].value
+  }
+}, { immediate: true })
 
 // 语言选择确认
 const onLanguageConfirm = (values) => {
@@ -197,7 +206,7 @@ const onTabChange = (index) => {
 const formData = reactive({
   memberAccount: '',
   password: '',
-  areaCode: '63',
+  areaCode: '',
   agreed: true
 })
 
@@ -371,8 +380,16 @@ const handleOpenArticle = (id, location) => {
   router.push(`/article/${id}?location=${location}`)
 }
 
-onMounted(() => {
-
+onMounted(async () => {
+  // 确保获取默认地区信息，避免在App.vue还未初始化完成时进入登录页面
+  if (!defaultRegionStore.languageColumns.length) {
+    await defaultRegionStore.fetchDefaultRegion()
+  }
+  
+  // 设置默认区号为areaCodeColumns第一个的值
+  if (areaCodeColumns.value.length > 0 && !formData.areaCode) {
+    formData.areaCode = areaCodeColumns.value[0].value
+  }
 })
 </script>
 
