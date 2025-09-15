@@ -2,33 +2,68 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-15 16:39:14
+ * @LastEditTime: 2025-09-15 19:13:52
  * @Description: 
  */
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
+import sitesConfig from './config/sites.js'
+import { htmlVariables } from './plugins/html-variables.js'
+
+// 获取站点配置
+const getSiteConfig = () => {
+  const site = process.env.VITE_SITE || 'Local'
+  const config = sitesConfig[site]
+  
+  if (!config) {
+    throw new Error(`Site configuration not found for: ${site}`)
+  }
+  
+  return { site, ...config }
+}
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [vue()],
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, 'src')
-    }
-  },
-  server: {
-    port: 5173,
-    host: '0.0.0.0',
-    proxy: {
-      // 特别注意：如果后端API已经包含/api前缀，则不要重写路径
-      '/api': {
-        // target: 'http://api.skcpop.com',
-        // target: 'https://api.jpskc.com',
-        changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/api/, '') // 移除重写规则，保留/api前缀
+export default defineConfig(({ command, mode }) => {
+  const siteConfig = getSiteConfig()
+  
+  return {
+    plugins: [
+      vue(),
+      htmlVariables({
+        VITE_FAVICON_PATH: siteConfig.faviconPath,
+        VITE_APP_TITLE: siteConfig.title,
+        VITE_APP_DESCRIPTION: siteConfig.description
+      })
+    ],
+    resolve: {
+      alias: {
+        '@': resolve(__dirname, 'src')
       }
     },
-    cors: true
+    define: {
+      // 将站点配置注入到环境变量中
+      __SITE_CONFIG__: JSON.stringify(siteConfig)
+    },
+    server: {
+      port: 5173,
+      host: '0.0.0.0',
+      proxy: {
+        '/api': {
+          target: siteConfig.baseUrl,
+          changeOrigin: true,
+          secure: siteConfig.baseUrl.startsWith('https'),
+        }
+      },
+      cors: {
+        origin: true,
+        credentials: true,
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+        allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+      }
+    },
+    build: {
+      outDir: `dist/${siteConfig.site.toLowerCase()}`
+    }
   }
 })

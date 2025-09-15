@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:25:10
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-15 16:39:34
+ * @LastEditTime: 2025-09-15 17:49:46
  * @Description: 环境配置文件
  */
 
@@ -11,47 +11,28 @@ import API_PATH from './api'
 // 判断当前环境
 const isDev = process.env.NODE_ENV === 'development';
 
-const region = 'Malaysia';
-const conf = {
-  Malaysia: {
-    baseUrl: 'http://api.skcpop.com',
-    apiSignSecret: '81fe9c1f0a2d564bf827eb5ca3f3ed7b46592b7dc40b9a47fd3cb8fbf5308e9a',
-  },
-  Japan: {
-    baseUrl: 'https://api.jpskc.com',
-    apiSignSecret: '4eUFufSZIlBEFSUynMcHVQGT2TpcNHjWb+C+ebZhPEQ=',
-  }
+// 获取站点配置（从 vite.config.js 注入）
+const siteConfig = typeof __SITE_CONFIG__ !== 'undefined' ? __SITE_CONFIG__ : {
+  site: 'Local',
+  baseUrl: 'http://localhost:3001',
+  apiSignSecret: '81fe9c1f0a2d564bf827eb5ca3f3ed7b46592b7dc40b9a47fd3cb8fbf5308e9a'
 }
 
-// API 基础路径配置
-const API_BASE = {
-  // 开发环境 API 基础路径
-  // development: '',
-  development: 'http://localhost:3001',
-  // 生产环境 API 基础路径
-  production: conf[region].baseUrl,
-};
-
 // 公共 API 路径配置（用于图片上传、获取枚举常量等）
-const PUBLIC_API_PATH = {
-  development: '/api',
-  production: '/api',
-};
+const PUBLIC_API_PATH = '/api';
 
 // 业务 API 路径配置
-const BUSINESS_API_PATH = {
-  development: '/api/h5',
-  production: '/api/h5',
-};
+const BUSINESS_API_PATH = '/api/h5';
 
 // 当前环境的基础 API 路径
-const BASE_URL = API_BASE[process.env.NODE_ENV || 'development'];
+// 开发环境使用代理，生产环境使用实际API地址
+const BASE_URL = isDev ? '' : siteConfig.baseUrl;
 
 // 当前环境的公共 API 路径
-const PUBLIC_API_URL = BASE_URL + PUBLIC_API_PATH[process.env.NODE_ENV || 'development'];
+const PUBLIC_API_URL = BASE_URL + PUBLIC_API_PATH;
 
 // 当前环境的业务 API 路径
-const BUSINESS_API_URL = BASE_URL + BUSINESS_API_PATH[process.env.NODE_ENV || 'development'];
+const BUSINESS_API_URL = BASE_URL + BUSINESS_API_PATH;
 
 // 模拟数据配置
 const MOCK_CONFIG = {
@@ -77,5 +58,7 @@ export default {
   api: API_PATH,
   // 模拟数据配置
   mock: MOCK_CONFIG,
-  apiSignSecret: conf[region].apiSignSecret,
+  // 当前站点配置
+  site: siteConfig.site,
+  apiSignSecret: siteConfig.apiSignSecret,
 }; 
