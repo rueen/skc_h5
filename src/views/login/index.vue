@@ -175,6 +175,14 @@ const showLanguagePicker = ref(false)
 const languageColumns = computed(() => defaultRegionStore.languageColumns);
 const areaCodeColumns = computed(() => defaultRegionStore.areaCodeColumns);
 
+// 表单数据
+const formData = reactive({
+  memberAccount: '',
+  password: '',
+  areaCode: '',
+  agreed: true
+})
+
 // 获取当前语言名称
 const currentLanguage = computed(() => {
   return languageColumns.value.find(lang => lang.value === locale.value)?.text
@@ -201,14 +209,6 @@ const onTabChange = (index) => {
   // 切换登录方式时清空账号字段
   formData.memberAccount = ''
 }
-
-// 表单数据
-const formData = reactive({
-  memberAccount: '',
-  password: '',
-  areaCode: '',
-  agreed: true
-})
 
 // 清空输入框
 const onInputClear = (field) => {

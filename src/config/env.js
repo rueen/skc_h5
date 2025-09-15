@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:25:10
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-14 13:49:22
+ * @LastEditTime: 2025-09-15 16:39:34
  * @Description: 环境配置文件
  */
 
@@ -26,8 +26,8 @@ const conf = {
 // API 基础路径配置
 const API_BASE = {
   // 开发环境 API 基础路径
-  development: '',
-  // development: 'http://localhost:3001',
+  // development: '',
+  development: 'http://localhost:3001',
   // 生产环境 API 基础路径
   production: conf[region].baseUrl,
 };
