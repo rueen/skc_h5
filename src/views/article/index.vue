@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-20 21:33:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-24 21:05:47
+ * @LastEditTime: 2025-09-16 19:55:39
  * @Description: 
 -->
 <template>
@@ -50,7 +50,6 @@ const getArticleDetail = async () => {
     })
     title.value = res.data.title;
     content.value = res.data.content;
-    console.log(content.value)
   }
 }
 

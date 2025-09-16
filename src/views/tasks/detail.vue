@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-16 18:08:32
+ * @LastEditTime: 2025-09-16 19:57:10
  * @Description: 任务详情页
  -->
 <template>
@@ -84,7 +84,7 @@
           </div>
           <div :class="$style.reqItem">
             <span :class="$style.label">{{ $t('task.detail.workRequirements') }}</span>
-            <div :class="$style.workRequirements" v-html="taskInfo.contentRequirement" />
+            <div :class="[$style.workRequirements, $style.quillContent]" v-html="taskInfo.contentRequirement" />
           </div>
         </div>
       </div>
@@ -92,9 +92,7 @@
       <!-- 任务信息 -->
       <div :class="$style.section">
         <h3 :class="$style.sectionTitle">{{ $t('task.detail.taskInfoTitle') }}</h3>
-        <div :class="$style.taskInfo">
-          {{ taskInfo.taskInfo }}
-        </div>
+        <div :class="[$style.taskInfo, $style.quillContent]" v-html="taskInfo.taskInfo" />
       </div>
     </div>
 
@@ -524,5 +522,12 @@ onMounted(async () => {
 
 .submitBtn {
   flex: 1;
+}
+
+.quillContent{
+  img{
+    max-width: 100%;
+    height: auto;
+  }
 }
 </style>
