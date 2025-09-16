@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-13 11:00:57
+ * @LastEditTime: 2025-09-16 18:08:32
  * @Description: 任务详情页
  -->
 <template>
@@ -74,11 +74,11 @@
       <div :class="$style.section">
         <h3 :class="$style.sectionTitle">{{ $t('task.detail.requirementsTitle') }}</h3>
         <div :class="$style.requirements">
-          <div :class="$style.reqItem">
+          <div :class="[$style.reqItem, $style.horizontal]">
             <span :class="$style.label">{{ $t('task.detail.publishForm') }}</span>
             <span :class="$style.value">{{ enumStore.getEnumText('TaskType', taskInfo.taskType) }}</span>
           </div>
-          <div :class="$style.reqItem">
+          <div :class="[$style.reqItem, $style.horizontal]">
             <span :class="$style.label">{{ $t('task.detail.fansRequired') }}</span>
             <span :class="$style.value">{{ taskInfo.fansRequired }}</span>
           </div>
@@ -451,6 +451,14 @@ onMounted(async () => {
 .requirements {
   .reqItem {
     margin-bottom: 16px;
+    &.horizontal{
+      display: flex;
+      align-items: center;
+      .label{
+        margin-bottom: 0;
+        margin-right: 8px;
+      }
+    }
 
     .label {
       display: block;
