@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-16 15:44:26
+ * @LastEditTime: 2025-09-16 17:15:51
  * @Description: 
 -->
 <template>
@@ -228,9 +228,10 @@ import Layout from '@/components/layout.vue'
 import NavBar from '@/components/NavBar.vue'
 import { useI18n } from 'vue-i18n'
 import { copyToClipboard } from '@/utils/copyToClipboard'
-const siteConfig = __SITE_CONFIG__;
 
+const siteConfig = __SITE_CONFIG__;
 const site = siteConfig.site;
+
 const { t } = useI18n()
 
 const enumStore = useEnumStore()
