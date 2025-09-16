@@ -2,7 +2,7 @@
  * @Author: rueen  
  * @Date: 2025-01-20 10:00:00
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-16 15:19:06
+ * @LastEditTime: 2025-09-16 18:19:04
  * @Description: 多站点配置文件
  */
 
@@ -13,7 +13,8 @@ export default {
     apiSignSecret: '81fe9c1f0a2d564bf827eb5ca3f3ed7b46592b7dc40b9a47fd3cb8fbf5308e9a',
     faviconPath: '/vite.svg',
     title: 'SKC Local',
-    description: 'SKC 本地开发环境'
+    description: 'SKC 本地开发环境',
+    primaryColor: '#1989fa'
   },
   Malaysia: {
     site: 'Malaysia',
@@ -21,7 +22,8 @@ export default {
     apiSignSecret: '81fe9c1f0a2d564bf827eb5ca3f3ed7b46592b7dc40b9a47fd3cb8fbf5308e9a',
     faviconPath: '/vite.svg',
     title: 'SKC',
-    description: 'SKC - Quick, Easy & Legit Earnings'
+    description: 'SKC - Quick, Easy & Legit Earnings',
+    primaryColor: '#1989fa'
   },
   Japan: {
     site: 'Japan',
@@ -29,6 +31,7 @@ export default {
     apiSignSecret: '4eUFufSZIlBEFSUynMcHVQGT2TpcNHjWb+C+ebZhPEQ=',
     faviconPath: '/favicon-japan.ico',
     title: 'SKC',
-    description: 'SKC - クイック、簡単、合法的な収益'
+    description: 'SKC - クイック、簡単、合法的な収益',
+    primaryColor: '#ff976a'
   }
 }

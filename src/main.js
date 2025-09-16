@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 10:09:01
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-20 18:13:06
+ * @LastEditTime: 2025-09-16 18:23:28
  * @Description: 
  */
 import { createApp } from 'vue'
@@ -45,6 +45,25 @@ import {
   Swipe,
   SwipeItem
 } from 'vant'
+
+/**
+ * 设置主题颜色
+ * 根据站点配置设置 CSS 变量 --van-primary-color
+ */
+function setThemeColor() {
+  try {
+    // 获取站点配置（从 vite.config.js 注入）
+    const siteConfig = __SITE_CONFIG__;
+    const primaryColor = siteConfig.primaryColor;
+    // 设置 CSS 变量
+    document.documentElement.style.setProperty('--van-primary-color', primaryColor)
+  } catch (error) {
+    console.error('设置主题颜色失败:', error)
+  }
+}
+
+// 在应用创建前设置主题颜色
+setThemeColor()
 
 const app = createApp(App)
 
