@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-18 16:43:02
+ * @LastEditTime: 2025-09-16 18:06:06
  * @Description: 
  */
 export default {
@@ -30,8 +30,8 @@ export default {
     processNote: '新成员需要通过账号审核后才能参加任务，审核结果会在主页-我的账号中更新，请及时关注',
     requirementsTitle: '任务要求',
     publishForm: '任务类型',
-    fansRequired: '最低粉丝数',
-    workRequirements: '要求',
+    fansRequired: '粉丝要求',
+    workRequirements: '作品要求',
     taskInfoTitle: '任务信息',
     viewSubmitDetails: '查看提交详情',
     submitTask: '提交任务',

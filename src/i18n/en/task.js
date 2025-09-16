@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-18 16:51:31
+ * @LastEditTime: 2025-09-16 18:05:44
  * @Description: 
  */
 export default {
@@ -30,8 +30,8 @@ export default {
     processNote: 'New members must pass account approval before joining tasks. The result will be updated in Profile > My Account. Please check it regularly',
     requirementsTitle: 'Task Requirements',
     publishForm: 'Task Type',
-    fansRequired: 'Minimum Followers',
-    workRequirements: 'Requirements',
+    fansRequired: 'Fans Required',
+    workRequirements: 'Work Requirements',
     taskInfoTitle: 'Task',
     viewSubmitDetails: 'View Submission Details',
     submitTask: 'Submit Task',

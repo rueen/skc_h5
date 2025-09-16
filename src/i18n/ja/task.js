@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-18 16:51:31
+ * @LastEditTime: 2025-09-16 18:05:32
  * @Description: 
  */
 export default {
@@ -30,8 +30,8 @@ export default {
     processNote: '新規メンバーはタスク参加前にアカウント承認を通過する必要があります。結果はプロフィール > マイアカウントで更新されます。定期的にご確認ください',
     requirementsTitle: 'タスク要件',
     publishForm: 'タスクタイプ',
-    fansRequired: '最小フォロワー数',
-    workRequirements: '要件',
+    fansRequired: 'フォロワー要件',
+    workRequirements: '作品要件',
     taskInfoTitle: 'タスク',
     viewSubmitDetails: '提出詳細を表示',
     submitTask: 'タスクを提出',

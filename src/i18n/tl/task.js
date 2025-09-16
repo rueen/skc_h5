@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-18 16:43:16
+ * @LastEditTime: 2025-09-16 18:06:22
  * @Description: 
  */
 export default {
@@ -30,8 +30,8 @@ export default {
     processNote: 'Kailangang maaprubahan muna ang account ng bagong miyembro bago makasali sa mga gawain. Ang resulta ay ia-update sa Home > Aking Account. Pakisubaybayan ito palagi.',
     requirementsTitle: 'Mga Kinakailangan sa Gawain',
     publishForm: 'Uri ng Gawain',
-    fansRequired: 'Minimum na Tagasubaybay',
-    workRequirements: 'Mga Kailangan',
+    fansRequired: 'Mga Kailangan sa Followers',
+    workRequirements: 'Mga Kailangan sa Pag-post',
     taskInfoTitle: 'Task',
     viewSubmitDetails: 'Tingnan ang Mga Detalye ng Pagpapasa',
     submitTask: 'Ipasa ang Gawain',
