@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-08-28 16:08:02
  * @LastEditors: rueen
- * @LastEditTime: 2025-08-28 16:21:57
+ * @LastEditTime: 2025-09-16 15:21:01
  * @Description: 
  */
 import { defineStore } from 'pinia'
@@ -14,20 +14,22 @@ export const useDefaultRegionStore = defineStore('defaultRegion', () => {
   const defaultRegion = ref('');
   const languageColumns = ref([]);
   const areaCodeColumns = ref([])
+  // 获取站点配置（从 vite.config.js 注入）
+  const siteConfig = __SITE_CONFIG__;
 
   /**
    * 获取默认地区并设置对应的默认语言
    */
   const fetchDefaultRegion = async () => {
     try {
-      const res = await get('system.defaultRegion')
-      defaultRegion.value = res.data.region;
+      defaultRegion.value = siteConfig.site;
 
       // 检查是否已经有语言设置
       const hasLanguageSetting = localStorage.getItem('language');
 
       switch(defaultRegion.value){
         case 'Malaysia':
+        case 'Local':
           // 只有在没有语言设置时才设置默认语言
           if(!hasLanguageSetting){
             setLocale('en-US')

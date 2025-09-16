@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-03-08 20:25:10
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-15 17:49:46
+ * @LastEditTime: 2025-09-16 15:09:37
  * @Description: 环境配置文件
  */
 
@@ -12,11 +12,7 @@ import API_PATH from './api'
 const isDev = process.env.NODE_ENV === 'development';
 
 // 获取站点配置（从 vite.config.js 注入）
-const siteConfig = typeof __SITE_CONFIG__ !== 'undefined' ? __SITE_CONFIG__ : {
-  site: 'Local',
-  baseUrl: 'http://localhost:3001',
-  apiSignSecret: '81fe9c1f0a2d564bf827eb5ca3f3ed7b46592b7dc40b9a47fd3cb8fbf5308e9a'
-}
+const siteConfig = __SITE_CONFIG__;
 
 // 公共 API 路径配置（用于图片上传、获取枚举常量等）
 const PUBLIC_API_PATH = '/api';
