@@ -52,7 +52,10 @@
           </div>
 
           <div :class="$style.formItem">
-            <span :class="$style.label">{{ selectedChannel.name }}ID</span>
+            <span :class="$style.label">
+              <span v-if="selectedChannel.name === 'Facebook'">{{ selectedChannel.name }}ID</span>
+              <span v-else>User Name</span>
+            </span>
             <van-field
               v-model="form.uid"
               :placeholder="`${t('common.inputPlaceholder')} ${selectedChannel.name}ID`"
