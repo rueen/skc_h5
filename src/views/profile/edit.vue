@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 18:25:46
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-24 20:20:29
+ * @LastEditTime: 2025-09-16 15:44:26
  * @Description: 
 -->
 <template>
@@ -120,12 +120,27 @@
           </div>
         </div>
 
-        <div :class="$style.formItem">
+        <div :class="$style.formItem" v-if="site === 'Japan'">
+          <span :class="$style.label">Line</span>
+          <template v-if="isEdit">
+            <van-field
+              v-model="form.line"
+              :placeholder="`${t('common.inputPlaceholder')}`"
+              :class="$style.input"
+              clearable
+              @clear="onInputClear('line')"
+            />
+          </template>
+          <div v-else :class="$style.value">
+            <span :class="$style.text">{{ form.line }}</span>
+          </div>
+        </div>
+        <div :class="$style.formItem" v-else>
           <span :class="$style.label">Telegram</span>
           <template v-if="isEdit">
             <van-field
               v-model="form.telegram"
-              :placeholder="`${t('common.inputPlaceholder')} Telegram`"
+              :placeholder="`${t('common.inputPlaceholder')}`"
               :class="$style.input"
               clearable
               @clear="onInputClear('telegram')"
@@ -202,7 +217,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import { showToast, closeToast } from 'vant'
 import { areaList } from '@vant/area-data'
 import { useUserStore, useEnumStore } from '@/stores'
@@ -213,7 +228,9 @@ import Layout from '@/components/layout.vue'
 import NavBar from '@/components/NavBar.vue'
 import { useI18n } from 'vue-i18n'
 import { copyToClipboard } from '@/utils/copyToClipboard'
+const siteConfig = __SITE_CONFIG__;
 
+const site = siteConfig.site;
 const { t } = useI18n()
 
 const enumStore = useEnumStore()
@@ -351,7 +368,8 @@ onMounted(async () => {
     occupation: userInfo.occupation,
     email: userInfo.email,
     phone: userInfo.phone,
-    telegram: userInfo.telegram
+    telegram: userInfo.telegram,
+    line: userInfo.line
   }
   if(userInfo.avatar){
     avatarFile.value = [{
