@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-16 18:06:22
+ * @LastEditTime: 2025-09-17 09:54:34
  * @Description: 
  */
 export default {
@@ -32,6 +32,7 @@ export default {
     publishForm: 'Uri ng Gawain',
     fansRequired: 'Mga Kailangan sa Followers',
     workRequirements: 'Mga Kailangan sa Pag-post',
+    keywordsTitle: 'Mga Keyword',
     taskInfoTitle: 'Task',
     viewSubmitDetails: 'Tingnan ang Mga Detalye ng Pagpapasa',
     submitTask: 'Ipasa ang Gawain',

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-16 19:57:10
+ * @LastEditTime: 2025-09-17 10:03:27
  * @Description: 任务详情页
  -->
 <template>
@@ -86,6 +86,15 @@
             <span :class="$style.label">{{ $t('task.detail.workRequirements') }}</span>
             <div :class="[$style.workRequirements, $style.quillContent]" v-html="taskInfo.contentRequirement" />
           </div>
+        </div>
+      </div>
+
+      <!-- 关键词 -->
+      <div :class="$style.section" v-if="showKeywords">
+        <h3 :class="$style.sectionTitle">{{ $t('task.detail.keywordsTitle') }}</h3>
+        <div :class="$style.keywordsContainer">
+          <div :class="$style.keywordTag">{{ showKeywords }}</div>
+          <van-button type="primary" size="mini" @click="handleCopy(showKeywords)">copy</van-button>
         </div>
       </div>
 
@@ -210,6 +219,7 @@ import { shareInviteLink } from '@/utils/share'
 import Layout from '@/components/layout.vue'
 import NavBar from '@/components/NavBar.vue'
 import { useI18n } from 'vue-i18n'
+import { copyToClipboard } from '@/utils/copyToClipboard'
 
 const { t } = useI18n()
 
@@ -227,6 +237,42 @@ const isStart = computed(() => {
 
 // 任务流程步骤
 const processSteps = [t('task.detail.processStep1'), t('task.detail.processStep2'), t('task.detail.processStep3'), t('task.detail.processStep4')]
+
+/**
+ * 按比重随机显示一个关键词
+ * @returns {string} 按比重随机选择的关键词
+ */
+const showKeywords = computed(() => {
+  if (!taskInfo.value?.brandKeywords || !Array.isArray(taskInfo.value.brandKeywords) || taskInfo.value.brandKeywords.length === 0) {
+    return ''
+  }
+
+  const keywords = taskInfo.value.brandKeywords
+  
+  // 如果只有一个关键词，直接返回
+  if (keywords.length === 1) {
+    return keywords[0].text
+  }
+
+  // 按比重随机选择一个关键词
+  const totalRatio = keywords.reduce((sum, item) => sum + (item.ratio || 0), 0)
+  const randomNum = Math.random() * totalRatio
+  let currentRatio = 0
+  
+  for (const keyword of keywords) {
+    currentRatio += keyword.ratio || 0
+    if (randomNum <= currentRatio) {
+      return keyword.text
+    }
+  }
+
+  // 如果没有选中（理论上不应该发生），返回第一个关键词
+  return keywords[0].text
+})
+// 复制关键词
+const handleCopy = (text) => {
+  copyToClipboard(text)
+}
 
 // 分享/邀请功能
 const onShare = () => {
@@ -529,5 +575,21 @@ onMounted(async () => {
     max-width: 100%;
     height: auto;
   }
+}
+
+.keywordsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.keywordTag {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background-color: #f2f2f2;
+  color: #323233;
+  border: none;
 }
 </style>

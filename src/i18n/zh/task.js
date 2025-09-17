@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-16 18:06:06
+ * @LastEditTime: 2025-09-17 09:54:40
  * @Description: 
  */
 export default {
@@ -32,6 +32,7 @@ export default {
     publishForm: '任务类型',
     fansRequired: '粉丝要求',
     workRequirements: '作品要求',
+    keywordsTitle: '关键词',
     taskInfoTitle: '任务信息',
     viewSubmitDetails: '查看提交详情',
     submitTask: '提交任务',

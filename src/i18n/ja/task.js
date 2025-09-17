@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-16 18:05:32
+ * @LastEditTime: 2025-09-17 09:54:28
  * @Description: 
  */
 export default {
@@ -32,6 +32,7 @@ export default {
     publishForm: 'タスクタイプ',
     fansRequired: 'フォロワー要件',
     workRequirements: '作品要件',
+    keywordsTitle: 'キーワード',
     taskInfoTitle: 'タスク',
     viewSubmitDetails: '提出詳細を表示',
     submitTask: 'タスクを提出',

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-16 18:05:44
+ * @LastEditTime: 2025-09-17 09:54:22
  * @Description: 
  */
 export default {
@@ -32,6 +32,7 @@ export default {
     publishForm: 'Task Type',
     fansRequired: 'Fans Required',
     workRequirements: 'Work Requirements',
+    keywordsTitle: 'Keywords',
     taskInfoTitle: 'Task',
     viewSubmitDetails: 'View Submission Details',
     submitTask: 'Submit Task',
