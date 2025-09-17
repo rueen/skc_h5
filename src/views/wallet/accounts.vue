@@ -182,7 +182,7 @@ const onSubmit = () => {
     return
   }
 
-  if(!/^0\d{10}$/.test(form.value.account)){
+  if(['bank'].indexOf(selectedType.value.bank) < 0 && !/^0\d{10}$/.test(form.value.account)){
     showDialog({
       title: t('wallet.accounts.invalidAccount'),
       message: t('wallet.accounts.invalidAccountMessage'),
@@ -219,7 +219,8 @@ const getPaymentChannels = async () => {
     const res = await get('paymentChannels.list')
     accountTypesOptions.value = res.data.map(item => ({
       text: item.name,
-      value: item.id
+      value: item.id,
+      bank: item.bank
     }))
   } catch (error) {
     console.log(error)

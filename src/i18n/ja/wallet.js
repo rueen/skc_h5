@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-19 07:47:25
+ * @LastEditTime: 2025-09-17 16:12:52
  * @Description: 
  */
 export default {
@@ -37,7 +37,7 @@ export default {
     confirmAdd: '追加を確認',
     saveChanges: '変更を保存',
     previewTitle: '出金電子ウォレット詳細',
-    accountType: '電子ウォレットタイプ',
+    accountType: '銀行',
     account: 'アカウント番号',
     accountPlaceholder: 'アカウント番号を入力してください',
     name: '氏名',

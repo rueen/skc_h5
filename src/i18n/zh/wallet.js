@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-19 08:41:17
+ * @LastEditTime: 2025-09-17 16:12:17
  * @Description: 
  */
 export default {
@@ -37,7 +37,7 @@ export default {
     confirmAdd: '确认添加',
     saveChanges: '保存修改',
     previewTitle: '提现账户详情',
-    accountType: '账户类型',
+    accountType: '银行',
     account: '账号',
     accountPlaceholder: '请输入账号',
     name: '姓名',
