@@ -54,7 +54,7 @@
           <div :class="$style.formItem">
             <span :class="$style.label">
               <span v-if="selectedChannel.name === 'Facebook'">{{ selectedChannel.name }}ID</span>
-              <span v-else>User Name</span>
+              <span v-else>{{ $t('social.edit.userName') }}</span>
             </span>
             <van-field
               v-model="form.uid"
@@ -70,7 +70,7 @@
           </div>
           
           <div :class="$style.formItem">
-            <span :class="$style.label">{{ selectedChannel.name }} Name</span>
+            <span :class="$style.label">{{ $t('social.edit.name') }}</span>
             <van-field
               v-model="form.account"
               :placeholder="$t('social.edit.accountPlaceholder')"

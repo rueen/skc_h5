@@ -2,19 +2,19 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:52:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-19 20:41:41
+ * @LastEditTime: 2025-09-17 17:04:35
  * @Description: 
  */
 export default {
   index: {
     notLogin: 'ログインしていません',
     account: 'アカウント',
-    withdrawn: '出金済み',
-    withdrawable: '出金可能',
-    wallet: 'マイウォレット',
-    myAccount: 'マイアカウント',
-    myInvites: 'マイ招待',
-    myGroups: 'マイグループ',
+    withdrawn: '引き出し済み',
+    withdrawable: '引出可能',
+    wallet: 'ウォレット',
+    myAccount: 'SNSアカウント',
+    myInvites: '友達を招待',
+    myGroups: 'グループ',
     settings: '設定'
   },
 

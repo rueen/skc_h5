@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:46:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-17 09:54:28
+ * @LastEditTime: 2025-09-17 16:32:16
  * @Description: 
  */
 export default {
@@ -44,7 +44,7 @@ export default {
   },
 
   applications: {
-    applied: '応募済み',
+    applied: '申込済み',
     submitted: '提出済み',
     completed: '完了',
   },

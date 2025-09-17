@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 15:59:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 21:01:14
+ * @LastEditTime: 2025-09-17 17:03:15
  * @Description: 
  */
 export default {
@@ -12,6 +12,7 @@ export default {
     deleteConfirmTitle: 'Kumpirmahin ang Pagtanggal',
     deleteConfirmMessage: 'Sigurado ka bang gusto mong tanggalin ang account',
     deleteSuccess: 'Matagumpay na Natanggal',
+    deleteFailed: 'Hindi Matagumpay na Natanggal',
   },
 
   edit: {
@@ -24,6 +25,8 @@ export default {
     platform: 'Platform',
     homeUrl: 'URL ng Homepage',
     homeUrlPlaceholder: 'Mangyaring ilagay ang URL ng homepage',
+    userName: 'User Name',
+    name: 'Name',
     accountPlaceholder: 'Mangyaring ilagay ang pangalan ng account',
     fansCount: 'Bilang ng Followers',
     fansCountPlaceholder: 'Mangyaring ilagay ang bilang ng followers',

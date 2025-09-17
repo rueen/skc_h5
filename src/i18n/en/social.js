@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 15:59:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-04-14 20:59:10
+ * @LastEditTime: 2025-09-17 17:02:36
  * @Description: 
  */
 export default {
@@ -25,6 +25,8 @@ export default {
     platform: 'Platform',
     homeUrl: 'Profile Link',
     homeUrlPlaceholder: 'Please fill up Profile Link',
+    userName: 'User Name',
+    name: 'Name',
     accountPlaceholder: 'Please fill up account name',
     fansCount: 'Followers Count',
     fansCountPlaceholder: 'Please fill up followers count',

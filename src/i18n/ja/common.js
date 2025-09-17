@@ -2,14 +2,14 @@
  * @Author: diaochan
  * @Date: 2025-04-11 14:41:16
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-21 17:51:23
+ * @LastEditTime: 2025-09-17 16:53:21
  * @Description: 
  */
 export default {
   tabbar: {
     home: 'ホーム',
-    task: 'タスク',
-    profile: 'プロフィール'
+    task: '進捗',
+    profile: 'マイページ'
   },
 
   emptyText: 'データがありません',
@@ -55,8 +55,8 @@ export default {
     switch (type) {
       case 'share':
         return {
-          success: '招待リンクがクリップボードにコピーされました',
-          failed: '招待リンクのコピーに失敗しました',
+          success: '招待リンクをコピーしました',
+          failed: '招待リンクをコピーに失敗しました',
         }
       default:
         return {

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-17 16:12:52
+ * @LastEditTime: 2025-09-17 16:38:05
  * @Description: 
  */
 export default {
@@ -10,33 +10,33 @@ export default {
   index: {
     title: 'マイウォレット',
     withdrawableBalance: '残高',
-    withdraw: '出金',
-    settlementBill: '決済請求書',
-    withdrawalRecords: '出金記録',
-    withdrawalAccount: '出金電子ウォレット',
+    withdraw: '引き出す',
+    settlementBill: '取引明細',
+    withdrawalRecords: '引出履歴',
+    withdrawalAccount: '引き出し口座',
     notSet: '未設定',
 
     pleaseSetWithdrawalAccount: 'まず出金アカウントを設定してください',
   },
   
   bills: {
-    title: '決済請求書',
+    title: '取引明細',
     daifuFailureReason: '電子ウォレットアカウントを更新してください',
   },
 
   records: {
-    title: '出金記録',
+    title: '引出履歴',
     withdrawTo: '出金先',
   },
 
   accounts: {
-    addTitle: '出金電子ウォレットを追加',
-    editTitle: '出金電子ウォレットを編集',
+    addTitle: '引き出し口座を追加',
+    editTitle: '引き出し口座を編集',
     edit: '編集',
     cancel: 'キャンセル',
     confirmAdd: '追加を確認',
     saveChanges: '変更を保存',
-    previewTitle: '出金電子ウォレット詳細',
+    previewTitle: '引き出し口座詳細',
     accountType: '銀行',
     account: 'アカウント番号',
     accountPlaceholder: 'アカウント番号を入力してください',
@@ -64,7 +64,7 @@ export default {
     withdrawableBalance: '出金可能残高',
     withdrawAll: '全額出金',
     confirmWithdraw: '出金を確認',
-    withdrawAccount: '出金電子ウォレット',
+    withdrawAccount: '引き出し口座',
     notSet: '未設定',
 
     pleaseSetWithdrawalAccount: 'まず出金アカウントを設定してください',
