@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 14:25:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-17 10:03:27
+ * @LastEditTime: 2025-09-17 10:47:42
  * @Description: 任务详情页
  -->
 <template>
@@ -94,7 +94,7 @@
         <h3 :class="$style.sectionTitle">{{ $t('task.detail.keywordsTitle') }}</h3>
         <div :class="$style.keywordsContainer">
           <div :class="$style.keywordTag">{{ showKeywords }}</div>
-          <van-button type="primary" size="mini" @click="handleCopy(showKeywords)">copy</van-button>
+          <van-button type="primary" size="mini" @click="handleCopy(showKeywords)" v-if="taskInfo.isEnrolled">copy</van-button>
         </div>
       </div>
 
@@ -243,6 +243,9 @@ const processSteps = [t('task.detail.processStep1'), t('task.detail.processStep2
  * @returns {string} 按比重随机选择的关键词
  */
 const showKeywords = computed(() => {
+  if(taskInfo.value.isEnrolled && !!taskInfo.value.showKeywords) {
+    return taskInfo.value.showKeywords;
+  }
   if (!taskInfo.value?.brandKeywords || !Array.isArray(taskInfo.value.brandKeywords) || taskInfo.value.brandKeywords.length === 0) {
     return ''
   }
@@ -299,7 +302,9 @@ const handleSubmitTask = async () => {
 
 // 提交报名
 const handleApply = async () => {
-  const res = await post('task.enroll', {}, {
+  const res = await post('task.enroll', {
+    brandKeywords: showKeywords.value
+  }, {
     urlParams: {
       taskId: route.params.id
     }
