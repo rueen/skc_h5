@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-25 11:50:45
  * @LastEditors: rueen
- * @LastEditTime: 2025-07-18 17:25:30
+ * @LastEditTime: 2025-09-17 16:00:46
  * @Description: 任务页
  -->
 <template>
@@ -265,7 +265,8 @@ const formatPrice = (price) => {
 const handleClickItem = (item) => {
   if(activeTab.value === 'applied') {
     // 已报名
-    router.push(`/tasks/submit/new?taskId=${item.taskId}`)
+    // router.push(`/tasks/submit/new?taskId=${item.taskId}`)
+    router.push(`/tasks/detail/${item.taskId}`)
   } else {
     // 已提交 | 已完成
     router.push(`/tasks/submit/${item.id}?taskId=${item.taskId}`)
