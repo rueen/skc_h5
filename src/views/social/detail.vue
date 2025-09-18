@@ -41,7 +41,7 @@
             <span :class="$style.label">{{ $t('social.edit.homeUrl') }}</span>
             <van-field
               v-model="form.homeUrl"
-              :placeholder="$t('social.edit.homeUrlPlaceholder')"
+              :placeholder="$t('common.inputPlaceholder')"
               :class="$style.input"
               :border="false"
               :readonly="isView || isApproved"
@@ -58,7 +58,7 @@
             </span>
             <van-field
               v-model="form.uid"
-              :placeholder="`${t('common.inputPlaceholder')} ${selectedChannel.name}ID`"
+              :placeholder="$t('common.inputPlaceholder')"
               :class="$style.input"
               :border="false"
               :disabled="!form.homeUrl"
@@ -73,7 +73,7 @@
             <span :class="$style.label">{{ $t('social.edit.name') }}</span>
             <van-field
               v-model="form.account"
-              :placeholder="$t('social.edit.accountPlaceholder')"
+              :placeholder="$t('common.inputPlaceholder')"
               :class="$style.input"
               :border="false"
               :readonly="isView"
@@ -87,7 +87,7 @@
             <van-field
               v-model="form.fansCount"
               type="digit"
-              :placeholder="$t('social.edit.fansCountPlaceholder')"
+              :placeholder="$t('common.inputPlaceholder')"
               :class="$style.input"
               :border="false"
               :readonly="isView || isApproved"
@@ -101,7 +101,7 @@
             <van-field
               v-model="form.friendsCount"
               type="digit"
-              :placeholder="$t('social.edit.friendsCountPlaceholder')"
+              :placeholder="$t('common.inputPlaceholder')"
               :class="$style.input"
               :border="false"
               :readonly="isView || isApproved"
@@ -115,7 +115,7 @@
             <van-field
               v-model="form.postsCount"
               type="digit"
-              :placeholder="$t('social.edit.postsCountPlaceholder')"
+              :placeholder="$t('common.inputPlaceholder')"
               :class="$style.input"
               :border="false"
               :readonly="isView || isApproved"

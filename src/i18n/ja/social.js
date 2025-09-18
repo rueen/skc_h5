@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 15:59:28
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-17 17:03:05
+ * @LastEditTime: 2025-09-18 16:48:43
  * @Description: 
  */
 export default {
@@ -23,17 +23,12 @@ export default {
     accountStatus: 'アカウントステータス',
     rejectReason: '拒否理由',
     platform: 'SNS',
-    homeUrl: 'プロフィールリンク',
-    homeUrlPlaceholder: 'プロフィールリンクを入力してください',
+    homeUrl: 'プロフィールurl',
     userName: 'ユーザーネー厶',
     name: '名前',
-    accountPlaceholder: 'アカウント名を入力してください',
-    fansCount: 'フォロワー',
-    fansCountPlaceholder: 'フォロワーを入力してください',
+    fansCount: 'フォロワー数',
     friendsCount: '友達数',
-    friendsCountPlaceholder: '友達数を入力してください',
-    postsCount: '投稿',
-    postsCountPlaceholder: '投稿を入力してください',
+    postsCount: '投稿数',
     warningText: 'アカウント情報の変更には再検証が必要です',
     resubmit: '再提出',
     save: '保存する',
