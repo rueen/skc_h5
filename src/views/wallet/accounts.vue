@@ -18,11 +18,48 @@
             <van-icon name="arrow" v-if="mode !== 'preview'" />
           </div>
         </div>
+        <!-- 银行名称 -->
+        <div :class="$style.formItem" v-if="selectedType && selectedType.bank === 'bank'">
+          <span :class="$style.label">{{ t('wallet.accounts.bankName') }}</span>
+          <van-field
+            v-model="form.bankName"
+            :placeholder="t('common.inputPlaceholder')"
+            :readonly="mode === 'preview'"
+            :class="$style.input"
+            clearable
+            @clear="onInputClear('bankName')"
+          />
+        </div>
+        <!-- 银行分行名称 -->
+        <div :class="$style.formItem" v-if="selectedType && selectedType.bank === 'bank'">
+          <span :class="$style.label">{{ t('wallet.accounts.bankBranchName') }}</span>
+          <van-field
+            v-model="form.bankBranchName"
+            :placeholder="t('common.inputPlaceholder')"
+            :readonly="mode === 'preview'"
+            :class="$style.input"
+            clearable
+            @clear="onInputClear('bankBranchName')"
+          />
+        </div>
+        <!-- 账户性质 -->
+        <div :class="$style.formItem" v-if="selectedType && selectedType.bank === 'bank'">
+          <span :class="$style.label">{{ t('wallet.accounts.bankAccountNature') }}</span>
+          <div :class="[$style.value, $style.radioGroupValue]" v-if="mode === 'preview'">{{ form.bankAccountNature }}</div>
+          <van-radio-group
+            v-else
+            v-model="form.bankAccountNature"
+            :class="$style.radioGroup"
+          >
+            <van-radio name="普通預金">普通預金</van-radio>
+            <van-radio name="当座預金">当座預金</van-radio>
+          </van-radio-group>
+        </div>
         <div :class="$style.formItem">
           <span :class="$style.label">{{ t('wallet.accounts.account') }}</span>
           <van-field
             v-model="form.account"
-            :placeholder="t('wallet.accounts.accountPlaceholder')"
+            :placeholder="t('common.inputPlaceholder')"
             :readonly="mode === 'preview'"
             :class="$style.input"
             clearable
@@ -33,7 +70,7 @@
           <span :class="$style.label">{{ t('wallet.accounts.name') }}</span>
           <van-field
             v-model="form.name"
-            :placeholder="t('wallet.accounts.namePlaceholder')"
+            :placeholder="t('common.inputPlaceholder')"
             :readonly="mode === 'preview'"
             :class="$style.input"
             clearable
@@ -104,7 +141,10 @@ const pageTitle = computed(() => {
 const form = ref({
   paymentChannelId: null, // 支付渠道ID
   account: '', // 账号
-  name: '' // 姓名
+  name: '', // 姓名
+  bankName: '', // 银行名称
+  bankBranchName: '', // 分行名称
+  bankAccountNature: '普通預金' // 账户性质
 })
 
 // 账户类型列表
@@ -130,17 +170,16 @@ const onClickRight = () => {
   if(isEditing.value){
     mode.value = 'edit'
   } else {
-    mode.value = 'preview'
+    mode.value = 'preview';
+    console.log(accountInfo.value, '---')
+    form.value = {
+      ...accountInfo.value
+    }
   }
 }
 
 // 创建账户
-const onCreate = async() => {
-  const params = {
-    paymentChannelId: form.value.paymentChannelId, // 支付渠道ID
-    account: form.value.account.trim(), // 账号
-    name: form.value.name.trim() // 姓名
-  }
+const onCreate = async(params) => {
   const res = await post('withdrawals.create', params)
   if(res.code === 0){
     showToast(t('wallet.accounts.createSuccess'))
@@ -151,12 +190,7 @@ const onCreate = async() => {
 }
 
 // 更新账户
-const onUpdate = async() => {
-  const params = {
-    paymentChannelId: form.value.paymentChannelId, // 支付渠道ID
-    account: form.value.account.trim(), // 账号
-    name: form.value.name.trim() // 姓名
-  }
+const onUpdate = async(params) => {
   const res = await put('withdrawals.update', params, {
     urlParams: {
       id: form.value.id
@@ -182,6 +216,17 @@ const onSubmit = () => {
     return
   }
 
+  if(selectedType.value.bank === 'bank'){
+    if(!form.value.bankName){
+      showToast(t('wallet.accounts.pleaseEnterBankName'))
+      return
+    }
+    if(!form.value.bankBranchName){
+      showToast(t('wallet.accounts.pleaseEnterBankBranchName'))
+      return
+    }
+  }
+
   if(['bank'].indexOf(selectedType.value.bank) < 0 && !/^0\d{10}$/.test(form.value.account)){
     showDialog({
       title: t('wallet.accounts.invalidAccount'),
@@ -197,18 +242,37 @@ const onSubmit = () => {
     return
   }
 
+  const params = {
+    paymentChannelId: form.value.paymentChannelId, // 支付渠道ID
+    account: form.value.account.trim(), // 账号
+    name: form.value.name.trim() // 姓名
+  }
+  if(selectedType.value.bank === 'bank'){
+    params.bankName = form.value.bankName;
+    params.bankBranchName = form.value.bankBranchName;
+    params.bankAccountNature = form.value.bankAccountNature;
+  }
   if(mode.value === 'add'){
-    onCreate()
+    onCreate(params)
   } else {
-    onUpdate()
+    onUpdate(params)
   }
 }
 
 // 获取提现账户
+const accountInfo = ref(null)
 const getWithdrawalAccount = async () => {
   const res = await get('withdrawals.accounts')
   if(res.code === 0 && res.data.length > 0){
-    form.value = res.data[0]
+    const data = res.data[0];
+    form.value = {
+      ...data,
+      bankAccountNature: data.bankAccountNature || '普通預金'
+    }
+    accountInfo.value = {
+      ...data,
+      bankAccountNature: data.bankAccountNature || '普通預金'
+    };
     selectedType.value = accountTypesOptions.value.find(item => item.value === form.value.paymentChannelId)
   }
 }
@@ -294,6 +358,18 @@ onMounted(async () => {
       color: #323233;
     }
   }
+}
+.radioGroup{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  font-size: 14px;
+}
+.radioGroupValue{
+  font-size: 14px;
+  padding-right: 16px;
 }
 
 .submitBtn {

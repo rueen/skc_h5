@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-20 19:15:49
+ * @LastEditTime: 2025-09-20 20:29:11
  * @Description: 
  */
 export default {
@@ -39,9 +39,7 @@ export default {
     previewTitle: 'Withdrawal E-Wallet Details',
     accountType: 'E-Wallet Type',
     account: 'Account Number',
-    accountPlaceholder: 'Please fill up account Number',
     name: 'Full Name',
-    namePlaceholder: 'Please fill up full name',
     confirmAdd: 'Confirm Addition',
     saveChanges: 'Save Changes',
     pleaseSelect: 'Please Select',
@@ -54,6 +52,11 @@ export default {
     invalidAccount: 'Invalid account number',
     invalidAccountMessage: 'Start with 0, followed by 9, and 10 digits, e.g., 09888888888',
     pleaseEnterName: 'Please fill up full name',
+    bankName: 'Bank Name',
+    bankBranchName: 'Branch Name',
+    bankAccountNature: 'Account Nature',
+    pleaseEnterBankName: 'Please fill up bank name',
+    pleaseEnterBankBranchName: 'Please fill up branch name',
   },
 
   withdraw: {

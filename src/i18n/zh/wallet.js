@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-20 19:16:50
+ * @LastEditTime: 2025-09-20 20:27:32
  * @Description: 
  */
 export default {
@@ -39,9 +39,7 @@ export default {
     previewTitle: '提现账户详情',
     accountType: '账户类型',
     account: '账号',
-    accountPlaceholder: '请输入账号',
     name: '姓名',
-    namePlaceholder: '请输入姓名',
     confirmAdd: '确认添加',
     saveChanges: '保存修改',
     pleaseSelect: '请选择',
@@ -54,6 +52,11 @@ export default {
     invalidAccount: '账号格式错误',
     invalidAccountMessage: '0开头，9开始的10位数，例如：09888888888',
     pleaseEnterName: '请输入姓名',
+    bankName: '银行名称',
+    bankBranchName: '分行名称',
+    bankAccountNature: '账户性质',
+    pleaseEnterBankName: '请输入银行名称',
+    pleaseEnterBankBranchName: '请输入分行名称',
   },
 
   withdraw: {

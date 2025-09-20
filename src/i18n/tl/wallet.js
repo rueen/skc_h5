@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-20 19:16:35
+ * @LastEditTime: 2025-09-20 20:28:08
  * @Description: 
  */
 export default {
@@ -39,9 +39,7 @@ export default {
     previewTitle: 'Mga Detalye ng Account para sa Pag-withdraw',
     accountType: 'Uri ng Account',
     account: 'Account',
-    accountPlaceholder: 'Mangyaring ilagay ang account',
     name: 'Pangalan',
-    namePlaceholder: 'Mangyaring ilagay ang pangalan',
     confirmAdd: 'Kumpirmahin ang Pagdagdag',
     saveChanges: 'I-save ang mga Pagbabago',
     pleaseSelect: 'Mangyaring Pumili',
@@ -54,6 +52,11 @@ export default {
     invalidAccount: 'Diwalidong account',
     invalidAccountMessage: 'Mag-start na 0, sumunod na 9, at 10 digit, halimbawa: 09888888888',
     pleaseEnterName: 'Mangyaring ilagay ang pangalan',
+    bankName: 'Pangalan ng Bank',
+    bankBranchName: 'Branch ng Bank',
+    bankAccountNature: 'Uri ng Account',
+    pleaseEnterBankName: 'Mangyaring ilagay ang pangalan ng bank',
+    pleaseEnterBankBranchName: 'Mangyaring ilagay ang branch ng bank',
   },
 
   withdraw: {
