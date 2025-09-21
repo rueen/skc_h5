@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-20 20:29:11
+ * @LastEditTime: 2025-09-21 16:29:08
  * @Description: 
  */
 export default {
@@ -37,7 +37,7 @@ export default {
     confirmAdd: 'Confirm Addition',
     saveChanges: 'Save Changes',
     previewTitle: 'Withdrawal E-Wallet Details',
-    accountType: 'E-Wallet Type',
+    accountType: 'Wallet Type',
     account: 'Account Number',
     name: 'Full Name',
     confirmAdd: 'Confirm Addition',

@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-21 15:45:07
+ * @LastEditTime: 2025-09-21 16:24:15
  * @Description: 
  */
 export default {
@@ -37,7 +37,7 @@ export default {
     confirmAdd: '追加を確認',
     saveChanges: '変更を保存',
     previewTitle: '引き出し口座詳細',
-    accountType: '電子ウォレットタイプ',
+    accountType: '財布の種類',
     account: '口座番号',
     name: 'お名前',
     confirmAdd: '追加を確認',

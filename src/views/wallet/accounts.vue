@@ -19,7 +19,7 @@
           </div>
         </div>
         <!-- 银行名称 -->
-        <div :class="$style.formItem" v-if="selectedType && selectedType.bank === 'bank'">
+        <div :class="$style.formItem" v-if="selectedType && ['bank', 'e-bank'].indexOf(selectedType.bank) > -1">
           <span :class="$style.label">{{ t('wallet.accounts.bankName') }}</span>
           <van-field
             v-model="form.bankName"
@@ -211,11 +211,6 @@ const onSubmit = () => {
     return
   }
 
-  if (!form.value.account) {
-    showToast(t('wallet.accounts.pleaseEnterAccount'))
-    return
-  }
-
   if(selectedType.value.bank === 'bank'){
     if(!form.value.bankName){
       showToast(t('wallet.accounts.pleaseEnterBankName'))
@@ -226,8 +221,19 @@ const onSubmit = () => {
       return
     }
   }
+  if(selectedType.value.bank === 'e-bank'){
+    if(!form.value.bankName){
+      showToast(t('wallet.accounts.pleaseEnterBankName'))
+      return
+    }
+  }
 
-  if(['bank'].indexOf(selectedType.value.bank) < 0 && !/^0\d{10}$/.test(form.value.account)){
+  if (!form.value.account) {
+    showToast(t('wallet.accounts.pleaseEnterAccount'))
+    return
+  }
+
+  if(['bank', 'e-bank'].indexOf(selectedType.value.bank) < 0 && !/^0\d{10}$/.test(form.value.account)){
     showDialog({
       title: t('wallet.accounts.invalidAccount'),
       message: t('wallet.accounts.invalidAccountMessage'),
@@ -251,6 +257,9 @@ const onSubmit = () => {
     params.bankName = form.value.bankName;
     params.bankBranchName = form.value.bankBranchName;
     params.bankAccountNature = form.value.bankAccountNature;
+  }
+  if(selectedType.value.bank === 'e-bank'){
+    params.bankName = form.value.bankName;
   }
   if(mode.value === 'add'){
     onCreate(params)

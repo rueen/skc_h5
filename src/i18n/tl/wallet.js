@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-20 20:28:08
+ * @LastEditTime: 2025-09-21 16:28:53
  * @Description: 
  */
 export default {
@@ -37,7 +37,7 @@ export default {
     confirmAdd: 'Kumpirmahin ang Pagdagdag',
     saveChanges: 'I-save ang mga Pagbabago',
     previewTitle: 'Mga Detalye ng Account para sa Pag-withdraw',
-    accountType: 'Uri ng Account',
+    accountType: 'Uri ng Wallet',
     account: 'Account',
     name: 'Pangalan',
     confirmAdd: 'Kumpirmahin ang Pagdagdag',
