@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-04-11 16:05:39
  * @LastEditors: rueen
- * @LastEditTime: 2025-09-20 20:28:38
+ * @LastEditTime: 2025-09-21 15:45:07
  * @Description: 
  */
 export default {
@@ -38,8 +38,8 @@ export default {
     saveChanges: '変更を保存',
     previewTitle: '引き出し口座詳細',
     accountType: '電子ウォレットタイプ',
-    account: 'アカウント番号',
-    name: '氏名',
+    account: '口座番号',
+    name: 'お名前',
     confirmAdd: '追加を確認',
     saveChanges: '変更を保存',
     pleaseSelect: '選択してください',
@@ -48,13 +48,13 @@ export default {
     updateSuccess: '更新が完了しました',
     updateFailed: '更新に失敗しました',
     pleaseSelectAccountType: 'アカウントタイプを選択してください',
-    pleaseEnterAccount: 'アカウント番号を入力してください',
-    invalidAccount: '無効なアカウント番号',
+    pleaseEnterAccount: '口座番号を入力してください',
+    invalidAccount: '無効な口座番号',
     invalidAccountMessage: '0で始まり、その後に9、10桁の数字、例：09888888888',
-    pleaseEnterName: '氏名を入力してください',
+    pleaseEnterName: 'お名前を入力してください',
     bankName: '銀行名',
     bankBranchName: '支店名',
-    bankAccountNature: '口座種類',
+    bankAccountNature: '座預金',
     pleaseEnterBankName: '銀行名を入力してください',
     pleaseEnterBankBranchName: '支店名を入力してください',
   },
